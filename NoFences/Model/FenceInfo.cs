@@ -1,51 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-
 namespace NoFences.Model
 {
+    public enum FenceKind
+    {
+        /// <summary>Shows a hand-picked list of links to files and folders anywhere on disk.</summary>
+        Links,
+
+        /// <summary>Mirrors the live contents of a folder; dropping files moves them into it.</summary>
+        Folder
+    }
+
+    /*
+     * Property names are part of the on-disk format (JSON, and the legacy XML migration).
+     * Do not rename them.
+     */
     public class FenceInfo
     {
-        /* 
-         * DO NOT RENAME PROPERTIES. Used for XML serialization.
-         */
+        public Guid Id { get; set; } = Guid.NewGuid();
 
-        public Guid Id { get; set; }
+        public string Name { get; set; } = "";
 
-        public string Name { get; set; }
+        public FenceKind Kind { get; set; } = FenceKind.Links;
 
+        /// <summary>Only used for <see cref="FenceKind.Folder"/>.</summary>
+        public string? FolderPath { get; set; }
+
+        /// <summary>Window position in device pixels.</summary>
         public int PosX { get; set; }
 
         public int PosY { get; set; }
 
-        /// <summary>
-        /// Gets or sets the DPI scaled window width.
-        /// </summary>
-        public int Width { get; set; }
+        /// <summary>Expanded window size in device pixels.</summary>
+        public int Width { get; set; } = 300;
 
-        /// <summary>
-        /// Gets or sets the DPI scaled window height.
-        /// </summary>
-        public int Height { get; set; }
+        public int Height { get; set; } = 300;
 
         public bool Locked { get; set; }
 
+        /// <summary>Collapse to the title bar while the mouse is elsewhere.</summary>
         public bool CanMinify { get; set; }
 
-        /// <summary>
-        /// Gets or sets the logical window title height.
-        /// </summary>
+        /// <summary>Title bar height in logical (96 dpi) pixels.</summary>
         public int TitleHeight { get; set; } = 35;
 
-        public List<string> Files { get; set; } = new List<string>();
+        /// <summary>Icon edge length in logical pixels.</summary>
+        public int IconSize { get; set; } = 32;
 
-        public FenceInfo()
-        {
+        /// <summary>Background color as RGB; alpha comes from <see cref="BackgroundAlpha"/>.</summary>
+        public int BackgroundColor { get; set; } = 0x000000;
 
-        }
+        public int BackgroundAlpha { get; set; } = 100;
 
-        public FenceInfo(Guid id)
-        {
-            Id = id;
-        }
+        /// <summary>Theme id; null = use the global default theme.</summary>
+        public string? Theme { get; set; }
+
+        /// <summary>
+        /// Wildcards separated by ';' (e.g. "*.pdf; *.docx"). New desktop files matching them are
+        /// moved into a folder fence, or linked into a links fence. Empty = no auto-sorting.
+        /// </summary>
+        public string? AutoSortPatterns { get; set; }
+
+        /// <summary>
+        /// Links fence: the entries. Folder fence: the user's preferred order of the folder's
+        /// contents; entries missing from this list are appended alphabetically.
+        /// </summary>
+        public List<string> Files { get; set; } = new();
     }
 }

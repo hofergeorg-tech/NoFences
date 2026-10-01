@@ -1,0 +1,86 @@
+# Build on every push/PR. On a version tag (v2.0.0) additionally publish the
+# single-file NoFences.exe, sign it (once SignPath is set up) and create the GitHub release.
+name: CI
+
+on:
+  push:
+    branches: [master, main, modernize]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: write      # create the release
+  id-token: write      # build provenance (Sigstore)
+  attestations: write
+  actions: read        # SignPath downloads the unsigned artifact
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      # Secrets can't be used in "if:" directly, environment variables can.
+      SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Build
+        run: dotnet build NoFences/NoFences.csproj -c Release
+
+      - name: Version in the project must match the tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: |
+          [xml]$proj = Get-Content NoFences/NoFences.csproj
+          $version = ($proj.Project.PropertyGroup | Where-Object Version).Version
+          if ("v$version" -ne $env:GITHUB_REF_NAME) { throw "Tag $env:GITHUB_REF_NAME != version $version" }
+
+      - name: Publish single-file exe
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          dotnet publish NoFences/NoFences.csproj -c Release -o publish
+          mkdir out
+          copy publish\NoFences.exe out\NoFences.exe
+
+      # --- Windows signing via SignPath Foundation (free for open source) ---
+      # Runs only once the secret SIGNPATH_API_TOKEN and the variable
+      # SIGNPATH_ORGANIZATION_ID are set. Until then the release is unsigned.
+      - name: Upload unsigned exe for SignPath
+        id: unsigned
+        if: startsWith(github.ref, 'refs/tags/v') && env.SIGNPATH_API_TOKEN != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: unsigned-NoFences.exe
+          path: out/NoFences.exe
+      - name: Sign with SignPath
+        if: startsWith(github.ref, 'refs/tags/v') && env.SIGNPATH_API_TOKEN != ''
+        uses: signpath/github-action-submit-signing-request@v1
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: nofences
+          signing-policy-slug: release-signing
+          github-artifact-id: ${{ steps.unsigned.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: signed
+      - name: Take over signed exe
+        if: startsWith(github.ref, 'refs/tags/v') && env.SIGNPATH_API_TOKEN != ''
+        run: copy signed\NoFences.exe out\NoFences.exe
+
+      # Proves the file was built from exactly this commit:
+      # gh attestation verify NoFences.exe --repo hofergeorg-tech/NoFences
+      - uses: actions/attest-build-provenance@v2
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          subject-path: out/NoFences.exe
+
+      - name: Create release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          gh release create "$env:GITHUB_REF_NAME" out/NoFences.exe `
+            --title "NoFences $($env:GITHUB_REF_NAME.TrimStart('v'))" --generate-notes

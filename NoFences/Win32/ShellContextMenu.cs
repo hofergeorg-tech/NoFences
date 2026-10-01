@@ -1,3 +1,5 @@
+﻿#nullable disable
+#pragma warning disable CS9191
 using System;
 using System.Text;
 using System.Runtime.InteropServices;

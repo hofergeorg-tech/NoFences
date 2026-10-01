@@ -359,3 +359,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Release output of publish.ps1
+dist/
