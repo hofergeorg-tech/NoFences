@@ -43,6 +43,15 @@ namespace NoFences.Model
             saveTimer.Tick += (_, _) => SaveNow();
         }
 
+        /// <summary>Store in a given folder (tests).</summary>
+        public FenceStore(string dataDirectory)
+        {
+            DataDirectory = dataDirectory;
+            IsPortable = true;
+            Directory.CreateDirectory(DataDirectory);
+            saveTimer.Tick += (_, _) => SaveNow();
+        }
+
         public void Load()
         {
             if (File.Exists(ConfigPath))
@@ -138,7 +147,7 @@ namespace NoFences.Model
         private List<FenceInfo> LoadLegacyFences()
         {
             var result = new List<FenceInfo>();
-            var serializer = new XmlSerializer(typeof(FenceInfo));
+            var serializer = new XmlSerializer(typeof(LegacyFenceInfo), new XmlRootAttribute("FenceInfo"));
             foreach (var dir in Directory.EnumerateDirectories(DataDirectory))
             {
                 var metaFile = Path.Combine(dir, LegacyMetaFileName);
@@ -147,8 +156,8 @@ namespace NoFences.Model
                 try
                 {
                     using var reader = new StreamReader(metaFile);
-                    if (serializer.Deserialize(reader) is FenceInfo fence)
-                        result.Add(fence);
+                    if (serializer.Deserialize(reader) is LegacyFenceInfo old)
+                        result.Add(old.ToFenceInfo());
                 }
                 catch (Exception e)
                 {
@@ -156,6 +165,30 @@ namespace NoFences.Model
                 }
             }
             return result;
+        }
+
+        /// <summary>
+        /// Exactly the fields NoFences 1.x wrote. Kept separate from <see cref="FenceInfo"/>, which has
+        /// grown types XmlSerializer can't handle (dictionaries) — using it here crashed every first start.
+        /// </summary>
+        public class LegacyFenceInfo
+        {
+            public Guid Id { get; set; } = Guid.NewGuid();
+            public string Name { get; set; } = "";
+            public int PosX { get; set; }
+            public int PosY { get; set; }
+            public int Width { get; set; } = 300;
+            public int Height { get; set; } = 300;
+            public bool Locked { get; set; }
+            public bool CanMinify { get; set; }
+            public int TitleHeight { get; set; } = 35;
+            public List<string> Files { get; set; } = new();
+
+            public FenceInfo ToFenceInfo() => new()
+            {
+                Id = Id, Name = Name, PosX = PosX, PosY = PosY, Width = Width, Height = Height,
+                Locked = Locked, CanMinify = CanMinify, TitleHeight = TitleHeight, Files = Files
+            };
         }
 
         private static void TryCopy(string from, string to)

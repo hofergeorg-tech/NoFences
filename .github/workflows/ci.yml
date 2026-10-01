@@ -26,6 +26,9 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
+      - name: Tests
+        run: dotnet test NoFences.Tests/NoFences.Tests.csproj -c Debug
+
       - name: Build
         run: dotnet build NoFences/NoFences.csproj -c Release
 

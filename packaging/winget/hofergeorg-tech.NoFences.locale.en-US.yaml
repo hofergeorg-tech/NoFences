@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.9.0.schema.json
+PackageIdentifier: hofergeorg-tech.NoFences
+PackageVersion: {VERSION}
+PackageLocale: en-US
+Publisher: hofergeorg-tech
+PublisherUrl: https://github.com/hofergeorg-tech
+PackageName: NoFences
+PackageUrl: https://github.com/hofergeorg-tech/NoFences
+License: MIT
+LicenseUrl: https://github.com/hofergeorg-tech/NoFences/blob/main/LICENSE
+Copyright: Copyright (c) 2024 Twometer, (c) 2026 Georg Hofer
+ShortDescription: Free desktop fences, folder fences and sticky notes for Windows.
+Description: |-
+  NoFences organizes your desktop with fences: boxes that hold links, mirror a folder or contain
+  sticky notes. Auto-sorts new desktop files, 16 styles plus your own, snapping, layouts per
+  monitor setup and built-in updates. Fork of Twometer/NoFences.
+Tags:
+  - desktop
+  - fences
+  - organizer
+  - sticky-notes
+  - productivity
+ReleaseNotesUrl: https://github.com/hofergeorg-tech/NoFences/blob/main/CHANGELOG.md
+ManifestType: defaultLocale
+ManifestVersion: 1.9.0

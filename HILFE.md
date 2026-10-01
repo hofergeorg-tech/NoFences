@@ -28,12 +28,24 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 - Mit dem Mausrad scrollen, wenn ein Fence voll ist.
 - „Aus Fence entfernen“ (Verknüpfungs-Fences) entfernt nur den Verweis, nie die Datei.
 
+## Auswahl, Tastatur und Suche
+
+- **Strg+Klick** wählt mehrere Einträge, **Shift+Klick** einen Bereich; auf freier Fläche ziehen zeichnet ein
+  **Auswahlrechteck**. Ausgewählte Einträge lassen sich gemeinsam ziehen und per Rechtsklick bearbeiten.
+- Ein angeklickter Fence reagiert auf die Tastatur:
+  - **Enter** öffnet, **F2** benennt um, **Strg+C** kopiert, **Strg+A** wählt alles, Pfeiltasten bewegen die Auswahl.
+  - **Entf**: im Verknüpfungs-Fence wird nur der Verweis entfernt, im Ordner-Fence kommt die Datei in den Papierkorb.
+  - **Lostippen** sucht: Der Fence zeigt nur noch passende Einträge, das Suchwort steht oben rechts. **Esc** beendet die Suche.
+
 ## Notizen
 
 - **Doppelklick** auf die Notiz zum Schreiben; **Esc** oder ein Klick daneben speichert.
 - Zeilen, die mit `[ ]` beginnen, werden zu Kästchen. Ein Klick hakt sie ab (`[x]`) und streicht die Zeile durch.
 - Text, den du auf eine Notiz ziehst (z. B. aus dem Browser), wird unten angehängt.
-- Neue Notizen haben den Post-it-Style; jeder andere Style geht auch.
+- Webadressen und Pfade (z. B. `www.example.com`, `C:\Ordner\Datei.pdf`) werden unterstrichen und öffnen sich per Klick.
+- Fence-Menü → **Erinnerung…**: Zu der Zeit meldet sich NoFences mit Ton und Benachrichtigung; ein Klick darauf
+  holt die Notiz nach vorne. Solange eine Erinnerung gesetzt ist, steht die Uhrzeit oben rechts.
+- Neue Notizen haben den Post-it-Style (gelb); Rosa, Grün, Blau und Orange gibt es unter Fence-Menü → **Style**.
 - Neue Notizen und Fences erscheinen neben der Maus.
 - Fence-Menü → **Immer im Vordergrund** hält eine Notiz über allen Fenstern. Über Spielen klappt das nur im
   Modus „Randloses Fenster“, nicht im exklusiven Vollbild.
@@ -43,6 +55,10 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 - Titelleiste ziehen zum Verschieben, Ränder ziehen für die Größe.
 - **Gesperrte** Fences lassen sich nicht verschieben, nicht in der Größe ändern und nehmen nichts an.
 - **Einklappen wenn Maus weg** verkleinert den Fence auf die Titelleiste, bis du darauf zeigst.
+- Beim Verschieben und Größe ändern **rasten** Fences an Bildschirmrändern und an anderen Fences ein. Mit
+  gedrückter **Alt**-Taste platzierst du frei.
+- NoFences merkt sich die Positionen **pro Monitor-Setup**: Steckst du einen Monitor ab und wieder an, wandern
+  die Fences an ihren jeweiligen Platz zurück.
 
 ## Automatisch einsortieren
 
@@ -83,12 +99,19 @@ Größe (größte zuerst). Ordner stehen immer zuerst. Umsortieren per Ziehen ge
 
 ## Styles
 
-12 Styles: Standard (Glas), Star Citizen (HUD), Retro-Arcade, Hardware, Nerd, Hobby, Arbeit, Familie, Gaming,
-Finanzen, Social und Post-it.
+16 Styles: Standard (Glas), Star Citizen (HUD), Retro-Arcade, Hardware, Nerd, Hobby, Arbeit, Familie, Gaming,
+Finanzen, Social und Post-it in fünf Farben.
 
 - Tray → **Standard-Style** gilt für alle Fences.
 - Fence-Menü → **Style** überschreibt ihn für einen Fence.
 - Farbe und Deckkraft stellst du in den Fence-Einstellungen ein (Farbe nur beim Standard-Style).
+- Tray → **Animationen** schaltet sanftes Einklappen und die Hover-Effekte (Star Citizen, Gaming, Retro-Arcade) ein und aus.
+
+### Eigene Styles
+
+Tray → **Eigene Styles → Styles-Ordner öffnen**. Dort liegt `beispiel-mocha.json`: kopieren, umbenennen, Farben
+ändern (`#RRGGBB` oder `#RRGGBBAA`, wobei AA die Deckkraft ist), dann **Styles neu laden**. Eigene Styles stehen mit ★
+in der Style-Liste. Fehlerhafte Dateien meldet NoFences mit dem Grund.
 
 ## Einstellungen pro Fence
 
@@ -100,6 +123,8 @@ Hintergrundfarbe, Deckkraft, Einsortier-Muster, Gesperrt, Einklappen.
 - **Mit Windows starten** (auch in jedem Fence-Menü).
 - **Dateiendungen anzeigen**: wie im Explorer, immer oder nie.
 - **Konfigurationsordner öffnen**: dort liegen die Einstellungen.
+- **Sicherung wiederherstellen**: NoFences sichert die Einstellungen alle 12 Stunden (die letzten 10 bleiben).
+  Ein Klick auf eine Sicherung setzt alle Fences auf diesen Stand zurück und startet NoFences neu.
 - **Beenden**.
 
 ## Häufige Fragen

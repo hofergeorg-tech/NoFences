@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.9.0.schema.json
+PackageIdentifier: hofergeorg-tech.NoFences
+PackageVersion: {VERSION}
+InstallerType: portable
+Commands:
+  - nofences
+MinimumOSVersion: 10.0.17763.0
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/hofergeorg-tech/NoFences/releases/download/v{VERSION}/NoFences.exe
+    InstallerSha256: {SHA256}
+ManifestType: installer
+ManifestVersion: 1.9.0

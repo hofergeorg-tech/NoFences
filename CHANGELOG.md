@@ -3,6 +3,29 @@
 All notable changes to this fork. Format based on [Keep a Changelog](https://keepachangelog.com/),
 versions follow [Semantic Versioning](https://semver.org/). German version: [CHANGELOG.de.md](CHANGELOG.de.md).
 
+## [2.3.0] - 2026-10-02
+
+### Added
+- **Multi-select**: Ctrl/Shift-click and rubber band selection; drag, reorder and the Explorer menu work on
+  several items.
+- **Keyboard**: Enter opens, Delete removes links (folder fences: recycle bin), F2 renames, Ctrl+A, Ctrl+C,
+  arrow keys, Esc. Clicked fences take the keyboard focus but stay behind other windows.
+- **Search**: just type while a fence is focused; the search shows top right, Esc clears it.
+- **Snapping** to screen edges and other fences while moving or resizing; hold Alt to place freely.
+- **Layouts per monitor setup**: fences go back to where they were for the current screens (e.g. docked/undocked).
+- **Backups** of the configuration every 12 hours (last 10 kept); tray → "Restore backup".
+- **Note reminders** (fence menu → Reminder…) as a notification with sound; the time shows in the title.
+- **Links in notes** (web addresses, paths) are underlined and open on click.
+- **Post-it colors**: yellow, pink, green, blue and orange.
+- **Animations**: smooth collapsing; hover effects for Star Citizen, Gaming and Retro-Arcade. Tray → Animations.
+- **Own styles** as JSON files in the `themes` folder (an example is created); tray → Own styles.
+- Automatic tests (45) run on every push; winget manifests prepared in `packaging/winget`.
+
+### Fixed
+- Tabs in notes are drawn with the same tab stops as in the editor.
+- A collapsed Post-it kept only a thin line instead of its title.
+- Post-its could not be resized (the handles were on the clear margin, which doesn't receive clicks).
+
 ## [2.2.0] - 2026-10-01
 
 ### Added
@@ -83,6 +106,7 @@ First release of this fork. Rewritten on .NET 10; based on
 
 Original NoFences by Twometer, see [Twometer/NoFences](https://github.com/Twometer/NoFences).
 
+[2.3.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.3.0
 [2.2.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.2.0
 [2.1.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.1.0
 [2.0.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.0.0

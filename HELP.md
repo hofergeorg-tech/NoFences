@@ -27,12 +27,24 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
 - Mouse wheel scrolls when a fence is full.
 - "Remove from fence" (link fences) only removes the link, never the file.
 
+## Selection, keyboard and search
+
+- **Ctrl+click** selects several items, **Shift+click** a range; dragging on empty space draws a
+  **selection rectangle**. Selected items can be dragged together and handled with a right-click.
+- A clicked fence listens to the keyboard:
+  - **Enter** opens, **F2** renames, **Ctrl+C** copies, **Ctrl+A** selects all, arrow keys move the selection.
+  - **Delete**: in a link fence only the link is removed, in a folder fence the file goes to the recycle bin.
+  - **Just type** to search: the fence shows matching items only, the search text appears top right. **Esc** ends it.
+
 ## Notes
 
 - **Double-click** a note to write; **Esc** or a click outside saves.
 - Lines starting with `[ ]` become checkboxes. A click ticks them (`[x]`) and strikes the line through.
 - Text you drag onto a note (e.g. from a browser) is appended at the bottom.
-- New notes use the Post-it style; any other style works too.
+- Web addresses and paths (e.g. `www.example.com`, `C:\Folder\File.pdf`) are underlined and open on click.
+- Fence menu → **Reminder…**: at that time NoFences plays a sound and shows a notification; clicking it brings the
+  note to the front. While a reminder is set, its time shows top right.
+- New notes use the Post-it style (yellow); pink, green, blue and orange are under fence menu → **Style**.
 - New notes and fences appear next to the mouse.
 - Fence menu → **Always on top** keeps a note above all windows. Over games this only works in
   "borderless window" mode, not in exclusive full screen.
@@ -42,6 +54,9 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
 - Drag the title bar to move a fence, drag the edges to resize.
 - **Locked** fences can't be moved, resized or dropped onto.
 - **Collapse when not hovered** shrinks the fence to its title bar until you point at it.
+- While moving or resizing, fences **snap** to screen edges and to other fences. Hold **Alt** to place freely.
+- NoFences remembers positions **per monitor setup**: unplug a monitor and plug it back in, and the fences
+  return to their places.
 
 ## Auto-sort
 
@@ -82,12 +97,19 @@ Folders always come first. Reordering by dragging only works in manual mode.
 
 ## Styles
 
-12 styles: Standard (glass), Star Citizen (HUD), Retro-Arcade, Hardware, Nerd, Hobby, Work, Family, Gaming,
-Finance, Social and Post-it.
+16 styles: Standard (glass), Star Citizen (HUD), Retro-Arcade, Hardware, Nerd, Hobby, Work, Family, Gaming,
+Finance, Social and Post-it in five colors.
 
 - Tray → **Default style** sets the style for all fences.
 - Fence menu → **Style** overrides it for one fence.
 - Color and opacity are set in the fence settings (color only for the Standard style).
+- Tray → **Animations** turns smooth collapsing and the hover effects (Star Citizen, Gaming, Retro-Arcade) on and off.
+
+### Own styles
+
+Tray → **Own styles → Open styles folder**. It contains `beispiel-mocha.json`: copy it, rename it, change the colors
+(`#RRGGBB` or `#RRGGBBAA`, AA being the opacity), then **Reload styles**. Own styles are marked with ★ in the
+style list. NoFences reports broken files with the reason.
 
 ## Settings per fence
 
@@ -99,6 +121,8 @@ color, opacity, auto-sort patterns, locked, collapse.
 - **Start with Windows** (also in every fence menu).
 - **Show file extensions**: like Explorer, always or never.
 - **Open config folder**: where the settings are stored.
+- **Restore backup**: NoFences backs up the settings every 12 hours (the last 10 are kept). Clicking a backup
+  puts all fences back to that state and restarts NoFences.
 - **Exit**.
 
 ## FAQ

@@ -2,6 +2,29 @@
 
 Alle wichtigen Änderungen an diesem Fork. English version: [CHANGELOG.md](CHANGELOG.md).
 
+## [2.3.0] - 2026-10-02
+
+### Neu
+- **Mehrfachauswahl**: Strg-/Shift-Klick und Auswahlrechteck; Ziehen, Umsortieren und das Explorer-Menü
+  funktionieren mit mehreren Einträgen.
+- **Tastatur**: Enter öffnet, Entf entfernt Verknüpfungen (Ordner-Fences: Papierkorb), F2 benennt um, Strg+A,
+  Strg+C, Pfeiltasten, Esc. Angeklickte Fences bekommen den Tastatur-Fokus, bleiben aber hinter anderen Fenstern.
+- **Suche**: einfach tippen, wenn ein Fence aktiv ist; die Suche steht oben rechts, Esc löscht sie.
+- **Einrasten** an Bildschirmrändern und anderen Fences beim Verschieben und Größe ändern; mit Alt frei platzieren.
+- **Layouts pro Monitor-Setup**: Fences kehren an ihren Platz für die aktuellen Bildschirme zurück (z. B. Laptop an/ab Dock).
+- **Sicherungen** der Konfiguration alle 12 Stunden (die letzten 10 bleiben); Tray → „Sicherung wiederherstellen“.
+- **Erinnerungen für Notizen** (Fence-Menü → Erinnerung…) als Benachrichtigung mit Ton; die Uhrzeit steht im Titel.
+- **Links in Notizen** (Webadressen, Pfade) sind unterstrichen und öffnen sich per Klick.
+- **Post-it-Farben**: Gelb, Rosa, Grün, Blau und Orange.
+- **Animationen**: sanftes Ein-/Ausklappen; Hover-Effekte bei Star Citizen, Gaming und Retro-Arcade. Tray → Animationen.
+- **Eigene Styles** als JSON-Dateien im Ordner `themes` (ein Beispiel wird angelegt); Tray → Eigene Styles.
+- Automatische Tests (45) laufen bei jedem Push; winget-Paketbeschreibung vorbereitet in `packaging/winget`.
+
+### Behoben
+- Tabs in Notizen werden mit denselben Tab-Stopps gezeichnet wie im Editor.
+- Ein eingeklapptes Post-it zeigte nur einen Strich statt des Titels.
+- Post-its ließen sich nicht in der Größe ändern (die Ziehzonen lagen im durchsichtigen Rand, der keine Klicks bekommt).
+
 ## [2.2.0] - 2026-10-01
 
 ### Neu
@@ -83,6 +106,7 @@ Erste Version dieses Forks. Neu aufgebaut auf .NET 10, basierend auf
 
 Original-NoFences von Twometer, siehe [Twometer/NoFences](https://github.com/Twometer/NoFences).
 
+[2.3.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.3.0
 [2.2.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.2.0
 [2.1.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.1.0
 [2.0.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.0.0

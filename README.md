@@ -23,7 +23,10 @@ Free, open-source desktop fences for Windows 10/11.
 - Built-in updates from GitHub releases with one click.
 - Reorder items by drag & drop, drag items between fences or out to Explorer.
 - Shell thumbnails (images, videos, PDFs …) and selectable icon size (24–96 px).
-- **12 styles**, globally or per fence (see below).
+- **16 styles** plus your own as JSON files, globally or per fence (see below); optional animations.
+- Multi-select, keyboard shortcuts (Enter, Delete, F2, Ctrl+A/C, arrows) and type-to-search.
+- Snapping, positions remembered per monitor setup, automatic config backups with restore.
+- Note reminders and clickable links in notes.
 - Auto-collapse to the title bar, lock, background color/opacity, title height.
 - Tray icon: new fence, show/hide all fences, autostart, file extensions, exit.
 - Per-monitor DPI aware; fences that end up off-screen are moved back.
@@ -39,7 +42,8 @@ See [CHANGELOG.md](CHANGELOG.md) ([Deutsch](CHANGELOG.de.md)) for all changes.
 ![All styles](docs/styles.png)
 
 Standard (glass) · Star Citizen (HUD) · Retro-Arcade · Hardware (circuit board) · Nerd (terminal) ·
-Hobby (pinboard) · Work (business) · Family · Gaming (RGB) · Finance (trading desk) · Social · Post-it
+Hobby (pinboard) · Work (business) · Family · Gaming (RGB) · Finance (trading desk) · Social ·
+Post-it (yellow, pink, green, blue, orange) · plus own styles (★, see the help)
 
 ![Sticky notes](docs/notes.png)
 
