@@ -103,6 +103,12 @@ namespace NoFences.Util
         public static string UpdateFailed(string reason) => T($"The update failed: {reason}\nThe download page will open instead.",
                                                               $"Das Update ist fehlgeschlagen: {reason}\nStattdessen öffnet sich die Download-Seite.");
         public static string UpdateCheckFailed => T("Could not reach GitHub to check for updates.", "GitHub war für die Update-Prüfung nicht erreichbar.");
+        public static string Animations => T("Animations", "Animationen");
+        public static string CustomThemes => T("Own styles", "Eigene Styles");
+        public static string OpenThemesFolder => T("Open styles folder", "Styles-Ordner öffnen");
+        public static string ReloadThemes => T("Reload styles", "Styles neu laden");
+        public static string ThemesLoaded(int n) => T($"{n} own style(s) loaded.", $"{n} eigene(r) Style(s) geladen.");
+        public static string ThemeErrors(string details) => T($"Some styles could not be loaded:\n{details}", $"Einige Styles konnten nicht geladen werden:\n{details}");
         public static string RestoreBackup => T("Restore backup", "Sicherung wiederherstellen");
         public static string NoBackups => T("No backups yet", "Noch keine Sicherungen");
         public static string ConfirmRestore(DateTime time) => T($"Restore all fences as they were on {time:g}?\nNoFences restarts; the current state is kept as a backup too.",

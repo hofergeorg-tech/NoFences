@@ -8,6 +8,8 @@ namespace NoFences
     {
         bool ShowExtensions { get; }
 
+        bool Animations { get; }
+
         FenceTheme ThemeFor(FenceInfo info);
 
         void RequestSave();

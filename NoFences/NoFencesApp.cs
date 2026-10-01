@@ -20,9 +20,12 @@ namespace NoFences
 
         public bool ShowExtensions => Store.Config.ShowExtensions ?? SystemSettings.ExplorerShowsExtensions;
 
+        public bool Animations => Store.Config.Animations;
+
         public NoFencesApp()
         {
             Store.Load();
+            var themeErrors = LoadCustomThemesQuiet().Errors;
             var firstStart = Store.Config.Fences.Count == 0;
             foreach (var info in Store.Config.Fences)
                 OpenWindow(info);
@@ -47,6 +50,8 @@ namespace NoFences
             InitUpdates();
             InitReminders();
             InitBackupsAndScreens();
+            if (themeErrors.Count > 0)
+                ShowBalloon(Strings.ThemeErrors(string.Join("\n", themeErrors)), timeout: 10_000);
 
             if (firstStart)
                 ShowBalloon(Strings.FirstStartHint, timeout: 8000);
@@ -254,6 +259,7 @@ namespace NoFences
                 }) { Checked = ThemeRegistry.Get(Store.Config.Theme) == t });
             }
             menu.Items.Add(style);
+            AddThemeItems(menu.Items);
 
             var ext = new ToolStripMenuItem(Strings.ShowExtensions);
             void ExtOption(string text, bool? value) => ext.DropDownItems.Add(new ToolStripMenuItem(text, null, (_, _) =>

@@ -70,6 +70,7 @@ namespace NoFences
             refreshTimer.Tick += (_, _) => { refreshTimer.Stop(); ReloadEntries(); };
             linkPollTimer.Tick += (_, _) => { if (Info.Kind == FenceKind.Links) ReloadEntries(); };
             IconCache.Shared.ImageLoaded += IconCache_ImageLoaded;
+            InitAnimations();
         }
 
         protected override bool ShowWithoutActivation => true;
@@ -348,6 +349,8 @@ namespace NoFences
                 DrawInsertMarker(g);
             DrawBand(g);
             DrawSearch(g);
+            g.SetClip(ClientRectangle);
+            DrawHoverAnimation(g);
 
             if (MaxScroll > 0)
             {
@@ -537,7 +540,7 @@ namespace NoFences
             collapsed = true;
             hoverPath = null;
             collapseTimer.Stop();
-            SetHeightSilently(CollapsedHeight);
+            AnimateHeight(CollapsedHeight);
             Invalidate();
         }
 
@@ -546,7 +549,7 @@ namespace NoFences
             if (!collapsed)
                 return;
             collapsed = false;
-            SetHeightSilently(Math.Max(Info.Height, titleHeight + Px(40)));
+            AnimateHeight(Math.Max(Info.Height, titleHeight + Px(40)));
             Relayout();
             Invalidate();
             collapseTimer.Start();
@@ -624,6 +627,7 @@ namespace NoFences
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
+            HoverStarted();
             if (collapsed && Info.CanMinify)
                 Expand();
             if (IsNote)
@@ -1071,6 +1075,7 @@ namespace NoFences
                 labelFormat.Dispose();
                 labelFormatSingleLine.Dispose();
                 DisposeNote();
+                DisposeAnimations();
                 shellContextMenu.DestroyHandle();
             }
             base.Dispose(disposing);

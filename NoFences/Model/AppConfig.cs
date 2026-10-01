@@ -22,6 +22,9 @@ namespace NoFences.Model
         /// <summary>Look for new releases on GitHub at startup and every few hours.</summary>
         public bool CheckForUpdates { get; set; } = true;
 
+        /// <summary>Smooth collapsing and the styles' hover effects.</summary>
+        public bool Animations { get; set; } = true;
+
         /// <summary>Shortcut that brings all fences to the front: see <see cref="PeekHotkeys"/>.</summary>
         public string PeekHotkey { get; set; } = "Ctrl+Alt+D";
 

@@ -82,6 +82,22 @@ namespace NoFences.Themes
                 g.FillRectangle(pip, bounds.X + 9 * s, bounds.Y + titleHeight / 2f - 2.5f * s, 5 * s, 5 * s);
         }
 
+        public override bool AnimatesOnHover => true;
+
+        /// <summary>A scan line sweeping down the panel every 2.5 seconds.</summary>
+        public override void DrawHoverEffect(Graphics g, Rectangle bounds, int titleHeight, float t, float s)
+        {
+            var body = bounds.Height - titleHeight;
+            if (body < 10)
+                return;
+            var y = bounds.Y + titleHeight + (t % 2.5f) / 2.5f * body;
+            var glow = new RectangleF(bounds.X, y - 14 * s, bounds.Width, 14 * s);
+            using (var brush = new LinearGradientBrush(glow, Color.FromArgb(0, Cyan), Color.FromArgb(45, Cyan), LinearGradientMode.Vertical))
+                g.FillRectangle(brush, glow);
+            using var pen = new Pen(Color.FromArgb(150, Cyan), Math.Max(1, s));
+            g.DrawLine(pen, bounds.X + 2 * s, y, bounds.Right - 2 * s, y);
+        }
+
         public override void DrawTitle(Graphics g, Rectangle titleRect, string text, Font font, float s)
         {
             var rect = new RectangleF(titleRect.X + 20 * s, titleRect.Y, titleRect.Width - 60 * s, titleRect.Height);

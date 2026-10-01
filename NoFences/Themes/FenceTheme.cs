@@ -35,6 +35,12 @@ namespace NoFences.Themes
         /// </summary>
         public virtual Padding SurfaceInsets => Padding.Empty;
 
+        /// <summary>Whether <see cref="DrawHoverEffect"/> animates while the mouse is over the fence.</summary>
+        public virtual bool AnimatesOnHover => false;
+
+        /// <summary>Animated overlay while hovered; <paramref name="t"/> = seconds since the mouse entered.</summary>
+        public virtual void DrawHoverEffect(Graphics g, Rectangle bounds, int titleHeight, float t, float s) { }
+
         /// <summary>Collapsed height on top of the title height (logical px), so margins don't eat the title.</summary>
         public virtual int CollapsedExtra => 0;
 

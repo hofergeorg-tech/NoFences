@@ -16,6 +16,7 @@ namespace NoFences
         private sealed class Host : IFenceHost
         {
             public bool ShowExtensions => false;
+            public bool Animations => false;
             public FenceTheme ThemeFor(FenceInfo info) => ThemeRegistry.Get(info.Theme);
             public void RequestSave() { }
             public void CreateFence(FenceKind kind, string? name = null) { }
@@ -26,6 +27,8 @@ namespace NoFences
         public static void Run(string outDir)
         {
             Directory.CreateDirectory(outDir);
+            // Show what a user style from a JSON file looks like, too.
+            ThemeRegistry.SetCustom(new[] { JsonTheme.Parse(JsonTheme.ExampleJson, "example") });
             var samples = CreateSampleFiles(Path.Combine(Path.GetTempPath(), "NoFencesPreview"));
             var host = new Host();
             const int w = 340, h = 270, gap = 24, columns = 4;

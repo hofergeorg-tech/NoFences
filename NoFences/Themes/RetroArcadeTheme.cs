@@ -70,6 +70,22 @@ namespace NoFences.Themes
             g.SmoothingMode = oldMode;
         }
 
+        public override bool AnimatesOnHover => true;
+
+        /// <summary>Blinking "INSERT COIN" at the bottom, like an attract screen.</summary>
+        public override void DrawHoverEffect(Graphics g, Rectangle bounds, int titleHeight, float t, float s)
+        {
+            if (bounds.Height - titleHeight < 60 * s || (int)(t * 2) % 2 == 1)
+                return;
+            using var font = CreateFont(new[] { "Press Start 2P", "Consolas" }, 10 * s, FontStyle.Bold, GraphicsUnit.Pixel);
+            using var format = new StringFormat { Alignment = StringAlignment.Center };
+            var rect = new RectangleF(bounds.X, bounds.Bottom - 22 * s, bounds.Width, 16 * s);
+            var old = g.TextRenderingHint;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
+            DrawShadowedString(g, "INSERT COIN", font, Yellow, Magenta, rect, format, Px(s));
+            g.TextRenderingHint = old;
+        }
+
         public override void DrawTitle(Graphics g, Rectangle titleRect, string text, Font font, float s)
         {
             var oldHint = g.TextRenderingHint;

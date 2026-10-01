@@ -84,6 +84,22 @@ namespace NoFences.Themes
                 g.DrawRectangle(edge, r.X, r.Y, r.Width, r.Height);
         }
 
+        public override bool AnimatesOnHover => true;
+
+        /// <summary>RGB light running around the edge.</summary>
+        public override void DrawHoverEffect(Graphics g, Rectangle bounds, int titleHeight, float t, float s)
+        {
+            var r = new RectangleF(bounds.X + 1 * s, bounds.Y + 1 * s, bounds.Width - 2.5f * s, bounds.Height - 2.5f * s);
+            using var brush = new LinearGradientBrush(bounds, Red, Cyan, (t * 120) % 360);
+            brush.InterpolationColors = new ColorBlend
+            {
+                Colors = new[] { Red, Purple, Blue, Cyan, Red },
+                Positions = new[] { 0f, 0.25f, 0.5f, 0.75f, 1f }
+            };
+            using var pen = new Pen(brush, 3 * s);
+            g.DrawRectangle(pen, r.X, r.Y, r.Width, r.Height);
+        }
+
         public override void DrawTitle(Graphics g, Rectangle titleRect, string text, Font font, float s)
         {
             using var format = TitleFormat();
