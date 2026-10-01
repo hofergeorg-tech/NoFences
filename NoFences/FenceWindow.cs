@@ -565,6 +565,7 @@ namespace NoFences
         protected override void OnMove(EventArgs e)
         {
             base.OnMove(e);
+            LayoutEditor();
             if (suppressBoundsSave || !IsHandleCreated)
                 return;
             Info.PosX = Left;

@@ -15,6 +15,7 @@ namespace NoFences
         private Font? noteFontDone;
         private Font? checkFont;
         private RichTextBox? editor;
+        private Form? editorHost;
         private readonly List<(RectangleF box, int line)> checkboxes = new(); // content coordinates
         private readonly StringFormat noteFormat = new() { Alignment = StringAlignment.Near, Trimming = StringTrimming.None };
 
@@ -122,8 +123,9 @@ namespace NoFences
             if (collapsed)
                 Expand();
 
-            // RichTextBox instead of TextBox: in Windows dark mode a TextBox ignores our colors
-            // (white text on a white box), the rich edit control keeps them.
+            // The editor lives in its own small, normal window laid exactly over the note. Inside the
+            // fence it can't work: the fence's transparency (glass/clear accent) drops the alpha of
+            // classic controls, so text and background come out white/see-through whatever the colors.
             var (back, fore) = theme.EditorColors;
             editor = new RichTextBox
             {
@@ -136,9 +138,12 @@ namespace NoFences
                 Font = noteFont,
                 BackColor = back,
                 ForeColor = fore,
-                Bounds = NoteArea,
+                Dock = DockStyle.Fill,
                 Text = Info.NoteText
             };
+            editorHost = new EditorHost { BackColor = back };
+            editorHost.Controls.Add(editor);
+            editorHost.Deactivate += (_, _) => BeginInvoke(EndEditNote);
             ApplyEditorColors(editor);
             editor.HandleCreated += (_, _) => ApplyEditorColors(editor);
             editor.KeyDown += (_, e) =>
@@ -157,15 +162,35 @@ namespace NoFences
                     ApplyEditorColors(editor!);
                 }
             };
-            editor.LostFocus += (_, _) => BeginInvoke(EndEditNote);
-            Controls.Add(editor);
-
-            // Fences normally refuse focus; while editing they must take it.
-            Activate();
-            Native.SetForegroundWindowSafe(Handle);
+            LayoutEditor();
+            editorHost.Show(this);
+            editorHost.Activate();
+            Native.SetForegroundWindowSafe(editorHost.Handle);
             editor.Focus();
             editor.SelectionStart = editor.TextLength;
             Invalidate();
+        }
+
+        /// <summary>Borderless, opaque window that carries the note editor.</summary>
+        private sealed class EditorHost : Form
+        {
+            public EditorHost()
+            {
+                FormBorderStyle = FormBorderStyle.None;
+                ShowInTaskbar = false;
+                StartPosition = FormStartPosition.Manual;
+                AutoScaleMode = AutoScaleMode.None;
+            }
+
+            protected override CreateParams CreateParams
+            {
+                get
+                {
+                    var cp = base.CreateParams;
+                    cp.ExStyle |= Native.WS_EX_TOOLWINDOW; // no Alt+Tab entry
+                    return cp;
+                }
+            }
         }
 
         /// <summary>Forces font and colors on the whole text and on what will be typed next.</summary>
@@ -189,10 +214,11 @@ namespace NoFences
             if (editor == null)
                 return;
             var text = editor.Text.Replace("\r\n", "\n").TrimEnd();
-            var box = editor;
+            var host = editorHost;
             editor = null;
-            Controls.Remove(box);
-            box.Dispose();
+            editorHost = null;
+            host?.Close();
+            host?.Dispose();
 
             if (text != Info.NoteText)
             {
@@ -204,10 +230,13 @@ namespace NoFences
             Invalidate();
         }
 
+        /// <summary>Keeps the editor window exactly over the note area (after moving/resizing the fence).</summary>
         private void LayoutEditor()
         {
-            if (editor != null)
-                editor.Bounds = NoteArea;
+            if (editorHost == null || !IsHandleCreated)
+                return;
+            var area = NoteArea;
+            editorHost.Bounds = new Rectangle(PointToScreen(area.Location), area.Size);
         }
 
         /// <summary>Text dropped onto a note is appended as a new line.</summary>
@@ -223,7 +252,7 @@ namespace NoFences
 
         private void DisposeNote()
         {
-            editor?.Dispose();
+            editorHost?.Dispose();
             noteFont?.Dispose();
             noteFontDone?.Dispose();
             checkFont?.Dispose();
