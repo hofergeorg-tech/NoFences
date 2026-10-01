@@ -672,6 +672,8 @@ namespace NoFences
             menu.Items.Add(Strings.NewFence, null, (_, _) => app.CreateFence(FenceKind.Links));
             menu.Items.Add(Strings.NewFolderFence, null, (_, _) => app.CreateFence(FenceKind.Folder));
             menu.Items.Add(new ToolStripSeparator());
+            menu.Items.Add(new ToolStripMenuItem(Strings.Autostart, null, (_, _) => NoFencesApp.ToggleAutostart()) { Checked = SystemSettings.AutostartEnabled });
+            menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(Strings.DeleteFence, null, (_, _) => ConfirmDelete());
 
             appMenuOpen = true;

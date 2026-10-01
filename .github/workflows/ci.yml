@@ -82,5 +82,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: pwsh
         run: |
+          # Release notes = this version's section of CHANGELOG.md
+          $version = $env:GITHUB_REF_NAME.TrimStart('v')
+          $changelog = Get-Content CHANGELOG.md -Raw
+          $match = [regex]::Match($changelog, "(?ms)^## \[$([regex]::Escape($version))\][^\n]*\n(.*?)(?=^## \[|\z)")
+          if (-not $match.Success) { throw "No section for $version in CHANGELOG.md" }
+          $match.Groups[1].Value.Trim() | Set-Content notes.md -Encoding utf8
           gh release create "$env:GITHUB_REF_NAME" out/NoFences.exe `
-            --title "NoFences $($env:GITHUB_REF_NAME.TrimStart('v'))" --generate-notes
+            --title "NoFences $version" --notes-file notes.md

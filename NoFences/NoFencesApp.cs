@@ -63,6 +63,18 @@ namespace NoFences
             windows.FirstOrDefault(w => w.Info == info)?.ReloadEntries();
         }
 
+        public static void ToggleAutostart()
+        {
+            try
+            {
+                SystemSettings.AutostartEnabled = !SystemSettings.AutostartEnabled;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "NoFences");
+            }
+        }
+
         private void SortDesktopNow()
         {
             if (!Store.Config.Fences.Any(f => !string.IsNullOrWhiteSpace(f.AutoSortPatterns)))
@@ -180,11 +192,7 @@ namespace NoFences
             ExtOption(Strings.ExtNever, false);
             menu.Items.Add(ext);
 
-            menu.Items.Add(new ToolStripMenuItem(Strings.Autostart, null, (_, _) =>
-            {
-                try { SystemSettings.AutostartEnabled = !SystemSettings.AutostartEnabled; }
-                catch (Exception e) { MessageBox.Show(e.Message, "NoFences"); }
-            }) { Checked = SystemSettings.AutostartEnabled });
+            menu.Items.Add(new ToolStripMenuItem(Strings.Autostart, null, (_, _) => ToggleAutostart()) { Checked = SystemSettings.AutostartEnabled });
 
             menu.Items.Add(Strings.OpenDataFolder, null, (_, _) =>
                 Process.Start(new ProcessStartInfo(Store.DataDirectory) { UseShellExecute = true }));

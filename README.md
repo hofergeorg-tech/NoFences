@@ -27,6 +27,8 @@ Free, open-source desktop fences for Windows 10/11.
 
 Right-click a fence for its menu; right-click an item for the Explorer menu (Shift + right-click for the fence menu).
 
+See [CHANGELOG.md](CHANGELOG.md) ([Deutsch](CHANGELOG.de.md)) for all changes.
+
 ## Build
 
 Requires the [.NET 10 SDK](https://dotnet.microsoft.com/download).
