@@ -106,6 +106,23 @@ namespace NoFences
                 g.Restore(state);
             }
             sheet.Save(Path.Combine(outDir, "notes.png"), ImageFormat.Png);
+
+            // Collapsed notes (only the title should remain, on paper)
+            using var strip = new Bitmap(3 * (w + gap) + gap, 120, PixelFormat.Format32bppArgb);
+            using var sg = Graphics.FromImage(strip);
+            DrawBackdrop(sg, new Rectangle(Point.Empty, strip.Size));
+            for (var i = 0; i < 3; i++)
+            {
+                var info = new FenceInfo { Name = "Einkaufsliste", Kind = FenceKind.Note, Theme = themes[i * 2], NoteText = text, TitleHeight = 30, CanMinify = true };
+                using var window = new FenceWindow(host, info) { Size = new Size(w, h) };
+                window.ApplySettings();
+                window.CollapseForPreview();
+                var state = sg.Save();
+                sg.TranslateTransform(gap + i * (w + gap), gap);
+                window.PaintFence(sg);
+                sg.Restore(state);
+            }
+            strip.Save(Path.Combine(outDir, "notes-collapsed.png"), ImageFormat.Png);
         }
 
         /// <summary>A neutral "wallpaper" that is neither too dark nor too light, so every style shows.</summary>

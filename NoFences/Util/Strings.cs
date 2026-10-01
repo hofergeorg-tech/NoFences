@@ -103,6 +103,10 @@ namespace NoFences.Util
         public static string UpdateFailed(string reason) => T($"The update failed: {reason}\nThe download page will open instead.",
                                                               $"Das Update ist fehlgeschlagen: {reason}\nStattdessen öffnet sich die Download-Seite.");
         public static string UpdateCheckFailed => T("Could not reach GitHub to check for updates.", "GitHub war für die Update-Prüfung nicht erreichbar.");
+        public static string Rename => T("Rename", "Umbenennen");
+        public static string NewName => T("New name:", "Neuer Name:");
+        public static string RenameFailed(string reason) => T($"Could not rename: {reason}", $"Umbenennen nicht möglich: {reason}");
+        public static string Search => T("Search", "Suche");
         public static string Reminder => T("Reminder…", "Erinnerung…");
         public static string ReminderTitle => T("Remind me", "Erinnern");
         public static string ReminderIn1h => T("In 1 hour", "In 1 Stunde");

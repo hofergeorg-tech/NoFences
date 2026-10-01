@@ -66,6 +66,11 @@ namespace NoFences.Themes
         // Paper ends above the clear shadow margin.
         public override int BottomInset => (int)BottomMargin + 4;
 
+        public override Padding SurfaceInsets => new((int)Margin, (int)TopMargin, (int)Margin, (int)BottomMargin);
+
+        // Collapsed, the paper still needs room for the title between the tape and shadow margins.
+        public override int CollapsedExtra => (int)(TopMargin + BottomMargin);
+
         public override Color HintColor => Color.FromArgb(140, Ink);
 
         public override (Color Back, Color Fore) EditorColors => (Blend(Top, Bottom, 0.3f), Ink);

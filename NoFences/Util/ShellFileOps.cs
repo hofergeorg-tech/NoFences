@@ -31,7 +31,12 @@ namespace NoFences.Util
 
         public static bool Copy(IWin32Window owner, IEnumerable<string> sources, string targetDir) => Run(owner, FO_COPY, sources, targetDir);
 
-        private static bool Run(IWin32Window owner, uint func, IEnumerable<string> sources, string targetDir)
+        /// <summary>Moves files to the recycle bin (Explorer asks for confirmation as usual).</summary>
+        public static bool Recycle(IWin32Window owner, IEnumerable<string> paths) => Run(owner, FO_DELETE, paths, null);
+
+        private const uint FO_DELETE = 0x0003;
+
+        private static bool Run(IWin32Window owner, uint func, IEnumerable<string> sources, string? targetDir)
         {
             var from = string.Join("\0", sources) + "\0\0";
             var op = new SHFILEOPSTRUCT
@@ -39,7 +44,7 @@ namespace NoFences.Util
                 hwnd = owner.Handle,
                 wFunc = func,
                 pFrom = from,
-                pTo = targetDir + "\0\0",
+                pTo = targetDir == null ? null : targetDir + "\0\0",
                 fFlags = FOF_ALLOWUNDO
             };
             return SHFileOperation(ref op) == 0 && !op.fAnyOperationsAborted;

@@ -38,7 +38,6 @@ namespace NoFences
         private int scrollOffset;
 
         private string? hoverPath;
-        private string? selectedPath;
         private Point? mouseDownAt;
         private string? mouseDownPath;
         private int insertIndex = -1;
@@ -132,7 +131,7 @@ namespace NoFences
 
             SetupWatcher();
             if (collapsed)
-                SetHeightSilently(titleHeight);
+                SetHeightSilently(CollapsedHeight);
             Relayout();
             Invalidate();
         }
@@ -145,7 +144,8 @@ namespace NoFences
                 LoadFolderEntries();
             else
                 entries = Info.Files.Select(FenceEntry.FromPath).OfType<FenceEntry>().ToList();
-            entries = FenceEntry.Sort(entries, Info.SortMode);
+            entries = ApplySearch(FenceEntry.Sort(entries, Info.SortMode));
+            selection.RemoveWhere(p => !entries.Any(e => e.Path.Equals(p, StringComparison.OrdinalIgnoreCase)));
 
             if (hoverPath != null && !entries.Any(x => x.Path == hoverPath))
                 hoverPath = null;
@@ -325,7 +325,7 @@ namespace NoFences
                     continue;
 
                 var entry = entries[i];
-                theme.DrawItemBackground(g, r, entry.Path == hoverPath, entry.Path == selectedPath, scale);
+                theme.DrawItemBackground(g, r, entry.Path == hoverPath, IsSelected(entry.Path), scale);
 
                 var icon = IconCache.Shared.Get(entry.Path, iconPx);
                 if (icon != null)
@@ -346,6 +346,8 @@ namespace NoFences
 
             if (insertIndex >= 0)
                 DrawInsertMarker(g);
+            DrawBand(g);
+            DrawSearch(g);
 
             if (MaxScroll > 0)
             {
@@ -405,16 +407,10 @@ namespace NoFences
                     m.Result = IntPtr.Zero;
                     return;
 
-                case Native.WM_MOUSEACTIVATE:
-                    // Clicking a fence must not bring it in front of other windows (except while typing a note).
-                    if (Editing)
-                        break;
-                    m.Result = new IntPtr(Native.MA_NOACTIVATE);
-                    return;
-
                 case Native.WM_SETFOCUS:
-                    if (Editing)
-                        break;
+                    // A clicked fence takes keyboard focus (selection, search, shortcuts) like the desktop
+                    // does, but must not come in front of other windows.
+                    base.WndProc(ref m);
                     if (!OnTop)
                         Native.SendToBottom(Handle);
                     return;
@@ -484,6 +480,12 @@ namespace NoFences
             }
         }
 
+        /// <summary>Used by the preview renderer to show the collapsed look.</summary>
+        internal void CollapseForPreview() => Collapse();
+
+        /// <summary>Height of a collapsed fence: the title, plus whatever margin the theme draws around it.</summary>
+        private int CollapsedHeight => titleHeight + Px(theme.CollapsedExtra);
+
         private int HitTest(Point pt, int current)
         {
             if (collapsed && Info.CanMinify)
@@ -496,7 +498,10 @@ namespace NoFences
             var b = Px(ResizeBorder);
             var w = ClientSize.Width;
             var h = ClientSize.Height;
-            bool left = pt.X < b, right = pt.X >= w - b, top = pt.Y < b / 2, bottom = pt.Y >= h - b;
+            // Resize zones sit on the visible surface's edges (themes like Post-it have a clear margin).
+            var ins = theme.SurfaceInsets;
+            var surface = Rectangle.FromLTRB(Px(ins.Left), Px(ins.Top), w - Px(ins.Right), h - Px(ins.Bottom));
+            bool left = pt.X < surface.Left + b, right = pt.X >= surface.Right - b, top = pt.Y < surface.Top + b / 2, bottom = pt.Y >= surface.Bottom - b;
 
             if (!collapsed)
             {
@@ -509,7 +514,7 @@ namespace NoFences
             }
             if (left) return Native.HTLEFT;
             if (right) return Native.HTRIGHT;
-            if (pt.Y < titleHeight) return Native.HTCAPTION;
+            if (pt.Y < titleHeight || collapsed) return Native.HTCAPTION;
             return Native.HTCLIENT;
         }
 
@@ -524,7 +529,7 @@ namespace NoFences
             collapsed = true;
             hoverPath = null;
             collapseTimer.Stop();
-            SetHeightSilently(titleHeight);
+            SetHeightSilently(CollapsedHeight);
             Invalidate();
         }
 
@@ -625,15 +630,21 @@ namespace NoFences
                 Invalidate();
             }
 
+            if (bandStart != null && e.Button == MouseButtons.Left)
+            {
+                UpdateBand(e.Location);
+                return;
+            }
+
             if (mouseDownAt is Point start && mouseDownPath != null && e.Button == MouseButtons.Left)
             {
                 var drag = SystemInformation.DragSize;
                 if (Math.Abs(e.X - start.X) > drag.Width || Math.Abs(e.Y - start.Y) > drag.Height)
                 {
-                    var p = mouseDownPath;
+                    var paths = IsSelected(mouseDownPath) ? SelectedInOrder() : new List<string> { mouseDownPath };
                     mouseDownAt = null;
                     mouseDownPath = null;
-                    StartDrag(p);
+                    StartDrag(paths);
                 }
             }
         }
@@ -659,16 +670,14 @@ namespace NoFences
                     NoteClick(e.Location);
                 return;
             }
-            var index = HitTestItem(e.Location);
-            selectedPath = index >= 0 ? entries[index].Path : null;
-            mouseDownAt = e.Location;
-            mouseDownPath = selectedPath;
-            Invalidate();
+            SelectionMouseDown(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
+            if (!IsNote)
+                SelectionMouseUp(e);
             mouseDownAt = null;
             mouseDownPath = null;
 
@@ -676,6 +685,11 @@ namespace NoFences
                 return;
 
             var index = HitTestItem(e.Location);
+            if (index >= 0 && !IsSelected(entries[index].Path))
+            {
+                SelectOnly(entries[index].Path);
+                Invalidate();
+            }
             if (index >= 0 && (ModifierKeys & Keys.Shift) == 0)
                 ShowShellMenu(entries[index]);
             else
@@ -720,10 +734,18 @@ namespace NoFences
         {
             try
             {
+                // The shell menu can only cover several items that share a folder (and are all files or all folders).
+                var selected = SelectedInOrder().Select(FenceEntry.FromPath).OfType<FenceEntry>().ToList();
+                var group = selected.Count > 1
+                            && selected.All(s => s.IsFolder == entry.IsFolder)
+                            && selected.Select(s => Path.GetDirectoryName(s.Path.TrimEnd('\\'))).Distinct(StringComparer.OrdinalIgnoreCase).Count() == 1
+                    ? selected
+                    : new List<FenceEntry> { entry };
+
                 if (entry.IsFolder)
-                    shellContextMenu.ShowContextMenu(new[] { new DirectoryInfo(entry.Path) }, Cursor.Position);
+                    shellContextMenu.ShowContextMenu(group.Select(g => new DirectoryInfo(g.Path)).ToArray(), Cursor.Position);
                 else
-                    shellContextMenu.ShowContextMenu(new[] { new FileInfo(entry.Path) }, Cursor.Position);
+                    shellContextMenu.ShowContextMenu(group.Select(g => new FileInfo(g.Path)).ToArray(), Cursor.Position);
             }
             catch (Exception)
             {
@@ -853,27 +875,30 @@ namespace NoFences
 
         #region Drag & drop
 
-        private void StartDrag(string path)
+        private void StartDrag(List<string> paths)
         {
             var data = new DataObject();
-            data.SetData(DataFormats.FileDrop, new[] { path });
-            data.SetData(InternalDragFormat, $"{Info.Id}|{path}");
+            data.SetData(DataFormats.FileDrop, paths.ToArray());
+            data.SetData(InternalDragFormat, $"{Info.Id}|{string.Join('\n', paths)}");
 
             lastDropWasFenceMove = false;
             var effect = DoDragDrop(data, DragDropEffects.Copy | DragDropEffects.Move | DragDropEffects.Link);
 
             if (Info.Kind == FenceKind.Links && effect == DragDropEffects.Move && lastDropWasFenceMove)
-                RemoveLink(path);
+            {
+                Info.Files.RemoveAll(f => paths.Contains(f, StringComparer.OrdinalIgnoreCase));
+                app.RequestSave();
+            }
             lastDropWasFenceMove = false;
             ReloadEntries();
         }
 
-        private static (Guid fence, string path)? GetInternal(IDataObject? data)
+        private static (Guid fence, string[] paths)? GetInternal(IDataObject? data)
         {
             if (data?.GetData(InternalDragFormat) is not string s)
                 return null;
             var sep = s.IndexOf('|');
-            return sep > 0 && Guid.TryParse(s[..sep], out var id) ? (id, s[(sep + 1)..]) : null;
+            return sep > 0 && Guid.TryParse(s[..sep], out var id) ? (id, s[(sep + 1)..].Split('\n')) : null;
         }
 
         private DragDropEffects ComputeEffect(DragEventArgs e)
@@ -970,7 +995,7 @@ namespace NoFences
 
             if (internalItem?.fence == Info.Id)
             {
-                MoveInOrder(internalItem.Value.path, index);
+                MoveInOrder(internalItem.Value.paths, index);
             }
             else if (Info.Kind == FenceKind.Links)
             {
@@ -1000,17 +1025,8 @@ namespace NoFences
             return i < 0 ? Info.Files.Count : i;
         }
 
-        private void MoveInOrder(string path, int entryIndex)
-        {
-            var target = FilesIndexFor(entryIndex);
-            var current = Info.Files.FindIndex(f => f.Equals(path, StringComparison.OrdinalIgnoreCase));
-            if (current < 0)
-                return;
-            Info.Files.RemoveAt(current);
-            if (current < target)
-                target--;
-            Info.Files.Insert(Math.Clamp(target, 0, Info.Files.Count), path);
-        }
+        /// <summary>Moves items (keeping their order) in front of the entry at <paramref name="entryIndex"/>.</summary>
+        private void MoveInOrder(IEnumerable<string> paths, int entryIndex) => InsertInOrder(paths, entryIndex);
 
         private void InsertInOrder(IEnumerable<string> paths, int entryIndex)
         {

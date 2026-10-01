@@ -29,6 +29,15 @@ namespace NoFences.Themes
         /// <summary>Extra space at the bottom (logical px) that is not part of the fence's surface, e.g. a drawn shadow.</summary>
         public virtual int BottomInset => 0;
 
+        /// <summary>
+        /// Clear margin (logical px) between the window edge and the visible surface. Resize handles sit
+        /// on the surface edge, because fully transparent pixels don't receive mouse clicks.
+        /// </summary>
+        public virtual Padding SurfaceInsets => Padding.Empty;
+
+        /// <summary>Collapsed height on top of the title height (logical px), so margins don't eat the title.</summary>
+        public virtual int CollapsedExtra => 0;
+
         public abstract Font CreateTitleFont(int titleHeightPx);
 
         /// <summary>Label font in pixels; <paramref name="s"/> is the DPI scale.</summary>
