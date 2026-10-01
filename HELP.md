@@ -33,6 +33,9 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
 - Lines starting with `[ ]` become checkboxes. A click ticks them (`[x]`) and strikes the line through.
 - Text you drag onto a note (e.g. from a browser) is appended at the bottom.
 - New notes use the Post-it style; any other style works too.
+- New notes and fences appear next to the mouse.
+- Fence menu → **Always on top** keeps a note above all windows. Over games this only works in
+  "borderless window" mode, not in exclusive full screen.
 
 ## Moving and resizing
 

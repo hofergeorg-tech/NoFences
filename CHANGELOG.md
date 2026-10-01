@@ -10,6 +10,11 @@ versions follow [Semantic Versioning](https://semver.org/). German version: [CHA
   click outside saves. Lines starting with `[ ]` become checkboxes you can tick with a click.
   Text dragged onto a note is appended.
 - **Post-it style**: yellow paper, adhesive strip, dog-ear and handwriting. New notes use it by default.
+- **Always on top** per fence (fence menu), e.g. for a note next to a game in borderless window mode.
+
+### Changed
+- New fences and notes appear next to the mouse, on the monitor you are working on, instead of always on the
+  primary monitor (where a game may cover them).
 
 ## [2.1.0] - 2026-10-01
 

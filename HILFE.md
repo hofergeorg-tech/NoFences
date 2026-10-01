@@ -34,6 +34,9 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 - Zeilen, die mit `[ ]` beginnen, werden zu Kästchen. Ein Klick hakt sie ab (`[x]`) und streicht die Zeile durch.
 - Text, den du auf eine Notiz ziehst (z. B. aus dem Browser), wird unten angehängt.
 - Neue Notizen haben den Post-it-Style; jeder andere Style geht auch.
+- Neue Notizen und Fences erscheinen neben der Maus.
+- Fence-Menü → **Immer im Vordergrund** hält eine Notiz über allen Fenstern. Über Spielen klappt das nur im
+  Modus „Randloses Fenster“, nicht im exklusiven Vollbild.
 
 ## Verschieben und Größe ändern
 

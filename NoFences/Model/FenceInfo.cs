@@ -51,6 +51,9 @@ namespace NoFences.Model
 
         public bool Locked { get; set; }
 
+        /// <summary>Stay above other windows instead of sitting on the desktop.</summary>
+        public bool AlwaysOnTop { get; set; }
+
         /// <summary>Collapse to the title bar while the mouse is elsewhere.</summary>
         public bool CanMinify { get; set; }
 

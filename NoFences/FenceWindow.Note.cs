@@ -171,7 +171,7 @@ namespace NoFences
                 Info.NoteText = text;
                 app.RequestSave();
             }
-            if (!Peeking)
+            if (!OnTop)
                 Native.SendToBottom(Handle);
             Invalidate();
         }

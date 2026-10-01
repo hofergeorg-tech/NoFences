@@ -103,6 +103,7 @@ namespace NoFences.Util
         public static string UpdateFailed(string reason) => T($"The update failed: {reason}\nThe download page will open instead.",
                                                               $"Das Update ist fehlgeschlagen: {reason}\nStattdessen öffnet sich die Download-Seite.");
         public static string UpdateCheckFailed => T("Could not reach GitHub to check for updates.", "GitHub war für die Update-Prüfung nicht erreichbar.");
+        public static string AlwaysOnTop => T("Always on top", "Immer im Vordergrund");
         public static string NewNote => T("New note", "Neue Notiz");
         public static string NoteName => T("Note", "Notiz");
         public static string EditNote => T("Edit note", "Notiz bearbeiten");

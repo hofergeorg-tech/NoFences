@@ -130,14 +130,10 @@ namespace NoFences
 
         public void CreateFence(FenceKind kind, string? name = null)
         {
-            var area = Screen.PrimaryScreen?.WorkingArea ?? new Rectangle(0, 0, 1280, 720);
-            var offset = 30 * (windows.Count % 8);
             var info = new FenceInfo
             {
                 Name = name ?? Strings.NewFence,
-                Kind = kind,
-                PosX = area.Left + 100 + offset,
-                PosY = area.Top + 150 + offset
+                Kind = kind
             };
 
             if (kind == FenceKind.Note)
@@ -158,9 +154,24 @@ namespace NoFences
                 info.Name = name ?? Path.GetFileName(dlg.SelectedPath.TrimEnd('\\'));
             }
 
+            PlaceNearCursor(info);
             Store.Config.Fences.Add(info);
             Store.RequestSave();
             OpenWindow(info);
+        }
+
+        /// <summary>
+        /// New fences appear where the user is working (the monitor under the mouse), not always on
+        /// the primary monitor, which may be covered by a full-screen game.
+        /// </summary>
+        private static void PlaceNearCursor(FenceInfo info)
+        {
+            var cursor = Cursor.Position;
+            var area = Screen.FromPoint(cursor).WorkingArea;
+            var x = cursor.X - info.Width / 2;
+            var y = cursor.Y - 20;
+            info.PosX = Math.Clamp(x, area.Left, Math.Max(area.Left, area.Right - info.Width));
+            info.PosY = Math.Clamp(y, area.Top, Math.Max(area.Top, area.Bottom - info.Height));
         }
 
         public void RemoveFence(FenceWindow window)

@@ -92,7 +92,7 @@ namespace NoFences
             Native.EnableBlur(Handle);
             Native.HideFromAltTab(Handle);
             Native.GlueToDesktop(Handle);
-            Native.SendToBottom(Handle);
+            ApplyZOrder();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -406,12 +406,12 @@ namespace NoFences
                 case Native.WM_SETFOCUS:
                     if (Editing)
                         break;
-                    if (!Peeking)
+                    if (!OnTop)
                         Native.SendToBottom(Handle);
                     return;
 
                 case Native.WM_WINDOWPOSCHANGING:
-                    if (!Peeking)
+                    if (!OnTop)
                         KeepAtBottom(m.LParam);
                     break;
 
@@ -431,20 +431,38 @@ namespace NoFences
         /// <summary>True while the fences are shown above all windows (peek shortcut).</summary>
         public bool Peeking { get; private set; }
 
+        /// <summary>Above other windows: during peek, or permanently with "Always on top".</summary>
+        private bool OnTop => Peeking || Info.AlwaysOnTop;
+
         public void SetPeek(bool on)
         {
-            if (Peeking == on || !IsHandleCreated)
+            if (Peeking == on)
                 return;
             Peeking = on;
-            if (on)
+            ApplyZOrder();
+        }
+
+        private void ApplyZOrder()
+        {
+            if (!IsHandleCreated)
+                return;
+            const uint flags = Native.SWP_NOSIZE | Native.SWP_NOMOVE | Native.SWP_NOACTIVATE;
+            if (OnTop)
             {
-                Native.SetWindowPos(Handle, Native.HWND_TOPMOST, 0, 0, 0, 0, Native.SWP_NOSIZE | Native.SWP_NOMOVE | Native.SWP_NOACTIVATE);
+                Native.SetWindowPos(Handle, Native.HWND_TOPMOST, 0, 0, 0, 0, flags);
             }
             else
             {
-                Native.SetWindowPos(Handle, Native.HWND_NOTOPMOST, 0, 0, 0, 0, Native.SWP_NOSIZE | Native.SWP_NOMOVE | Native.SWP_NOACTIVATE);
+                Native.SetWindowPos(Handle, Native.HWND_NOTOPMOST, 0, 0, 0, 0, flags);
                 Native.SendToBottom(Handle);
             }
+        }
+
+        private void ToggleAlwaysOnTop()
+        {
+            Info.AlwaysOnTop = !Info.AlwaysOnTop;
+            app.RequestSave();
+            ApplyZOrder();
         }
 
         private static void KeepAtBottom(IntPtr lParam)
@@ -716,6 +734,7 @@ namespace NoFences
             menu.Items.Add(Strings.Settings, null, (_, _) => OpenSettings());
             menu.Items.Add(new ToolStripMenuItem(Strings.Locked, null, (_, _) => { Info.Locked = !Info.Locked; app.RequestSave(); }) { Checked = Info.Locked });
             menu.Items.Add(new ToolStripMenuItem(Strings.AutoCollapse, null, (_, _) => ToggleCollapse()) { Checked = Info.CanMinify });
+            menu.Items.Add(new ToolStripMenuItem(Strings.AlwaysOnTop, null, (_, _) => ToggleAlwaysOnTop()) { Checked = Info.AlwaysOnTop });
 
             var style = new ToolStripMenuItem(Strings.Theme);
             style.DropDownItems.Add(new ToolStripMenuItem(Strings.ThemeInherit, null, (_, _) => SetTheme(null)) { Checked = Info.Theme == null });

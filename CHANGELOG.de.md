@@ -9,6 +9,11 @@ Alle wichtigen Änderungen an diesem Fork. English version: [CHANGELOG.md](CHANG
   Esc oder ein Klick daneben speichert. Zeilen mit `[ ]` am Anfang werden zu Kästchen, die man per Klick abhakt.
   Auf eine Notiz gezogener Text wird angehängt.
 - **Post-it-Style**: gelbes Papier, Klebestreifen, Eselsohr und Handschrift. Neue Notizen bekommen ihn automatisch.
+- **Immer im Vordergrund** pro Fence (Fence-Menü), z. B. für eine Notiz neben einem Spiel im randlosen Fenstermodus.
+
+### Geändert
+- Neue Fences und Notizen erscheinen neben der Maus, auf dem Monitor, auf dem du gerade arbeitest, statt immer auf
+  dem Hauptmonitor (wo sie z. B. ein Spiel verdecken kann).
 
 ## [2.1.0] - 2026-10-01
 
