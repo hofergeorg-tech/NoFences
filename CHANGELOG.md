@@ -21,7 +21,11 @@ versions follow [Semantic Versioning](https://semver.org/). German version: [CHA
 - **Own styles** as JSON files in the `themes` folder (an example is created); tray → Own styles.
 - Automatic tests (45) run on every push; winget manifests prepared in `packaging/winget`.
 
+- **Rename in place**: double-click a fence's title (or fence menu → Rename).
+
 ### Fixed
+- Moving fences stuttered: position is now saved once when you let go, hover animations pause while
+  dragging, and snapping is less sticky.
 - Tabs in notes are drawn with the same tab stops as in the editor.
 - A collapsed Post-it kept only a thin line instead of its title.
 - Post-its could not be resized (the handles were on the clear margin, which doesn't receive clicks).

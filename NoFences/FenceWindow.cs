@@ -423,6 +423,20 @@ namespace NoFences
                         KeepAtBottom(m.LParam);
                     break;
 
+                case Native.WM_NCLBUTTONDBLCLK when m.WParam.ToInt32() == Native.HTCAPTION:
+                    // Double-click on the title renames the fence in place (instead of Windows' maximize).
+                    if (!collapsed && !Info.Locked)
+                        StartEditTitle();
+                    return;
+
+                case Native.WM_ENTERSIZEMOVE:
+                    BeginSizeMove();
+                    break;
+
+                case Native.WM_EXITSIZEMOVE:
+                    EndSizeMove();
+                    break;
+
                 case Native.WM_MOVING:
                     SnapMoving(m.LParam);
                     break;
@@ -584,7 +598,8 @@ namespace NoFences
         {
             base.OnMove(e);
             LayoutEditor();
-            if (suppressBoundsSave || !IsHandleCreated)
+            // While dragging, save once at the end (EndSizeMove) instead of on every pixel.
+            if (suppressBoundsSave || !IsHandleCreated || inSizeMove)
                 return;
             Info.PosX = Left;
             Info.PosY = Top;
@@ -597,7 +612,7 @@ namespace NoFences
             base.OnResize(e);
             Relayout();
             Invalidate();
-            if (suppressBoundsSave || collapsed || !IsHandleCreated)
+            if (suppressBoundsSave || collapsed || !IsHandleCreated || inSizeMove)
                 return;
             Info.Width = Width;
             Info.Height = Height;
@@ -785,6 +800,7 @@ namespace NoFences
             if (menu.Items.Count > 0)
                 menu.Items.Add(new ToolStripSeparator());
 
+            menu.Items.Add(Strings.Rename, null, (_, _) => StartEditTitle());
             menu.Items.Add(Strings.Settings, null, (_, _) => OpenSettings());
             menu.Items.Add(new ToolStripMenuItem(Strings.Locked, null, (_, _) => { Info.Locked = !Info.Locked; app.RequestSave(); }) { Checked = Info.Locked });
             menu.Items.Add(new ToolStripMenuItem(Strings.AutoCollapse, null, (_, _) => ToggleCollapse()) { Checked = Info.CanMinify });

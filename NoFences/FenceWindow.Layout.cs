@@ -7,8 +7,39 @@ namespace NoFences
     /// <summary>Snapping while moving/resizing, and positions remembered per monitor setup.</summary>
     public sealed partial class FenceWindow
     {
-        private const int SnapThreshold = 12;
+        private const int SnapThreshold = 8;
         private const int SnapGap = 8;
+
+        /// <summary>True while the user drags or resizes the fence (Windows' move/size loop).</summary>
+        private bool inSizeMove;
+
+        // Snap targets are collected once per drag, not on every mouse move.
+        private IReadOnlyCollection<Rectangle> snapFences = Array.Empty<Rectangle>();
+        private IReadOnlyCollection<Rectangle> snapScreens = Array.Empty<Rectangle>();
+
+        private void BeginSizeMove()
+        {
+            inSizeMove = true;
+            snapFences = app.OtherFenceSurfaces(this);
+            snapScreens = ScreenAreas();
+        }
+
+        /// <summary>Saves position/size once, when the user lets go (not on every pixel).</summary>
+        private void EndSizeMove()
+        {
+            inSizeMove = false;
+            Info.PosX = Left;
+            Info.PosY = Top;
+            if (!collapsed)
+            {
+                Info.Width = Width;
+                Info.Height = Height;
+            }
+            RememberLayout();
+            app.RequestSave();
+            Relayout();
+            Invalidate();
+        }
 
         /// <summary>The visible part of the fence in screen coordinates (without a theme's clear margin).</summary>
         public Rectangle SurfaceOnScreen
@@ -37,7 +68,7 @@ namespace NoFences
             var r = Marshal.PtrToStructure<Native.RECT>(lParam);
             var (l, t, ri, b) = SurfaceInsetPx();
             var surface = Rectangle.FromLTRB(r.Left + l, r.Top + t, r.Right - ri, r.Bottom - b);
-            var offset = Snapper.SnapMove(surface, app.OtherFenceSurfaces(this), ScreenAreas(), Px(SnapThreshold), Px(SnapGap));
+            var offset = Snapper.SnapMove(surface, snapFences, snapScreens, Px(SnapThreshold), Px(SnapGap));
             r.Left += offset.X;
             r.Right += offset.X;
             r.Top += offset.Y;
@@ -53,8 +84,8 @@ namespace NoFences
             var r = Marshal.PtrToStructure<Native.RECT>(lParam);
             var (l, t, ri, b) = SurfaceInsetPx();
             var surface = Rectangle.FromLTRB(r.Left + l, r.Top + t, r.Right - ri, r.Bottom - b);
-            var fences = app.OtherFenceSurfaces(this);
-            var screens = ScreenAreas();
+            var fences = snapFences;
+            var screens = snapScreens;
             int Snap(int value, bool horizontal) => Snapper.SnapEdge(value, horizontal, surface, fences, screens, Px(SnapThreshold), Px(SnapGap));
 
             if (edge is Native.WMSZ_LEFT or Native.WMSZ_TOPLEFT or Native.WMSZ_BOTTOMLEFT)

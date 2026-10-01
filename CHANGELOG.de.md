@@ -20,7 +20,11 @@ Alle wichtigen Änderungen an diesem Fork. English version: [CHANGELOG.md](CHANG
 - **Eigene Styles** als JSON-Dateien im Ordner `themes` (ein Beispiel wird angelegt); Tray → Eigene Styles.
 - Automatische Tests (45) laufen bei jedem Push; winget-Paketbeschreibung vorbereitet in `packaging/winget`.
 
+- **Umbenennen direkt im Titel**: Doppelklick auf die Titelleiste (oder Fence-Menü → Umbenennen).
+
 ### Behoben
+- Verschieben ruckelte: Die Position wird erst beim Loslassen gespeichert, Hover-Animationen pausieren während
+  des Ziehens, und das Einrasten ist weniger klebrig.
 - Tabs in Notizen werden mit denselben Tab-Stopps gezeichnet wie im Editor.
 - Ein eingeklapptes Post-it zeigte nur einen Strich statt des Titels.
 - Post-its ließen sich nicht in der Größe ändern (die Ziehzonen lagen im durchsichtigen Rand, der keine Klicks bekommt).

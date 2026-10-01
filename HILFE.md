@@ -53,6 +53,7 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 ## Verschieben und Größe ändern
 
 - Titelleiste ziehen zum Verschieben, Ränder ziehen für die Größe.
+- **Doppelklick auf die Titelleiste** benennt den Fence direkt um (Enter speichert, Esc bricht ab).
 - **Gesperrte** Fences lassen sich nicht verschieben, nicht in der Größe ändern und nehmen nichts an.
 - **Einklappen wenn Maus weg** verkleinert den Fence auf die Titelleiste, bis du darauf zeigst.
 - Beim Verschieben und Größe ändern **rasten** Fences an Bildschirmrändern und an anderen Fences ein. Mit

@@ -52,6 +52,7 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
 ## Moving and resizing
 
 - Drag the title bar to move a fence, drag the edges to resize.
+- **Double-click the title bar** to rename the fence in place (Enter saves, Esc cancels).
 - **Locked** fences can't be moved, resized or dropped onto.
 - **Collapse when not hovered** shrinks the fence to its title bar until you point at it.
 - While moving or resizing, fences **snap** to screen edges and to other fences. Hold **Alt** to place freely.

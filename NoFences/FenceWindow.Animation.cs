@@ -60,7 +60,9 @@ namespace NoFences
                 hoverTimer.Stop();
                 hoverSince = null;
             }
-            Invalidate();
+            // Repainting the whole fence 30 times a second makes dragging stutter; pause meanwhile.
+            if (!inSizeMove)
+                Invalidate();
         }
 
         private void DrawHoverAnimation(Graphics g)

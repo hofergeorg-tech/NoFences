@@ -24,6 +24,9 @@ namespace NoFences.Win32
 
         public const int WM_HOTKEY = 0x0312;
         public const int WM_SIZING = 0x0214;
+        public const int WM_NCLBUTTONDBLCLK = 0x00A3;
+        public const int WM_ENTERSIZEMOVE = 0x0231;
+        public const int WM_EXITSIZEMOVE = 0x0232;
         public const int WM_MOVING = 0x0216;
         public const int WMSZ_LEFT = 1, WMSZ_RIGHT = 2, WMSZ_TOP = 3, WMSZ_TOPLEFT = 4, WMSZ_TOPRIGHT = 5,
             WMSZ_BOTTOM = 6, WMSZ_BOTTOMLEFT = 7, WMSZ_BOTTOMRIGHT = 8;
