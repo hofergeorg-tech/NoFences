@@ -98,7 +98,7 @@ namespace NoFences
         {
             base.OnLoad(e);
             ApplySettings();
-            EnsureOnScreen();
+            ApplyLayoutForCurrentScreens();
             ReloadEntries();
             linkPollTimer.Start();
             if (Info.CanMinify)
@@ -420,6 +420,14 @@ namespace NoFences
                         KeepAtBottom(m.LParam);
                     break;
 
+                case Native.WM_MOVING:
+                    SnapMoving(m.LParam);
+                    break;
+
+                case Native.WM_SIZING:
+                    SnapSizing(m.WParam.ToInt32(), m.LParam);
+                    break;
+
                 case Native.WM_SYSCOMMAND:
                     var cmd = m.WParam.ToInt32() & 0xFFF0;
                     if (cmd == Native.SC_MAXIMIZE)
@@ -577,6 +585,7 @@ namespace NoFences
                 return;
             Info.PosX = Left;
             Info.PosY = Top;
+            RememberLayout();
             app.RequestSave();
         }
 
@@ -589,6 +598,7 @@ namespace NoFences
                 return;
             Info.Width = Width;
             Info.Height = Height;
+            RememberLayout();
             app.RequestSave();
         }
 

@@ -46,6 +46,7 @@ namespace NoFences
             InitPeek();
             InitUpdates();
             InitReminders();
+            InitBackupsAndScreens();
 
             if (firstStart)
                 ShowBalloon(Strings.FirstStartHint, timeout: 8000);
@@ -128,6 +129,9 @@ namespace NoFences
         public FenceTheme ThemeFor(FenceInfo info) => ThemeRegistry.Get(info.Theme ?? Store.Config.Theme);
 
         public void RequestSave() => Store.RequestSave();
+
+        public IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except) =>
+            windows.Where(w => w != except && w.Visible).Select(w => w.SurfaceOnScreen).ToList();
 
         public void CreateFence(FenceKind kind, string? name = null)
         {
@@ -268,6 +272,7 @@ namespace NoFences
                 Process.Start(new ProcessStartInfo(Store.DataDirectory) { UseShellExecute = true }));
             menu.Items.Add(new ToolStripSeparator());
             AddUpdateItems(menu.Items);
+            AddBackupItems(menu.Items);
             AddDocumentItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(Strings.Exit, null, (_, _) => ExitThread());
@@ -275,11 +280,13 @@ namespace NoFences
 
         protected override void ExitThreadCore()
         {
-            Store.SaveNow();
+            if (!skipSaveOnExit)
+                Store.SaveNow();
             desktopHook?.Dispose();
             DisposePeek();
             DisposeUpdates();
             DisposeReminders();
+            DisposeBackupsAndScreens();
             sorter.Dispose();
             tray.Visible = false;
             tray.Dispose();

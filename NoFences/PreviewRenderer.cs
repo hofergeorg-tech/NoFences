@@ -20,6 +20,7 @@ namespace NoFences
             public void RequestSave() { }
             public void CreateFence(FenceKind kind, string? name = null) { }
             public void RemoveFence(FenceWindow window) { }
+            public IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except) => Array.Empty<Rectangle>();
         }
 
         public static void Run(string outDir)

@@ -15,5 +15,8 @@ namespace NoFences
         void CreateFence(FenceKind kind, string? name = null);
 
         void RemoveFence(FenceWindow window);
+
+        /// <summary>Visible surfaces (screen coordinates) of all other fences, for snapping.</summary>
+        IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except);
     }
 }

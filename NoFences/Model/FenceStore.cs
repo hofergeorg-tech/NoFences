@@ -87,6 +87,53 @@ namespace NoFences.Model
             }
         }
 
+        private string BackupDirectory => Path.Combine(DataDirectory, "backups");
+
+        private const int KeepBackups = 10;
+
+        /// <summary>Copies the config into backups/ if the newest backup is older than 12 hours; keeps the last 10.</summary>
+        public void BackupIfDue()
+        {
+            if (!File.Exists(ConfigPath))
+                return;
+            var newest = ListBackups().FirstOrDefault();
+            if (newest.Path != null && DateTime.Now - newest.Time < TimeSpan.FromHours(12))
+                return;
+            try
+            {
+                Directory.CreateDirectory(BackupDirectory);
+                File.Copy(ConfigPath, Path.Combine(BackupDirectory, $"fences-{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.json"), overwrite: true);
+                foreach (var old in ListBackups().Skip(KeepBackups))
+                    File.Delete(old.Path);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Backup failed: {e.Message}");
+            }
+        }
+
+        /// <summary>Backups, newest first.</summary>
+        public IEnumerable<(string Path, DateTime Time)> ListBackups()
+        {
+            if (!Directory.Exists(BackupDirectory))
+                return Enumerable.Empty<(string, DateTime)>();
+            return new DirectoryInfo(BackupDirectory).GetFiles("fences-*.json")
+                .OrderByDescending(f => f.LastWriteTime)
+                .Select(f => (f.FullName, f.LastWriteTime))
+                .ToList();
+        }
+
+        /// <summary>Replaces the config with a backup (the current config is backed up first). Takes effect after a restart.</summary>
+        public void RestoreBackup(string backupPath)
+        {
+            // Validate before touching anything.
+            JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(backupPath), JsonOptions);
+            SaveNow();
+            Directory.CreateDirectory(BackupDirectory);
+            File.Copy(ConfigPath, Path.Combine(BackupDirectory, $"fences-{DateTime.Now:yyyy-MM-dd_HH-mm-ss}-before-restore.json"), overwrite: true);
+            File.Copy(backupPath, ConfigPath, overwrite: true);
+        }
+
         /// <summary>Reads fences written by NoFences 1.x (one folder per fence with an XML file).</summary>
         private List<FenceInfo> LoadLegacyFences()
         {

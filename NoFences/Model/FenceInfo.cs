@@ -51,6 +51,12 @@ namespace NoFences.Model
 
         public bool Locked { get; set; }
 
+        /// <summary>
+        /// Position and size per monitor setup (key: the screens' bounds). When monitors change,
+        /// the fence returns to where it was the last time this setup was used.
+        /// </summary>
+        public Dictionary<string, int[]> Layouts { get; set; } = new();
+
         /// <summary>Stay above other windows instead of sitting on the desktop.</summary>
         public bool AlwaysOnTop { get; set; }
 
