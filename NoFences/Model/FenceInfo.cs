@@ -82,6 +82,9 @@ namespace NoFences.Model
         /// <summary>Only used for <see cref="FenceKind.Note"/>; lines separated by '\n'.</summary>
         public string NoteText { get; set; } = "";
 
+        /// <summary>Notes only: local time at which to remind the user; cleared once shown.</summary>
+        public DateTime? ReminderAt { get; set; }
+
         /// <summary>
         /// Links fence: the entries. Folder fence: the user's preferred order of the folder's
         /// contents; entries missing from this list are appended alphabetically.

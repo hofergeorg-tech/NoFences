@@ -17,10 +17,10 @@ namespace NoFences
         private RichTextBox? editor;
         private Form? editorHost;
         private readonly List<(RectangleF box, int line)> checkboxes = new(); // content coordinates
+        private readonly List<(RectangleF rect, string target)> links = new(); // content coordinates
         private readonly StringFormat noteFormat = new() { Alignment = StringAlignment.Near, Trimming = StringTrimming.None };
 
-        [GeneratedRegex(@"^(\s*(?:[-*]\s+)?)\[([ xX])\]\s?")]
-        private static partial Regex CheckboxPrefix();
+        private static Regex CheckboxPrefix() => NoteText.CheckboxPrefix();
 
         private bool IsNote => Info.Kind == FenceKind.Note;
 
@@ -34,11 +34,25 @@ namespace NoFences
             noteFont = theme.CreateNoteFont(scale);
             noteFontDone = new Font(noteFont, FontStyle.Strikeout);
             checkFont = new Font("Segoe UI Symbol", noteFont.Size, FontStyle.Regular, GraphicsUnit.Pixel);
+            // Without tab stops GDI+ draws tabs differently than the editor; use the same grid in both.
+            noteFormat.SetTabStops(0, new[] { TabWidth });
             if (editor != null)
             {
                 editor.Font = noteFont;
                 ApplyEditorColors(editor);
             }
+        }
+
+        /// <summary>One tab = about six average characters of the note font (pixels).</summary>
+        private float TabWidth => (noteFont?.Size ?? 16) * 3f;
+
+        private void ApplyEditorTabs(RichTextBox box)
+        {
+            var (start, length) = (box.SelectionStart, box.SelectionLength);
+            box.SelectAll();
+            // RichTextBox allows 32 tab stops; repeat the same width as the painted text.
+            box.SelectionTabs = Enumerable.Range(1, 32).Select(i => (int)Math.Round(i * TabWidth)).ToArray();
+            box.Select(start, length);
         }
 
         private Rectangle NoteArea => new(
@@ -50,6 +64,7 @@ namespace NoFences
         private void DrawNote(Graphics g, Rectangle view)
         {
             checkboxes.Clear();
+            links.Clear();
             if (noteFont == null || noteFontDone == null || checkFont == null || Editing)
                 return;
 
@@ -89,8 +104,12 @@ namespace NoFences
 
                 var width = area.Right - x;
                 var height = line.Length == 0 ? font.Height : g.MeasureString(line, font, (int)Math.Max(1, width), noteFormat).Height;
+                var layout = new RectangleF(x, y, width, height + 2);
                 if (y + height >= view.Top && y <= view.Bottom)
-                    theme.DrawLabel(g, line, new RectangleF(x, y, width, height + 2), font, noteFormat, scale);
+                {
+                    theme.DrawLabel(g, line, layout, font, noteFormat, scale);
+                    MarkLinks(g, line, layout, font);
+                }
                 y += height;
             }
 
@@ -98,7 +117,37 @@ namespace NoFences
             contentHeight = (int)(y + scrollOffset - titleHeight) + Px(8);
         }
 
-        /// <summary>Handles a left click in a note; returns true if it toggled a checkbox.</summary>
+        /// <summary>Underlines web addresses and paths in a drawn line and remembers where they are.</summary>
+        private void MarkLinks(Graphics g, string line, RectangleF layout, Font font)
+        {
+            var found = NoteText.FindLinks(line).Take(32).ToList(); // GDI+ measures at most 32 ranges at once
+            if (found.Count == 0)
+                return;
+
+            using var format = (StringFormat)noteFormat.Clone();
+            format.SetMeasurableCharacterRanges(found.Select(l => new CharacterRange(l.Start, l.Length)).ToArray());
+            var regions = g.MeasureCharacterRanges(line, font, layout, format);
+            using var pen = new Pen(Color.FromArgb(220, theme.HintColor), Math.Max(1, scale));
+            using var identity = new System.Drawing.Drawing2D.Matrix();
+            for (var i = 0; i < regions.Length; i++)
+            {
+                using var region = regions[i];
+                // A link wrapped over several lines yields one rectangle per line.
+                foreach (var r in region.GetRegionScans(identity))
+                {
+                    g.DrawLine(pen, r.Left, r.Bottom - Px(2), r.Right, r.Bottom - Px(2));
+                    links.Add((new RectangleF(r.X, r.Y + scrollOffset - titleHeight, r.Width, r.Height), found[i].Target));
+                }
+            }
+        }
+
+        private string? LinkAt(Point client)
+        {
+            var p = new PointF(client.X, client.Y - titleHeight + scrollOffset);
+            return links.FirstOrDefault(l => l.rect.Contains(p)).target;
+        }
+
+        /// <summary>Handles a left click in a note; returns true if it toggled a checkbox or opened a link.</summary>
         private bool NoteClick(Point client)
         {
             if (Editing || collapsed)
@@ -108,19 +157,56 @@ namespace NoFences
             {
                 if (!RectangleF.Inflate(box, Px(3), Px(3)).Contains(p))
                     continue;
-                var lines = Info.NoteText.Split('\n');
-                var m = CheckboxPrefix().Match(lines[line]);
-                if (!m.Success)
-                    return false;
-                var state = m.Groups[2];
-                var toggled = state.Value == " " ? "x" : " ";
-                lines[line] = lines[line][..state.Index] + toggled + lines[line][(state.Index + state.Length)..];
-                Info.NoteText = string.Join('\n', lines);
+                Info.NoteText = NoteText.ToggleCheckbox(Info.NoteText, line);
                 app.RequestSave();
                 Invalidate();
                 return true;
             }
+
+            var target = LinkAt(client);
+            if (target != null)
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(target) { UseShellExecute = true });
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "NoFences", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                return true;
+            }
             return false;
+        }
+
+        /// <summary>Small "⏰ 18:00" in the title row while a reminder is set.</summary>
+        private void DrawReminderBadge(Graphics g)
+        {
+            if (Info.ReminderAt is not DateTime at || labelFont == null)
+                return;
+            var when = at.Date == DateTime.Today ? at.ToString("HH:mm") : at.ToString("dd.MM. HH:mm");
+            using var brush = new SolidBrush(Color.FromArgb(230, theme.HintColor));
+            using var format = new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Far };
+            var inset = Px(12 + theme.ContentInset);
+            g.DrawString("⏰ " + when, labelFont, brush, new RectangleF(inset, 0, ClientSize.Width - 2 * inset, titleHeight + Px(4)), format);
+        }
+
+        private void EditReminder()
+        {
+            using var dialog = new ReminderDialog(Info.ReminderAt);
+            if (dialog.ShowDialog(this) != DialogResult.OK)
+                return;
+            Info.ReminderAt = dialog.Result;
+            app.RequestSave();
+            Invalidate();
+        }
+
+        /// <summary>Hand cursor over links and checkboxes.</summary>
+        private void UpdateNoteCursor(Point client)
+        {
+            var p = new PointF(client.X, client.Y - titleHeight + scrollOffset);
+            var clickable = LinkAt(client) != null || checkboxes.Any(c => RectangleF.Inflate(c.box, Px(3), Px(3)).Contains(p));
+            Cursor = clickable ? Cursors.Hand : Cursors.Default;
         }
 
         public void StartEditNote()
@@ -214,6 +300,7 @@ namespace NoFences
                 box.SelectionFont = noteFont;
             box.Select(start, length);
             box.SelectionColor = fore;
+            ApplyEditorTabs(box);
         }
 
         private void EndEditNote()

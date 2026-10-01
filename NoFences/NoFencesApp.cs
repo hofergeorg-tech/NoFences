@@ -45,6 +45,7 @@ namespace NoFences
             tray.BalloonTipClicked += (_, _) => balloonAction?.Invoke();
             InitPeek();
             InitUpdates();
+            InitReminders();
 
             if (firstStart)
                 ShowBalloon(Strings.FirstStartHint, timeout: 8000);
@@ -278,6 +279,7 @@ namespace NoFences
             desktopHook?.Dispose();
             DisposePeek();
             DisposeUpdates();
+            DisposeReminders();
             sorter.Dispose();
             tray.Visible = false;
             tray.Dispose();

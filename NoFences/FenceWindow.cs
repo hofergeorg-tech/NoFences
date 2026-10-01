@@ -304,6 +304,8 @@ namespace NoFences
             theme.DrawFrame(g, bounds, titleHeight, Info, scale);
             if (titleFont != null)
                 theme.DrawTitle(g, new Rectangle(0, 0, bounds.Width, titleHeight), theme.FormatTitle(Text), titleFont, scale);
+            if (IsNote)
+                DrawReminderBadge(g);
 
             if (collapsed || labelFont == null)
                 return;
@@ -609,6 +611,11 @@ namespace NoFences
             base.OnMouseMove(e);
             if (collapsed && Info.CanMinify)
                 Expand();
+            if (IsNote)
+            {
+                UpdateNoteCursor(e.Location);
+                return;
+            }
 
             var index = HitTestItem(e.Location);
             var path = index >= 0 ? entries[index].Path : null;
@@ -731,7 +738,10 @@ namespace NoFences
             var menu = new ContextMenuStrip();
 
             if (IsNote)
+            {
                 menu.Items.Add(Strings.EditNote, null, (_, _) => StartEditNote());
+                menu.Items.Add(new ToolStripMenuItem(Strings.Reminder, null, (_, _) => EditReminder()) { Checked = Info.ReminderAt != null });
+            }
             if (entry != null && Info.Kind == FenceKind.Links)
                 menu.Items.Add(Strings.RemoveItem, null, (_, _) => RemoveLink(entry.Path));
             if (Info.Kind == FenceKind.Folder && Directory.Exists(Info.FolderPath))

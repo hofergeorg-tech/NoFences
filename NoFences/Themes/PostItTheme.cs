@@ -10,9 +10,38 @@ namespace NoFences.Themes
     /// </summary>
     public sealed class PostItTheme : FenceTheme
     {
-        private static readonly Color Top = Color.FromArgb(255, 243, 150);
-        private static readonly Color Bottom = Color.FromArgb(255, 229, 104);
-        private static readonly Color Ink = Color.FromArgb(70, 56, 18);
+        private readonly string id;
+        private readonly string name;
+        private readonly Color Top;
+        private readonly Color Bottom;
+        private readonly Color Ink;
+        private readonly Color FlapLight;
+        private readonly Color FlapDark;
+
+        /// <summary>The classic sticky-note colors.</summary>
+        public static IEnumerable<PostItTheme> AllColors()
+        {
+            yield return new PostItTheme("postit", "Post-it (Gelb)", Color.FromArgb(255, 243, 150), Color.FromArgb(255, 229, 104), Color.FromArgb(70, 56, 18));
+            yield return new PostItTheme("postit-pink", "Post-it (Rosa)", Color.FromArgb(255, 205, 222), Color.FromArgb(252, 168, 196), Color.FromArgb(92, 28, 52));
+            yield return new PostItTheme("postit-green", "Post-it (Grün)", Color.FromArgb(214, 245, 170), Color.FromArgb(178, 228, 120), Color.FromArgb(34, 68, 20));
+            yield return new PostItTheme("postit-blue", "Post-it (Blau)", Color.FromArgb(198, 230, 255), Color.FromArgb(150, 204, 248), Color.FromArgb(20, 50, 88));
+            yield return new PostItTheme("postit-orange", "Post-it (Orange)", Color.FromArgb(255, 214, 160), Color.FromArgb(255, 180, 108), Color.FromArgb(92, 46, 10));
+        }
+
+        private PostItTheme(string id, string name, Color top, Color bottom, Color ink)
+        {
+            this.id = id;
+            this.name = name;
+            Top = top;
+            Bottom = bottom;
+            Ink = ink;
+            FlapLight = Blend(top, Color.White, 0.6f);
+            FlapDark = Blend(bottom, ink, 0.15f);
+        }
+
+        private static Color Blend(Color a, Color b, float t) =>
+            Color.FromArgb((int)(a.R + (b.R - a.R) * t), (int)(a.G + (b.G - a.G) * t), (int)(a.B + (b.B - a.B) * t));
+
         private static readonly Color TapeColor = Color.FromArgb(120, 255, 253, 246);
 
         private static readonly string[] Handwriting = { "Ink Free", "Segoe Print", "Comic Sans MS" };
@@ -22,9 +51,9 @@ namespace NoFences.Themes
         private const float TopMargin = 15;
         private const float BottomMargin = 16;
 
-        public override string Id => "postit";
+        public override string Id => id;
 
-        public override string DisplayName => "Post-it";
+        public override string DisplayName => name;
 
         public override bool Glass => false;
 
@@ -39,7 +68,7 @@ namespace NoFences.Themes
 
         public override Color HintColor => Color.FromArgb(140, Ink);
 
-        public override (Color Back, Color Fore) EditorColors => (Color.FromArgb(255, 240, 138), Ink);
+        public override (Color Back, Color Fore) EditorColors => (Blend(Top, Bottom, 0.3f), Ink);
 
         public override Font CreateTitleFont(int titleHeightPx) =>
             CreateFont(Handwriting, Math.Max(6, titleHeightPx * 0.46f), FontStyle.Bold, GraphicsUnit.Pixel);
@@ -104,7 +133,7 @@ namespace NoFences.Themes
             }
         }
 
-        private static void DrawCurledCorner(Graphics g, RectangleF paper, float s)
+        private void DrawCurledCorner(Graphics g, RectangleF paper, float s)
         {
             var c = 16 * s;
             var r = paper.Right;
@@ -112,7 +141,7 @@ namespace NoFences.Themes
             // Cut the corner away, then draw the folded-up flap
             using (var cut = new LinearGradientBrush(new RectangleF(r - c, b - c, c, c), Color.FromArgb(0, 0, 0, 0), Color.FromArgb(40, 60, 45, 0), LinearGradientMode.ForwardDiagonal))
                 g.FillPolygon(cut, new[] { new PointF(r - c, b), new PointF(r, b - c), new PointF(r, b) });
-            using var flap = new LinearGradientBrush(new RectangleF(r - c, b - c, c, c), Color.FromArgb(255, 252, 214), Color.FromArgb(232, 206, 92), LinearGradientMode.BackwardDiagonal);
+            using var flap = new LinearGradientBrush(new RectangleF(r - c, b - c, c, c), FlapLight, FlapDark, LinearGradientMode.BackwardDiagonal);
             g.FillPolygon(flap, new[] { new PointF(r - c, b), new PointF(r, b - c), new PointF(r - c * 0.85f, b - c * 0.85f) });
         }
 

@@ -103,6 +103,13 @@ namespace NoFences.Util
         public static string UpdateFailed(string reason) => T($"The update failed: {reason}\nThe download page will open instead.",
                                                               $"Das Update ist fehlgeschlagen: {reason}\nStattdessen öffnet sich die Download-Seite.");
         public static string UpdateCheckFailed => T("Could not reach GitHub to check for updates.", "GitHub war für die Update-Prüfung nicht erreichbar.");
+        public static string Reminder => T("Reminder…", "Erinnerung…");
+        public static string ReminderTitle => T("Remind me", "Erinnern");
+        public static string ReminderIn1h => T("In 1 hour", "In 1 Stunde");
+        public static string ReminderTonight => T("Today 6 pm", "Heute 18:00");
+        public static string ReminderTomorrow => T("Tomorrow 9 am", "Morgen 9:00");
+        public static string ReminderRemove => T("Remove", "Entfernen");
+        public static string ReminderDue(string name) => T($"Reminder: {name}", $"Erinnerung: {name}");
         public static string AlwaysOnTop => T("Always on top", "Immer im Vordergrund");
         public static string NewNote => T("New note", "Neue Notiz");
         public static string NoteName => T("Note", "Notiz");

@@ -84,19 +84,24 @@ namespace NoFences
         /// <summary>Sample sticky notes in a few styles, including checkboxes.</summary>
         private static void RenderNotes(string outDir, IFenceHost host)
         {
-            const string text = "Einkaufen:\n[x] Milch\n[ ] Brot\n[ ] Kaffee\n\nAnrufen: Werkstatt wegen Termin am Freitag, 0664 123 456";
-            var themes = new[] { "postit", "nerd", "default", "family" };
-            const int w = 260, h = 250, gap = 24;
-            using var sheet = new Bitmap(themes.Length * (w + gap) + gap, h + 2 * gap, PixelFormat.Format32bppArgb);
+            const string text = "Einkaufen:\n[x] Milch\n[ ] Brot\n[ ] Kaffee\n\nTel.\t0664 123 456\nWeb:\twww.robertsspaceindustries.com";
+            var themes = new[] { "postit", "postit-pink", "postit-green", "postit-blue", "postit-orange", "nerd" };
+            const int w = 260, h = 260, gap = 24, columns = 3;
+            var rows = (themes.Length + columns - 1) / columns;
+            using var sheet = new Bitmap(columns * (w + gap) + gap, rows * (h + gap) + gap, PixelFormat.Format32bppArgb);
             using var g = Graphics.FromImage(sheet);
             DrawBackdrop(g, new Rectangle(Point.Empty, sheet.Size));
             for (var i = 0; i < themes.Length; i++)
             {
-                var info = new FenceInfo { Name = "Notiz", Kind = FenceKind.Note, Theme = themes[i], NoteText = text, TitleHeight = 30, BackgroundAlpha = 120 };
+                var info = new FenceInfo
+                {
+                    Name = "Notiz", Kind = FenceKind.Note, Theme = themes[i], NoteText = text, TitleHeight = 30, BackgroundAlpha = 120,
+                    ReminderAt = i == 0 ? DateTime.Today.AddHours(18) : null
+                };
                 using var window = new FenceWindow(host, info) { Size = new Size(w, h) };
                 window.ApplySettings();
                 var state = g.Save();
-                g.TranslateTransform(gap + i * (w + gap), gap);
+                g.TranslateTransform(gap + (i % columns) * (w + gap), gap + (i / columns) * (h + gap));
                 window.PaintFence(g);
                 g.Restore(state);
             }

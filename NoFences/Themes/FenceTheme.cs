@@ -180,7 +180,7 @@ namespace NoFences.Themes
 
     public static class ThemeRegistry
     {
-        public static IReadOnlyList<FenceTheme> All { get; } = new FenceTheme[]
+        private static readonly List<FenceTheme> BuiltIn = new FenceTheme[]
         {
             new DefaultTheme(),
             new StarCitizenTheme(),
@@ -192,9 +192,14 @@ namespace NoFences.Themes
             new FamilyTheme(),
             new GamingTheme(),
             new FinanceTheme(),
-            new SocialTheme(),
-            new PostItTheme()
-        };
+            new SocialTheme()
+        }.Concat(PostItTheme.AllColors()).ToList();
+
+        public static IReadOnlyList<FenceTheme> All { get; private set; } = BuiltIn;
+
+        /// <summary>Built-in styles plus user styles; a user style can't replace a built-in id.</summary>
+        public static void SetCustom(IEnumerable<FenceTheme> custom) =>
+            All = BuiltIn.Concat(custom.Where(c => BuiltIn.All(b => !b.Id.Equals(c.Id, StringComparison.OrdinalIgnoreCase)))).ToList();
 
         public static FenceTheme Get(string? id) =>
             All.FirstOrDefault(t => t.Id.Equals(id, StringComparison.OrdinalIgnoreCase)) ?? All[0];
