@@ -22,8 +22,10 @@ namespace NoFences.Util
         private static readonly HttpClient Http = CreateClient();
 
         /// <summary>Only the published single-file exe can replace itself (Assembly.Location is empty there).</summary>
+#pragma warning disable IL3000 // the empty Location is exactly what identifies the single-file build
         public static bool CanSelfUpdate =>
             string.IsNullOrEmpty(typeof(UpdateChecker).Assembly.Location) && Environment.ProcessPath != null;
+#pragma warning restore IL3000
 
         private static HttpClient CreateClient()
         {
