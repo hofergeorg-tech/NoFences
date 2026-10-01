@@ -49,6 +49,26 @@ Vorlage wählen (Bilder, Dokumente, Archive, Installer, Videos, Musik, Verknüpf
   Abschaltbar im Tray-Menü.
 - Tray → **Fences anzeigen** macht dasselbe, ebenso ein Doppelklick auf das Tray-Icon.
 
+## Fences nach vorne holen
+
+- **Strg+Alt+D** holt alle Fences vor die offenen Fenster, ohne etwas zu minimieren.
+- Sie bleiben vorne, bis du das Kürzel nochmal drückst, **Esc** drückst, daneben klickst oder einen Eintrag öffnest.
+- Tray → **Tastenkürzel**: Strg+Alt+Leertaste, Strg+Shift+D oder aus. Ist ein Kürzel schon von einem anderen
+  Programm belegt, meldet sich NoFences.
+
+## Sortieren
+
+Fence-Menü → **Sortieren nach**: Manuell (Drag & Drop), Name, Typ, Änderungsdatum (neueste zuerst) oder
+Größe (größte zuerst). Ordner stehen immer zuerst. Umsortieren per Ziehen geht nur bei „Manuell“.
+
+## Updates
+
+- NoFences schaut kurz nach dem Start und dann alle 6 Stunden auf GitHub nach einer neuen Version.
+- Gibt es eine, erscheint eine Benachrichtigung. Ein Klick darauf (oder Tray → **Update installieren**) lädt sie,
+  tauscht die EXE aus und startet NoFences neu. Danach zeigt „Was ist neu?“ die Änderungen.
+- Tray → **Jetzt nach Updates suchen** prüft sofort; **Automatisch nach Updates suchen** schaltet die Prüfung ab.
+- Dabei wird nur die öffentliche GitHub-Seite des Projekts abgefragt, es werden keine Daten von dir gesendet.
+
 ## Styles
 
 11 Styles: Standard (Glas), Star Citizen (HUD), Retro-Arcade, Hardware, Nerd, Hobby, Arbeit, Familie, Gaming,
@@ -60,7 +80,7 @@ Finanzen und Social.
 
 ## Einstellungen pro Fence
 
-Rechtsklick → **Fence-Einstellungen…**: Name, Typ (Verknüpfungen/Ordner), Ordner, Style, Titelhöhe, Icongröße,
+Rechtsklick → **Fence-Einstellungen…**: Name, Typ (Verknüpfungen/Ordner), Ordner, Style, Sortierung, Titelhöhe, Icongröße,
 Hintergrundfarbe, Deckkraft, Einsortier-Muster, Gesperrt, Einklappen.
 
 ## App-Optionen (Tray-Menü)

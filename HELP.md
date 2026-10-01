@@ -48,6 +48,26 @@ In a fence's settings, enter patterns under "Auto-sort from desktop", e.g. `*.pd
   Switch this off in the tray menu.
 - Tray → **Show fences** does the same; double-clicking the tray icon too.
 
+## Bringing fences to the front
+
+- **Ctrl+Alt+D** lifts all fences above the open windows without minimizing anything.
+- They stay in front until you press the shortcut again, press **Esc**, click outside them or open an item.
+- Tray → **Shortcut**: Ctrl+Alt+Space, Ctrl+Shift+D or off. If another program already uses the shortcut,
+  NoFences tells you.
+
+## Sorting
+
+Fence menu → **Sort by**: manual (drag & drop), name, type, date modified (newest first) or size (largest first).
+Folders always come first. Reordering by dragging only works in manual mode.
+
+## Updates
+
+- Shortly after starting and then every 6 hours, NoFences checks GitHub for a new version.
+- If there is one, a notification appears. Clicking it (or tray → **Install update**) downloads it, swaps the exe
+  and restarts NoFences. "What's new?" then shows the changes.
+- Tray → **Check for updates now** checks right away; **Check for updates automatically** turns the check off.
+- Only the project's public GitHub page is queried; no data about you is sent.
+
 ## Styles
 
 11 styles: Standard (glass), Star Citizen (HUD), Retro-Arcade, Hardware, Nerd, Hobby, Work, Family, Gaming,
@@ -59,7 +79,7 @@ Finance and Social.
 
 ## Settings per fence
 
-Right-click → **Fence settings…**: name, type (links/folder), folder, style, title height, icon size, background
+Right-click → **Fence settings…**: name, type (links/folder), folder, style, sorting, title height, icon size, background
 color, opacity, auto-sort patterns, locked, collapse.
 
 ## App options (tray menu)

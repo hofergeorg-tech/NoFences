@@ -9,6 +9,18 @@ namespace NoFences.Model
         Folder
     }
 
+    public enum FenceSortMode
+    {
+        /// <summary>Order chosen by drag & drop.</summary>
+        Manual,
+        Name,
+        Type,
+        /// <summary>Newest first.</summary>
+        Modified,
+        /// <summary>Largest first.</summary>
+        Size
+    }
+
     /*
      * Property names are part of the on-disk format (JSON, and the legacy XML migration).
      * Do not rename them.
@@ -58,6 +70,8 @@ namespace NoFences.Model
         /// moved into a folder fence, or linked into a links fence. Empty = no auto-sorting.
         /// </summary>
         public string? AutoSortPatterns { get; set; }
+
+        public FenceSortMode SortMode { get; set; } = FenceSortMode.Manual;
 
         /// <summary>
         /// Links fence: the entries. Folder fence: the user's preferred order of the folder's

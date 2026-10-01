@@ -20,6 +20,7 @@ namespace NoFences
         private readonly TrackBar opacity = new() { Minimum = 0, Maximum = 255, TickFrequency = 32, Dock = DockStyle.Fill };
         private readonly CheckBox lockedBox = new() { Text = Strings.Locked, AutoSize = true };
         private readonly CheckBox collapseBox = new() { Text = Strings.AutoCollapse, AutoSize = true };
+        private readonly ComboBox sortBox = new() { Dock = DockStyle.Fill, DropDownStyle = ComboBoxStyle.DropDownList };
         private readonly TextBox autoSortBox = new() { Dock = DockStyle.Fill };
         private readonly ComboBox presetBox = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 170 };
 
@@ -64,6 +65,9 @@ namespace NoFences
             Row(Strings.Kind, kindBox);
             Row(Strings.Folder, folderBox, browseButton);
             Row(Strings.Theme, themeBox);
+            foreach (var mode in Enum.GetValues<FenceSortMode>())
+                sortBox.Items.Add(Strings.SortModeName(mode));
+            Row(Strings.SortBy, sortBox);
             Row(Strings.TitleHeight, titleHeight);
             Row(Strings.IconSize, iconSizeBox);
             Row(Strings.Background, colorButton);
@@ -109,6 +113,7 @@ namespace NoFences
             lockedBox.Checked = info.Locked;
             collapseBox.Checked = info.CanMinify;
             autoSortBox.Text = info.AutoSortPatterns ?? "";
+            sortBox.SelectedIndex = (int)info.SortMode;
             UpdateColorButton();
             UpdateEnabled();
 
@@ -186,6 +191,7 @@ namespace NoFences
             info.Locked = lockedBox.Checked;
             info.CanMinify = collapseBox.Checked;
             info.AutoSortPatterns = string.IsNullOrWhiteSpace(autoSortBox.Text) ? null : autoSortBox.Text.Trim();
+            info.SortMode = (FenceSortMode)Math.Max(0, sortBox.SelectedIndex);
         }
     }
 }

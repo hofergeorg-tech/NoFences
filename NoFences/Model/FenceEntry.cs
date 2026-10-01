@@ -39,6 +39,36 @@ namespace NoFences.Model
             return System.IO.Path.GetFileName(Path);
         }
 
+        /// <summary>Folders first, then by the chosen key. Manual keeps the given order.</summary>
+        public static List<FenceEntry> Sort(List<FenceEntry> entries, FenceSortMode mode)
+        {
+            if (mode == FenceSortMode.Manual)
+                return entries;
+
+            var byName = StringComparer.CurrentCultureIgnoreCase;
+            IOrderedEnumerable<FenceEntry> ordered = entries.OrderBy(e => !e.IsFolder);
+            ordered = mode switch
+            {
+                FenceSortMode.Type => ordered.ThenBy(e => System.IO.Path.GetExtension(e.Path), byName),
+                FenceSortMode.Modified => ordered.ThenByDescending(e => SafeInfo(e)?.LastWriteTimeUtc ?? DateTime.MinValue),
+                FenceSortMode.Size => ordered.ThenByDescending(e => (SafeInfo(e) as FileInfo)?.Length ?? 0),
+                _ => ordered
+            };
+            return ordered.ThenBy(e => System.IO.Path.GetFileName(e.Path.TrimEnd('\\')), byName).ToList();
+        }
+
+        private static FileSystemInfo? SafeInfo(FenceEntry e)
+        {
+            try
+            {
+                return e.IsFolder ? new DirectoryInfo(e.Path) : new FileInfo(e.Path);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public void Open()
         {
             try

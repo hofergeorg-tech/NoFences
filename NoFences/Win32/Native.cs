@@ -19,6 +19,41 @@ namespace NoFences.Win32
 
         public const uint SWP_NOSIZE = 0x0001, SWP_NOMOVE = 0x0002, SWP_NOZORDER = 0x0004, SWP_NOACTIVATE = 0x0010;
         public static readonly IntPtr HWND_BOTTOM = new(1);
+        public static readonly IntPtr HWND_TOPMOST = new(-1);
+        public static readonly IntPtr HWND_NOTOPMOST = new(-2);
+
+        public const int WM_HOTKEY = 0x0312;
+        public const uint MOD_ALT = 0x1, MOD_CONTROL = 0x2, MOD_SHIFT = 0x4, MOD_WIN = 0x8, MOD_NOREPEAT = 0x4000;
+        public const int VK_LBUTTON = 0x01, VK_RBUTTON = 0x02, VK_ESCAPE = 0x1B;
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint modifiers, uint vk);
+
+        [DllImport("user32.dll")]
+        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr WindowFromPoint(Point point);
+
+        /// <summary>Whether a window belongs to this process (our menus, dialogs, fences).</summary>
+        public static bool IsOwnWindow(IntPtr hwnd)
+        {
+            if (hwnd == IntPtr.Zero)
+                return false;
+            GetWindowThreadProcessId(hwnd, out var pid);
+            return pid == Environment.ProcessId;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+
+        [DllImport("user32.dll")]
+        public static extern short GetAsyncKeyState(int vk);
+
+        public static bool IsKeyDown(int vk) => (GetAsyncKeyState(vk) & 0x8000) != 0;
 
         public const int GWL_EXSTYLE = -20;
         public const int GWLP_HWNDPARENT = -8;

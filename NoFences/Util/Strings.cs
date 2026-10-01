@@ -71,6 +71,38 @@ namespace NoFences.Util
         public static string SortNowDone(int n) => n == 1 ? T("1 file sorted into fences.", "1 Datei in Fences einsortiert.")
                                                           : T($"{n} files sorted into fences.", $"{n} Dateien in Fences einsortiert.");
         public static string DoubleClickToggle => T("Double-click desktop to hide fences", "Doppelklick auf Desktop blendet Fences aus");
+        public static string SortBy => T("Sort by", "Sortieren nach");
+        public static string SortModeName(Model.FenceSortMode mode) => mode switch
+        {
+            Model.FenceSortMode.Name => T("Name", "Name"),
+            Model.FenceSortMode.Type => T("Type", "Typ"),
+            Model.FenceSortMode.Modified => T("Date modified (newest first)", "Änderungsdatum (neueste zuerst)"),
+            Model.FenceSortMode.Size => T("Size (largest first)", "Größe (größte zuerst)"),
+            _ => T("Manual (drag & drop)", "Manuell (Drag & Drop)")
+        };
+
+        public static string PeekMenu => T("Bring fences to front", "Fences nach vorne holen");
+        public static string PeekHotkey => T("Shortcut", "Tastenkürzel");
+        public static string HotkeyName(string hotkey) => hotkey switch
+        {
+            "Off" => T("Off", "Aus"),
+            _ => De ? hotkey.Replace("Ctrl", "Strg").Replace("Space", "Leertaste") : hotkey
+        };
+        public static string HotkeyTaken(string hotkey) => T($"The shortcut {HotkeyName(hotkey)} is already used by another program. Pick another one in the tray menu.",
+                                                             $"Das Tastenkürzel {HotkeyName(hotkey)} wird schon von einem anderen Programm verwendet. Wähle im Tray-Menü ein anderes.");
+
+        public static string CheckForUpdatesAuto => T("Check for updates automatically", "Automatisch nach Updates suchen");
+        public static string CheckForUpdatesNow => T("Check for updates now", "Jetzt nach Updates suchen");
+        public static string InstallUpdate(Version v) => T($"Install update {v}", $"Update {v} installieren");
+        public static string UpdateAvailable(Version v) => T($"NoFences {v} is available. Click here to install it.",
+                                                             $"NoFences {v} ist verfügbar. Hier klicken zum Installieren.");
+        public static string UpdateAvailableManual(Version v) => T($"NoFences {v} is available. Click here to open the download page.",
+                                                                   $"NoFences {v} ist verfügbar. Hier klicken, um die Download-Seite zu öffnen.");
+        public static string UpToDate(Version v) => T($"You have the latest version ({v}).", $"Du hast die neueste Version ({v}).");
+        public static string UpdateDownloading => T("Downloading update…", "Update wird heruntergeladen…");
+        public static string UpdateFailed(string reason) => T($"The update failed: {reason}\nThe download page will open instead.",
+                                                              $"Das Update ist fehlgeschlagen: {reason}\nStattdessen öffnet sich die Download-Seite.");
+        public static string UpdateCheckFailed => T("Could not reach GitHub to check for updates.", "GitHub war für die Update-Prüfung nicht erreichbar.");
         public static string FolderMissing(string path) => T($"Folder not found:\n{path}", $"Ordner nicht gefunden:\n{path}");
     }
 }

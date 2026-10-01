@@ -2,6 +2,17 @@
 
 Alle wichtigen Änderungen an diesem Fork. English version: [CHANGELOG.md](CHANGELOG.md).
 
+## [2.1.0] - 2026-10-01
+
+### Neu
+- **Updates**: NoFences sucht auf GitHub nach neuen Versionen (kurz nach dem Start, dann alle 6 Stunden) und
+  installiert sie mit einem Klick auf die Benachrichtigung oder Tray → „Update installieren“. Abschaltbar;
+  „Jetzt nach Updates suchen“ im Tray.
+- **Fences nach vorne holen** per Tastenkürzel (Standard Strg+Alt+D; Strg+Alt+Leertaste, Strg+Shift+D oder aus im Tray).
+  Die Fences bleiben vorne, bis du das Kürzel nochmal drückst, Esc drückst, daneben klickst oder einen Eintrag öffnest.
+- **Sortierung pro Fence**: manuell (Drag & Drop), Name, Typ, Änderungsdatum oder Größe. Fence-Menü → „Sortieren nach“
+  oder in den Fence-Einstellungen. Ordner stehen immer zuerst.
+
 ## [2.0.0] - 2026-10-01
 
 Erste Version dieses Forks. Neu aufgebaut auf .NET 10, basierend auf
@@ -57,5 +68,6 @@ Erste Version dieses Forks. Neu aufgebaut auf .NET 10, basierend auf
 
 Original-NoFences von Twometer, siehe [Twometer/NoFences](https://github.com/Twometer/NoFences).
 
+[2.1.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.1.0
 [2.0.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.0.0
 [1.x]: https://github.com/Twometer/NoFences

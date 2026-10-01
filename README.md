@@ -17,7 +17,9 @@ Free, open-source desktop fences for Windows 10/11.
 - **Auto-sort**: give a fence patterns like `*.pdf; *.docx` (or pick a preset) and new desktop files
   matching them are moved into it automatically. Finished browser downloads are picked up too.
   Tray → "Tidy up desktop now" sorts what is already there.
-- **Double-click empty desktop space** to hide/show all fences.
+- **Double-click empty desktop space** to hide/show all fences; **Ctrl+Alt+D** brings them in front of all windows.
+- Sorting per fence (manual, name, type, date, size).
+- Built-in updates from GitHub releases with one click.
 - Reorder items by drag & drop, drag items between fences or out to Explorer.
 - Shell thumbnails (images, videos, PDFs …) and selectable icon size (24–96 px).
 - **11 styles**, globally or per fence (see below).

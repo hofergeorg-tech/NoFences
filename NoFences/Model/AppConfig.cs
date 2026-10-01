@@ -19,6 +19,14 @@ namespace NoFences.Model
         /// <summary>App version whose changelog the user has seen; a newer version shows "What's new" once.</summary>
         public string? LastSeenVersion { get; set; }
 
+        /// <summary>Look for new releases on GitHub at startup and every few hours.</summary>
+        public bool CheckForUpdates { get; set; } = true;
+
+        /// <summary>Shortcut that brings all fences to the front: see <see cref="PeekHotkeys"/>.</summary>
+        public string PeekHotkey { get; set; } = "Ctrl+Alt+D";
+
+        public static readonly IReadOnlyList<string> PeekHotkeys = new[] { "Ctrl+Alt+D", "Ctrl+Alt+Space", "Ctrl+Shift+D", "Off" };
+
         public List<FenceInfo> Fences { get; set; } = new();
     }
 }

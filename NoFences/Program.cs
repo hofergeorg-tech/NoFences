@@ -1,3 +1,4 @@
+using NoFences.Util;
 using NoFences.Win32;
 
 namespace NoFences
@@ -8,6 +9,16 @@ namespace NoFences
         private static void Main(string[] args)
         {
             CleanInheritedEnvironment();
+            args = UpdateChecker.FinishUpdate(args);
+            if (args.Length == 1 && args[0] == "--install-update")
+            {
+                // Non-interactive update (scripts/testing): install the latest release if newer.
+                ApplicationConfiguration.Initialize();
+                var latest = UpdateChecker.GetLatestAsync().GetAwaiter().GetResult();
+                if (latest != null && UpdateChecker.IsNewer(latest))
+                    UpdateChecker.InstallAsync(latest).GetAwaiter().GetResult();
+                return;
+            }
 
             if (args.Length == 2 && args[0] == "--preview")
             {

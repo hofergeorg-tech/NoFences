@@ -8,7 +8,7 @@ using NoFences.Win32;
 namespace NoFences
 {
     /// <summary>Owns the config, all fence windows and the tray icon. The app lives until "Exit".</summary>
-    public sealed class NoFencesApp : ApplicationContext, IFenceHost
+    public sealed partial class NoFencesApp : ApplicationContext, IFenceHost
     {
         private readonly List<FenceWindow> windows = new();
         private readonly NotifyIcon tray;
@@ -42,9 +42,12 @@ namespace NoFences
 
             sorter = new AutoSorter(() => Store.Config, OnAutoSorted);
             UpdateDesktopHook();
+            tray.BalloonTipClicked += (_, _) => balloonAction?.Invoke();
+            InitPeek();
+            InitUpdates();
 
             if (firstStart)
-                tray.ShowBalloonTip(8000, "NoFences", Strings.FirstStartHint, ToolTipIcon.Info);
+                ShowBalloon(Strings.FirstStartHint, timeout: 8000);
             ShowChangelogAfterUpdate(firstStart);
         }
 
@@ -67,6 +70,17 @@ namespace NoFences
             Store.RequestSave();
             windows.FirstOrDefault(w => w.Info == info)?.ReloadEntries();
         }
+
+        private Action? balloonAction;
+
+        /// <summary>Tray notification; <paramref name="onClick"/> runs if the user clicks it.</summary>
+        private void ShowBalloon(string text, Action? onClick = null, int timeout = 4000)
+        {
+            balloonAction = onClick;
+            tray.ShowBalloonTip(timeout, "NoFences", text, ToolTipIcon.Info);
+        }
+
+        private static void OpenUrl(string url) => Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
 
         public static void AddDocumentItems(ToolStripItemCollection items)
         {
@@ -103,11 +117,11 @@ namespace NoFences
         {
             if (!Store.Config.Fences.Any(f => !string.IsNullOrWhiteSpace(f.AutoSortPatterns)))
             {
-                tray.ShowBalloonTip(4000, "NoFences", Strings.SortNowNoRules, ToolTipIcon.Info);
+                ShowBalloon(Strings.SortNowNoRules);
                 return;
             }
             var count = sorter.SortDesktopNow();
-            tray.ShowBalloonTip(3000, "NoFences", Strings.SortNowDone(count), ToolTipIcon.Info);
+            ShowBalloon(Strings.SortNowDone(count));
         }
 
         public FenceTheme ThemeFor(FenceInfo info) => ThemeRegistry.Get(info.Theme ?? Store.Config.Theme);
@@ -177,6 +191,13 @@ namespace NoFences
         private void BuildTrayMenu(ContextMenuStrip menu)
         {
             menu.Items.Clear();
+            if (availableUpdate != null)
+            {
+                var update = new ToolStripMenuItem(Strings.InstallUpdate(availableUpdate.Version), null, (_, _) => InstallUpdate());
+                update.Font = new Font(update.Font, FontStyle.Bold);
+                menu.Items.Add(update);
+                menu.Items.Add(new ToolStripSeparator());
+            }
             menu.Items.Add(Strings.NewFence, null, (_, _) => CreateFence(FenceKind.Links));
             menu.Items.Add(Strings.NewFolderFence, null, (_, _) => CreateFence(FenceKind.Folder));
             menu.Items.Add(new ToolStripSeparator());
@@ -187,6 +208,7 @@ namespace NoFences
                 Store.RequestSave();
                 UpdateDesktopHook();
             }) { Checked = Store.Config.DesktopDoubleClickToggle });
+            AddPeekItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(Strings.SortNow, null, (_, _) => SortDesktopNow());
             menu.Items.Add(new ToolStripMenuItem(Strings.AutoSortEnabled, null, (_, _) =>
@@ -223,6 +245,7 @@ namespace NoFences
             menu.Items.Add(Strings.OpenDataFolder, null, (_, _) =>
                 Process.Start(new ProcessStartInfo(Store.DataDirectory) { UseShellExecute = true }));
             menu.Items.Add(new ToolStripSeparator());
+            AddUpdateItems(menu.Items);
             AddDocumentItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(Strings.Exit, null, (_, _) => ExitThread());
@@ -232,6 +255,8 @@ namespace NoFences
         {
             Store.SaveNow();
             desktopHook?.Dispose();
+            DisposePeek();
+            DisposeUpdates();
             sorter.Dispose();
             tray.Visible = false;
             tray.Dispose();

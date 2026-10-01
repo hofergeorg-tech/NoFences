@@ -137,6 +137,7 @@ namespace NoFences
                 LoadFolderEntries();
             else
                 entries = Info.Files.Select(FenceEntry.FromPath).OfType<FenceEntry>().ToList();
+            entries = FenceEntry.Sort(entries, Info.SortMode);
 
             if (hoverPath != null && !entries.Any(x => x.Path == hoverPath))
                 hoverPath = null;
@@ -395,11 +396,13 @@ namespace NoFences
                     return;
 
                 case Native.WM_SETFOCUS:
-                    Native.SendToBottom(Handle);
+                    if (!Peeking)
+                        Native.SendToBottom(Handle);
                     return;
 
                 case Native.WM_WINDOWPOSCHANGING:
-                    KeepAtBottom(m.LParam);
+                    if (!Peeking)
+                        KeepAtBottom(m.LParam);
                     break;
 
                 case Native.WM_SYSCOMMAND:
@@ -413,6 +416,25 @@ namespace NoFences
 
             if (m.Msg == Native.WM_NCHITTEST)
                 m.Result = new IntPtr(HitTest(PointToClient(new Point(unchecked((short)(long)m.LParam), unchecked((short)((long)m.LParam >> 16)))), (int)m.Result));
+        }
+
+        /// <summary>True while the fences are shown above all windows (peek shortcut).</summary>
+        public bool Peeking { get; private set; }
+
+        public void SetPeek(bool on)
+        {
+            if (Peeking == on || !IsHandleCreated)
+                return;
+            Peeking = on;
+            if (on)
+            {
+                Native.SetWindowPos(Handle, Native.HWND_TOPMOST, 0, 0, 0, 0, Native.SWP_NOSIZE | Native.SWP_NOMOVE | Native.SWP_NOACTIVATE);
+            }
+            else
+            {
+                Native.SetWindowPos(Handle, Native.HWND_NOTOPMOST, 0, 0, 0, 0, Native.SWP_NOSIZE | Native.SWP_NOMOVE | Native.SWP_NOACTIVATE);
+                Native.SendToBottom(Handle);
+            }
         }
 
         private static void KeepAtBottom(IntPtr lParam)
@@ -675,6 +697,11 @@ namespace NoFences
                 style.DropDownItems.Add(new ToolStripMenuItem(t.DisplayName, null, (_, _) => SetTheme(t.Id)) { Checked = Info.Theme == t.Id });
             menu.Items.Add(style);
 
+            var sort = new ToolStripMenuItem(Strings.SortBy);
+            foreach (var mode in Enum.GetValues<FenceSortMode>())
+                sort.DropDownItems.Add(new ToolStripMenuItem(Strings.SortModeName(mode), null, (_, _) => SetSortMode(mode)) { Checked = Info.SortMode == mode });
+            menu.Items.Add(sort);
+
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(Strings.NewFence, null, (_, _) => app.CreateFence(FenceKind.Links));
             menu.Items.Add(Strings.NewFolderFence, null, (_, _) => app.CreateFence(FenceKind.Folder));
@@ -691,6 +718,19 @@ namespace NoFences
                 BeginInvoke(menu.Dispose);
             };
             menu.Show(this, location);
+        }
+
+        private void SetSortMode(FenceSortMode mode)
+        {
+            if (mode == FenceSortMode.Manual && Info.SortMode != FenceSortMode.Manual)
+            {
+                // Start manual ordering from what the user currently sees.
+                var visible = entries.Select(e => e.Path).ToList();
+                Info.Files = visible.Concat(Info.Files.Where(f => !visible.Contains(f, StringComparer.OrdinalIgnoreCase))).ToList();
+            }
+            Info.SortMode = mode;
+            app.RequestSave();
+            ReloadEntries();
         }
 
         private void SetTheme(string? id)
@@ -778,7 +818,7 @@ namespace NoFences
 
             var internalItem = GetInternal(e.Data);
             if (internalItem?.fence == Info.Id)
-                return DragDropEffects.Move; // reorder
+                return Info.SortMode == FenceSortMode.Manual ? DragDropEffects.Move : DragDropEffects.None; // reorder
 
             var allowed = e.AllowedEffect;
             if (Info.Kind == FenceKind.Links)
@@ -821,7 +861,10 @@ namespace NoFences
         private void UpdateDrag(DragEventArgs e)
         {
             e.Effect = ComputeEffect(e);
-            var newIndex = e.Effect == DragDropEffects.None ? -1 : InsertIndexAt(PointToClient(new Point(e.X, e.Y)));
+            // With automatic sorting the drop position doesn't matter, so don't show a marker.
+            var newIndex = e.Effect == DragDropEffects.None || Info.SortMode != FenceSortMode.Manual
+                ? -1
+                : InsertIndexAt(PointToClient(new Point(e.X, e.Y)));
             if (newIndex != insertIndex)
             {
                 insertIndex = newIndex;
