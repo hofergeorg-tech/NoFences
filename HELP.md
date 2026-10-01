@@ -16,6 +16,8 @@ NoFences puts boxes ("fences") on your desktop that keep your icons organized. G
 - **Folder fence**: shows the contents of a folder. Dropping files onto it **moves** them into that folder
   (hold Ctrl to copy), so they really leave the desktop. Create one via "New folder fence…".
 
+- **Note**: a sticky note with text instead of files. Create one via "New note".
+
 Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use it as a folder fence.
 
 ## Working with items
@@ -24,6 +26,13 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
 - Drag items to reorder them, onto another fence to move them there, or into Explorer.
 - Mouse wheel scrolls when a fence is full.
 - "Remove from fence" (link fences) only removes the link, never the file.
+
+## Notes
+
+- **Double-click** a note to write; **Esc** or a click outside saves.
+- Lines starting with `[ ]` become checkboxes. A click ticks them (`[x]`) and strikes the line through.
+- Text you drag onto a note (e.g. from a browser) is appended at the bottom.
+- New notes use the Post-it style; any other style works too.
 
 ## Moving and resizing
 
@@ -70,8 +79,8 @@ Folders always come first. Reordering by dragging only works in manual mode.
 
 ## Styles
 
-11 styles: Standard (glass), Star Citizen (HUD), Retro-Arcade, Hardware, Nerd, Hobby, Work, Family, Gaming,
-Finance and Social.
+12 styles: Standard (glass), Star Citizen (HUD), Retro-Arcade, Hardware, Nerd, Hobby, Work, Family, Gaming,
+Finance, Social and Post-it.
 
 - Tray → **Default style** sets the style for all fences.
 - Fence menu → **Style** overrides it for one fence.

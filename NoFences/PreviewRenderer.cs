@@ -77,6 +77,30 @@ namespace NoFences
                 window.Dispose();
             }
             overview.Save(Path.Combine(outDir, "styles.png"), ImageFormat.Png);
+
+            RenderNotes(outDir, host);
+        }
+
+        /// <summary>Sample sticky notes in a few styles, including checkboxes.</summary>
+        private static void RenderNotes(string outDir, IFenceHost host)
+        {
+            const string text = "Einkaufen:\n[x] Milch\n[ ] Brot\n[ ] Kaffee\n\nAnrufen: Werkstatt wegen Termin am Freitag, 0664 123 456";
+            var themes = new[] { "postit", "nerd", "default", "family" };
+            const int w = 260, h = 250, gap = 24;
+            using var sheet = new Bitmap(themes.Length * (w + gap) + gap, h + 2 * gap, PixelFormat.Format32bppArgb);
+            using var g = Graphics.FromImage(sheet);
+            DrawBackdrop(g, new Rectangle(Point.Empty, sheet.Size));
+            for (var i = 0; i < themes.Length; i++)
+            {
+                var info = new FenceInfo { Name = "Notiz", Kind = FenceKind.Note, Theme = themes[i], NoteText = text, TitleHeight = 30, BackgroundAlpha = 120 };
+                using var window = new FenceWindow(host, info) { Size = new Size(w, h) };
+                window.ApplySettings();
+                var state = g.Save();
+                g.TranslateTransform(gap + i * (w + gap), gap);
+                window.PaintFence(g);
+                g.Restore(state);
+            }
+            sheet.Save(Path.Combine(outDir, "notes.png"), ImageFormat.Png);
         }
 
         /// <summary>A neutral "wallpaper" that is neither too dark nor too light, so every style shows.</summary>

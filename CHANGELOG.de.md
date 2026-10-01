@@ -2,6 +2,14 @@
 
 Alle wichtigen Änderungen an diesem Fork. English version: [CHANGELOG.md](CHANGELOG.md).
 
+## [2.2.0] - 2026-10-01
+
+### Neu
+- **Notizen (Post-its)**: neuer Fence-Typ „Notiz“ (Tray- oder Fence-Menü → „Neue Notiz“). Doppelklick zum Schreiben,
+  Esc oder ein Klick daneben speichert. Zeilen mit `[ ]` am Anfang werden zu Kästchen, die man per Klick abhakt.
+  Auf eine Notiz gezogener Text wird angehängt.
+- **Post-it-Style**: gelbes Papier, Klebestreifen, Eselsohr und Handschrift. Neue Notizen bekommen ihn automatisch.
+
 ## [2.1.0] - 2026-10-01
 
 ### Neu
@@ -68,6 +76,7 @@ Erste Version dieses Forks. Neu aufgebaut auf .NET 10, basierend auf
 
 Original-NoFences von Twometer, siehe [Twometer/NoFences](https://github.com/Twometer/NoFences).
 
+[2.2.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.2.0
 [2.1.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.1.0
 [2.0.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.0.0
 [1.x]: https://github.com/Twometer/NoFences

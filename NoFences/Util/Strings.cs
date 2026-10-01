@@ -103,6 +103,12 @@ namespace NoFences.Util
         public static string UpdateFailed(string reason) => T($"The update failed: {reason}\nThe download page will open instead.",
                                                               $"Das Update ist fehlgeschlagen: {reason}\nStattdessen öffnet sich die Download-Seite.");
         public static string UpdateCheckFailed => T("Could not reach GitHub to check for updates.", "GitHub war für die Update-Prüfung nicht erreichbar.");
+        public static string NewNote => T("New note", "Neue Notiz");
+        public static string NoteName => T("Note", "Notiz");
+        public static string EditNote => T("Edit note", "Notiz bearbeiten");
+        public static string NoteHint => T("Double-click to write.\nLines starting with [ ] become checkboxes.",
+                                           "Doppelklick zum Schreiben.\nZeilen mit [ ] am Anfang werden zu Kästchen.");
+        public static string KindNote => T("Note (sticky note with text)", "Notiz (Post-it mit Text)");
         public static string FolderMissing(string path) => T($"Folder not found:\n{path}", $"Ordner nicht gefunden:\n{path}");
     }
 }

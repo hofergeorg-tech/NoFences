@@ -17,6 +17,8 @@ NoFences legt Boxen („Fences“) auf deinen Desktop, die deine Icons ordnen. E
 - **Ordner-Fence**: zeigt den Inhalt eines Ordners. Reingezogene Dateien werden in diesen Ordner **verschoben**
   (mit Strg kopiert), sie verschwinden also wirklich vom Desktop. Anlegen über „Neuer Ordner-Fence…“.
 
+- **Notiz**: ein Post-it mit Text statt Dateien. Anlegen über „Neue Notiz“.
+
 Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit` anlegen und als Ordner-Fence verwenden.
 
 ## Mit Einträgen arbeiten
@@ -25,6 +27,13 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 - Einträge ziehen zum Umsortieren, auf einen anderen Fence zum Verschieben oder in den Explorer.
 - Mit dem Mausrad scrollen, wenn ein Fence voll ist.
 - „Aus Fence entfernen“ (Verknüpfungs-Fences) entfernt nur den Verweis, nie die Datei.
+
+## Notizen
+
+- **Doppelklick** auf die Notiz zum Schreiben; **Esc** oder ein Klick daneben speichert.
+- Zeilen, die mit `[ ]` beginnen, werden zu Kästchen. Ein Klick hakt sie ab (`[x]`) und streicht die Zeile durch.
+- Text, den du auf eine Notiz ziehst (z. B. aus dem Browser), wird unten angehängt.
+- Neue Notizen haben den Post-it-Style; jeder andere Style geht auch.
 
 ## Verschieben und Größe ändern
 
@@ -71,8 +80,8 @@ Größe (größte zuerst). Ordner stehen immer zuerst. Umsortieren per Ziehen ge
 
 ## Styles
 
-11 Styles: Standard (Glas), Star Citizen (HUD), Retro-Arcade, Hardware, Nerd, Hobby, Arbeit, Familie, Gaming,
-Finanzen und Social.
+12 Styles: Standard (Glas), Star Citizen (HUD), Retro-Arcade, Hardware, Nerd, Hobby, Arbeit, Familie, Gaming,
+Finanzen, Social und Post-it.
 
 - Tray → **Standard-Style** gilt für alle Fences.
 - Fence-Menü → **Style** überschreibt ihn für einen Fence.

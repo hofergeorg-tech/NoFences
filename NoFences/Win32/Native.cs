@@ -38,6 +38,12 @@ namespace NoFences.Win32
         [DllImport("user32.dll")]
         public static extern IntPtr WindowFromPoint(Point point);
 
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        /// <summary>Works while handling the user's own click (Windows only allows it then).</summary>
+        public static void SetForegroundWindowSafe(IntPtr hWnd) => SetForegroundWindow(hWnd);
+
         /// <summary>Whether a window belongs to this process (our menus, dialogs, fences).</summary>
         public static bool IsOwnWindow(IntPtr hwnd)
         {

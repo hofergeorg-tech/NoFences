@@ -3,6 +3,14 @@
 All notable changes to this fork. Format based on [Keep a Changelog](https://keepachangelog.com/),
 versions follow [Semantic Versioning](https://semver.org/). German version: [CHANGELOG.de.md](CHANGELOG.de.md).
 
+## [2.2.0] - 2026-10-01
+
+### Added
+- **Sticky notes**: a new fence type "Note" (tray or fence menu → "New note"). Double-click to write, Esc or a
+  click outside saves. Lines starting with `[ ]` become checkboxes you can tick with a click.
+  Text dragged onto a note is appended.
+- **Post-it style**: yellow paper, adhesive strip, dog-ear and handwriting. New notes use it by default.
+
 ## [2.1.0] - 2026-10-01
 
 ### Added
@@ -68,6 +76,7 @@ First release of this fork. Rewritten on .NET 10; based on
 
 Original NoFences by Twometer, see [Twometer/NoFences](https://github.com/Twometer/NoFences).
 
+[2.2.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.2.0
 [2.1.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.1.0
 [2.0.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.0.0
 [1.x]: https://github.com/Twometer/NoFences

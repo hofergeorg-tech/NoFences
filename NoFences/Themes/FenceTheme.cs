@@ -48,6 +48,16 @@ namespace NoFences.Themes
         /// <summary>Color of the "drop files here" hint in empty fences (dark for light styles).</summary>
         public virtual Color HintColor => Color.FromArgb(150, Color.White);
 
+        /// <summary>Background and text color of the note editor (a normal, opaque text box).</summary>
+        public virtual (Color Back, Color Fore) EditorColors => (Color.FromArgb(28, 30, 36), Color.FromArgb(235, 238, 245));
+
+        /// <summary>Font for note text; by default the label font a bit larger.</summary>
+        public virtual Font CreateNoteFont(float s)
+        {
+            using var label = CreateLabelFont(s);
+            return new Font(label.FontFamily, label.Size * 1.2f, FontStyle.Regular, GraphicsUnit.Pixel);
+        }
+
         protected int Alpha(FenceInfo info) => Math.Clamp(Math.Max(info.BackgroundAlpha, MinAlpha), 0, 255);
 
         /// <summary>Stable per-fence randomness, so decorations don't jump between repaints.</summary>
@@ -173,7 +183,8 @@ namespace NoFences.Themes
             new FamilyTheme(),
             new GamingTheme(),
             new FinanceTheme(),
-            new SocialTheme()
+            new SocialTheme(),
+            new PostItTheme()
         };
 
         public static FenceTheme Get(string? id) =>

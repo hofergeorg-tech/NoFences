@@ -140,6 +140,15 @@ namespace NoFences
                 PosY = area.Top + 150 + offset
             };
 
+            if (kind == FenceKind.Note)
+            {
+                info.Name = name ?? Strings.NoteName;
+                info.Theme = "postit";
+                info.Width = 260;
+                info.Height = 240;
+                info.TitleHeight = 30;
+            }
+
             if (kind == FenceKind.Folder)
             {
                 using var dlg = new FolderBrowserDialog { Description = Strings.ChooseFolder, UseDescriptionForTitle = true };
@@ -200,6 +209,7 @@ namespace NoFences
             }
             menu.Items.Add(Strings.NewFence, null, (_, _) => CreateFence(FenceKind.Links));
             menu.Items.Add(Strings.NewFolderFence, null, (_, _) => CreateFence(FenceKind.Folder));
+            menu.Items.Add(Strings.NewNote, null, (_, _) => CreateFence(FenceKind.Note));
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(new ToolStripMenuItem(Strings.ShowFences, null, (_, _) => ToggleVisible()) { Checked = fencesVisible });
             menu.Items.Add(new ToolStripMenuItem(Strings.DoubleClickToggle, null, (_, _) =>

@@ -54,7 +54,7 @@ namespace NoFences
                     grid.Controls.Add(new Label { AutoSize = true });
             }
 
-            kindBox.Items.AddRange(new object[] { Strings.KindLinks, Strings.KindFolder });
+            kindBox.Items.AddRange(new object[] { Strings.KindLinks, Strings.KindFolder, Strings.KindNote }); // index = (int)FenceKind
             themeBox.Items.Add(Strings.ThemeInherit);
             foreach (var t in ThemeRegistry.All)
                 themeBox.Items.Add(t.DisplayName);
@@ -101,7 +101,7 @@ namespace NoFences
 
             // Values
             nameBox.Text = info.Name;
-            kindBox.SelectedIndex = info.Kind == FenceKind.Folder ? 1 : 0;
+            kindBox.SelectedIndex = (int)info.Kind;
             folderBox.Text = info.FolderPath ?? "";
             var themeIndex = info.Theme == null ? 0 : ThemeRegistry.All.ToList().FindIndex(t => t.Id == info.Theme) + 1;
             themeBox.SelectedIndex = Math.Max(0, themeIndex);
@@ -178,7 +178,7 @@ namespace NoFences
         public void ApplyTo(FenceInfo info)
         {
             info.Name = string.IsNullOrWhiteSpace(nameBox.Text) ? info.Name : nameBox.Text.Trim();
-            var kind = kindBox.SelectedIndex == 1 ? FenceKind.Folder : FenceKind.Links;
+            var kind = (FenceKind)Math.Max(0, kindBox.SelectedIndex);
             if (kind != info.Kind || !string.Equals(info.FolderPath, folderBox.Text, StringComparison.OrdinalIgnoreCase))
                 info.Files.Clear(); // the stored order belongs to the old content
             info.Kind = kind;

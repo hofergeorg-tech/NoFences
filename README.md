@@ -17,12 +17,13 @@ Free, open-source desktop fences for Windows 10/11.
 - **Auto-sort**: give a fence patterns like `*.pdf; *.docx` (or pick a preset) and new desktop files
   matching them are moved into it automatically. Finished browser downloads are picked up too.
   Tray → "Tidy up desktop now" sorts what is already there.
+- **Sticky notes**: note fences with free text and clickable `[ ]` checkboxes, with a Post-it style.
 - **Double-click empty desktop space** to hide/show all fences; **Ctrl+Alt+D** brings them in front of all windows.
 - Sorting per fence (manual, name, type, date, size).
 - Built-in updates from GitHub releases with one click.
 - Reorder items by drag & drop, drag items between fences or out to Explorer.
 - Shell thumbnails (images, videos, PDFs …) and selectable icon size (24–96 px).
-- **11 styles**, globally or per fence (see below).
+- **12 styles**, globally or per fence (see below).
 - Auto-collapse to the title bar, lock, background color/opacity, title height.
 - Tray icon: new fence, show/hide all fences, autostart, file extensions, exit.
 - Per-monitor DPI aware; fences that end up off-screen are moved back.
@@ -38,7 +39,9 @@ See [CHANGELOG.md](CHANGELOG.md) ([Deutsch](CHANGELOG.de.md)) for all changes.
 ![All styles](docs/styles.png)
 
 Standard (glass) · Star Citizen (HUD) · Retro-Arcade · Hardware (circuit board) · Nerd (terminal) ·
-Hobby (pinboard) · Work (business) · Family · Gaming (RGB) · Finance (trading desk) · Social
+Hobby (pinboard) · Work (business) · Family · Gaming (RGB) · Finance (trading desk) · Social · Post-it
+
+![Sticky notes](docs/notes.png)
 
 Pick one in the tray menu (default style) or per fence via right-click → Style.
 `NoFences.exe --preview <folder>` renders all styles with sample items into PNGs.

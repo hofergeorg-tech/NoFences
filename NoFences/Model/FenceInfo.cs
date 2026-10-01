@@ -6,7 +6,10 @@ namespace NoFences.Model
         Links,
 
         /// <summary>Mirrors the live contents of a folder; dropping files moves them into it.</summary>
-        Folder
+        Folder,
+
+        /// <summary>A sticky note: free text, lines starting with "[ ]" become checkboxes.</summary>
+        Note
     }
 
     public enum FenceSortMode
@@ -72,6 +75,9 @@ namespace NoFences.Model
         public string? AutoSortPatterns { get; set; }
 
         public FenceSortMode SortMode { get; set; } = FenceSortMode.Manual;
+
+        /// <summary>Only used for <see cref="FenceKind.Note"/>; lines separated by '\n'.</summary>
+        public string NoteText { get; set; } = "";
 
         /// <summary>
         /// Links fence: the entries. Folder fence: the user's preferred order of the folder's

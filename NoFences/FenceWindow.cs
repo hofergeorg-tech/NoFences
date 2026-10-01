@@ -9,7 +9,7 @@ using Peter;
 
 namespace NoFences
 {
-    public sealed class FenceWindow : Form
+    public sealed partial class FenceWindow : Form
     {
         private const string InternalDragFormat = "NoFences.Item";
         private const int ResizeBorder = 8;
@@ -118,6 +118,7 @@ namespace NoFences
             labelFont?.Dispose();
             titleFont = theme.CreateTitleFont(titleHeight);
             labelFont = theme.CreateLabelFont(scale);
+            ApplyNoteSettings();
 
             if (IsHandleCreated)
                 Native.SetCornerPreference(Handle, theme.CornerPreference);
@@ -242,8 +243,11 @@ namespace NoFences
                 itemRects.Add(new Rectangle(pad + col * (itemWidth + gap), pad + row * (itemHeight + gap), itemWidth, itemHeight));
             }
 
-            contentHeight = itemRects.Count == 0 ? 0 : itemRects[^1].Bottom + pad;
+            // Notes measure their text while painting and set contentHeight there.
+            if (!IsNote)
+                contentHeight = itemRects.Count == 0 ? 0 : itemRects[^1].Bottom + pad;
             scrollOffset = Math.Clamp(scrollOffset, 0, MaxScroll);
+            LayoutEditor();
         }
 
         private Rectangle ToClient(Rectangle contentRect) => new(contentRect.X, contentRect.Y + titleHeight - scrollOffset, contentRect.Width, contentRect.Height);
@@ -300,7 +304,9 @@ namespace NoFences
             var view = new Rectangle(0, titleHeight, bounds.Width, ViewHeight);
             g.SetClip(view);
 
-            if (entries.Count == 0)
+            if (IsNote)
+                DrawNote(g, view);
+            else if (entries.Count == 0)
                 DrawEmptyHint(g, view);
 
             for (var i = 0; i < entries.Count; i++)
@@ -391,11 +397,15 @@ namespace NoFences
                     return;
 
                 case Native.WM_MOUSEACTIVATE:
-                    // Clicking a fence must not bring it in front of other windows.
+                    // Clicking a fence must not bring it in front of other windows (except while typing a note).
+                    if (Editing)
+                        break;
                     m.Result = new IntPtr(Native.MA_NOACTIVATE);
                     return;
 
                 case Native.WM_SETFOCUS:
+                    if (Editing)
+                        break;
                     if (!Peeking)
                         Native.SendToBottom(Handle);
                     return;
@@ -510,7 +520,7 @@ namespace NoFences
                 return;
             }
             // Don't collapse while the user is dragging, resizing or has a menu open.
-            if (MouseButtons != MouseButtons.None || Capture || appMenuOpen)
+            if (MouseButtons != MouseButtons.None || Capture || appMenuOpen || Editing)
                 return;
             if (!Bounds.Contains(Cursor.Position))
                 Collapse();
@@ -610,6 +620,12 @@ namespace NoFences
             base.OnMouseDown(e);
             if (e.Button != MouseButtons.Left)
                 return;
+            if (IsNote)
+            {
+                if (e.Clicks == 1)
+                    NoteClick(e.Location);
+                return;
+            }
             var index = HitTestItem(e.Location);
             selectedPath = index >= 0 ? entries[index].Path : null;
             mouseDownAt = e.Location;
@@ -638,6 +654,14 @@ namespace NoFences
             base.OnMouseDoubleClick(e);
             if (e.Button != MouseButtons.Left)
                 return;
+            if (IsNote)
+            {
+                // A fast double click on a checkbox toggles twice; don't also open the editor then.
+                var p = new PointF(e.X, e.Y - titleHeight + scrollOffset);
+                if (e.Y >= titleHeight && !checkboxes.Any(c => RectangleF.Inflate(c.box, Px(3), Px(3)).Contains(p)))
+                    StartEditNote();
+                return;
+            }
             var index = HitTestItem(e.Location);
             if (index >= 0)
                 entries[index].Open();
@@ -680,6 +704,8 @@ namespace NoFences
         {
             var menu = new ContextMenuStrip();
 
+            if (IsNote)
+                menu.Items.Add(Strings.EditNote, null, (_, _) => StartEditNote());
             if (entry != null && Info.Kind == FenceKind.Links)
                 menu.Items.Add(Strings.RemoveItem, null, (_, _) => RemoveLink(entry.Path));
             if (Info.Kind == FenceKind.Folder && Directory.Exists(Info.FolderPath))
@@ -700,11 +726,13 @@ namespace NoFences
             var sort = new ToolStripMenuItem(Strings.SortBy);
             foreach (var mode in Enum.GetValues<FenceSortMode>())
                 sort.DropDownItems.Add(new ToolStripMenuItem(Strings.SortModeName(mode), null, (_, _) => SetSortMode(mode)) { Checked = Info.SortMode == mode });
-            menu.Items.Add(sort);
+            if (!IsNote)
+                menu.Items.Add(sort);
 
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(Strings.NewFence, null, (_, _) => app.CreateFence(FenceKind.Links));
             menu.Items.Add(Strings.NewFolderFence, null, (_, _) => app.CreateFence(FenceKind.Folder));
+            menu.Items.Add(Strings.NewNote, null, (_, _) => app.CreateFence(FenceKind.Note));
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(new ToolStripMenuItem(Strings.Autostart, null, (_, _) => NoFencesApp.ToggleAutostart()) { Checked = SystemSettings.AutostartEnabled });
             NoFencesApp.AddDocumentItems(menu.Items);
@@ -813,6 +841,8 @@ namespace NoFences
 
         private DragDropEffects ComputeEffect(DragEventArgs e)
         {
+            if (IsNote)
+                return !Info.Locked && !Editing && e.Data?.GetDataPresent(DataFormats.UnicodeText) == true ? DragDropEffects.Copy : DragDropEffects.None;
             if (Info.Locked || e.Data?.GetDataPresent(DataFormats.FileDrop) != true)
                 return DragDropEffects.None;
 
@@ -891,6 +921,12 @@ namespace NoFences
                 return;
             }
             e.Effect = effect;
+
+            if (IsNote)
+            {
+                AppendDroppedText(e.Data?.GetData(DataFormats.UnicodeText) as string ?? "");
+                return;
+            }
 
             var files = e.Data?.GetData(DataFormats.FileDrop) as string[] ?? Array.Empty<string>();
             var internalItem = GetInternal(e.Data);
@@ -971,6 +1007,7 @@ namespace NoFences
                 labelFont?.Dispose();
                 labelFormat.Dispose();
                 labelFormatSingleLine.Dispose();
+                DisposeNote();
                 shellContextMenu.DestroyHandle();
             }
             base.Dispose(disposing);
