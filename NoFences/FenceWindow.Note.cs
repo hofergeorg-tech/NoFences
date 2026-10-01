@@ -41,7 +41,11 @@ namespace NoFences
             }
         }
 
-        private Rectangle NoteArea => new(Px(12 + theme.ContentInset), titleHeight + Px(8), ClientSize.Width - Px(24 + 2 * theme.ContentInset), Math.Max(0, ViewHeight - Px(16)));
+        private Rectangle NoteArea => new(
+            Px(12 + theme.ContentInset),
+            titleHeight + Px(8),
+            Math.Max(Px(20), ClientSize.Width - Px(24 + 2 * theme.ContentInset)),
+            Math.Max(Px(20), ViewHeight - Px(16 + theme.BottomInset)));
 
         private void DrawNote(Graphics g, Rectangle view)
         {
@@ -58,6 +62,9 @@ namespace NoFences
                 contentHeight = 0;
                 return;
             }
+
+            // Keep long notes on the paper, out of margins/shadows the theme draws around it.
+            g.SetClip(Rectangle.Intersect(view, new Rectangle(0, area.Top - Px(4), ClientSize.Width, area.Height + Px(8))));
 
             var y = (float)area.Y - scrollOffset;
             var lines = Info.NoteText.Split('\n');

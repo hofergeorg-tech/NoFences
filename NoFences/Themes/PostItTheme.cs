@@ -34,6 +34,9 @@ namespace NoFences.Themes
 
         public override int ContentInset => 13;
 
+        // Paper ends above the clear shadow margin.
+        public override int BottomInset => (int)BottomMargin + 4;
+
         public override Color HintColor => Color.FromArgb(140, Ink);
 
         public override (Color Back, Color Fore) EditorColors => (Color.FromArgb(255, 240, 138), Ink);

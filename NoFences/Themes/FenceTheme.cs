@@ -26,6 +26,9 @@ namespace NoFences.Themes
         /// <summary>Extra inner padding (logical px) so items don't overlap theme decorations.</summary>
         public virtual int ContentInset => 0;
 
+        /// <summary>Extra space at the bottom (logical px) that is not part of the fence's surface, e.g. a drawn shadow.</summary>
+        public virtual int BottomInset => 0;
+
         public abstract Font CreateTitleFont(int titleHeightPx);
 
         /// <summary>Label font in pixels; <paramref name="s"/> is the DPI scale.</summary>
