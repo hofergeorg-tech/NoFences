@@ -21,6 +21,8 @@ First release of this fork. Rewritten on .NET 10; based on
 - `--preview <folder>` renders all styles with sample items into PNGs.
 - **Tray icon** with new fence, show/hide fences, start with Windows, file extensions, open config folder, exit.
 - "Start with Windows" also in every fence's context menu.
+- **Help** and **What's new?** in the tray and fence menus, in English and German (follows the Windows
+  language). "What's new?" opens once by itself after an update.
 - Drag & drop: reorder items, move items between fences, drag items out to Explorer.
 - Shell thumbnails for images, videos, PDFs etc.; icon size 24–96 px.
 - One settings dialog per fence: name, type, folder, style, title height, icon size, color, opacity,

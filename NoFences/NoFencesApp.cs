@@ -23,6 +23,7 @@ namespace NoFences
         public NoFencesApp()
         {
             Store.Load();
+            var firstStart = Store.Config.Fences.Count == 0;
             foreach (var info in Store.Config.Fences)
                 OpenWindow(info);
             if (windows.Count == 0)
@@ -41,6 +42,10 @@ namespace NoFences
 
             sorter = new AutoSorter(() => Store.Config, OnAutoSorted);
             UpdateDesktopHook();
+
+            if (firstStart)
+                tray.ShowBalloonTip(8000, "NoFences", Strings.FirstStartHint, ToolTipIcon.Info);
+            ShowChangelogAfterUpdate(firstStart);
         }
 
         private void UpdateDesktopHook()
@@ -61,6 +66,25 @@ namespace NoFences
         {
             Store.RequestSave();
             windows.FirstOrDefault(w => w.Info == info)?.ReloadEntries();
+        }
+
+        public static void AddDocumentItems(ToolStripItemCollection items)
+        {
+            items.Add(Strings.Help, null, (_, _) => DocumentViewer.ShowDocument(Strings.HelpDocument, Strings.Help));
+            items.Add(Strings.WhatsNew, null, (_, _) => DocumentViewer.ShowDocument(Strings.ChangelogDocument, Strings.WhatsNew));
+        }
+
+        /// <summary>Shows the changelog once after an update (not on the very first start).</summary>
+        private void ShowChangelogAfterUpdate(bool firstStart)
+        {
+            var version = typeof(NoFencesApp).Assembly.GetName().Version?.ToString(3) ?? "";
+            if (Store.Config.LastSeenVersion == version)
+                return;
+            var show = !firstStart;
+            Store.Config.LastSeenVersion = version;
+            Store.RequestSave();
+            if (show)
+                DocumentViewer.ShowDocument(Strings.ChangelogDocument, Strings.WhatsNew);
         }
 
         public static void ToggleAutostart()
@@ -198,6 +222,8 @@ namespace NoFences
 
             menu.Items.Add(Strings.OpenDataFolder, null, (_, _) =>
                 Process.Start(new ProcessStartInfo(Store.DataDirectory) { UseShellExecute = true }));
+            menu.Items.Add(new ToolStripSeparator());
+            AddDocumentItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(Strings.Exit, null, (_, _) => ExitThread());
         }

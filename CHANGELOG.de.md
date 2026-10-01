@@ -21,6 +21,8 @@ Erste Version dieses Forks. Neu aufgebaut auf .NET 10, basierend auf
 - **Tray-Icon** mit neuer Fence, Fences ein-/ausblenden, Mit Windows starten, Dateiendungen,
   Konfigurationsordner öffnen, Beenden.
 - „Mit Windows starten“ zusätzlich im Rechtsklick-Menü jedes Fences.
+- **Hilfe** und **Was ist neu?** im Tray- und Fence-Menü, auf Deutsch und Englisch (folgt der Windows-Sprache).
+  „Was ist neu?“ öffnet sich nach einem Update einmal von selbst.
 - Drag & Drop: Einträge umsortieren, zwischen Fences verschieben, in den Explorer ziehen.
 - Vorschaubilder für Bilder, Videos, PDFs usw.; Icongröße 24–96 px.
 - Ein Einstellungsdialog pro Fence: Name, Typ, Ordner, Style, Titelhöhe, Icongröße, Farbe, Deckkraft,

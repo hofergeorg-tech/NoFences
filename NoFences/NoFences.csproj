@@ -34,6 +34,12 @@
 
   <ItemGroup>
     <EmbeddedResource Include="NoFences.ico" LogicalName="NoFences.ico" />
+    <!-- Help and changelog live in the repo root and are shown in-app -->
+    <EmbeddedResource Include="..\HELP.md" LogicalName="HELP.md" />
+    <EmbeddedResource Include="..\HILFE.md" LogicalName="HILFE.md" />
+    <EmbeddedResource Include="..\CHANGELOG.md" LogicalName="CHANGELOG.md" />
+    <!-- WithCulture=false: otherwise ".de." makes MSBuild move it into a German satellite assembly -->
+    <EmbeddedResource Include="..\CHANGELOG.de.md" LogicalName="CHANGELOG.de.md" WithCulture="false" />
   </ItemGroup>
 
 </Project>

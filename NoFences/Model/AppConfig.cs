@@ -16,6 +16,9 @@ namespace NoFences.Model
         /// <summary>Master switch for the per-fence auto-sort rules.</summary>
         public bool AutoSortEnabled { get; set; } = true;
 
+        /// <summary>App version whose changelog the user has seen; a newer version shows "What's new" once.</summary>
+        public string? LastSeenVersion { get; set; }
+
         public List<FenceInfo> Fences { get; set; } = new();
     }
 }

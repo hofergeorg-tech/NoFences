@@ -7,6 +7,13 @@ namespace NoFences.Util
     {
         private static readonly bool De = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "de";
 
+        public static string HelpDocument => De ? "HILFE.md" : "HELP.md";
+        public static string ChangelogDocument => De ? "CHANGELOG.de.md" : "CHANGELOG.md";
+        public static string Help => T("Help", "Hilfe");
+        public static string WhatsNew => T("What's new?", "Was ist neu?");
+        public static string FirstStartHint => T("Drag files onto the fence. Right-click a fence for options; the tray icon has Help.",
+                                                 "Zieh Dateien auf den Fence. Rechtsklick auf einen Fence zeigt die Optionen, im Tray-Icon gibt es die Hilfe.");
+
         private static string T(string en, string de) => De ? de : en;
 
         public static string NewFence => T("New fence", "Neuer Fence");
