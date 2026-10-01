@@ -7,6 +7,8 @@ namespace NoFences
         [STAThread]
         private static void Main(string[] args)
         {
+            CleanInheritedEnvironment();
+
             if (args.Length == 2 && args[0] == "--preview")
             {
                 ApplicationConfiguration.Initialize();
@@ -32,6 +34,21 @@ namespace NoFences
             ApplicationConfiguration.Initialize();
             Application.SetColorMode(SystemColorMode.System);
             Application.Run(new NoFencesApp());
+        }
+
+        /// <summary>
+        /// Everything opened from a fence inherits our environment. When NoFences was started from a
+        /// VS Code terminal (or another Electron app), ELECTRON_RUN_AS_NODE=1 is set and makes Electron
+        /// apps like the RSI Launcher, Discord or Slack start as a bare Node process and exit silently.
+        /// </summary>
+        private static void CleanInheritedEnvironment()
+        {
+            foreach (var name in Environment.GetEnvironmentVariables().Keys.Cast<string>().ToList())
+            {
+                if (name.StartsWith("ELECTRON_", StringComparison.OrdinalIgnoreCase)
+                    || name.StartsWith("VSCODE_", StringComparison.OrdinalIgnoreCase))
+                    Environment.SetEnvironmentVariable(name, null);
+            }
         }
     }
 }

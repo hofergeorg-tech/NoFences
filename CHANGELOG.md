@@ -47,6 +47,8 @@ First release of this fork. Rewritten on .NET 10; based on
 - Opening documents failed with "UseShellExecute" after the .NET port.
 - There was no way to exit the app other than deleting all fences.
 - Long single-word names were broken mid-word; they are now shortened with "…".
+- Electron apps (e.g. RSI Launcher, Discord) did not start from a fence when NoFences itself had been
+  started from VS Code or another Electron app (inherited `ELECTRON_RUN_AS_NODE`).
 
 ### Removed
 - Chinese and Czech translations of the 1.x dialogs (the dialogs were replaced).
