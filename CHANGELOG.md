@@ -15,7 +15,10 @@ First release of this fork. Rewritten on .NET 10; based on
   archives, installers, videos, music and shortcuts. New desktop files and finished browser downloads are
   sorted automatically; "Tidy up desktop now" in the tray sorts existing files.
 - **Double-click empty desktop space** to hide/show all fences.
-- **Styles**: Standard (glass), Star Citizen (HUD) and Retro-Arcade, globally or per fence.
+- **11 styles**, globally or per fence: Standard (glass), Star Citizen (HUD), Retro-Arcade,
+  Hardware (circuit board), Nerd (terminal), Hobby (pinboard), Work (business), Family, Gaming (RGB),
+  Finance (trading desk) and Social.
+- `--preview <folder>` renders all styles with sample items into PNGs.
 - **Tray icon** with new fence, show/hide fences, start with Windows, file extensions, open config folder, exit.
 - "Start with Windows" also in every fence's context menu.
 - Drag & drop: reorder items, move items between fences, drag items out to Explorer.
@@ -41,6 +44,7 @@ First release of this fork. Rewritten on .NET 10; based on
 - Fences sporadically appeared on top of other windows.
 - Opening documents failed with "UseShellExecute" after the .NET port.
 - There was no way to exit the app other than deleting all fences.
+- Long single-word names were broken mid-word; they are now shortened with "…".
 
 ### Removed
 - Chinese and Czech translations of the 1.x dialogs (the dialogs were replaced).

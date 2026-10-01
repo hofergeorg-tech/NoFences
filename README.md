@@ -20,7 +20,7 @@ Free, open-source desktop fences for Windows 10/11.
 - **Double-click empty desktop space** to hide/show all fences.
 - Reorder items by drag & drop, drag items between fences or out to Explorer.
 - Shell thumbnails (images, videos, PDFs …) and selectable icon size (24–96 px).
-- Styles: **Standard (glass)**, **Star Citizen (HUD)**, **Retro-Arcade**, globally or per fence.
+- **11 styles**, globally or per fence (see below).
 - Auto-collapse to the title bar, lock, background color/opacity, title height.
 - Tray icon: new fence, show/hide all fences, autostart, file extensions, exit.
 - Per-monitor DPI aware; fences that end up off-screen are moved back.
@@ -28,6 +28,16 @@ Free, open-source desktop fences for Windows 10/11.
 Right-click a fence for its menu; right-click an item for the Explorer menu (Shift + right-click for the fence menu).
 
 See [CHANGELOG.md](CHANGELOG.md) ([Deutsch](CHANGELOG.de.md)) for all changes.
+
+## Styles
+
+![All styles](docs/styles.png)
+
+Standard (glass) · Star Citizen (HUD) · Retro-Arcade · Hardware (circuit board) · Nerd (terminal) ·
+Hobby (pinboard) · Work (business) · Family · Gaming (RGB) · Finance (trading desk) · Social
+
+Pick one in the tray menu (default style) or per fence via right-click → Style.
+`NoFences.exe --preview <folder>` renders all styles with sample items into PNGs.
 
 ## Build
 

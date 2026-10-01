@@ -8,7 +8,7 @@ using NoFences.Win32;
 namespace NoFences
 {
     /// <summary>Owns the config, all fence windows and the tray icon. The app lives until "Exit".</summary>
-    public sealed class NoFencesApp : ApplicationContext
+    public sealed class NoFencesApp : ApplicationContext, IFenceHost
     {
         private readonly List<FenceWindow> windows = new();
         private readonly NotifyIcon tray;
@@ -87,6 +87,8 @@ namespace NoFences
         }
 
         public FenceTheme ThemeFor(FenceInfo info) => ThemeRegistry.Get(info.Theme ?? Store.Config.Theme);
+
+        public void RequestSave() => Store.RequestSave();
 
         public void CreateFence(FenceKind kind, string? name = null)
         {

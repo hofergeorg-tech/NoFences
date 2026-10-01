@@ -17,12 +17,13 @@ namespace NoFences
         // Set by a links fence that accepted an item moved out of another fence, so the source can drop it.
         private static bool lastDropWasFenceMove;
 
-        private readonly NoFencesApp app;
+        private readonly IFenceHost app;
         private readonly ShellContextMenu shellContextMenu = new();
         private readonly System.Windows.Forms.Timer collapseTimer = new() { Interval = 200 };
         private readonly System.Windows.Forms.Timer refreshTimer = new() { Interval = 300 };
         private readonly System.Windows.Forms.Timer linkPollTimer = new() { Interval = 5000 };
         private readonly StringFormat labelFormat = new() { Alignment = StringAlignment.Center, Trimming = StringTrimming.EllipsisCharacter };
+        private readonly StringFormat labelFormatSingleLine = new() { Alignment = StringAlignment.Center, Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.NoWrap };
 
         private FenceTheme theme = ThemeRegistry.All[0];
         private Font? titleFont;
@@ -48,7 +49,7 @@ namespace NoFences
 
         public FenceInfo Info { get; }
 
-        public FenceWindow(NoFencesApp app, FenceInfo info)
+        public FenceWindow(IFenceHost app, FenceInfo info)
         {
             this.app = app;
             Info = info;
@@ -178,7 +179,7 @@ namespace NoFences
             if (!ordered.SequenceEqual(Info.Files, StringComparer.OrdinalIgnoreCase))
             {
                 Info.Files = ordered;
-                app.Store.RequestSave();
+                app.RequestSave();
             }
             entries = ordered.Select(FenceEntry.FromPath).OfType<FenceEntry>().ToList();
         }
@@ -277,14 +278,17 @@ namespace NoFences
 
         #region Painting
 
-        protected override void OnPaint(PaintEventArgs e)
+        protected override void OnPaint(PaintEventArgs e) => PaintFence(e.Graphics);
+
+        /// <summary>Paints the whole fence; also used by the <c>--preview</c> renderer.</summary>
+        public void PaintFence(Graphics g)
         {
-            var g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
             var bounds = ClientRectangle;
+            g.SetClip(bounds);
             theme.DrawFrame(g, bounds, titleHeight, Info, scale);
             if (titleFont != null)
                 theme.DrawTitle(g, new Rectangle(0, 0, bounds.Width, titleHeight), theme.FormatTitle(Text), titleFont, scale);
@@ -318,7 +322,10 @@ namespace NoFences
 
                 var labelTop = r.Y + Px(4) + iconPx + Px(4);
                 var labelRect = new RectangleF(r.X + Px(2), labelTop, r.Width - Px(4), r.Bottom - labelTop);
-                theme.DrawLabel(g, entry.GetDisplayName(app.ShowExtensions), labelRect, labelFont, labelFormat, scale);
+                var name = entry.GetDisplayName(app.ShowExtensions);
+                // A single word that is too wide would be broken mid-word; shorten it with "…" instead.
+                var format = !name.Contains(' ') && g.MeasureString(name, labelFont).Width > labelRect.Width ? labelFormatSingleLine : labelFormat;
+                theme.DrawLabel(g, name, labelRect, labelFont, format, scale);
             }
 
             if (insertIndex >= 0)
@@ -339,7 +346,7 @@ namespace NoFences
                 ? Strings.FolderMissing(Info.FolderPath ?? "")
                 : Strings.DropHint;
             using var format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-            using var brush = new SolidBrush(Color.FromArgb(150, Color.White));
+            using var brush = new SolidBrush(theme.HintColor);
             g.DrawString(text, labelFont!, brush, RectangleF.Inflate(view, -Px(12), -Px(12)), format);
         }
 
@@ -505,7 +512,7 @@ namespace NoFences
                 return;
             Info.PosX = Left;
             Info.PosY = Top;
-            app.Store.RequestSave();
+            app.RequestSave();
         }
 
         protected override void OnResize(EventArgs e)
@@ -517,7 +524,7 @@ namespace NoFences
                 return;
             Info.Width = Width;
             Info.Height = Height;
-            app.Store.RequestSave();
+            app.RequestSave();
         }
 
         protected override void OnDpiChanged(DpiChangedEventArgs e)
@@ -659,7 +666,7 @@ namespace NoFences
                 menu.Items.Add(new ToolStripSeparator());
 
             menu.Items.Add(Strings.Settings, null, (_, _) => OpenSettings());
-            menu.Items.Add(new ToolStripMenuItem(Strings.Locked, null, (_, _) => { Info.Locked = !Info.Locked; app.Store.RequestSave(); }) { Checked = Info.Locked });
+            menu.Items.Add(new ToolStripMenuItem(Strings.Locked, null, (_, _) => { Info.Locked = !Info.Locked; app.RequestSave(); }) { Checked = Info.Locked });
             menu.Items.Add(new ToolStripMenuItem(Strings.AutoCollapse, null, (_, _) => ToggleCollapse()) { Checked = Info.CanMinify });
 
             var style = new ToolStripMenuItem(Strings.Theme);
@@ -688,14 +695,14 @@ namespace NoFences
         private void SetTheme(string? id)
         {
             Info.Theme = id;
-            app.Store.RequestSave();
+            app.RequestSave();
             ApplySettings();
         }
 
         private void ToggleCollapse()
         {
             Info.CanMinify = !Info.CanMinify;
-            app.Store.RequestSave();
+            app.RequestSave();
             if (Info.CanMinify)
                 collapseTimer.Start();
             else
@@ -705,7 +712,7 @@ namespace NoFences
         private void RemoveLink(string path)
         {
             Info.Files.RemoveAll(f => f.Equals(path, StringComparison.OrdinalIgnoreCase));
-            app.Store.RequestSave();
+            app.RequestSave();
             ReloadEntries();
         }
 
@@ -722,7 +729,7 @@ namespace NoFences
                 Size = new Size(Info.Width, Info.Height);
                 suppressBoundsSave = false;
             }
-            app.Store.RequestSave();
+            app.RequestSave();
             ApplySettings();
             ReloadEntries();
         }
@@ -862,7 +869,7 @@ namespace NoFences
                     InsertInOrder(files.Select(f => Path.Combine(Info.FolderPath!, Path.GetFileName(f.TrimEnd('\\')))), index);
             }
 
-            app.Store.RequestSave();
+            app.RequestSave();
             ReloadEntries();
         }
 
@@ -919,6 +926,7 @@ namespace NoFences
                 titleFont?.Dispose();
                 labelFont?.Dispose();
                 labelFormat.Dispose();
+                labelFormatSingleLine.Dispose();
                 shellContextMenu.DestroyHandle();
             }
             base.Dispose(disposing);

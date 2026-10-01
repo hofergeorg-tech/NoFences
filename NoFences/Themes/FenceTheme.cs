@@ -45,7 +45,71 @@ namespace NoFences.Themes
 
         public abstract void DrawInsertMarker(Graphics g, int x, int top, int height, float s);
 
+        /// <summary>Color of the "drop files here" hint in empty fences (dark for light styles).</summary>
+        public virtual Color HintColor => Color.FromArgb(150, Color.White);
+
         protected int Alpha(FenceInfo info) => Math.Clamp(Math.Max(info.BackgroundAlpha, MinAlpha), 0, 255);
+
+        /// <summary>Stable per-fence randomness, so decorations don't jump between repaints.</summary>
+        protected static Random Seeded(FenceInfo info) => new(info.Id.GetHashCode());
+
+        protected static StringFormat TitleFormat(StringAlignment alignment = StringAlignment.Near) => new()
+        {
+            Alignment = alignment,
+            LineAlignment = StringAlignment.Center,
+            Trimming = StringTrimming.EllipsisCharacter,
+            FormatFlags = StringFormatFlags.NoWrap
+        };
+
+        protected static GraphicsPath RoundedRect(RectangleF r, float radius)
+        {
+            var path = new GraphicsPath();
+            var d = Math.Min(radius * 2, Math.Min(r.Width, r.Height));
+            if (d <= 0)
+            {
+                path.AddRectangle(r);
+                return path;
+            }
+            path.AddArc(r.X, r.Y, d, d, 180, 90);
+            path.AddArc(r.Right - d, r.Y, d, d, 270, 90);
+            path.AddArc(r.Right - d, r.Bottom - d, d, d, 0, 90);
+            path.AddArc(r.X, r.Bottom - d, d, d, 90, 90);
+            path.CloseFigure();
+            return path;
+        }
+
+        protected static void FillRounded(Graphics g, Color color, RectangleF r, float radius)
+        {
+            using var path = RoundedRect(r, radius);
+            using var brush = new SolidBrush(color);
+            g.FillPath(brush, path);
+        }
+
+        protected static void DrawRounded(Graphics g, Color color, float width, RectangleF r, float radius)
+        {
+            using var path = RoundedRect(r, radius);
+            using var pen = new Pen(color, width);
+            g.DrawPath(pen, path);
+        }
+
+        protected static void DrawPlainString(Graphics g, string text, Font font, Color color, RectangleF rect, StringFormat format)
+        {
+            using var brush = new SolidBrush(color);
+            g.DrawString(text, font, brush, rect, format);
+        }
+
+        /// <summary>Simple thin rounded scrollbar thumb used by several styles.</summary>
+        protected static void DrawPillThumb(Graphics g, Rectangle track, Rectangle thumb, Color color, float s)
+        {
+            var w = 4 * s;
+            FillRounded(g, color, new RectangleF(track.X + (track.Width - w) / 2, thumb.Y, w, thumb.Height), w / 2);
+        }
+
+        protected static void DrawBarMarker(Graphics g, Color color, int x, int top, int height, float width)
+        {
+            using var pen = new Pen(color, width);
+            g.DrawLine(pen, x, top, x, top + height);
+        }
 
         protected static Font CreateFont(string[] families, float size, FontStyle style = FontStyle.Regular, GraphicsUnit unit = GraphicsUnit.Point)
         {
@@ -101,7 +165,15 @@ namespace NoFences.Themes
         {
             new DefaultTheme(),
             new StarCitizenTheme(),
-            new RetroArcadeTheme()
+            new RetroArcadeTheme(),
+            new HardwareTheme(),
+            new NerdTheme(),
+            new HobbyTheme(),
+            new WorkTheme(),
+            new FamilyTheme(),
+            new GamingTheme(),
+            new FinanceTheme(),
+            new SocialTheme()
         };
 
         public static FenceTheme Get(string? id) =>

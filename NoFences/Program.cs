@@ -5,8 +5,15 @@ namespace NoFences
     internal static class Program
     {
         [STAThread]
-        private static void Main()
+        private static void Main(string[] args)
         {
+            if (args.Length == 2 && args[0] == "--preview")
+            {
+                ApplicationConfiguration.Initialize();
+                PreviewRenderer.Run(args[1]);
+                return;
+            }
+
             using var mutex = new Mutex(true, "No_fences", out var createdNew);
             if (!createdNew)
                 return;

@@ -14,7 +14,10 @@ Erste Version dieses Forks. Neu aufgebaut auf .NET 10, basierend auf
   Installer, Videos, Musik und Verknüpfungen. Neue Desktop-Dateien und fertige Browser-Downloads werden
   automatisch einsortiert; „Desktop jetzt aufräumen“ im Tray sortiert vorhandene Dateien.
 - **Doppelklick auf leeren Desktop** blendet alle Fences aus und wieder ein.
-- **Styles**: Standard (Glas), Star Citizen (HUD) und Retro-Arcade, global oder pro Fence.
+- **11 Styles**, global oder pro Fence: Standard (Glas), Star Citizen (HUD), Retro-Arcade,
+  Hardware (Platine), Nerd (Terminal), Hobby (Pinnwand), Arbeit (Business), Familie, Gaming (RGB),
+  Finanzen (Börse) und Social.
+- `--preview <ordner>` rendert alle Styles mit Beispiel-Einträgen als PNG.
 - **Tray-Icon** mit neuer Fence, Fences ein-/ausblenden, Mit Windows starten, Dateiendungen,
   Konfigurationsordner öffnen, Beenden.
 - „Mit Windows starten“ zusätzlich im Rechtsklick-Menü jedes Fences.
@@ -41,6 +44,7 @@ Erste Version dieses Forks. Neu aufgebaut auf .NET 10, basierend auf
 - Fences tauchten manchmal vor anderen Fenstern auf.
 - Dokumente ließen sich nach der .NET-Portierung nicht öffnen („UseShellExecute“).
 - Das Programm ließ sich nur beenden, indem man alle Fences löschte.
+- Lange Namen ohne Leerzeichen wurden mitten im Wort umgebrochen; jetzt werden sie mit „…“ gekürzt.
 
 ### Entfernt
 - Chinesische und tschechische Übersetzung der 1.x-Dialoge (die Dialoge wurden ersetzt).
