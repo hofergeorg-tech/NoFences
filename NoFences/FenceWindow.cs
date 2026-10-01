@@ -121,7 +121,14 @@ namespace NoFences
             ApplyNoteSettings();
 
             if (IsHandleCreated)
+            {
                 Native.SetCornerPreference(Handle, theme.CornerPreference);
+                if (theme.Glass)
+                    Native.EnableBlur(Handle);
+                else
+                    Native.EnableClearBackground(Handle);
+                Native.SetWindowShadow(Handle, theme.WindowShadow);
+            }
 
             SetupWatcher();
             if (collapsed)

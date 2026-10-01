@@ -135,9 +135,25 @@ namespace NoFences.Win32
         private const int DWMWA_NCRENDERING_POLICY = 2;
         private const int DWMWA_WINDOW_CORNER_PREFERENCE = 33;
 
-        public static void EnableBlur(IntPtr hwnd)
+        private const int ACCENT_ENABLE_TRANSPARENTGRADIENT = 2;
+
+        public static void EnableBlur(IntPtr hwnd) => SetAccent(hwnd, ACCENT_ENABLE_BLURBEHIND);
+
+        /// <summary>Per-pixel transparency without the frosted-glass blur (fully clear where nothing is painted).</summary>
+        /// <remarks>Flag 2 makes DWM use our (fully transparent) gradient color; without it Windows fills in a tint.</remarks>
+        public static void EnableClearBackground(IntPtr hwnd) => SetAccent(hwnd, ACCENT_ENABLE_TRANSPARENTGRADIENT, flags: 2);
+
+        /// <summary>Turns the DWM drop shadow around the window on or off.</summary>
+        public static void SetWindowShadow(IntPtr hwnd, bool enabled)
         {
-            var accent = new AccentPolicy { AccentState = ACCENT_ENABLE_BLURBEHIND };
+            var policy = enabled ? 2 : 1; // DWMNCRP_ENABLED : DWMNCRP_DISABLED
+            DwmSetWindowAttribute(hwnd, DWMWA_NCRENDERING_POLICY, ref policy, sizeof(int));
+        }
+
+        private static void SetAccent(IntPtr hwnd, int state, int flags = 0)
+        {
+            // GradientColor 0 = fully transparent, so only what we paint is visible.
+            var accent = new AccentPolicy { AccentState = state, AccentFlags = flags, GradientColor = 0 };
             var size = Marshal.SizeOf(accent);
             var ptr = Marshal.AllocHGlobal(size);
             try

@@ -14,7 +14,7 @@ namespace NoFences
         private Font? noteFont;
         private Font? noteFontDone;
         private Font? checkFont;
-        private TextBox? editor;
+        private RichTextBox? editor;
         private readonly List<(RectangleF box, int line)> checkboxes = new(); // content coordinates
         private readonly StringFormat noteFormat = new() { Alignment = StringAlignment.Near, Trimming = StringTrimming.None };
 
@@ -36,7 +36,7 @@ namespace NoFences
             if (editor != null)
             {
                 editor.Font = noteFont;
-                (editor.BackColor, editor.ForeColor) = theme.EditorColors;
+                ApplyEditorColors(editor);
             }
         }
 
@@ -122,27 +122,39 @@ namespace NoFences
             if (collapsed)
                 Expand();
 
+            // RichTextBox instead of TextBox: in Windows dark mode a TextBox ignores our colors
+            // (white text on a white box), the rich edit control keeps them.
             var (back, fore) = theme.EditorColors;
-            editor = new TextBox
+            editor = new RichTextBox
             {
                 Multiline = true,
-                AcceptsReturn = true,
                 AcceptsTab = true,
                 WordWrap = true,
-                ScrollBars = ScrollBars.Vertical,
+                DetectUrls = false,
+                ScrollBars = RichTextBoxScrollBars.Vertical,
                 BorderStyle = BorderStyle.None,
                 Font = noteFont,
                 BackColor = back,
                 ForeColor = fore,
                 Bounds = NoteArea,
-                Text = Info.NoteText.Replace("\n", "\r\n")
+                Text = Info.NoteText
             };
+            ApplyEditorColors(editor);
+            editor.HandleCreated += (_, _) => ApplyEditorColors(editor);
             editor.KeyDown += (_, e) =>
             {
                 if (e.KeyCode == Keys.Escape)
                 {
                     e.SuppressKeyPress = true;
                     EndEditNote();
+                }
+                else if (e.Control && e.KeyCode == Keys.V || e.Shift && e.KeyCode == Keys.Insert)
+                {
+                    // Paste as plain text in the note's own font and color.
+                    e.SuppressKeyPress = true;
+                    if (Clipboard.ContainsText())
+                        editor!.SelectedText = Clipboard.GetText().Replace("\r\n", "\n");
+                    ApplyEditorColors(editor!);
                 }
             };
             editor.LostFocus += (_, _) => BeginInvoke(EndEditNote);
@@ -154,6 +166,22 @@ namespace NoFences
             editor.Focus();
             editor.SelectionStart = editor.TextLength;
             Invalidate();
+        }
+
+        /// <summary>Forces font and colors on the whole text and on what will be typed next.</summary>
+        private void ApplyEditorColors(RichTextBox box)
+        {
+            var (back, fore) = theme.EditorColors;
+            box.BackColor = back;
+            box.ForeColor = fore;
+            var (start, length) = (box.SelectionStart, box.SelectionLength);
+            box.SelectAll();
+            box.SelectionColor = fore;
+            box.SelectionBackColor = back;
+            if (noteFont != null)
+                box.SelectionFont = noteFont;
+            box.Select(start, length);
+            box.SelectionColor = fore;
         }
 
         private void EndEditNote()

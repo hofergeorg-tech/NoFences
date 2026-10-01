@@ -8,7 +8,9 @@ Alle wichtigen Änderungen an diesem Fork. English version: [CHANGELOG.md](CHANG
 - **Notizen (Post-its)**: neuer Fence-Typ „Notiz“ (Tray- oder Fence-Menü → „Neue Notiz“). Doppelklick zum Schreiben,
   Esc oder ein Klick daneben speichert. Zeilen mit `[ ]` am Anfang werden zu Kästchen, die man per Klick abhakt.
   Auf eine Notiz gezogener Text wird angehängt.
-- **Post-it-Style**: gelbes Papier, Klebestreifen, Eselsohr und Handschrift. Neue Notizen bekommen ihn automatisch.
+- **Post-it-Style**: ein gelber Zettel, aufgeklebt auf den Desktop: durchsichtiger Hintergrund um das Papier,
+  zwei halbdurchsichtige Klebestreifen, weicher Schatten mit leicht abstehenden Ecken, Eselsohr und Handschrift.
+  Neue Notizen bekommen ihn automatisch. Styles können jetzt auf das Milchglas verzichten und freie Formen zeichnen.
 - **Immer im Vordergrund** pro Fence (Fence-Menü), z. B. für eine Notiz neben einem Spiel im randlosen Fenstermodus.
 
 ### Geändert

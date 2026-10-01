@@ -9,7 +9,9 @@ versions follow [Semantic Versioning](https://semver.org/). German version: [CHA
 - **Sticky notes**: a new fence type "Note" (tray or fence menu → "New note"). Double-click to write, Esc or a
   click outside saves. Lines starting with `[ ]` become checkboxes you can tick with a click.
   Text dragged onto a note is appended.
-- **Post-it style**: yellow paper, adhesive strip, dog-ear and handwriting. New notes use it by default.
+- **Post-it style**: a yellow note taped onto the desktop: clear background around the paper, two strips of
+  translucent tape, soft shadow with lifted corners, curled corner and handwriting. New notes use it by default.
+  Styles can now opt out of the frosted glass and draw free shapes.
 - **Always on top** per fence (fence menu), e.g. for a note next to a game in borderless window mode.
 
 ### Changed

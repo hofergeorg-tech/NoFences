@@ -45,6 +45,12 @@ namespace NoFences.Themes
 
         public abstract void DrawInsertMarker(Graphics g, int x, int top, int height, float s);
 
+        /// <summary>Frosted-glass blur behind the fence. Off = clear, so the theme can paint free shapes.</summary>
+        public virtual bool Glass => true;
+
+        /// <summary>Rectangular DWM drop shadow around the window (off when the theme draws its own).</summary>
+        public virtual bool WindowShadow => true;
+
         /// <summary>Color of the "drop files here" hint in empty fences (dark for light styles).</summary>
         public virtual Color HintColor => Color.FromArgb(150, Color.White);
 
