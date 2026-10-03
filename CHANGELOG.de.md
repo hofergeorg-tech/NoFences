@@ -14,6 +14,10 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Profil-Tastenkürzel** Strg+Alt+F1…F9 (F10: alle Fences) und ein **Hintergrundbild pro Profil**.
 - **Desktop-Assistent**: sortiert Desktop-Symbole nach Art in neue Fences (wird beim ersten Start angeboten).
 - **Bildschirm-Lineal** in Pixel, Zentimeter oder Zoll (Werkzeuge ▸ Bildschirm-Lineal – im Tray und in jedem Fence-Menü).
+- **Farbpipette** mit Lupe (kopiert #RRGGBB) und **Downloads aufräumen** (alte Dateien, größte zuerst, in den Papierkorb).
+- **Schnellnotiz** von überall mit Strg+Alt+N; **Formatierung in Notizen** (Überschriften, Aufzählungen, Zitate, Linien, fett, kursiv).
+- **Wiederkehrende Erinnerungen** (täglich, werktags, wöchentlich, monatlich) und ein Widget **To-do-Liste** mit Fälligkeiten.
+- Widgets **Weltzeituhr**, **Energiesparplan** (auch pro Profil) und **Steam-Angebote** (Wunschliste zuerst).
 
 ### Geändert
 - **Gruppierte Menüs**: Neues Widget ▸ Zeit & Planung / Info & News / System / Spiele & Medien; Style ▸ Basis /

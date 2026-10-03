@@ -15,6 +15,10 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Scorciatoie dei profili** Ctrl+Alt+F1…F9 (F10: tutti i recinti) e uno **sfondo per profilo**.
 - **Assistente desktop**: ordina le icone del desktop in nuovi recinti per tipo (proposto al primo avvio).
 - **Righello sullo schermo** in pixel, centimetri o pollici (Strumenti ▸ Righello sullo schermo – nella barra e in ogni menu dei recinti).
+- **Contagocce** con lente (copia #RRGGBB) e **Pulisci Download** (file vecchi, i più grandi prima, nel cestino).
+- **Nota rapida** da ovunque con Ctrl+Alt+N; **formattazione nelle note** (titoli, elenchi, citazioni, linee, grassetto, corsivo).
+- **Promemoria ripetuti** (ogni giorno, feriali, settimanali, mensili) e un widget **Cose da fare** con scadenze.
+- Widget **orologio mondiale**, **risparmio energia** (anche per profilo) e **offerte Steam** (prima la lista dei desideri).
 
 ### Modifiche
 - **Menu raggruppati**: Nuovo widget ▸ Tempo e pianificazione / Info e notizie / Sistema / Giochi e media; Stile ▸ Base /

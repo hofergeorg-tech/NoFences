@@ -114,6 +114,9 @@ namespace NoFences.Model
         /// <summary>Only on this virtual desktop (null = on all desktops).</summary>
         public Guid? VirtualDesktop { get; set; }
 
+        /// <summary>How the note's reminder repeats after it fired.</summary>
+        public Repeat ReminderRepeat { get; set; }
+
         /// <summary>Profiles this fence belongs to ("Work", "Gaming"); null or empty = shown in every profile.</summary>
         public List<string>? Profiles { get; set; }
 

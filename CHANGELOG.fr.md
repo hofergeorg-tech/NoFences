@@ -15,6 +15,10 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 - **Raccourcis de profil** Ctrl+Alt+F1…F9 (F10 : toutes les barrières) et un **fond d'écran par profil**.
 - **Assistant de bureau** : range les icônes du bureau dans de nouvelles barrières par type (proposé au premier démarrage).
 - **Règle à l'écran** en pixels, centimètres ou pouces (Outils ▸ Règle à l'écran – dans la zone de notification et le menu de chaque barrière).
+- **Pipette de couleur** avec loupe (copie #RRGGBB) et **Nettoyer les téléchargements** (anciens fichiers, les plus gros d'abord, vers la corbeille).
+- **Note rapide** de partout avec Ctrl+Alt+N ; **mise en forme des notes** (titres, listes, citations, lignes, gras, italique).
+- **Rappels répétés** (chaque jour, en semaine, chaque semaine, chaque mois) et un widget **liste de tâches** avec échéances.
+- Widgets **horloge mondiale**, **mode d'alimentation** (aussi par profil) et **promos Steam** (liste de souhaits d'abord).
 
 ### Modifications
 - **Menus groupés** : Nouveau widget ▸ Temps et planning / Infos et actualités / Système / Jeux et médias ; Style ▸ De base /

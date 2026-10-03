@@ -15,6 +15,10 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 - **Atajos de perfil** Ctrl+Alt+F1…F9 (F10: todas las vallas) y un **fondo de pantalla por perfil**.
 - **Asistente de escritorio**: ordena los iconos del escritorio en vallas nuevas por tipo (se ofrece en el primer inicio).
 - **Regla en pantalla** en píxeles, centímetros o pulgadas (Herramientas ▸ Regla en pantalla – en la bandeja y en el menú de cada valla).
+- **Cuentagotas** con lupa (copia #RRGGBB) y **Limpiar Descargas** (archivos antiguos, primero los más grandes, a la papelera).
+- **Nota rápida** desde cualquier sitio con Ctrl+Alt+N; **formato en las notas** (títulos, listas, citas, líneas, negrita, cursiva).
+- **Recordatorios periódicos** (a diario, entre semana, cada semana, cada mes) y un widget de **lista de tareas** con vencimientos.
+- Widgets de **reloj mundial**, **plan de energía** (también por perfil) y **ofertas de Steam** (primero la lista de deseos).
 
 ### Cambios
 - **Menús agrupados**: Nuevo widget ▸ Tiempo y planificación / Información y noticias / Sistema / Juegos y multimedia;

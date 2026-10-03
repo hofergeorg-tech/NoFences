@@ -14,6 +14,8 @@ namespace NoFences
         private Font? noteFont;
         private Font? noteFontDone;
         private Font? checkFont;
+        // Markdown-style formatting: bold, italic and three heading sizes
+        private Font? noteBold, noteItalic, heading1, heading2, heading3;
         private RichTextBox? editor;
         private Form? editorHost;
         private readonly List<(RectangleF box, int line)> checkboxes = new(); // content coordinates
@@ -34,6 +36,13 @@ namespace NoFences
             noteFont = theme.CreateNoteFont(scale);
             noteFontDone = new Font(noteFont, FontStyle.Strikeout);
             checkFont = new Font("Segoe UI Symbol", noteFont.Size, FontStyle.Regular, GraphicsUnit.Pixel);
+            foreach (var f in new[] { noteBold, noteItalic, heading1, heading2, heading3 })
+                f?.Dispose();
+            noteBold = new Font(noteFont, FontStyle.Bold);
+            noteItalic = new Font(noteFont, FontStyle.Italic);
+            heading1 = new Font(noteFont.FontFamily, noteFont.Size * 1.45f, FontStyle.Bold, noteFont.Unit);
+            heading2 = new Font(noteFont.FontFamily, noteFont.Size * 1.2f, FontStyle.Bold, noteFont.Unit);
+            heading3 = new Font(noteFont.FontFamily, noteFont.Size * 1.05f, FontStyle.Bold, noteFont.Unit);
             // Without tab stops GDI+ draws tabs differently than the editor; use the same grid in both.
             noteFormat.SetTabStops(0, new[] { TabWidth });
             if (editor != null)
@@ -82,6 +91,7 @@ namespace NoFences
             g.SetClip(Rectangle.Intersect(view, new Rectangle(0, area.Top - Px(4), ClientSize.Width, area.Height + Px(8))));
 
             var y = (float)area.Y - scrollOffset;
+            (float X, float Y)? quoteBar = null;
             var lines = Info.NoteText.Split('\n');
             for (var i = 0; i < lines.Length; i++)
             {
@@ -101,20 +111,103 @@ namespace NoFences
                     if (done)
                         font = noteFontDone;
                 }
+                else
+                {
+                    // Markdown-style lines: headings, bullets, quotes, rules
+                    var (kind, content) = NoteText.ParseLine(line);
+                    switch (kind)
+                    {
+                        case NoteText.LineKind.Rule:
+                            using (var pen = new Pen(Color.FromArgb(120, theme.HintColor), Math.Max(1, scale)))
+                                g.DrawLine(pen, x, y + font.Height * 0.45f, area.Right, y + font.Height * 0.45f);
+                            y += font.Height * 0.9f;
+                            continue;
+                        case NoteText.LineKind.Heading1:
+                        case NoteText.LineKind.Heading2:
+                        case NoteText.LineKind.Heading3:
+                            font = kind == NoteText.LineKind.Heading1 ? heading1! : kind == NoteText.LineKind.Heading2 ? heading2! : heading3!;
+                            if (i > 0)
+                                y += Px(4);
+                            line = content;
+                            break;
+                        case NoteText.LineKind.Bullet:
+                            var bullet = g.MeasureString("• ", font);
+                            theme.DrawLabel(g, "•", new RectangleF(x, y, bullet.Width, bullet.Height), font, noteFormat, scale);
+                            x += bullet.Width;
+                            line = content;
+                            break;
+                        case NoteText.LineKind.Quote:
+                            quoteBar = (x, y);
+                            x += Px(10);
+                            font = noteItalic!;
+                            line = content;
+                            break;
+                    }
+                }
 
                 var width = area.Right - x;
-                var height = line.Length == 0 ? font.Height : g.MeasureString(line, font, (int)Math.Max(1, width), noteFormat).Height;
-                var layout = new RectangleF(x, y, width, height + 2);
-                if (y + height >= view.Top && y <= view.Bottom)
+                float height;
+                if (NoteText.HasInlineFormatting(line) && font == noteFont)
                 {
-                    theme.DrawLabel(g, line, layout, font, noteFormat, scale);
-                    MarkLinks(g, line, layout, font);
+                    // **bold** / *italic* runs: laid out word by word (links aren't underlined here)
+                    var visible = y + font.Height * 3 >= view.Top && y <= view.Bottom;
+                    height = DrawRuns(g, NoteText.Runs(line), x, y, width, visible);
+                }
+                else
+                {
+                    height = line.Length == 0 ? font.Height : g.MeasureString(line, font, (int)Math.Max(1, width), noteFormat).Height;
+                    var layout = new RectangleF(x, y, width, height + 2);
+                    if (y + height >= view.Top && y <= view.Bottom)
+                    {
+                        theme.DrawLabel(g, line, layout, font, noteFormat, scale);
+                        MarkLinks(g, line, layout, font);
+                    }
+                }
+                if (quoteBar is (float qx, float qy))
+                {
+                    using var bar = new SolidBrush(Color.FromArgb(150, theme.Accent));
+                    g.FillRectangle(bar, qx, qy + Px(2), Px(3), height - Px(2));
+                    quoteBar = null;
                 }
                 y += height;
             }
 
             // Content coordinates are relative to the top of the view, like the item layout.
             contentHeight = (int)(y + scrollOffset - titleHeight) + Px(8);
+        }
+
+        /// <summary>Draws bold/italic runs with word wrapping; returns the height used.</summary>
+        private float DrawRuns(Graphics g, List<NoteText.Run> runs, float x, float y, float width, bool draw)
+        {
+            var format = StringFormat.GenericTypographic;
+            var lineHeight = noteFont!.GetHeight(g);
+            var cx = x;
+            var cy = y;
+            var space = g.MeasureString(" ", noteFont, PointF.Empty, format).Width + noteFont.Size * 0.25f;
+            foreach (var run in runs)
+            {
+                var font = run.Bold ? noteBold! : run.Italic ? noteItalic! : noteFont;
+                var words = run.Text.Split(' ');
+                for (var w = 0; w < words.Length; w++)
+                {
+                    var word = words[w];
+                    if (word.Length > 0)
+                    {
+                        var size = g.MeasureString(word, font, PointF.Empty, format);
+                        if (cx + size.Width > x + width && cx > x)
+                        {
+                            cx = x;
+                            cy += lineHeight;
+                        }
+                        if (draw)
+                            theme.DrawLabel(g, word, new RectangleF(cx, cy, size.Width + 2, lineHeight + 2), font, format, scale);
+                        cx += size.Width;
+                    }
+                    if (w < words.Length - 1)
+                        cx += space;
+                }
+            }
+            return cy - y + lineHeight;
         }
 
         /// <summary>Underlines web addresses and paths in a drawn line and remembers where they are.</summary>
@@ -188,15 +281,16 @@ namespace NoFences
             using var brush = new SolidBrush(Color.FromArgb(230, theme.HintColor));
             using var format = new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Far };
             var inset = Px(12 + theme.ContentInset);
-            g.DrawString("⏰ " + when, labelFont, brush, new RectangleF(inset, 0, ClientSize.Width - 2 * inset, titleHeight + Px(4)), format);
+            g.DrawString((Info.ReminderRepeat != Repeat.None ? "↻ " : "⏰ ") + when, labelFont, brush, new RectangleF(inset, 0, ClientSize.Width - 2 * inset, titleHeight + Px(4)), format);
         }
 
         private void EditReminder()
         {
-            using var dialog = new ReminderDialog(Info.ReminderAt);
+            using var dialog = new ReminderDialog(Info.ReminderAt, Info.ReminderRepeat);
             if (dialog.ShowDialog(this) != DialogResult.OK)
                 return;
             Info.ReminderAt = dialog.Result;
+            Info.ReminderRepeat = dialog.Result == null ? Repeat.None : dialog.ResultRepeat;
             app.RequestSave();
             Invalidate();
         }
@@ -350,6 +444,8 @@ namespace NoFences
             noteFont?.Dispose();
             noteFontDone?.Dispose();
             checkFont?.Dispose();
+            foreach (var f in new[] { noteBold, noteItalic, heading1, heading2, heading3 })
+                f?.Dispose();
             noteFormat.Dispose();
         }
     }

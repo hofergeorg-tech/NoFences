@@ -59,7 +59,7 @@ namespace NoFences
                 ApplyProfileWallpaper(profile);
         }
 
-        /// <summary>Tray: "Wallpaper for 'Gaming'…" and remove it again.</summary>
+        /// <summary>Tray: "Wallpaper for 'Gaming'…", remove it again, and "Power plan for 'Gaming' ▸".</summary>
         private void AddWallpaperItems(ToolStripItemCollection items)
         {
             if (ActiveProfile is not { } profile)
@@ -67,6 +67,45 @@ namespace NoFences
             items.Add(Strings.WallpaperChoose(profile) + "…", null, (_, _) => ChooseProfileWallpaper(profile, null));
             if (Store.Config.ProfileWallpapers.ContainsKey(profile))
                 items.Add(Strings.WallpaperRemove, null, (_, _) => RemoveProfileWallpaper(profile));
+
+            var power = new ToolStripMenuItem(Strings.PowerForProfile(profile));
+            var assigned = Store.Config.ProfilePowerPlans.TryGetValue(profile, out var id) ? id : (Guid?)null;
+            power.DropDownItems.Add(new ToolStripMenuItem(Strings.PowerKeep, null, (_, _) => SetProfilePowerPlan(profile, null)) { Checked = assigned == null });
+            foreach (var plan in Win32.PowerPlans.All())
+                power.DropDownItems.Add(new ToolStripMenuItem(plan.Name, null, (_, _) => SetProfilePowerPlan(profile, plan.Id)) { Checked = assigned == plan.Id });
+            items.Add(power);
+        }
+
+        private void SetProfilePowerPlan(string profile, Guid? plan)
+        {
+            if (plan is Guid id)
+                Store.Config.ProfilePowerPlans[profile] = id;
+            else
+                Store.Config.ProfilePowerPlans.Remove(profile);
+            Store.RequestSave();
+            if (ActiveProfile == profile)
+                ApplyProfilePowerPlan(profile);
+        }
+
+        /// <summary>The profile's power plan; the plan from before comes back in profiles without one.</summary>
+        private void ApplyProfilePowerPlan(string? profile)
+        {
+            var c = Store.Config;
+            if (profile != null && c.ProfilePowerPlans.TryGetValue(profile, out var plan))
+            {
+                var current = Win32.PowerPlans.Active();
+                if (current == plan)
+                    return;
+                c.OriginalPowerPlan ??= current;
+                Store.RequestSave();
+                Win32.PowerPlans.SetActive(plan);
+            }
+            else if (c.OriginalPowerPlan is Guid original)
+            {
+                c.OriginalPowerPlan = null;
+                Store.RequestSave();
+                Win32.PowerPlans.SetActive(original);
+            }
         }
 
         private static string? CurrentWallpaper()

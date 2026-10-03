@@ -30,6 +30,8 @@ namespace NoFences
             "Ctrl+Alt+F" => (Native.MOD_CONTROL | Native.MOD_ALT, Keys.F),
             "Ctrl+Shift+F" => (Native.MOD_CONTROL | Native.MOD_SHIFT, Keys.F),
             "Ctrl+Alt+S" => (Native.MOD_CONTROL | Native.MOD_ALT, Keys.S),
+            "Ctrl+Alt+N" => (Native.MOD_CONTROL | Native.MOD_ALT, Keys.N),
+            "Ctrl+Alt+Q" => (Native.MOD_CONTROL | Native.MOD_ALT, Keys.Q),
             _ => (0, Keys.None)
         };
 

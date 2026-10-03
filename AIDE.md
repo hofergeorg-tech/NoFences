@@ -63,7 +63,11 @@ résultat, **↑↓** pour choisir, **Échap** ferme. Le raccourci se change dan
 - **Double-clic** pour écrire ; **Échap** ou un clic à côté enregistre.
 - Les lignes commençant par `[ ]` deviennent des cases à cocher ; un clic les coche et barre la ligne.
 - Les adresses web et chemins sont soulignés et s'ouvrent d'un clic. Le texte déposé sur une note y est ajouté.
-- Menu de la barrière → **Rappel…** : à l'heure choisie, NoFences joue un son et affiche une notification.
+- **Mise en forme** : `# Titre` (aussi `##`, `###`), `- élément` ou `* élément` pour les listes, `> citation`, `---`
+  pour une ligne, `**gras**` et `*italique*`.
+- **Ctrl+Alt+N** (modifiable dans Paramètres → Bureau) crée de n'importe où une note près de la souris, prête à écrire.
+- Menu de la barrière → **Rappel…** : à l'heure choisie, NoFences joue un son et affiche une notification – une fois,
+  chaque jour, en semaine, chaque semaine ou chaque mois.
 - Style post-it en jaune, rose, vert, bleu et orange.
 
 ## Widgets
@@ -104,6 +108,14 @@ Menu de la zone de notification ou d'une barrière → **Nouveau widget**. Les w
   haut-parleurs et du micro, et passer d'un clic à un autre périphérique (casque ↔ haut-parleurs).
 - **État des services** : si RSI, Discord, Epic Games, GitHub et d'autres ont des problèmes en ce moment, d'après leurs
   pages d'état publiques ; un clic sur une ligne ouvre la page.
+- **Liste de tâches** : double-cliquez pour ajouter une tâche, avec échéance et répétition si vous voulez ; un clic sur le
+  cercle la coche (les tâches répétées passent à leur prochaine date). Les tâches arrivées à échéance sont annoncées même
+  si le widget est masqué.
+- **Horloge mondiale** : l'heure ailleurs avec le décalage par rapport à la vôtre ; double-cliquez pour choisir les
+  fuseaux horaires.
+- **Mode d'alimentation** : passez d'un clic entre Utilisation normale, Performances élevées et les autres.
+- **Promos Steam** : les promotions actuelles sur Steam ; les jeux de votre liste de souhaits passent en premier si elle
+  est publique (le compte Steam connecté sur ce PC est utilisé). Un clic ouvre la page du magasin dans Steam.
 
 Chaque widget a ses propres réglages dans son menu. Le menu du minuteur de concentration propose aussi le **mode
 concentration** : pendant un tour, il passe à un profil de votre choix (par ex. « Concentration » avec seulement les
@@ -123,6 +135,13 @@ l'extrémité pour l'allonger, double-clic ou espace pour la tourner, flèches p
 le menu passe entre pixels, centimètres et pouces (taille réelle, d'après la taille indiquée par l'écran). Une ligne
 rouge suit la souris et affiche la distance. Échap la ferme.
 
+## Pipette et téléchargements
+
+- Outils ▸ **Pipette de couleur** : l'écran se fige et une loupe suit la souris ; un clic copie la couleur en `#RRGGBB`
+  (Maj+clic : `rgb(…)`), Échap annule.
+- Outils ▸ **Nettoyer les téléchargements…** : liste ce qui traîne dans le dossier Téléchargements depuis une semaine, un
+  mois, trois mois ou un an, les plus gros d'abord ; les éléments choisis vont à la corbeille (restaurables).
+
 ## Profils
 
 Regroupez les barrières en profils comme « Travail » et « Jeux » et passez de l'un à l'autre depuis la zone de
@@ -130,7 +149,8 @@ notification (**Profil ▸**) ou dans **Paramètres → Bureau**. Clic droit sur
 pour l'attribuer ; une barrière sans profil apparaît dans tous les profils. Les barrières créées pendant qu'un profil
 est actif lui appartiennent. **Ctrl+Alt+F1…F9** passent au profil 1…9, **Ctrl+Alt+F10** affiche toutes les barrières.
 Avec un profil actif, zone de notification → Profil ▸ **Fond d'écran pour « … »** lui donne son propre fond d'écran ;
-votre fond habituel revient dans les profils qui n'en ont pas.
+votre fond habituel revient dans les profils qui n'en ont pas. **Alimentation pour « … » ▸** dans le même menu change
+aussi le mode d'alimentation avec le profil (par ex. Performances élevées pour les jeux).
 
 ## Automatisation (Paramètres → Automatisation)
 

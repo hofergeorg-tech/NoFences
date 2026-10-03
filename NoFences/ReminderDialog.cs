@@ -13,11 +13,17 @@ namespace NoFences
             Width = 200
         };
 
+        private readonly ComboBox repeat = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 200 };
+
         /// <summary>The chosen time, or null if the reminder was removed.</summary>
         public DateTime? Result { get; private set; }
 
-        public ReminderDialog(DateTime? current)
+        public Model.Repeat ResultRepeat => (Model.Repeat)Math.Max(0, repeat.SelectedIndex);
+
+        public ReminderDialog(DateTime? current, Model.Repeat currentRepeat = Model.Repeat.None)
         {
+            repeat.Items.AddRange(Enum.GetValues<Model.Repeat>().Select(r => (object)Strings.RepeatName(r)).ToArray());
+            repeat.SelectedIndex = (int)currentRepeat;
             Text = Strings.ReminderTitle;
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = MinimizeBox = false;
@@ -54,6 +60,8 @@ namespace NoFences
             var layout = new FlowLayoutPanel { FlowDirection = FlowDirection.TopDown, AutoSize = true, Dock = DockStyle.Fill };
             layout.Controls.Add(picker);
             layout.Controls.Add(quick);
+            layout.Controls.Add(new Label { Text = Strings.RepeatLabel, AutoSize = true, Margin = new Padding(3, 10, 3, 2) });
+            layout.Controls.Add(repeat);
             Controls.Add(layout);
             Controls.Add(buttons);
         }

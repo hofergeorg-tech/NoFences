@@ -69,6 +69,7 @@ namespace NoFences
             Store.RequestSave();
             ApplyVisibility();
             ApplyProfileWallpaper(Store.Config.ActiveProfile);
+            ApplyProfilePowerPlan(Store.Config.ActiveProfile);
             var name = Store.Config.ActiveProfile ?? Strings.ProfileAll;
             ShowBalloon(automatic ? Strings.ProfileSwitchedAuto(name) : Strings.ProfileSwitched(name));
         }
@@ -94,6 +95,7 @@ namespace NoFences
                 return;
             Store.Config.Profiles.Remove(profile);
             Store.Config.ProfileWallpapers.Remove(profile);
+            Store.Config.ProfilePowerPlans.Remove(profile);
             UpdateProfileHotkeys();
             foreach (var f in Store.Config.Fences)
             {

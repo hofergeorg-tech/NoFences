@@ -221,6 +221,13 @@ namespace NoFences
                 ("audio", "gaming", new Size(300, 230)),
                 ("status", "windows", new Size(330, 230)),
             });
+            RenderWidgetSheet(outDir, host, "widgets-planning-docs.png", new (string, string, Size)[]
+            {
+                ("todo", "work", new Size(300, 300)),
+                ("worldclock", "default", new Size(290, 260)),
+                ("power", "hardware", new Size(280, 170)),
+                ("steamdeals", "gaming", new Size(360, 330)),
+            });
             // Checking: news in a wide dark style, as people actually use it
             RenderWidgetSheet(outDir, host, "check-news.png", new (string, string, Size)[]
             {
@@ -349,6 +356,20 @@ namespace NoFences
                     }
                     photo.SetPreview(picture);
                     break;
+                case Widgets.PowerWidget power:
+                    power.SetPreview(new List<Win32.PowerPlan>
+                    {
+                        new(Guid.NewGuid(), "Balanced", false),
+                        new(Guid.NewGuid(), "High performance", true),
+                        new(Guid.NewGuid(), "Power saver", false),
+                    });
+                    break;
+                case Widgets.SteamDealsWidget steam:
+                    var colors = new[] { (Color.FromArgb(30, 40, 90), Color.FromArgb(200, 60, 160)), (Color.FromArgb(20, 90, 60), Color.FromArgb(220, 200, 60)), (Color.FromArgb(90, 30, 20), Color.FromArgb(240, 150, 40)), (Color.FromArgb(20, 60, 110), Color.FromArgb(120, 200, 240)) };
+                    var names = new[] { "Star Voyage", "Kart Rush", "Dune Riders", "Ice Peak" };
+                    steam.SetPreview(names.Select((n, i) => (new Widgets.SteamDeal(i + 1, n, new[] { 75, 50, 33, 60 }[i], new[] { 1499, 999, 2679, 799 }[i], new[] { 5999, 1999, 3999, 1999 }[i], "EUR", null, i == 0),
+                        (Image?)DemoCover(n.ToUpperInvariant(), colors[i].Item1, colors[i].Item2))));
+                    break;
                 case Widgets.AudioWidget audio:
                     audio.SetPreview(new List<Win32.AudioDevice>
                     {
@@ -391,6 +412,14 @@ namespace NoFences
                         "agenda" => "https://example.com/calendar.ics",
                         "news" => "https://example.com/feed.xml",
                         "photos" => Widgets.PhotoWidget.Format(60, @"C:\Pictures\Holidays"),
+                        "todo" => TodoList.Format(new List<TodoItem>
+                        {
+                            new() { Text = "Send the report", Due = DateTime.Today.AddHours(17) },
+                            new() { Text = "Water the plants", Due = DateTime.Today.AddDays(1).AddHours(8), Repeat = Repeat.Weekly },
+                            new() { Text = "Book train tickets" },
+                            new() { Text = "Call the dentist", Done = true },
+                        }),
+                        "worldclock" => "Pacific Standard Time|Los Angeles\nEastern Standard Time|New York\nTokyo Standard Time|Tokyo",
                         _ => null
                     }
                 };
@@ -434,7 +463,9 @@ namespace NoFences
         /// <summary>Sample sticky notes in a few styles, including checkboxes.</summary>
         private static void RenderNotes(string outDir, IFenceHost host)
         {
-            const string text = "Einkaufen:\n[x] Milch\n[ ] Brot\n[ ] Kaffee\n\nTel.\t0664 123 456\nWeb:\twww.robertsspaceindustries.com";
+            const string plain = "Einkaufen:\n[x] Milch\n[ ] Brot\n[ ] Kaffee\n\nTel.\t0664 123 456\nWeb:\twww.robertsspaceindustries.com";
+            // Every second note shows the formatting (headings, bold/italic, bullets, quote, rule)
+            const string formatted = "# Wochenplan\n**Montag:** Sport um *18 Uhr*\n- Einkaufen\n- Paket abholen\n---\n> Geburtstag Anna!\n[ ] Kuchen backen";
             var themes = new[] { "postit", "postit-pink", "postit-green", "postit-blue", "postit-orange", "nerd" };
             const int w = 260, h = 260, gap = 24, columns = 3;
             var rows = (themes.Length + columns - 1) / columns;
@@ -445,7 +476,7 @@ namespace NoFences
             {
                 var info = new FenceInfo
                 {
-                    Name = "Notiz", Kind = FenceKind.Note, Theme = themes[i], NoteText = text, TitleHeight = 30, BackgroundAlpha = 120,
+                    Name = "Notiz", Kind = FenceKind.Note, Theme = themes[i], NoteText = i % 2 == 1 ? formatted : plain, TitleHeight = 30, BackgroundAlpha = 120,
                     ReminderAt = i == 0 ? DateTime.Today.AddHours(18) : null
                 };
                 using var window = new FenceWindow(host, info) { Size = new Size(w, h) };
@@ -463,7 +494,7 @@ namespace NoFences
             DrawBackdrop(sg, new Rectangle(Point.Empty, strip.Size));
             for (var i = 0; i < 3; i++)
             {
-                var info = new FenceInfo { Name = "Einkaufsliste", Kind = FenceKind.Note, Theme = themes[i * 2], NoteText = text, TitleHeight = 30, CanMinify = true };
+                var info = new FenceInfo { Name = "Einkaufsliste", Kind = FenceKind.Note, Theme = themes[i * 2], NoteText = plain, TitleHeight = 30, CanMinify = true };
                 using var window = new FenceWindow(host, info) { Size = new Size(w, h) };
                 window.ApplySettings();
                 window.CollapseForPreview();

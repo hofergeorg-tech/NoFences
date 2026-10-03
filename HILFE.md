@@ -60,7 +60,11 @@ du unter Einstellungen → Desktop.
 - **Doppelklick** zum Schreiben; **Esc** oder ein Klick daneben speichert.
 - Zeilen mit `[ ]` am Anfang werden zu Kästchen; ein Klick hakt sie ab und streicht die Zeile durch.
 - Webadressen und Pfade sind unterstrichen und öffnen sich per Klick. Auf die Notiz gezogener Text wird angehängt.
-- Fence-Menü → **Erinnerung…**: Zur gewählten Zeit meldet sich NoFences mit Ton und Benachrichtigung.
+- **Formatierung**: `# Überschrift` (auch `##`, `###`), `- Punkt` oder `* Punkt` für Aufzählungen, `> Zitat`, `---` für
+  eine Linie, `**fett**` und `*kursiv*`.
+- **Strg+Alt+N** (änderbar unter Einstellungen → Desktop) legt von überall eine Notiz an der Maus an, bereit zum Tippen.
+- Fence-Menü → **Erinnerung…**: Zur gewählten Zeit meldet sich NoFences mit Ton und Benachrichtigung – einmalig,
+  täglich, werktags, wöchentlich oder monatlich.
 - Post-it-Style in Gelb, Rosa, Grün, Blau und Orange.
 
 ## Widgets
@@ -100,6 +104,13 @@ Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem
   und Mikrofon, und mit einem Klick zu einem anderen Gerät wechseln (Headset ↔ Lautsprecher).
 - **Dienst-Status**: ob RSI, Discord, Epic Games, GitHub und andere gerade Störungen haben, aus ihren öffentlichen
   Statusseiten; Klick auf eine Zeile öffnet die Seite.
+- **To-do-Liste**: Doppelklick fügt eine Aufgabe hinzu, auf Wunsch mit Fälligkeit und Wiederholung; Klick auf den Kreis
+  hakt sie ab (wiederkehrende springen auf den nächsten Termin). Fällige Aufgaben werden gemeldet, auch wenn das Widget
+  ausgeblendet ist.
+- **Weltzeituhr**: die Uhrzeit an anderen Orten mit dem Unterschied zu deiner; Doppelklick wählt die Zeitzonen.
+- **Energiesparplan**: mit einem Klick zwischen Ausbalanciert, Höchstleistung und anderen wechseln.
+- **Steam-Angebote**: aktuelle Angebote auf Steam; Spiele von deiner Wunschliste stehen oben, wenn sie öffentlich ist
+  (genommen wird das auf diesem PC angemeldete Steam-Konto). Klick öffnet die Shop-Seite in Steam.
 
 Jedes Widget hat im Menü eigene Einstellungen. Im Menü des Fokus-Timers gibt es außerdem den **Fokus-Modus**: Er
 wechselt während einer Fokus-Runde zu einem Profil deiner Wahl (z. B. „Fokus“ nur mit Arbeits-Fences) und in den
@@ -119,13 +130,21 @@ Doppelklick oder Leertaste dreht es, Pfeiltasten verschieben pixelgenau (Shift: 
 zwischen Pixel, Zentimeter und Zoll (echte Größe, aus der Größe, die dein Monitor meldet). Eine rote Linie folgt der
 Maus und zeigt den Abstand. Esc schließt es.
 
+## Farbpipette und Downloads
+
+- Werkzeuge ▸ **Farbpipette**: Der Bildschirm friert ein, eine Lupe folgt der Maus; ein Klick kopiert die Farbe als
+  `#RRGGBB` (Shift+Klick: `rgb(…)`), Esc bricht ab.
+- Werkzeuge ▸ **Downloads aufräumen…**: zeigt, was seit einer Woche, einem Monat, drei Monaten oder einem Jahr im
+  Downloads-Ordner liegt, größte zuerst; Gewähltes wandert in den Papierkorb (wiederherstellbar).
+
 ## Profile
 
 Fences in Profile wie „Arbeit“ und „Gaming“ gruppieren und im Tray (**Profil ▸**) oder unter **Einstellungen → Desktop**
 umschalten. Rechtsklick auf ein Fence → **In Profil zeigen** ordnet es zu; ein Fence ohne Profil erscheint in allen
 Profilen. Neue Fences gehören zum gerade aktiven Profil. **Strg+Alt+F1…F9** wechseln zu Profil 1…9, **Strg+Alt+F10**
 zeigt alle Fences. Ist ein Profil aktiv, gibt Tray → Profil ▸ **Hintergrundbild für „…“** ihm ein eigenes
-Hintergrundbild; in Profilen ohne eigenes kommt dein gewohntes zurück.
+Hintergrundbild; in Profilen ohne eigenes kommt dein gewohntes zurück. **Energiesparplan für „…“ ▸** im selben Menü
+wechselt mit dem Profil auch den Energiesparplan (z. B. Höchstleistung bei Gaming).
 
 ## Automatik (Einstellungen → Automatik)
 

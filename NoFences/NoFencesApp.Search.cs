@@ -73,10 +73,29 @@ namespace NoFences
             var tools = new ToolStripMenuItem(Strings.ToolsMenu);
             tools.DropDownItems.Add(SearchItem());
             tools.DropDownItems.Add(Strings.RulerMenu, null, (_, _) => RulerWindow.Toggle());
+            tools.DropDownItems.Add(Strings.ColorPickerMenu, null, (_, _) => PickColor());
+            tools.DropDownItems.Add(Strings.DownloadsMenu, null, (_, _) => DownloadsCleaner.Show());
             tools.DropDownItems.Add(new ToolStripSeparator());
             tools.DropDownItems.Add(Strings.AssistantMenu, null, (_, _) => RunDesktopAssistant());
             tools.DropDownItems.Add(Strings.SortNow, null, (_, _) => SortDesktopNow());
             items.Add(tools);
+        }
+
+        /// <summary>Color picker: the picked value goes to the clipboard and is shown in a notification.</summary>
+        public void PickColor()
+        {
+            // Let the menu that started it disappear before the screens are captured
+            var wait = new System.Windows.Forms.Timer { Interval = 250 };
+            wait.Tick += (_, _) =>
+            {
+                wait.Dispose();
+                ColorPicker.Start(value =>
+                {
+                    try { Clipboard.SetText(value); } catch (System.Runtime.InteropServices.ExternalException) { }
+                    ShowBalloon(Strings.ColorCopied(value));
+                });
+            };
+            wait.Start();
         }
 
         private void DisposeSearch() => searchHotkey?.Dispose();

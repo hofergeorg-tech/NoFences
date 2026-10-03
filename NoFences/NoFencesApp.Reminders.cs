@@ -19,9 +19,11 @@ namespace NoFences
         private void CheckReminders()
         {
             var now = DateTime.Now;
+            CheckTodos(now);
             foreach (var fence in Store.Config.Fences.Where(f => f.ReminderAt is DateTime at && at <= now).ToList())
             {
-                fence.ReminderAt = null;
+                // Repeating reminders move on to their next time
+                fence.ReminderAt = Recurrence.Next(fence.ReminderAt!.Value, fence.ReminderRepeat, now);
                 Store.RequestSave();
                 windows.FirstOrDefault(w => w.Info == fence)?.Invalidate();
 
@@ -30,6 +32,25 @@ namespace NoFences
                 var text = summary.Length > 0 ? $"{Strings.ReminderDue(fence.Name)}\n{summary}" : Strings.ReminderDue(fence.Name);
                 // Clicking the notification brings the fences (and so the note) to the front.
                 ShowBalloon(text, StartPeek, timeout: 15_000);
+            }
+        }
+
+        /// <summary>To-dos in to-do widgets that came due: one notification each (also while the widget is hidden).</summary>
+        private void CheckTodos(DateTime now)
+        {
+            foreach (var fence in Store.Config.Fences.Where(f => f.Kind == FenceKind.Widget && f.WidgetType == "todo"))
+            {
+                var items = TodoList.Parse(fence.WidgetOption);
+                var due = items.Where(i => !i.Done && !i.Notified && i.Due is DateTime d && d <= now).ToList();
+                if (due.Count == 0)
+                    continue;
+                foreach (var item in due)
+                    item.Notified = true;
+                fence.WidgetOption = TodoList.Format(items);
+                Store.RequestSave();
+                windows.FirstOrDefault(w => w.Info == fence)?.Invalidate();
+                SystemSounds.Asterisk.Play();
+                ShowBalloon(Strings.TodoDue(fence.Name, string.Join("\n", due.Select(i => "• " + i.Text))), StartPeek, timeout: 15_000);
             }
         }
 

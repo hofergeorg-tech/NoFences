@@ -15,6 +15,10 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Profile shortcuts** Ctrl+Alt+F1…F9 (F10: all fences) and a **wallpaper per profile**.
 - **Desktop assistant**: sorts desktop icons into new fences by kind (offered on the first start).
 - **Screen ruler** in pixels, centimetres or inches (Tools ▸ Screen ruler – in the tray and every fence menu).
+- **Color picker** with magnifier (copies #RRGGBB) and **Clean up Downloads** (old files, biggest first, to the recycle bin).
+- **Quick note** from anywhere with Ctrl+Alt+N; **formatting in notes** (headings, bullets, quotes, lines, bold, italic).
+- **Repeating reminders** (daily, weekdays, weekly, monthly) and a **to-do list** widget with due times.
+- Widgets **world clock**, **power plan** (also switched per profile) and **Steam sales** (wishlist first).
 
 ### Changed
 - **Grouped menus**: New widget ▸ Time & planning / Info & news / System / Games & media; Style ▸ Basic / Gaming & tech /

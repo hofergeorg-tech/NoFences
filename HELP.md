@@ -57,7 +57,11 @@ settings pages ("bluetooth", "sound"). Type a calculation like `12*7` or `200*15
 - **Double-click** to write; **Esc** or a click outside saves.
 - Lines starting with `[ ]` become checkboxes; a click ticks them and strikes the line through.
 - Web addresses and paths are underlined and open on click. Text dragged onto a note is appended.
-- Fence menu → **Reminder…**: NoFences plays a sound and shows a notification at that time.
+- **Formatting**: `# Heading` (also `##`, `###`), `- item` or `* item` for bullets, `> quote`, `---` for a line,
+  `**bold**` and `*italic*`.
+- **Ctrl+Alt+N** (changeable in Settings → Desktop) creates a note at the mouse, ready to type – from anywhere.
+- Fence menu → **Reminder…**: NoFences plays a sound and shows a notification at that time – once, daily, on weekdays,
+  weekly or monthly.
 - Post-it style in yellow, pink, green, blue and orange.
 
 ## Widgets
@@ -97,6 +101,12 @@ Tray or fence menu → **New widget**. Widgets with a list scroll with the mouse
   microphone, and one click to switch to another device (headset ↔ speakers).
 - **Service status**: whether RSI, Discord, Epic Games, GitHub and others have problems right now, from their
   public status pages; click a line to open the page.
+- **To-do list**: double-click to add a to-do, optionally with a due time and repetition; click the circle to tick it
+  off (repeating ones move to their next date). Due to-dos are announced even while the widget is hidden.
+- **World clock**: the time in other places, with the difference to yours; double-click to choose time zones.
+- **Power plan**: switch between Balanced, High performance and others with one click.
+- **Steam sales**: current sales on Steam; games from your wishlist come first if the wishlist is public (the Steam
+  account signed in on this PC is used). Click opens the store page in Steam.
 
 Every widget's menu has its own settings. The focus timer's menu also has **focus mode**: it switches to a profile you
 choose (e.g. "Focus" with only work fences) while a focus round runs, and back in breaks.
@@ -113,13 +123,21 @@ Tray or fence menu → Tools ▸ **Screen ruler** puts a ruler above everything:
 space turns it, arrow keys nudge it (Shift: 10 px), U or the menu switches between pixels, centimetres and inches
 (real size, from the size your monitor reports). A red line follows the mouse and shows the distance. Esc closes it.
 
+## Color picker and Downloads
+
+- Tools ▸ **Color picker**: the screen freezes and a magnifier follows the mouse; a click copies the color as `#RRGGBB`
+  (Shift+click: `rgb(…)`), Esc cancels.
+- Tools ▸ **Clean up Downloads…**: lists what has been lying in your Downloads folder for a week, month, three months
+  or a year, biggest first; the chosen items go to the recycle bin (restorable).
+
 ## Profiles
 
 Group fences into profiles like "Work" and "Gaming" and switch between them in the tray (**Profile ▸**) or in
 **Settings → Desktop**. Right-click a fence → **Show in profile** to assign it; a fence without a profile shows in
 every profile. Fences created while a profile is active belong to it. **Ctrl+Alt+F1…F9** switch to profile 1…9,
 **Ctrl+Alt+F10** shows all fences. With a profile active, tray → Profile ▸ **Wallpaper for "…"** gives it its own
-wallpaper; your usual wallpaper comes back in profiles without one.
+wallpaper; your usual wallpaper comes back in profiles without one. **Power plan for "…" ▸** in the same menu switches
+the power plan along with the profile (e.g. High performance for Gaming).
 
 ## Automation (Settings → Automation)
 

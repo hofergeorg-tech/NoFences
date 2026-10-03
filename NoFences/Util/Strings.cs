@@ -126,7 +126,47 @@ namespace NoFences.Util
         public static string ProfileHowTo => T("Assign fences: right-click a fence → Show in profile", "Fences zuordnen: Rechtsklick auf ein Fence → In Profil zeigen", "Assegna recinti: clic destro su un recinto → Mostra nel profilo", "Attribuer des barrières : clic droit sur une barrière → Afficher dans le profil", "Asignar vallas: clic derecho en una valla → Mostrar en el perfil");
         public static string ProfileFenceMenu => T("Show in profile", "In Profil zeigen", "Mostra nel profilo", "Afficher dans le profil", "Mostrar en el perfil");
         public static string ProfileFenceHint => T("No check = in every profile", "Ohne Haken = in allen Profilen", "Nessuna spunta = in tutti i profili", "Aucune coche = dans tous les profils", "Sin marca = en todos los perfiles");
-        public static string ToolsMenu => T("Tools", "Werkzeuge", "Strumenti", "Outils", "Herramientas");
+        public static string DownloadsMenu => T("Clean up Downloads…", "Downloads aufräumen…", "Pulisci Download…", "Nettoyer les téléchargements…", "Limpiar Descargas…");
+        public static string DownloadsTitle => T("Clean up Downloads", "Downloads aufräumen", "Pulisci Download", "Nettoyer les téléchargements", "Limpiar Descargas");
+        public static string DownloadsShow => T("Show what's untouched for", "Zeigen, was liegt seit", "Mostra ciò che è fermo da", "Afficher ce qui n'a pas bougé depuis", "Mostrar lo que lleva sin tocarse");
+        public static string DownloadsOlderThan(int days) => days switch
+        {
+            7 => T("1 week or more", "1 Woche oder länger", "1 settimana o più", "1 semaine ou plus", "1 semana o más"),
+            30 => T("1 month or more", "1 Monat oder länger", "1 mese o più", "1 mois ou plus", "1 mes o más"),
+            90 => T("3 months or more", "3 Monaten oder länger", "3 mesi o più", "3 mois ou plus", "3 meses o más"),
+            _ => T("1 year or more", "1 Jahr oder länger", "1 anno o più", "1 an ou plus", "1 año o más")
+        };
+        public static string DownloadsSize => T("Size", "Größe", "Dimensione", "Taille", "Tamaño");
+        public static string DownloadsAge => T("Untouched for", "Liegt seit", "Fermo da", "Inchangé depuis", "Sin tocar desde hace");
+        public static string DownloadsRecycle => T("Move to recycle bin", "In den Papierkorb", "Sposta nel cestino", "Mettre à la corbeille", "Mover a la papelera");
+        public static string DownloadsNothing => T("Nothing that old here.", "Hier liegt nichts so Altes.", "Qui non c'è niente di così vecchio.", "Rien d'aussi ancien ici.", "Aquí no hay nada tan antiguo.");
+        public static string DownloadsSelected(int n, string size, int all) => T($"{n} of {all} chosen · {size}", $"{n} von {all} gewählt · {size}", $"{n} di {all} scelti · {size}", $"{n} sur {all} choisis · {size}", $"{n} de {all} elegidos · {size}");
+        public static string DownloadsConfirm(int n, string size) => T(
+            $"Move {n} items ({size}) to the recycle bin? You can restore them from there.",
+            $"{n} Einträge ({size}) in den Papierkorb verschieben? Von dort lassen sie sich wiederherstellen.",
+            $"Spostare {n} elementi ({size}) nel cestino? Da lì si possono ripristinare.",
+            $"Mettre {n} éléments ({size}) à la corbeille ? Vous pourrez les y restaurer.",
+            $"¿Mover {n} elementos ({size}) a la papelera? Desde allí se pueden restaurar.");
+        public static string WidgetSteamDeals => T("Steam sales", "Steam-Angebote", "Offerte Steam", "Promos Steam", "Ofertas de Steam");
+        public static string SteamWishlist => T("On your wishlist", "Auf deiner Wunschliste", "Nella tua lista dei desideri", "Dans votre liste de souhaits", "En tu lista de deseos");
+        public static string SteamSpecials => T("Current sales", "Aktuelle Angebote", "Offerte attuali", "Promotions actuelles", "Ofertas actuales");
+        public static string SteamIdMenu => T("Steam account for the wishlist…", "Steam-Konto für die Wunschliste…", "Account Steam per la lista dei desideri…", "Compte Steam pour la liste de souhaits…", "Cuenta de Steam para la lista de deseos…");
+        public static string SteamIdPrompt => T(
+            "SteamID64 (17 digits, starts with 7656…). Leave empty to use the account signed in on this PC. The wishlist must be public.",
+            "SteamID64 (17 Ziffern, beginnt mit 7656…). Leer lassen, um das auf diesem PC angemeldete Konto zu nehmen. Die Wunschliste muss öffentlich sein.",
+            "SteamID64 (17 cifre, inizia con 7656…). Lascia vuoto per usare l'account collegato su questo PC. La lista dei desideri deve essere pubblica.",
+            "SteamID64 (17 chiffres, commence par 7656…). Laissez vide pour utiliser le compte connecté sur ce PC. La liste de souhaits doit être publique.",
+            "SteamID64 (17 dígitos, empieza por 7656…). Déjalo vacío para usar la cuenta iniciada en este PC. La lista de deseos debe ser pública.");
+        public static string WidgetPower =>T("Power plan", "Energiesparplan", "Combinazione di risparmio energia", "Mode de gestion de l'alimentation", "Plan de energía");
+        public static string PowerNone => T("No power plans found.", "Keine Energiesparpläne gefunden.", "Nessuna combinazione trovata.", "Aucun mode d'alimentation trouvé.", "No se encontraron planes de energía.");
+        public static string PowerSettings => T("Power settings…", "Energie-Einstellungen…", "Impostazioni di alimentazione…", "Paramètres d'alimentation…", "Configuración de energía…");
+        public static string PowerForProfile(string profile) => T($"Power plan for \"{profile}\"", $"Energiesparplan für „{profile}“", $"Risparmio energia per «{profile}»", $"Alimentation pour « {profile} »", $"Plan de energía para «{profile}»");
+        public static string PowerKeep => T("Don't change", "Nicht ändern", "Non cambiare", "Ne pas changer", "No cambiar");
+        public static string QuickNoteLabel =>T("New note (anywhere):", "Neue Notiz (überall):", "Nuova nota (ovunque):", "Nouvelle note (partout) :", "Nota nueva (en cualquier sitio):");
+        public static string ColorPickerMenu => T("Color picker", "Farbpipette", "Contagocce", "Pipette de couleur", "Cuentagotas");
+        public static string ColorPickerHint => T("Click copies the color (Shift+click: rgb) · Esc cancels", "Klick kopiert die Farbe (Shift+Klick: rgb) · Esc bricht ab", "Clic copia il colore (Maiusc+clic: rgb) · Esc annulla", "Clic copie la couleur (Maj+clic : rgb) · Échap annule", "Clic copia el color (Mayús+clic: rgb) · Esc cancela");
+        public static string ColorCopied(string value) => T($"Color {value} copied.", $"Farbe {value} kopiert.", $"Colore {value} copiato.", $"Couleur {value} copiée.", $"Color {value} copiado.");
+        public static string ToolsMenu =>T("Tools", "Werkzeuge", "Strumenti", "Outils", "Herramientas");
         public static string RulerTitle =>T("Ruler", "Lineal", "Righello", "Règle", "Regla");
         public static string RulerMenu => T("Screen ruler", "Bildschirm-Lineal", "Righello sullo schermo", "Règle à l'écran", "Regla en pantalla");
         public static string RulerTurn => T("Turn (space)", "Drehen (Leertaste)", "Ruota (spazio)", "Tourner (espace)", "Girar (espacio)");
@@ -574,7 +614,33 @@ namespace NoFences.Util
         public static string NewsUnreachable(string host) => T($"{host} can't be reached.", $"{host} ist nicht erreichbar.", $"{host} non è raggiungibile.", $"{host} est injoignable.", $"{host} no está disponible.");
         public static string NewsSet => T("News feeds…", "News-Feeds…", "Feed di notizie…", "Flux d'actualités…", "Fuentes de noticias…");
 
-        public static string WidgetStatus => T("Service status (RSI, Discord …)", "Dienst-Status (RSI, Discord …)", "Stato dei servizi (RSI, Discord …)", "État des services (RSI, Discord…)", "Estado de servicios (RSI, Discord…)");
+        public static string WidgetWorldClock => T("World clock", "Weltzeituhr", "Orologio mondiale", "Horloge mondiale", "Reloj mundial");
+        public static string WorldClockHint => T("Double-click to choose time zones.", "Doppelklick, um Zeitzonen auszuwählen.", "Doppio clic per scegliere i fusi orari.", "Double-cliquez pour choisir des fuseaux horaires.", "Haz doble clic para elegir zonas horarias.");
+        public static string WorldClockSet => T("Time zones…", "Zeitzonen…", "Fusi orari…", "Fuseaux horaires…", "Zonas horarias…");
+        public static string WorldClockAdd => T("Add", "Hinzufügen", "Aggiungi", "Ajouter", "Añadir");
+        public static string WorldClockZone => T("Time zone:", "Zeitzone:", "Fuso orario:", "Fuseau horaire :", "Zona horaria:");
+        public static string WorldClockLabel => T("Name:", "Name:", "Nome:", "Nom :", "Nombre:");
+        public static string WorldClockYesterday => T("yesterday", "gestern", "ieri", "hier", "ayer");
+        public static string WidgetTodo =>T("To-do list", "To-do-Liste", "Cose da fare", "Liste de tâches", "Lista de tareas");
+        public static string TodoHint => T("Double-click to add a to-do – with a due time and repetition if you like.", "Doppelklick fügt eine Aufgabe hinzu – auf Wunsch mit Fälligkeit und Wiederholung.", "Doppio clic per aggiungere un'attività – se vuoi con scadenza e ripetizione.", "Double-cliquez pour ajouter une tâche – avec échéance et répétition si vous voulez.", "Haz doble clic para añadir una tarea, con vencimiento y repetición si quieres.");
+        public static string TodoAdd => T("New to-do…", "Neue Aufgabe…", "Nuova attività…", "Nouvelle tâche…", "Nueva tarea…");
+        public static string TodoEdit(string text) => T($"Edit \"{Short(text)}\"…", $"„{Short(text)}“ bearbeiten…", $"Modifica «{Short(text)}»…", $"Modifier « {Short(text)} »…", $"Editar «{Short(text)}»…");
+        public static string TodoDelete => T("Delete this to-do", "Diese Aufgabe löschen", "Elimina questa attività", "Supprimer cette tâche", "Eliminar esta tarea");
+        public static string TodoClearDone => T("Remove completed", "Erledigte entfernen", "Rimuovi completate", "Retirer les tâches faites", "Quitar completadas");
+        public static string TodoTextLabel => T("To-do", "Aufgabe", "Attività", "Tâche", "Tarea");
+        public static string TodoDueLabel => T("Due on", "Fällig am", "Scadenza", "Échéance", "Vence el");
+        public static string TodoDue(string fence, string items) => T($"Due ({fence}):\n{items}", $"Fällig ({fence}):\n{items}", $"In scadenza ({fence}):\n{items}", $"À faire ({fence}) :\n{items}", $"Pendiente ({fence}):\n{items}");
+        private static string Short(string text) => text.Length <= 24 ? text : text[..23] + "…";
+        public static string RepeatLabel => T("Repeat", "Wiederholen", "Ripeti", "Répéter", "Repetir");
+        public static string RepeatName(Repeat repeat) => repeat switch
+        {
+            Repeat.Daily => T("daily", "täglich", "ogni giorno", "chaque jour", "a diario"),
+            Repeat.Weekdays => T("on weekdays", "werktags", "nei giorni feriali", "en semaine", "entre semana"),
+            Repeat.Weekly => T("weekly", "wöchentlich", "ogni settimana", "chaque semaine", "cada semana"),
+            Repeat.Monthly => T("monthly", "monatlich", "ogni mese", "chaque mois", "cada mes"),
+            _ => T("once", "einmalig", "una volta", "une fois", "una vez")
+        };
+        public static string WidgetStatus =>T("Service status (RSI, Discord …)", "Dienst-Status (RSI, Discord …)", "Stato dei servizi (RSI, Discord …)", "État des services (RSI, Discord…)", "Estado de servicios (RSI, Discord…)");
         public static string StatusSet => T("Services…", "Dienste…", "Servizi…", "Services…", "Servicios…");
         public static string StatusPrompt => T(
             "Status pages, one per line – add one of these or paste the address of another status page:",

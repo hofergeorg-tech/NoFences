@@ -308,6 +308,12 @@ namespace NoFences
                 app.UpdateSearchHotkey(notifyIfTaken: true);
             }, 180));
             Hint(search, Strings.SearchHint, ContentWidth);
+            Row(search, Strings.QuickNoteLabel, Choice(AppConfig.QuickNoteHotkeys.Select(Strings.HotkeyName), IndexOf(AppConfig.QuickNoteHotkeys, Config.QuickNoteHotkey), i =>
+            {
+                Config.QuickNoteHotkey = AppConfig.QuickNoteHotkeys[i];
+                app.Store.RequestSave();
+                app.UpdateQuickNoteHotkey();
+            }, 180));
 
             var sort = Section(page, Strings.SectionAutoSort, ContentWidth);
             Wide(sort, Check(Strings.AutoSortEnabled, Config.AutoSortEnabled, v =>

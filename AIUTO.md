@@ -59,7 +59,11 @@ cambia in Impostazioni → Desktop.
 - **Doppio clic** per scrivere; **Esc** o un clic fuori salva.
 - Le righe che iniziano con `[ ]` diventano caselle; un clic le spunta e barra la riga.
 - Indirizzi web e percorsi sono sottolineati e si aprono con un clic. Il testo trascinato su una nota viene aggiunto.
-- Menu del recinto → **Promemoria…**: a quell'ora NoFences emette un suono e mostra una notifica.
+- **Formattazione**: `# Titolo` (anche `##`, `###`), `- voce` o `* voce` per gli elenchi, `> citazione`, `---` per una
+  linea, `**grassetto**` e `*corsivo*`.
+- **Ctrl+Alt+N** (modificabile in Impostazioni → Desktop) crea da ovunque una nota accanto al mouse, pronta da scrivere.
+- Menu del recinto → **Promemoria…**: a quell'ora NoFences emette un suono e mostra una notifica – una volta, ogni giorno,
+  nei giorni feriali, ogni settimana o ogni mese.
 - Stile post-it in giallo, rosa, verde, blu e arancione.
 
 ## Widget
@@ -98,6 +102,13 @@ Menu della barra o del recinto → **Nuovo widget**. I widget con un elenco scor
   microfono, e con un clic passi a un altro dispositivo (cuffie ↔ altoparlanti).
 - **Stato dei servizi**: se RSI, Discord, Epic Games, GitHub e altri hanno problemi in questo momento, dalle loro pagine
   di stato pubbliche; un clic su una riga apre la pagina.
+- **Cose da fare**: doppio clic per aggiungere un'attività, se vuoi con scadenza e ripetizione; un clic sul cerchio la
+  spunta (quelle ripetute passano alla data successiva). Le attività in scadenza vengono annunciate anche se il widget è
+  nascosto.
+- **Orologio mondiale**: l'ora in altri luoghi con la differenza rispetto alla tua; doppio clic per scegliere i fusi orari.
+- **Risparmio energia**: passa con un clic tra Bilanciato, Prestazioni elevate e gli altri.
+- **Offerte Steam**: le offerte attuali su Steam; i giochi della tua lista dei desideri vengono prima, se è pubblica (si
+  usa l'account Steam collegato su questo PC). Un clic apre la pagina del negozio in Steam.
 
 Ogni widget ha le sue impostazioni nel menu. Nel menu del timer di concentrazione c'è anche la **modalità
 concentrazione**: durante un giro passa a un profilo a tua scelta (ad es. "Concentrazione" con soli recinti di lavoro)
@@ -117,13 +128,21 @@ allungarlo, doppio clic o spazio lo ruota, le frecce lo spostano al pixel (Maius
 pixel, centimetri e pollici (dimensione reale, da quella comunicata dal monitor). Una linea rossa segue il mouse e
 mostra la distanza. Esc lo chiude.
 
+## Contagocce e Download
+
+- Strumenti ▸ **Contagocce**: lo schermo si blocca e una lente segue il mouse; un clic copia il colore come `#RRGGBB`
+  (Maiusc+clic: `rgb(…)`), Esc annulla.
+- Strumenti ▸ **Pulisci Download…**: mostra ciò che è fermo nella cartella Download da una settimana, un mese, tre mesi o
+  un anno, i più grandi prima; gli elementi scelti vanno nel cestino (ripristinabili).
+
 ## Profili
 
 Raggruppa i recinti in profili come "Lavoro" e "Gaming" e passa dall'uno all'altro nella barra (**Profilo ▸**) o in
 **Impostazioni → Desktop**. Clic destro su un recinto → **Mostra nel profilo** per assegnarlo; un recinto senza profilo
 appare in tutti i profili. I nuovi recinti appartengono al profilo attivo. **Ctrl+Alt+F1…F9** passano al profilo 1…9,
 **Ctrl+Alt+F10** mostra tutti i recinti. Con un profilo attivo, barra → Profilo ▸ **Sfondo per «…»** gli dà uno
-sfondo proprio; nei profili senza torna quello abituale.
+sfondo proprio; nei profili senza torna quello abituale. **Risparmio energia per «…» ▸** nello stesso menu cambia anche
+la combinazione di risparmio energia insieme al profilo (ad es. Prestazioni elevate per Gaming).
 
 ## Automazione (Impostazioni → Automazione)
 

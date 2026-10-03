@@ -59,7 +59,12 @@ atajo se cambia en Configuración → Escritorio.
 - **Doble clic** para escribir; **Esc** o un clic fuera guarda.
 - Las líneas que empiezan con `[ ]` se convierten en casillas; un clic las marca y tacha la línea.
 - Las direcciones web y rutas aparecen subrayadas y se abren con un clic. El texto arrastrado a una nota se añade al final.
-- Menú de la valla → **Recordatorio…**: a la hora elegida, NoFences suena y muestra una notificación.
+- **Formato**: `# Título` (también `##`, `###`), `- elemento` o `* elemento` para listas, `> cita`, `---` para una línea,
+  `**negrita**` y `*cursiva*`.
+- **Ctrl+Alt+N** (se cambia en Configuración → Escritorio) crea desde cualquier sitio una nota junto al ratón, lista para
+  escribir.
+- Menú de la valla → **Recordatorio…**: a la hora elegida, NoFences suena y muestra una notificación – una vez, a diario,
+  entre semana, cada semana o cada mes.
 - Estilo pósit en amarillo, rosa, verde, azul y naranja.
 
 ## Widgets
@@ -98,6 +103,12 @@ Menú de la bandeja o de una valla → **Nuevo widget**. Los widgets con listas 
   micrófono, y cambiar con un clic a otro dispositivo (auriculares ↔ altavoces).
 - **Estado de servicios**: si RSI, Discord, Epic Games, GitHub y otros tienen problemas ahora mismo, según sus páginas
   de estado públicas; un clic en una línea abre la página.
+- **Lista de tareas**: doble clic para añadir una tarea, con vencimiento y repetición si quieres; un clic en el círculo la
+  marca (las periódicas pasan a su siguiente fecha). Las tareas pendientes se avisan aunque el widget esté oculto.
+- **Reloj mundial**: la hora en otros lugares con la diferencia respecto a la tuya; doble clic para elegir zonas horarias.
+- **Plan de energía**: cambia con un clic entre Equilibrado, Alto rendimiento y otros.
+- **Ofertas de Steam**: las ofertas actuales de Steam; los juegos de tu lista de deseos van primero si es pública (se usa
+  la cuenta de Steam iniciada en este PC). Un clic abre la página de la tienda en Steam.
 
 Cada widget tiene sus propios ajustes en su menú. El menú del temporizador de concentración incluye además el **modo
 concentración**: durante una ronda cambia a un perfil que elijas (p. ej. «Concentración» solo con vallas de trabajo) y
@@ -117,13 +128,21 @@ doble clic o espacio la gira, las flechas la ajustan píxel a píxel (Mayús: 10
 centímetros y pulgadas (tamaño real, según el tamaño que indica el monitor). Una línea roja sigue al ratón y muestra la
 distancia. Esc la cierra.
 
+## Cuentagotas y Descargas
+
+- Herramientas ▸ **Cuentagotas**: la pantalla se congela y una lupa sigue al ratón; un clic copia el color como `#RRGGBB`
+  (Mayús+clic: `rgb(…)`), Esc cancela.
+- Herramientas ▸ **Limpiar Descargas…**: muestra lo que lleva una semana, un mes, tres meses o un año en la carpeta
+  Descargas, primero lo más grande; lo elegido va a la papelera (se puede restaurar).
+
 ## Perfiles
 
 Agrupa las vallas en perfiles como «Trabajo» y «Juegos» y cambia entre ellos en la bandeja (**Perfil ▸**) o en
 **Configuración → Escritorio**. Clic derecho en una valla → **Mostrar en el perfil** para asignarla; una valla sin perfil
 aparece en todos los perfiles. Las vallas creadas mientras hay un perfil activo pertenecen a él. **Ctrl+Alt+F1…F9**
 cambian al perfil 1…9 y **Ctrl+Alt+F10** muestra todas las vallas. Con un perfil activo, bandeja → Perfil ▸ **Fondo de
-pantalla para «…»** le da su propio fondo; en los perfiles sin fondo propio vuelve el habitual.
+pantalla para «…»** le da su propio fondo; en los perfiles sin fondo propio vuelve el habitual. **Plan de energía para
+«…» ▸** en el mismo menú cambia también el plan de energía con el perfil (p. ej. Alto rendimiento para Juegos).
 
 ## Automatización (Configuración → Automatización)
 

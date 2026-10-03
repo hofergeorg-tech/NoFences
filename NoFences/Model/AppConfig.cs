@@ -68,6 +68,17 @@ namespace NoFences.Model
 
         public string DarkTo { get; set; } = "07:00";
 
+        /// <summary>Shortcut for a new note at the mouse.</summary>
+        public string QuickNoteHotkey { get; set; } = "Ctrl+Alt+N";
+
+        public static readonly IReadOnlyList<string> QuickNoteHotkeys = new[] { "Ctrl+Alt+N", "Ctrl+Alt+Q", "Off" };
+
+        /// <summary>Power plan (scheme GUID) per profile, switched along with the profile.</summary>
+        public Dictionary<string, Guid> ProfilePowerPlans { get; set; } = new();
+
+        /// <summary>The power plan from before a profile changed it, restored for profiles without one.</summary>
+        public Guid? OriginalPowerPlan { get; set; }
+
         /// <summary>Shortcut for the search across all fences.</summary>
         public string SearchHotkey { get; set; } = "Ctrl+Alt+F";
 

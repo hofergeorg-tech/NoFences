@@ -61,6 +61,7 @@ namespace NoFences
             InitSync();
             InitScreenTime();
             UpdateProfileHotkeys();
+            UpdateQuickNoteHotkey();
             if (themeErrors.Count > 0)
                 ShowBalloon(Strings.ThemeErrors(string.Join("\n", themeErrors)), timeout: 10_000);
 
@@ -274,7 +275,10 @@ namespace NoFences
             }
             menu.Items.Add(Strings.NewFence, null, (_, _) => CreateFence(FenceKind.Links));
             menu.Items.Add(Strings.NewFolderFence, null, (_, _) => CreateFence(FenceKind.Folder));
-            menu.Items.Add(Strings.NewNote, null, (_, _) => CreateFence(FenceKind.Note));
+            var note = new ToolStripMenuItem(Strings.NewNote, null, (_, _) => QuickNote());
+            if (Store.Config.QuickNoteHotkey != "Off")
+                note.ShortcutKeyDisplayString = Strings.HotkeyName(Store.Config.QuickNoteHotkey);
+            menu.Items.Add(note);
             AddCreateExtrasItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(new ToolStripMenuItem(Strings.ShowFences, null, (_, _) => ToggleVisible()) { Checked = fencesVisible });
@@ -306,6 +310,7 @@ namespace NoFences
             DisposeSync();
             DisposeScreenTime();
             DisposeProfileHotkeys();
+            DisposeQuickNote();
             sorter.Dispose();
             tray.Visible = false;
             tray.Dispose();

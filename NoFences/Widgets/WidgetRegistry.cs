@@ -28,6 +28,10 @@ namespace NoFences.Widgets
             ("screentime", () => Strings.WidgetScreenTime, new Size(300, 300)),
             ("audio", () => Strings.WidgetAudio, new Size(280, 220)),
             ("status", () => Strings.WidgetStatus, new Size(320, 220)),
+            ("todo", () => Strings.WidgetTodo, new Size(300, 320)),
+            ("worldclock", () => Strings.WidgetWorldClock, new Size(290, 260)),
+            ("power", () => Strings.WidgetPower, new Size(280, 170)),
+            ("steamdeals", () => Strings.WidgetSteamDeals, new Size(340, 360)),
         };
 
         public enum Group { Time, Info, System, GamesMedia }
@@ -35,10 +39,10 @@ namespace NoFences.Widgets
         /// <summary>Menu groups, in menu order, with the widget types they contain (in that order too).</summary>
         public static IReadOnlyList<(Group Group, string[] Types)> Groups { get; } = new (Group, string[])[]
         {
-            (Group.Time, new[] { "clock", "countdown", "agenda", "focus", "screentime" }),
+            (Group.Time, new[] { "clock", "worldclock", "todo", "countdown", "agenda", "focus", "screentime" }),
             (Group.Info, new[] { "weather", "news", "ticker", "status" }),
-            (Group.System, new[] { "system", "audio", "network", "drives", "battery", "recyclebin", "clipboard" }),
-            (Group.GamesMedia, new[] { "games", "playtime", "media", "photos" }),
+            (Group.System, new[] { "system", "audio", "power", "network", "drives", "battery", "recyclebin", "clipboard" }),
+            (Group.GamesMedia, new[] { "games", "steamdeals", "playtime", "media", "photos" }),
         };
 
         public static FenceWidget? Create(FenceInfo info, IFenceHost host)
@@ -94,6 +98,10 @@ namespace NoFences.Widgets
                 "ticker" => new TickerWidget(() => info.WidgetOption, Set),
                 "audio" => new AudioWidget(),
                 "status" => new StatusWidget(() => info.WidgetOption, Set),
+                "todo" => new TodoWidget(() => info.WidgetOption, Set),
+                "worldclock" => new WorldClockWidget(() => info.WidgetOption, Set),
+                "power" => new PowerWidget(),
+                "steamdeals" => new SteamDealsWidget(() => info.WidgetOption, Set),
                 "screentime" =>new ScreenTimeWidget(() => info.WidgetOption, Set, () => host.ScreenTime),
                 _ => null
             };
