@@ -3,6 +3,16 @@ using NoFences.Util;
 
 namespace NoFences.Tests
 {
+    /// <summary>
+    /// These tests switch the UI language for a moment. Other tests expect fixed texts, so these run on
+    /// their own, after the parallel ones.
+    /// </summary>
+    [CollectionDefinition(nameof(LanguageSwitching), DisableParallelization = true)]
+    public class LanguageSwitching
+    {
+    }
+
+    [Collection(nameof(LanguageSwitching))]
     public class LanguageTests
     {
         private static IEnumerable<PropertyInfo> TextProperties() =>
