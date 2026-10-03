@@ -28,9 +28,14 @@ namespace NoFences
             ApplyVisibility();
         }
 
-        /// <summary>Shown if fences aren't hidden and the fence belongs to all desktops or the current one.</summary>
+        /// <summary>
+        /// Shown if fences aren't hidden, the fence belongs to all desktops or the current one, and it is
+        /// part of the active profile.
+        /// </summary>
         private bool ShouldBeVisible(FenceInfo info) =>
-            fencesVisible && (info.VirtualDesktop == null || CurrentVirtualDesktop == null || info.VirtualDesktop == CurrentVirtualDesktop);
+            fencesVisible
+            && (info.VirtualDesktop == null || CurrentVirtualDesktop == null || info.VirtualDesktop == CurrentVirtualDesktop)
+            && info.InProfile(Store.Config.ActiveProfile);
 
         private void ApplyVisibility()
         {

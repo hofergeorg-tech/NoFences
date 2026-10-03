@@ -44,6 +44,12 @@ namespace NoFences
                 var fences = export.PrepareForImport();
                 foreach (var info in fences)
                 {
+                    // Profiles from the other PC become profiles here
+                    foreach (var profile in info.Profiles ?? new())
+                    {
+                        if (!Store.Config.Profiles.Contains(profile))
+                            Store.Config.Profiles.Add(profile);
+                    }
                     Store.Config.Fences.Add(info);
                     OpenWindow(info); // off-screen positions are moved back onto a screen
                 }

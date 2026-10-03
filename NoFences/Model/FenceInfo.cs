@@ -11,7 +11,7 @@ namespace NoFences.Model
         /// <summary>A sticky note: free text, lines starting with "[ ]" become checkboxes.</summary>
         Note,
 
-        /// <summary>Live content instead of files: clock, system monitor, drives, recycle bin, Star Citizen playtime.</summary>
+        /// <summary>Live content instead of files: clock, system monitor, weather, media, playtime and more (see WidgetRegistry).</summary>
         Widget
     }
 
@@ -113,6 +113,13 @@ namespace NoFences.Model
 
         /// <summary>Only on this virtual desktop (null = on all desktops).</summary>
         public Guid? VirtualDesktop { get; set; }
+
+        /// <summary>Profiles this fence belongs to ("Work", "Gaming"); null or empty = shown in every profile.</summary>
+        public List<string>? Profiles { get; set; }
+
+        /// <summary>Whether the fence shows while <paramref name="activeProfile"/> is active (null = all fences).</summary>
+        public bool InProfile(string? activeProfile) =>
+            activeProfile == null || Profiles is not { Count: > 0 } || Profiles.Contains(activeProfile);
 
         /// <summary>Only used for <see cref="FenceKind.Note"/>; lines separated by '\n'.</summary>
         public string NoteText { get; set; } = "";

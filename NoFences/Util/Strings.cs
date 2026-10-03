@@ -69,7 +69,8 @@ namespace NoFences.Util
         public static string Help => T("Help", "Hilfe", "Guida");
         public static string WhatsNew => T("What's new?", "Was ist neu?", "Novità");
         public static string About => T("About NoFences", "Über NoFences", "Informazioni su NoFences");
-        public static string AppSettings => T("Settings…", "Einstellungen…", "Impostazioni…");
+        public static string LanguageMenu => "Sprache · Language · Lingua";
+        public static string AppSettings =>T("Settings…", "Einstellungen…", "Impostazioni…");
         public static string NewFence => T("New fence", "Neuer Fence", "Nuovo recinto");
         public static string NewFolderFence => T("New folder fence…", "Neuer Ordner-Fence…", "Nuovo recinto cartella…");
         public static string FirstFence => T("First fence", "Erster Fence", "Primo recinto");
@@ -98,7 +99,22 @@ namespace NoFences.Util
         public static string RenameFailed(string reason) => T($"Could not rename: {reason}", $"Umbenennen nicht möglich: {reason}", $"Impossibile rinominare: {reason}");
         public static string Search => T("Search", "Suche", "Cerca");
         public static string AlwaysOnTop => T("Always on top", "Immer im Vordergrund", "Sempre in primo piano");
-        public static string OnlyThisDesktop => T("Only on this virtual desktop", "Nur auf diesem virtuellen Desktop", "Solo su questo desktop virtuale");
+        public static string ProfileAll => T("All fences", "Alle Fences", "Tutti i recinti");
+        public static string ProfileMenu(string active) => T($"Profile: {active}", $"Profil: {active}", $"Profilo: {active}");
+        public static string ProfileNew => T("New profile…", "Neues Profil…", "Nuovo profilo…");
+        public static string ProfileDelete => T("Delete profile", "Profil löschen", "Elimina profilo");
+        public static string ProfileNamePrompt => T("Name of the profile (e.g. Work, Gaming):", "Name des Profils (z. B. Arbeit, Gaming):", "Nome del profilo (es. Lavoro, Gaming):");
+        public static string ProfileDeleteConfirm(string name) => T(
+            $"Delete the profile \"{name}\"? The fences stay; they just no longer belong to it.",
+            $"Profil „{name}“ löschen? Die Fences bleiben erhalten, sie gehören nur nicht mehr dazu.",
+            $"Eliminare il profilo «{name}»? I recinti restano, semplicemente non ne fanno più parte.");
+        public static string ProfileSwitched(string name) => T($"Profile: {name}", $"Profil: {name}", $"Profilo: {name}");
+        public static string ProfileHowTo => T("Assign fences: right-click a fence → Show in profile", "Fences zuordnen: Rechtsklick auf ein Fence → In Profil zeigen", "Assegna recinti: clic destro su un recinto → Mostra nel profilo");
+        public static string ProfileFenceMenu => T("Show in profile", "In Profil zeigen", "Mostra nel profilo");
+        public static string ProfileFenceHint => T("No check = in every profile", "Ohne Haken = in allen Profilen", "Nessuna spunta = in tutti i profili");
+        public static string ProfileLabel => T("Active profile", "Aktives Profil", "Profilo attivo");
+        public static string SectionProfiles => T("Profiles", "Profile", "Profili");
+        public static string OnlyThisDesktop =>T("Only on this virtual desktop", "Nur auf diesem virtuellen Desktop", "Solo su questo desktop virtuale");
         public static string DropHint => T("Drop files or folders here", "Dateien oder Ordner hierher ziehen", "Trascina qui file o cartelle");
         public static string FolderMissing(string path) => T($"Folder not found:\n{path}", $"Ordner nicht gefunden:\n{path}", $"Cartella non trovata:\n{path}");
         public static string FirstStartHint => T("Drag files onto the fence. Right-click a fence for options; the tray icon has the settings and help.",
@@ -279,6 +295,45 @@ namespace NoFences.Util
         public static string PlaytimeWeek => T("This week", "Diese Woche", "Questa settimana");
         public static string PlaytimeMonth => T("This month", "Diesen Monat", "Questo mese");
         public static string PlaytimeTotal => T("Total", "Gesamt", "Totale");
+        public static string WidgetWeather => T("Weather", "Wetter", "Meteo");
+        public static string WeatherHint => T("Double-click to choose a place.", "Doppelklick, um einen Ort auszuwählen.", "Doppio clic per scegliere una località.");
+        public static string WeatherChoose => T("Choose place…", "Ort auswählen…", "Scegli località…");
+        public static string WeatherUpdateNow => T("Update now", "Jetzt aktualisieren", "Aggiorna ora");
+        public static string WeatherPlaceLabel => T("Town or city:", "Ort oder Stadt:", "Località o città:");
+        public static string WeatherSearch => T("Search", "Suchen", "Cerca");
+        public static string WeatherLoading => T("Loading…", "Wird geladen…", "Caricamento…");
+        public static string WeatherOffline => T("No connection to the weather service.", "Keine Verbindung zum Wetterdienst.", "Nessuna connessione al servizio meteo.");
+        public static string WeatherNoPlace => T("No place found.", "Kein Ort gefunden.", "Nessuna località trovata.");
+        public static string WeatherCredit => T("Weather data: Open-Meteo.com", "Wetterdaten: Open-Meteo.com", "Dati meteo: Open-Meteo.com");
+        public static string WeatherDetails(double feelsLike, double wind) => T(
+            $"Feels like {feelsLike:0}° · wind {wind:0} km/h", $"Gefühlt {feelsLike:0}° · Wind {wind:0} km/h", $"Percepita {feelsLike:0}° · vento {wind:0} km/h");
+        public static string WeatherKindName(Widgets.WeatherKind kind) => kind switch
+        {
+            Widgets.WeatherKind.Clear => T("Clear", "Klar", "Sereno"),
+            Widgets.WeatherKind.PartlyCloudy => T("Partly cloudy", "Teils bewölkt", "Parzialmente nuvoloso"),
+            Widgets.WeatherKind.Cloudy => T("Cloudy", "Bewölkt", "Nuvoloso"),
+            Widgets.WeatherKind.Fog => T("Fog", "Nebel", "Nebbia"),
+            Widgets.WeatherKind.Drizzle => T("Drizzle", "Nieselregen", "Pioviggine"),
+            Widgets.WeatherKind.Rain => T("Rain", "Regen", "Pioggia"),
+            Widgets.WeatherKind.Snow => T("Snow", "Schnee", "Neve"),
+            _ => T("Thunderstorm", "Gewitter", "Temporale")
+        };
+        public static string WidgetMedia => T("Now playing (media)", "Medien (läuft gerade)", "In riproduzione (media)");
+        public static string MediaNothing => T("Nothing is playing.\nMusic and videos from Spotify, browsers etc. appear here.",
+                                              "Gerade läuft nichts.\nMusik und Videos aus Spotify, Browsern usw. erscheinen hier.",
+                                              "Nessuna riproduzione.\nMusica e video da Spotify, browser ecc. appaiono qui.");
+        public static string WidgetNetwork => T("Network", "Netzwerk", "Rete");
+        public static string WidgetClipboard => T("Clipboard history", "Zwischenablage-Verlauf", "Cronologia appunti");
+        public static string ClipboardHint => T("Copied texts appear here – click one to copy it again. Kept only until NoFences closes; passwords from password managers are skipped.",
+                                               "Kopierte Texte erscheinen hier – anklicken kopiert sie erneut. Nur bis NoFences beendet wird; Passwörter aus Passwort-Managern werden übersprungen.",
+                                               "I testi copiati appaiono qui – fai clic per copiarli di nuovo. Conservati solo finché NoFences è aperto; le password dei gestori di password vengono ignorate.");
+        public static string ClipboardClear => T("Clear history", "Verlauf leeren", "Cancella cronologia");
+        public static string WidgetBattery => T("Battery", "Akku", "Batteria");
+        public static string BatteryNone => T("No battery found.", "Kein Akku gefunden.", "Nessuna batteria trovata.");
+        public static string BatteryCharging => T("Charging", "Wird geladen", "In carica");
+        public static string BatteryPlugged => T("Plugged in", "Am Netz", "Collegato");
+        public static string BatteryOnBattery => T("On battery", "Akkubetrieb", "A batteria");
+        public static string BatteryLeft(string time) => T($"{time} left", $"noch {time}", $"ancora {time}");
         public static string DriveDefaultName(DriveType type) => type switch
         {
             DriveType.Removable => T("USB drive", "USB-Laufwerk", "Unità USB"),

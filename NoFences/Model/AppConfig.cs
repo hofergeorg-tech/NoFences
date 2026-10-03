@@ -36,6 +36,12 @@ namespace NoFences.Model
 
         public static readonly IReadOnlyList<string> PeekHotkeys = new[] { "Ctrl+Alt+D", "Ctrl+Alt+Space", "Ctrl+Shift+D", "Off" };
 
+        /// <summary>Fence profiles like "Work" or "Gaming", switched in the tray menu.</summary>
+        public List<string> Profiles { get; set; } = new();
+
+        /// <summary>The active profile; null = show all fences.</summary>
+        public string? ActiveProfile { get; set; }
+
         public List<FenceInfo> Fences { get; set; } = new();
     }
 }

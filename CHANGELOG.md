@@ -10,6 +10,10 @@ versions follow [Semantic Versioning](https://semver.org/). German version: [CHA
   playtime and countdown. Tray or fence menu → New widget.
 - **Playtime** for any game: pick its exe, NoFences records how long it runs (today, week, month, total, running now).
 - **Countdown** to a date with a title.
+- **Weather** (Open-Meteo, no account), **now playing** with media controls, **network** with graph and ping,
+  **clipboard history** (in memory only, password managers respected) and **battery** widgets.
+- **Profiles** like "Work" and "Gaming": switch in the tray, assign fences via right-click → Show in profile.
+- **Language** menu in the tray and in every fence menu.
 - **FPS measurement** (optional, off by default): a small helper with administrator rights counts the frames of the
   program in front; Windows asks once, the settings explain why.
 - **Recent files** fence and **quick-launch bar** (icons only, names as tooltips).
@@ -28,6 +32,7 @@ versions follow [Semantic Versioning](https://semver.org/). German version: [CHA
 - Opening the settings of a widget crashed.
 - Post-it items spilled over the paper's shadow at the bottom.
 - The peek shortcut was stuck to the menu text without a space.
+- The selected page in the settings' side bar became unreadable.
 
 ## [2.3.0] - 2026-10-02
 

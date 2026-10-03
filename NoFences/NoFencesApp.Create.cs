@@ -30,6 +30,11 @@ namespace NoFences
                 if (option != null)
                     title = PlaytimeWidget.GameName(option);
             }
+            else if (type == "weather" && WeatherPlaceDialog.Choose(null, null) is { } place)
+            {
+                option = place.ToOption();
+                title = $"{name()} {place.Name}";
+            }
             AddFence(new FenceInfo
             {
                 Name = title,
@@ -74,6 +79,7 @@ namespace NoFences
         private void AddFence(FenceInfo info)
         {
             PlaceNearCursor(info);
+            AssignActiveProfile(info);
             Store.Config.Fences.Add(info);
             Store.RequestSave();
             OpenWindow(info);

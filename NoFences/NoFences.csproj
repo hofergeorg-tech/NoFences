@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -23,7 +23,7 @@
     <NoWarn>$(NoWarn);WFO5001;WFO5002;CA1416</NoWarn>
   </PropertyGroup>
 
-  <!-- dotnet publish -c Release → one self-contained NoFences.exe, no .NET install needed -->
+  <!-- dotnet publish -c Release â†’ one self-contained NoFences.exe, no .NET install needed -->
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
@@ -35,6 +35,10 @@
   <ItemGroup>
     <!-- ETW real-time session for the (opt-in, elevated) FPS helper -->
     <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="NoFences.Tests" />
   </ItemGroup>
 
   <ItemGroup>

@@ -27,6 +27,8 @@ namespace NoFences
             public void AddCreateExtrasItems(ToolStripItemCollection items) { }
             public Guid? CurrentVirtualDesktop => null;
             public void TogglePinToDesktop(FenceInfo info) { }
+            public void AddAppSettingsItems(ToolStripItemCollection items) { }
+            public void AddFenceProfileItems(ToolStripItemCollection items, FenceInfo info, IWin32Window owner) { }
             public IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except) => Array.Empty<Rectangle>();
         }
 
@@ -111,6 +113,7 @@ namespace NoFences
             RenderDialog(new FenceSettingsDialog(new FenceInfo { Name = "Spiele", Theme = "gaming", Files = samples, Width = 340, Height = 260, AutoSortPatterns = "*.lnk" }),
                 Path.Combine(outDir, "settings.png"));
             RenderWidgets(outDir, host);
+            RenderFlags(outDir);
             RenderExtras(outDir, host, samples);
         }
 
@@ -177,6 +180,55 @@ namespace NoFences
                 ("countdown", "postit", new Size(280, 220)),
                 ("system", "gaming", new Size(260, 230)),
             });
+            RenderWidgetSheet(outDir, host, "widgets-more-docs.png", new (string, string, Size)[]
+            {
+                ("weather", "default", new Size(270, 300)),
+                ("media", "music", new Size(330, 200)),
+                ("network", "hardware", new Size(260, 230)),
+                ("clipboard", "work", new Size(280, 260)),
+                ("battery", "nature", new Size(220, 170)),
+            });
+        }
+
+        /// <summary>The language flags at menu size and enlarged (flags.png).</summary>
+        private static void RenderFlags(string outDir)
+        {
+            using var sheet = new Bitmap(420, 90);
+            using var g = Graphics.FromImage(sheet);
+            g.Clear(Color.White);
+            var x = 10;
+            foreach (var code in Strings.Languages)
+            {
+                g.DrawImage(Flags.For(code), x, 8);
+                g.DrawImage(Flags.For(code, 48), x, 30);
+                x += 100;
+            }
+            sheet.Save(Path.Combine(outDir, "flags.png"), ImageFormat.Png);
+        }
+
+        /// <summary>Made-up content for widgets that would otherwise show live or personal data.</summary>
+        private static void FillDemo(Widgets.FenceWidget? widget)
+        {
+            switch (widget)
+            {
+                case Widgets.WeatherWidget weather:
+                    var today = DateTime.Today;
+                    weather.SetReport(new Widgets.WeatherReport(17.4, 16.1, 12, Widgets.WeatherKind.PartlyCloudy, true, new[]
+                    {
+                        new Widgets.WeatherDay(today, Widgets.WeatherKind.PartlyCloudy, 19, 9),
+                        new Widgets.WeatherDay(today.AddDays(1), Widgets.WeatherKind.Rain, 14, 8),
+                        new Widgets.WeatherDay(today.AddDays(2), Widgets.WeatherKind.Thunder, 16, 10),
+                        new Widgets.WeatherDay(today.AddDays(3), Widgets.WeatherKind.Clear, 21, 11),
+                    }));
+                    break;
+                case Widgets.MediaWidget media:
+                    media.SetPreview("Midnight Drive", "The Synthwave Band", "Spotify", null, TimeSpan.FromSeconds(83), TimeSpan.FromSeconds(214));
+                    break;
+                case Widgets.ClipboardWidget clipboard:
+                    foreach (var text in new[] { "https://github.com/hofergeorg-tech/NoFences", "Meeting moved to 3 pm", "C:\\Projects\\report-2026.docx", "Thanks for the update!\nSee you tomorrow" }.Reverse())
+                        clipboard.History.Add(text);
+                    break;
+            }
         }
 
         private static void RenderWidgetSheet(string outDir, IFenceHost host, string file, (string Type, string Theme, Size Size)[] items)
@@ -194,11 +246,15 @@ namespace NoFences
                     {
                         "countdown" => Widgets.CountdownWidget.Format(new DateTime(DateTime.Now.Year, 12, 24, 18, 0, 0), "Weihnachten"),
                         "playtime" => DemoGame,
+                        "weather" => new Widgets.WeatherPlace("Wien", 48.2085, 16.3721).ToOption(),
                         _ => null
                     }
                 };
+                if (type == "weather")
+                    info.Name = $"{name} Wien";
                 using var window = new FenceWindow(host, info) { Size = size };
                 window.ApplySettings();
+                FillDemo(window.WidgetForPreview);
                 window.RefreshWidgetForPreview();
                 var state = g.Save();
                 g.TranslateTransform(x, gap);

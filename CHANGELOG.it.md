@@ -10,6 +10,10 @@ Tutte le modifiche importanti a questo fork. English: [CHANGELOG.md](CHANGELOG.m
 - **Tempo di gioco** per qualsiasi gioco: scegli l'eseguibile, NoFences registra per quanto tempo è in esecuzione
   (oggi, settimana, mese, totale, in corso).
 - **Conto alla rovescia** fino a una data, con titolo.
+- Widget **meteo** (Open-Meteo, senza account), **in riproduzione** con controlli, **rete** con grafico e ping,
+  **cronologia appunti** (solo in memoria, rispetta i gestori di password) e **batteria**.
+- **Profili** come "Lavoro" e "Gaming": si cambiano dalla barra, i recinti si assegnano con clic destro → Mostra nel profilo.
+- Menu **Lingua** nella barra e in ogni menu dei recinti.
 - **Misurazione FPS** (facoltativa, disattivata di default): un piccolo supporto con diritti di amministratore conta i
   fotogrammi del programma in primo piano; Windows lo chiede una volta, le impostazioni spiegano perché.
 - Recinto **"File recenti"** e **barra di avvio rapido** (solo icone, nomi come suggerimento).
@@ -28,6 +32,7 @@ Tutte le modifiche importanti a questo fork. English: [CHANGELOG.md](CHANGELOG.m
 - Aprire le impostazioni di un widget causava un arresto anomalo.
 - Nel post-it gli elementi sporgevano in basso oltre l'ombra del foglio.
 - La scorciatoia "Porta i recinti in primo piano" era attaccata al testo del menu senza spazio.
+- La voce selezionata nella barra laterale delle impostazioni diventava illeggibile.
 
 ## [2.3.0] - 2026-10-02
 

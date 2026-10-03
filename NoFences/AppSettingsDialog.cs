@@ -85,17 +85,24 @@ namespace NoFences
             if (e.Index < 0)
                 return;
             var selected = (e.State & DrawItemState.Selected) != 0;
-            using var back = new SolidBrush(selected ? Color.FromArgb(40, 0, 120, 212) : nav.BackColor);
-            e.Graphics.FillRectangle(back, e.Bounds);
+            var accent = Color.FromArgb(0, 120, 212);
+            // Opaque colors only: a translucent fill would add up on every repaint until the text is unreadable
+            var back = selected ? Blend(nav.BackColor, accent, 0.18) : nav.BackColor;
+            using (var brush = new SolidBrush(back))
+                e.Graphics.FillRectangle(brush, e.Bounds);
             if (selected)
             {
-                using var bar = new SolidBrush(Color.FromArgb(0, 120, 212));
+                using var bar = new SolidBrush(accent);
                 e.Graphics.FillRectangle(bar, e.Bounds.X, e.Bounds.Y + 6, 4, e.Bounds.Height - 12);
             }
-            TextRenderer.DrawText(e.Graphics, pages[e.Index].Title, selected ? new Font(Font, FontStyle.Bold) : Font,
-                new Rectangle(e.Bounds.X + 16, e.Bounds.Y, e.Bounds.Width - 16, e.Bounds.Height), nav.ForeColor,
+            using var font = selected ? new Font(Font, FontStyle.Bold) : null;
+            TextRenderer.DrawText(e.Graphics, pages[e.Index].Title, font ?? Font,
+                new Rectangle(e.Bounds.X + 16, e.Bounds.Y, e.Bounds.Width - 16, e.Bounds.Height), nav.ForeColor, back,
                 TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
         }
+
+        private static Color Blend(Color a, Color b, double amount) => Color.FromArgb(
+            (int)(a.R + (b.R - a.R) * amount), (int)(a.G + (b.G - a.G) * amount), (int)(a.B + (b.B - a.B) * amount));
 
         private void ShowPage(int index)
         {
@@ -116,7 +123,7 @@ namespace NoFences
         private void BuildGeneral(FlowLayoutPanel page)
         {
             var grid = Section(page, Strings.SectionGeneral, ContentWidth);
-            Row(grid, Strings.LanguageLabel, Choice(Strings.Languages.Select(Strings.LanguageName), IndexOf(Strings.Languages, Config.Language), i =>
+            Row(grid, Strings.LanguageLabel, WithFlags(Choice(Strings.Languages.Select(Strings.LanguageName), IndexOf(Strings.Languages, Config.Language), i =>
             {
                 Config.Language = Strings.Languages[i];
                 Strings.Language = Config.Language;
@@ -130,7 +137,7 @@ namespace NoFences
                 nav.Items.Clear();
                 nav.Items.AddRange(pages.Select(x => (object)x.Title).ToArray());
                 BeginInvoke(() => nav.SelectedIndex = selected);
-            }));
+            })));
             Wide(grid, Check(Strings.Autostart, SystemSettings.AutostartEnabled, _ => NoFencesApp.ToggleAutostart()));
 
             var ext = new[] { (bool?)null, true, false };
@@ -168,6 +175,20 @@ namespace NoFences
                 app.Store.RequestSave();
                 app.UpdateHotkey(notifyIfTaken: true);
             }, 180));
+
+            var profiles = Section(page, Strings.SectionProfiles, ContentWidth);
+            var names = new List<string?> { null };
+            names.AddRange(app.Profiles);
+            Row(profiles, Strings.ProfileLabel, Choice(names.Select(n => n ?? Strings.ProfileAll), names.IndexOf(app.ActiveProfile), i => app.SwitchProfile(names[i]), 180),
+                Action(Strings.ProfileNew, () =>
+                {
+                    if (app.NewProfile(this) is { } name)
+                    {
+                        app.SwitchProfile(name);
+                        ShowPage(nav.SelectedIndex);
+                    }
+                }));
+            Hint(profiles, Strings.ProfileHowTo, ContentWidth);
 
             var sort = Section(page, Strings.SectionAutoSort, ContentWidth);
             Wide(sort, Check(Strings.AutoSortEnabled, Config.AutoSortEnabled, v =>
@@ -247,6 +268,28 @@ namespace NoFences
         }
 
         #endregion
+
+        /// <summary>Draws the language list with a flag in front of each name.</summary>
+        private static ComboBox WithFlags(ComboBox box)
+        {
+            box.DrawMode = DrawMode.OwnerDrawFixed;
+            box.ItemHeight = Math.Max(box.ItemHeight, box.Font.Height + 4);
+            box.DrawItem += (_, e) =>
+            {
+                e.DrawBackground();
+                if (e.Index < 0)
+                    return;
+                var flagHeight = Math.Max(10, e.Bounds.Height - 8);
+                var flag = Flags.For(Strings.Languages[e.Index], flagHeight);
+                e.Graphics.DrawImage(flag, e.Bounds.X + 4, e.Bounds.Y + (e.Bounds.Height - flag.Height) / 2, flag.Width, flag.Height);
+                var textX = e.Bounds.X + 4 + flagHeight * 3 / 2 + 8;
+                TextRenderer.DrawText(e.Graphics, box.Items[e.Index].ToString(), e.Font ?? box.Font,
+                    new Rectangle(textX, e.Bounds.Y, e.Bounds.Right - textX, e.Bounds.Height), e.ForeColor,
+                    TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
+                e.DrawFocusRectangle();
+            };
+            return box;
+        }
 
         private static int IndexOf(IReadOnlyList<string> list, string value)
         {

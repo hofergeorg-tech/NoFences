@@ -61,9 +61,22 @@ Tray- oder Fence-Menü → **Neues Widget**:
 - **System-Monitor**: CPU, RAM, GPU-Last und -Temperatur (NVIDIA) und **FPS**, wenn aktiviert (siehe unten).
 - **Laufwerke**: Füllstand und freier Platz; Klick öffnet das Laufwerk.
 - **Papierkorb**: Dateien darauf ziehen löscht sie, Doppelklick öffnet ihn, im Menü leeren.
-- **Spielzeit**: heute / diese Woche / diesen Monat / gesamt für ein Spiel, gelesen aus dem kostenlosen Tool SC Playtime,
-  das beliebige Spiele aufzeichnen kann. Das Spiel wählst du im Menü des Widgets.
+- **Spielzeit**: heute / diese Woche / diesen Monat / gesamt für ein beliebiges Spiel. Doppelklick und die EXE des Spiels
+  auswählen; NoFences zeichnet auf, wie lange es läuft.
 - **Countdown**: Tage und Stunden bis zu einem Datum; Doppelklick zum Festlegen.
+- **Wetter**: aktuelles Wetter und drei Tage Vorschau für einen gesuchten Ort (Daten: Open-Meteo, ohne Konto).
+- **Medien**: Titel, Interpret und Cover von dem, was Spotify, ein Browser oder ein Mediaplayer gerade abspielt, mit
+  Zurück / Play-Pause / Weiter.
+- **Netzwerk**: Download- und Upload-Rate mit Verlauf der letzten Minute und Ping.
+- **Zwischenablage-Verlauf**: die letzten 15 kopierten Texte; anklicken kopiert sie erneut. Nur solange NoFences läuft,
+  Passwörter aus Passwort-Managern werden übersprungen.
+- **Akku**: Ladestand, ob geladen wird, Restzeit (Laptops).
+
+## Profile
+
+Fences in Profile wie „Arbeit“ und „Gaming“ gruppieren und im Tray (**Profil ▸**) oder unter **Einstellungen → Desktop**
+umschalten. Rechtsklick auf ein Fence → **In Profil zeigen** ordnet es zu; ein Fence ohne Profil erscheint in allen
+Profilen. Neue Fences gehören zum gerade aktiven Profil.
 
 ## FPS-Messung (optional)
 

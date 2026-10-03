@@ -60,9 +60,22 @@ Tray or fence menu → **New widget**:
 - **System monitor**: CPU, RAM, GPU load and temperature (NVIDIA), and **FPS** if enabled (see below).
 - **Drives**: fill level and free space; click opens the drive.
 - **Recycle bin**: drop files on it to delete them, double-click opens it, the menu empties it.
-- **Playtime**: today / this week / this month / total for a game, read from the free tool SC Playtime, which can
-  record any game. Pick the game in the widget's menu.
+- **Playtime**: today / this week / this month / total for any game. Double-click and pick the game's exe; NoFences
+  records how long it runs.
 - **Countdown**: days and hours until a date; double-click to set it.
+- **Weather**: current weather and three days ahead for a place you search for (data: Open-Meteo, no account needed).
+- **Now playing**: title, artist and cover of what Spotify, a browser or a media player is playing, with
+  previous / play-pause / next.
+- **Network**: download and upload rate with a one-minute graph, and the ping.
+- **Clipboard history**: the last 15 copied texts; click one to copy it again. Kept only while NoFences runs, and
+  passwords from password managers are skipped.
+- **Battery**: charge, charging or not, time left (laptops).
+
+## Profiles
+
+Group fences into profiles like "Work" and "Gaming" and switch between them in the tray (**Profile ▸**) or in
+**Settings → Desktop**. Right-click a fence → **Show in profile** to assign it; a fence without a profile shows in
+every profile. Fences created while a profile is active belong to it.
 
 ## FPS measurement (optional)
 

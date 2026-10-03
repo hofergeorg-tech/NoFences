@@ -93,6 +93,28 @@ namespace NoFences
 
         internal static void OpenUrl(string url) => Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
 
+        /// <summary>"Settings…" (bold) and "Language ▸" – in the tray and in every fence's menu.</summary>
+        public void AddAppSettingsItems(ToolStripItemCollection items)
+        {
+            var settings = new ToolStripMenuItem(Strings.AppSettings, null, (_, _) => AppSettingsDialog.ShowSingle(this));
+            settings.Font = new Font(settings.Font, FontStyle.Bold);
+            items.Add(settings);
+
+            // Labelled in several languages so it can be found whatever language is shown
+            var language = new ToolStripMenuItem(Strings.LanguageMenu);
+            foreach (var code in Strings.Languages)
+                language.DropDownItems.Add(new ToolStripMenuItem(Strings.LanguageName(code), Flags.For(code), (_, _) => SetLanguage(code)) { Checked = Store.Config.Language == code });
+            items.Add(language);
+        }
+
+        internal void SetLanguage(string code)
+        {
+            Store.Config.Language = code;
+            Strings.Language = code;
+            Store.RequestSave();
+            ApplyToAll();
+        }
+
         public static void AddDocumentItems(ToolStripItemCollection items)
         {
             items.Add(Strings.Help, null, (_, _) => DocumentViewer.ShowDocument(Strings.HelpDocument, Strings.Help));
@@ -170,6 +192,7 @@ namespace NoFences
             }
 
             PlaceNearCursor(info);
+            AssignActiveProfile(info);
             Store.Config.Fences.Add(info);
             Store.RequestSave();
             OpenWindow(info);
@@ -238,13 +261,12 @@ namespace NoFences
             AddCreateExtrasItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(new ToolStripMenuItem(Strings.ShowFences, null, (_, _) => ToggleVisible()) { Checked = fencesVisible });
+            AddProfileItems(menu.Items);
             AddPeekItems(menu.Items);
             menu.Items.Add(Strings.SortNow, null, (_, _) => SortDesktopNow());
             menu.Items.Add(new ToolStripSeparator());
             // Everything else lives in the settings window
-            var settings = new ToolStripMenuItem(Strings.AppSettings, null, (_, _) => AppSettingsDialog.ShowSingle(this));
-            settings.Font = new Font(settings.Font, FontStyle.Bold);
-            menu.Items.Add(settings);
+            AddAppSettingsItems(menu.Items);
             AddDocumentItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(Strings.Exit, null, (_, _) => ExitThread());

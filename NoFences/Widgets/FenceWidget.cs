@@ -47,6 +47,9 @@ namespace NoFences.Widgets
 
         public int Px(float v) => (int)Math.Round(v * S);
 
+        /// <summary>Solid foreground for drawn shapes: light on dark styles, dark on light ones.</summary>
+        public Color Ink => Color.FromArgb(235, Theme.HintColor);
+
         private static StringFormat Format(StringAlignment h, StringAlignment v) => new()
         {
             Alignment = h,

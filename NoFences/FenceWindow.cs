@@ -862,6 +862,7 @@ namespace NoFences
             menu.Items.Add(new ToolStripMenuItem(Strings.AlwaysOnTop, null, (_, _) => ToggleAlwaysOnTop()) { Checked = Info.AlwaysOnTop });
             if (app.CurrentVirtualDesktop != null)
                 menu.Items.Add(new ToolStripMenuItem(Strings.OnlyThisDesktop, null, (_, _) => app.TogglePinToDesktop(Info)) { Checked = Info.VirtualDesktop != null });
+            app.AddFenceProfileItems(menu.Items, Info, this);
 
             var style = new ToolStripMenuItem(Strings.Theme);
             style.DropDownItems.Add(new ToolStripMenuItem(Strings.ThemeInherit, null, (_, _) => SetTheme(null)) { Checked = Info.Theme == null });
@@ -881,6 +882,7 @@ namespace NoFences
             menu.Items.Add(Strings.NewNote, null, (_, _) => app.CreateFence(FenceKind.Note));
             app.AddCreateExtrasItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
+            app.AddAppSettingsItems(menu.Items);
             menu.Items.Add(new ToolStripMenuItem(Strings.Autostart, null, (_, _) => NoFencesApp.ToggleAutostart()) { Checked = SystemSettings.AutostartEnabled });
             NoFencesApp.AddDocumentItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());

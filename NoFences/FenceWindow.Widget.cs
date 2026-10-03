@@ -84,6 +84,9 @@ namespace NoFences
             toolTip.SetToolTip(this, entry?.GetDisplayName(app.ShowExtensions) ?? "");
         }
 
+        /// <summary>Preview renderer: the widget, to fill in demo content.</summary>
+        internal FenceWidget? WidgetForPreview => widget;
+
         /// <summary>Preview renderer: sample twice so rates (CPU load) have a baseline.</summary>
         internal void RefreshWidgetForPreview()
         {

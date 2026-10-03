@@ -9,6 +9,10 @@ Alle wichtigen Änderungen an diesem Fork. English version: [CHANGELOG.md](CHANG
   Spielzeit und Countdown. Tray- oder Fence-Menü → Neues Widget.
 - **Spielzeit** für beliebige Spiele: EXE auswählen, NoFences zeichnet auf, wie lange es läuft (heute, Woche, Monat, gesamt, läuft gerade).
 - **Countdown** bis zu einem Datum mit Titel.
+- Widgets **Wetter** (Open-Meteo, ohne Konto), **Medien** mit Steuerung, **Netzwerk** mit Verlauf und Ping,
+  **Zwischenablage-Verlauf** (nur im Speicher, Passwort-Manager werden respektiert) und **Akku**.
+- **Profile** wie „Arbeit“ und „Gaming“: im Tray umschalten, Fences per Rechtsklick → In Profil zeigen zuordnen.
+- Menü **Sprache** im Tray und in jedem Fence-Menü.
 - **FPS-Messung** (optional, standardmäßig aus): Ein kleiner Helfer mit Administratorrechten zählt die Bilder des Programms
   im Vordergrund; Windows fragt einmal, die Einstellungen erklären, warum.
 - Fence **„Zuletzt verwendet“** und **Schnellstart-Leiste** (nur Icons, Namen als Tooltip).
@@ -27,6 +31,7 @@ Alle wichtigen Änderungen an diesem Fork. English version: [CHANGELOG.md](CHANG
 - Die Einstellungen eines Widgets zu öffnen führte zum Absturz.
 - Beim Post-it ragten Einträge unten über den Schatten des Papiers hinaus.
 - Das Tastenkürzel „Fences nach vorne holen“ klebte ohne Abstand am Menütext.
+- Der ausgewählte Eintrag in der Seitenleiste der Einstellungen wurde unlesbar.
 
 ## [2.3.0] - 2026-10-02
 

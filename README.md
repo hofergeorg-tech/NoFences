@@ -26,9 +26,14 @@ English · Deutsch · Italiano
 ![Sticky notes](docs/notes.png)
 
 **Widgets** – clock & calendar, system monitor (CPU, RAM, GPU, optional FPS), drives, recycle bin,
-**playtime** of any game (pick its exe, NoFences records how long it runs) and a **countdown**.
+**playtime** of any game (pick its exe, NoFences records how long it runs), a **countdown**, **weather**
+(Open-Meteo, no account), **now playing** with media controls, **network** rate and ping, **clipboard history** and
+**battery**.
 
 ![Widgets](docs/widgets-docs.png)
+![More widgets](docs/widgets-more-docs.png)
+
+**Profiles** – group fences into profiles like "Work" and "Gaming" and switch between them from the tray.
 
 **Styles** – 24 built-in styles (glass, Star Citizen HUD, Retro-Arcade, Hardware, Nerd, Hobby, Work, Family, Gaming,
 Finance, Social, Documents, Multimedia, Music, Sport, Photos, Travel, Cooking, Nature, Post-it ×5) plus your own as JSON

@@ -61,9 +61,22 @@ Menu della barra o del recinto → **Nuovo widget**:
 - **Monitor di sistema**: CPU, RAM, carico e temperatura della GPU (NVIDIA) e **FPS**, se attivati (vedi sotto).
 - **Unità**: livello di riempimento e spazio libero; un clic apre l'unità.
 - **Cestino**: trascinaci i file per eliminarli, doppio clic lo apre, dal menu lo svuoti.
-- **Tempo di gioco**: oggi / questa settimana / questo mese / totale per un gioco, letto dallo strumento gratuito
-  SC Playtime, che può registrare qualsiasi gioco. Scegli il gioco nel menu del widget.
+- **Tempo di gioco**: oggi / questa settimana / questo mese / totale per qualsiasi gioco. Doppio clic e scegli
+  l'eseguibile del gioco; NoFences registra per quanto tempo è in esecuzione.
 - **Conto alla rovescia**: giorni e ore fino a una data; doppio clic per impostarla.
+- **Meteo**: tempo attuale e previsioni per tre giorni per una località cercata (dati: Open-Meteo, senza account).
+- **In riproduzione**: titolo, artista e copertina di ciò che Spotify, un browser o un lettore multimediale sta
+  riproducendo, con precedente / play-pausa / successivo.
+- **Rete**: velocità di download e upload con il grafico dell'ultimo minuto e il ping.
+- **Cronologia appunti**: gli ultimi 15 testi copiati; un clic li copia di nuovo. Conservati solo finché NoFences è
+  aperto; le password dei gestori di password vengono ignorate.
+- **Batteria**: carica, se è in carica, tempo rimanente (portatili).
+
+## Profili
+
+Raggruppa i recinti in profili come "Lavoro" e "Gaming" e passa dall'uno all'altro nella barra (**Profilo ▸**) o in
+**Impostazioni → Desktop**. Clic destro su un recinto → **Mostra nel profilo** per assegnarlo; un recinto senza profilo
+appare in tutti i profili. I nuovi recinti appartengono al profilo attivo.
 
 ## Misurazione FPS (facoltativa)
 

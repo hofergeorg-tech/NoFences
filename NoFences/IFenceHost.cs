@@ -32,6 +32,12 @@ namespace NoFences
 
         void TogglePinToDesktop(FenceInfo info);
 
+        /// <summary>Adds the app's "Settings…" and "Language ▸" to a menu.</summary>
+        void AddAppSettingsItems(ToolStripItemCollection items);
+
+        /// <summary>Adds "Show in profile ▸" for this fence to a menu.</summary>
+        void AddFenceProfileItems(ToolStripItemCollection items, FenceInfo info, IWin32Window owner);
+
         /// <summary>Adds "New widget ▸", "Recent files" and "Quick-launch bar" to a menu.</summary>
         void AddCreateExtrasItems(ToolStripItemCollection items);
 
