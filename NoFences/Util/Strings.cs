@@ -278,9 +278,7 @@ namespace NoFences.Util
         public static string PlaytimeTotal => T("Total", "Gesamt", "Totale");
         public static string PlaytimeMissing => T("No playtime data found. This widget shows the playtime of your games as recorded by the free tool SC Playtime (works for any game).",
                                                   "Keine Spielzeit-Daten gefunden. Das Widget zeigt die Spielzeit deiner Spiele, die das kostenlose Tool SC Playtime aufzeichnet (für beliebige Spiele).",
-                                                  "Nessun dato sul tempo di gioco. Questo widget mostra il tempo di gioco registrato dallo strumento gratuito SC Playtime (per qualsiasi gioco)."); this widget shows it.",
-                                                  "SC Playtime nicht gefunden. Es zeichnet auf, wie lange du deine Spiele spielst, dieses Widget zeigt es an.",
-                                                  "SC Playtime non trovato. Registra quanto giochi ai tuoi giochi; questo widget lo mostra.");
+                                                  "Nessun dato sul tempo di gioco. Questo widget mostra il tempo di gioco registrato dallo strumento gratuito SC Playtime (per qualsiasi gioco).");
         public static string DriveDefaultName(DriveType type) => type switch
         {
             DriveType.Removable => T("USB drive", "USB-Laufwerk", "Unità USB"),
