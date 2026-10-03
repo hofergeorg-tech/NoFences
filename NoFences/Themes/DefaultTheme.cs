@@ -1,3 +1,4 @@
+using NoFences.Util;
 using NoFences.Model;
 
 namespace NoFences.Themes
@@ -7,7 +8,7 @@ namespace NoFences.Themes
     {
         public override string Id => "default";
 
-        public override string DisplayName => "Standard (Glas)";
+        public override string DisplayName => Strings.ThemeName(Id);
 
 
         public override Color Accent => Color.FromArgb(120, 190, 255);

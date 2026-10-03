@@ -1,3 +1,4 @@
+using NoFences.Util;
 using NoFences.Model;
 
 namespace NoFences.Themes
@@ -15,7 +16,7 @@ namespace NoFences.Themes
 
         public override string Id => "hobby";
 
-        public override string DisplayName => "Hobby (Pinnwand)";
+        public override string DisplayName => Strings.ThemeName(Id);
 
 
         public override Color Accent => Pin;

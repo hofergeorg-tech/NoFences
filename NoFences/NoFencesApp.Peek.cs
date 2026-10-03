@@ -30,7 +30,7 @@ namespace NoFences
             _ => (0, Keys.None)
         };
 
-        private void UpdateHotkey(bool notifyIfTaken)
+        internal void UpdateHotkey(bool notifyIfTaken)
         {
             hotkey?.Dispose();
             hotkey = null;
@@ -59,7 +59,7 @@ namespace NoFences
                 StartPeek();
         }
 
-        private void StartPeek()
+        internal void StartPeek()
         {
             if (!fencesVisible)
                 ToggleVisible();
@@ -106,21 +106,13 @@ namespace NoFences
 
         private void AddPeekItems(ToolStripItemCollection items)
         {
-            var name = Strings.HotkeyName(Store.Config.PeekHotkey);
-            var text = Store.Config.PeekHotkey == "Off" ? Strings.PeekMenu : $"{Strings.PeekMenu}\t{name}";
-            items.Add(new ToolStripMenuItem(text, null, (_, _) => StartPeek()));
+            // The shortcut goes into the item's own shortcut column (right-aligned, with spacing).
+            var peek = new ToolStripMenuItem(Strings.PeekMenu, null, (_, _) => StartPeek());
+            if (Store.Config.PeekHotkey != "Off")
+                peek.ShortcutKeyDisplayString = Strings.HotkeyName(Store.Config.PeekHotkey);
+            items.Add(peek);
 
-            var shortcut = new ToolStripMenuItem(Strings.PeekHotkey);
-            foreach (var option in AppConfig.PeekHotkeys)
-            {
-                shortcut.DropDownItems.Add(new ToolStripMenuItem(Strings.HotkeyName(option), null, (_, _) =>
-                {
-                    Store.Config.PeekHotkey = option;
-                    Store.RequestSave();
-                    UpdateHotkey(notifyIfTaken: true);
-                }) { Checked = Store.Config.PeekHotkey == option });
-            }
-            items.Add(shortcut);
+
         }
 
         private void DisposePeek()

@@ -41,7 +41,7 @@ namespace NoFences
             items.Add(restore);
         }
 
-        private void RestoreBackup(string path, DateTime time)
+        internal void RestoreBackup(string path, DateTime time)
         {
             if (MessageBox.Show(Strings.ConfirmRestore(time), "NoFences", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;

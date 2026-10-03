@@ -947,6 +947,7 @@ namespace NoFences
             }
             app.RequestSave();
             ApplySettings();
+            ApplyZOrder(); // "Always on top" may have changed
             ReloadEntries();
         }
 

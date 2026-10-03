@@ -25,7 +25,7 @@ namespace NoFences
             firstUpdateCheck.Start();
         }
 
-        private async Task CheckForUpdatesAsync(bool manual)
+        internal async Task CheckForUpdatesAsync(bool manual)
         {
             if (!manual && !Store.Config.CheckForUpdates)
                 return;
@@ -61,7 +61,7 @@ namespace NoFences
             }
         }
 
-        private async void InstallUpdate()
+        internal async void InstallUpdate()
         {
             var release = availableUpdate;
             if (release == null || installing)

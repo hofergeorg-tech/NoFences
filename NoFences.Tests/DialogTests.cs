@@ -20,6 +20,21 @@ namespace NoFences.Tests
                 throw new Exception(error.Message, error);
         }
 
+        // Regression: OK in the settings of a links fence emptied it ("no folder" was taken as "folder changed").
+        [Fact]
+        public void SettingsDialog_KeepsLinksOfALinksFence()
+        {
+            OnSta(() =>
+            {
+                var info = new FenceInfo { Kind = FenceKind.Links, Files = { @"C:\a.lnk", @"C:\b.lnk" }, Compact = true, AlwaysOnTop = true };
+                using var dialog = new FenceSettingsDialog(info);
+                dialog.ApplyTo(info);
+                Assert.Equal(2, info.Files.Count);
+                Assert.True(info.Compact);
+                Assert.True(info.AlwaysOnTop);
+            });
+        }
+
         // Regression: the settings of a widget fence crashed (no "Widget" entry in the type list).
         [Fact]
         public void SettingsDialog_OpensForEveryFenceKind()

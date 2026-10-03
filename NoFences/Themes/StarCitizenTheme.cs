@@ -1,3 +1,4 @@
+using NoFences.Util;
 using System.Drawing.Drawing2D;
 using NoFences.Model;
 
@@ -19,7 +20,7 @@ namespace NoFences.Themes
 
         public override string Id => "starcitizen";
 
-        public override string DisplayName => "Star Citizen (HUD)";
+        public override string DisplayName => Strings.ThemeName(Id);
 
 
         public override Color Accent => Cyan;

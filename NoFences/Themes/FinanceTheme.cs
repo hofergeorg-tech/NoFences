@@ -1,3 +1,4 @@
+using NoFences.Util;
 using NoFences.Model;
 
 namespace NoFences.Themes
@@ -13,7 +14,7 @@ namespace NoFences.Themes
 
         public override string Id => "finance";
 
-        public override string DisplayName => "Finanzen (Börse)";
+        public override string DisplayName => Strings.ThemeName(Id);
 
 
         public override Color Accent => Gold;

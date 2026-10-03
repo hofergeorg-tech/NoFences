@@ -1,3 +1,4 @@
+using NoFences.Util;
 using System.Drawing.Drawing2D;
 using NoFences.Model;
 
@@ -13,7 +14,7 @@ namespace NoFences.Themes
 
         public override string Id => "social";
 
-        public override string DisplayName => "Social";
+        public override string DisplayName => Strings.ThemeName(Id);
 
 
         public override Color Accent => Color.White;

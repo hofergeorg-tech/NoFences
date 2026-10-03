@@ -12,7 +12,7 @@ namespace NoFences
             items.Add(Strings.ImportFences, null, (_, _) => ImportFences());
         }
 
-        private void ExportFences()
+        internal void ExportFences()
         {
             using var dialog = new SaveFileDialog
             {
@@ -33,7 +33,7 @@ namespace NoFences
             }
         }
 
-        private void ImportFences()
+        internal void ImportFences()
         {
             using var dialog = new OpenFileDialog { Filter = Strings.ExportFilter };
             if (dialog.ShowDialog() != DialogResult.OK)

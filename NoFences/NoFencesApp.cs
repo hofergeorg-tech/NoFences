@@ -25,6 +25,7 @@ namespace NoFences
         public NoFencesApp()
         {
             Store.Load();
+            Strings.Language = Store.Config.Language;
             var themeErrors = LoadCustomThemesQuiet().Errors;
             var firstStart = Store.Config.Fences.Count == 0;
             foreach (var info in Store.Config.Fences)
@@ -60,7 +61,7 @@ namespace NoFences
             ShowChangelogAfterUpdate(firstStart);
         }
 
-        private void UpdateDesktopHook()
+        internal void UpdateDesktopHook()
         {
             if (Store.Config.DesktopDoubleClickToggle && desktopHook == null)
             {
@@ -89,7 +90,7 @@ namespace NoFences
             tray.ShowBalloonTip(timeout, "NoFences", text, ToolTipIcon.Info);
         }
 
-        private static void OpenUrl(string url) => Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+        internal static void OpenUrl(string url) => Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
 
         public static void AddDocumentItems(ToolStripItemCollection items)
         {
@@ -123,7 +124,7 @@ namespace NoFences
             }
         }
 
-        private void SortDesktopNow()
+        internal void SortDesktopNow()
         {
             if (!Store.Config.Fences.Any(f => !string.IsNullOrWhiteSpace(f.AutoSortPatterns)))
             {
@@ -204,7 +205,7 @@ namespace NoFences
                 window.Show();
         }
 
-        private void ApplyToAll()
+        internal void ApplyToAll()
         {
             Store.RequestSave();
             foreach (var w in windows)
@@ -214,7 +215,7 @@ namespace NoFences
             }
         }
 
-        private void ToggleVisible()
+        internal void ToggleVisible()
         {
             fencesVisible = !fencesVisible;
             ApplyVisibility();
@@ -236,54 +237,13 @@ namespace NoFences
             AddCreateExtrasItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(new ToolStripMenuItem(Strings.ShowFences, null, (_, _) => ToggleVisible()) { Checked = fencesVisible });
-            menu.Items.Add(new ToolStripMenuItem(Strings.DoubleClickToggle, null, (_, _) =>
-            {
-                Store.Config.DesktopDoubleClickToggle = !Store.Config.DesktopDoubleClickToggle;
-                Store.RequestSave();
-                UpdateDesktopHook();
-            }) { Checked = Store.Config.DesktopDoubleClickToggle });
             AddPeekItems(menu.Items);
-            menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(Strings.SortNow, null, (_, _) => SortDesktopNow());
-            menu.Items.Add(new ToolStripMenuItem(Strings.AutoSortEnabled, null, (_, _) =>
-            {
-                Store.Config.AutoSortEnabled = !Store.Config.AutoSortEnabled;
-                Store.RequestSave();
-            }) { Checked = Store.Config.AutoSortEnabled });
             menu.Items.Add(new ToolStripSeparator());
-
-            var style = new ToolStripMenuItem(Strings.ThemeGlobal);
-            foreach (var t in ThemeRegistry.All)
-            {
-                style.DropDownItems.Add(new ToolStripMenuItem(t.DisplayName, null, (_, _) =>
-                {
-                    Store.Config.Theme = t.Id;
-                    ApplyToAll();
-                }) { Checked = ThemeRegistry.Get(Store.Config.Theme) == t });
-            }
-            menu.Items.Add(style);
-            AddThemeItems(menu.Items);
-            menu.Items.Add(new ToolStripMenuItem(Strings.FpsMenu, null, (_, _) => ToggleFps()) { Checked = FpsEnabled });
-
-            var ext = new ToolStripMenuItem(Strings.ShowExtensions);
-            void ExtOption(string text, bool? value) => ext.DropDownItems.Add(new ToolStripMenuItem(text, null, (_, _) =>
-            {
-                Store.Config.ShowExtensions = value;
-                ApplyToAll();
-            }) { Checked = Store.Config.ShowExtensions == value });
-            ExtOption(Strings.ExtFollowExplorer, null);
-            ExtOption(Strings.ExtAlways, true);
-            ExtOption(Strings.ExtNever, false);
-            menu.Items.Add(ext);
-
-            menu.Items.Add(new ToolStripMenuItem(Strings.Autostart, null, (_, _) => ToggleAutostart()) { Checked = SystemSettings.AutostartEnabled });
-
-            menu.Items.Add(Strings.OpenDataFolder, null, (_, _) =>
-                Process.Start(new ProcessStartInfo(Store.DataDirectory) { UseShellExecute = true }));
-            menu.Items.Add(new ToolStripSeparator());
-            AddUpdateItems(menu.Items);
-            AddBackupItems(menu.Items);
-            AddTransferItems(menu.Items);
+            // Everything else lives in the settings window
+            var settings = new ToolStripMenuItem(Strings.AppSettings, null, (_, _) => AppSettingsDialog.ShowSingle(this));
+            settings.Font = new Font(settings.Font, FontStyle.Bold);
+            menu.Items.Add(settings);
             AddDocumentItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(Strings.Exit, null, (_, _) => ExitThread());

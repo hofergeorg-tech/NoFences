@@ -7,10 +7,10 @@ namespace NoFences
     /// <summary>User styles from the "themes" folder and the animation switch.</summary>
     public sealed partial class NoFencesApp
     {
-        private string ThemesFolder => Path.Combine(Store.DataDirectory, "themes");
+        internal string ThemesFolder => Path.Combine(Store.DataDirectory, "themes");
 
         /// <summary>Loads user styles and reports problems (or the count) in a notification.</summary>
-        private void LoadCustomThemes(bool report)
+        internal void LoadCustomThemes(bool report)
         {
             var (count, errors) = LoadCustomThemesQuiet();
             if (errors.Count > 0)

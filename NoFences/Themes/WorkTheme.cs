@@ -1,3 +1,4 @@
+using NoFences.Util;
 using NoFences.Model;
 
 namespace NoFences.Themes
@@ -13,7 +14,7 @@ namespace NoFences.Themes
 
         public override string Id => "work";
 
-        public override string DisplayName => "Arbeit (Business)";
+        public override string DisplayName => Strings.ThemeName(Id);
 
 
         public override Color Accent => AccentBlue;

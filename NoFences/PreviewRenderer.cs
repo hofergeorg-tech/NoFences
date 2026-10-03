@@ -13,7 +13,7 @@ namespace NoFences
     /// </summary>
     internal static class PreviewRenderer
     {
-        private sealed class Host : IFenceHost
+        internal sealed class Host : IFenceHost
         {
             public bool ShowExtensions => false;
             public bool Animations => false;
@@ -89,6 +89,8 @@ namespace NoFences
 
             RenderNotes(outDir, host);
             RenderDialog(AboutDialog.CreateForPreview(), Path.Combine(outDir, "about.png"));
+            RenderDialog(new FenceSettingsDialog(new FenceInfo { Name = "Spiele", Theme = "gaming", Files = samples, Width = 340, Height = 260, AutoSortPatterns = "*.lnk" }),
+                Path.Combine(outDir, "settings.png"));
             RenderWidgets(outDir, host);
             RenderExtras(outDir, host, samples);
         }
@@ -174,7 +176,13 @@ namespace NoFences
                 form.StartPosition = FormStartPosition.Manual;
                 form.Location = new Point(-32000, -32000);
                 form.Show();
-                Application.DoEvents();
+                // Let timers (e.g. the settings preview) run before taking the picture
+                var until = DateTime.Now.AddSeconds(1.5);
+                while (DateTime.Now < until)
+                {
+                    Application.DoEvents();
+                    Thread.Sleep(20);
+                }
                 using var bmp = new Bitmap(form.Width, form.Height);
                 form.DrawToBitmap(bmp, new Rectangle(Point.Empty, form.Size));
                 bmp.Save(path, ImageFormat.Png);
@@ -227,7 +235,7 @@ namespace NoFences
         }
 
         /// <summary>A neutral "wallpaper" that is neither too dark nor too light, so every style shows.</summary>
-        private static void DrawBackdrop(Graphics g, Rectangle r)
+        internal static void DrawBackdrop(Graphics g, Rectangle r)
         {
             using var brush = new LinearGradientBrush(r, Color.FromArgb(58, 84, 120), Color.FromArgb(150, 130, 120), LinearGradientMode.ForwardDiagonal);
             g.FillRectangle(brush, r);

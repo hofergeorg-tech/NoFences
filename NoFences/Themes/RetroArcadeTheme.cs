@@ -1,3 +1,4 @@
+using NoFences.Util;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using NoFences.Model;
@@ -21,7 +22,7 @@ namespace NoFences.Themes
 
         public override string Id => "retroarcade";
 
-        public override string DisplayName => "Retro-Arcade";
+        public override string DisplayName => Strings.ThemeName(Id);
 
 
         public override Color Accent => Cyan;

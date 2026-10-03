@@ -1,3 +1,4 @@
+using NoFences.Util;
 using System.Drawing.Drawing2D;
 using NoFences.Model;
 
@@ -11,7 +12,7 @@ namespace NoFences.Themes
         private static readonly Color Ink = Color.FromArgb(78, 56, 24);
 
         public override string Id => "documents";
-        public override string DisplayName => "Dokumente";
+        public override string DisplayName => Strings.ThemeName(Id);
         public override Color Accent => Color.FromArgb(196, 140, 50);
         public override int MinAlpha => 225;
         public override int CornerPreference => 3;
@@ -67,7 +68,7 @@ namespace NoFences.Themes
         private static readonly Color Red = Color.FromArgb(229, 20, 30);
 
         public override string Id => "multimedia";
-        public override string DisplayName => "Multimedia";
+        public override string DisplayName => Strings.ThemeName(Id);
         public override Color Accent => Red;
         public override int MinAlpha => 210;
         public override int CornerPreference => 1;
@@ -129,7 +130,7 @@ namespace NoFences.Themes
         private static readonly Color Green = Color.FromArgb(30, 215, 96);
 
         public override string Id => "music";
-        public override string DisplayName => "Musik";
+        public override string DisplayName => Strings.ThemeName(Id);
         public override Color Accent => Green;
         public override int MinAlpha => 200;
         public override bool AnimatesOnHover => true;
@@ -206,7 +207,7 @@ namespace NoFences.Themes
         private static readonly Color Led = Color.FromArgb(255, 196, 0);
 
         public override string Id => "sport";
-        public override string DisplayName => "Sport";
+        public override string DisplayName => Strings.ThemeName(Id);
         public override Color Accent => Led;
         public override int MinAlpha => 215;
         public override int CornerPreference => 1;
@@ -265,7 +266,7 @@ namespace NoFences.Themes
         private static readonly Color Ink = Color.FromArgb(50, 50, 60);
 
         public override string Id => "photos";
-        public override string DisplayName => "Fotos";
+        public override string DisplayName => Strings.ThemeName(Id);
         public override Color Accent => Color.FromArgb(255, 140, 0);
         public override int MinAlpha => 230;
         public override int CornerPreference => 1;
@@ -319,7 +320,7 @@ namespace NoFences.Themes
         private static readonly Color Ink = Color.FromArgb(40, 50, 90);
 
         public override string Id => "travel";
-        public override string DisplayName => "Reisen";
+        public override string DisplayName => Strings.ThemeName(Id);
         public override Color Accent => Blue;
         public override int MinAlpha => 230;
         public override int CornerPreference => 1;
@@ -391,7 +392,7 @@ namespace NoFences.Themes
         private static readonly Color Ink = Color.FromArgb(70, 40, 30);
 
         public override string Id => "cooking";
-        public override string DisplayName => "Kochen";
+        public override string DisplayName => Strings.ThemeName(Id);
         public override Color Accent => Red;
         public override int MinAlpha => 230;
         public override int CornerPreference => 3;
@@ -452,7 +453,7 @@ namespace NoFences.Themes
         private static readonly Color Leaf = Color.FromArgb(120, 200, 80);
 
         public override string Id => "nature";
-        public override string DisplayName => "Natur";
+        public override string DisplayName => Strings.ThemeName(Id);
         public override Color Accent => Leaf;
         public override int MinAlpha => 200;
 
