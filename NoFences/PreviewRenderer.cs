@@ -145,7 +145,7 @@ namespace NoFences
                 ("system", "gaming", new Size(260, 300)),
                 ("drives", "hardware", new Size(300, 240)),
                 ("recyclebin", "nerd", new Size(220, 210)),
-                ("playtime", "starcitizen", new Size(270, 260)),
+                ("playtime", "gaming", new Size(270, 260)),
                 ("countdown", "family", new Size(280, 200)),
             };
             const int gap = 24;

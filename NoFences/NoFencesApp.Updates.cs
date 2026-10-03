@@ -90,15 +90,6 @@ namespace NoFences
             }
         }
 
-        private void AddUpdateItems(ToolStripItemCollection items)
-        {
-            items.Add(Strings.CheckForUpdatesNow, null, async (_, _) => await CheckForUpdatesAsync(manual: true));
-            items.Add(new ToolStripMenuItem(Strings.CheckForUpdatesAuto, null, (_, _) =>
-            {
-                Store.Config.CheckForUpdates = !Store.Config.CheckForUpdates;
-                Store.RequestSave();
-            }) { Checked = Store.Config.CheckForUpdates });
-        }
 
         private void DisposeUpdates()
         {

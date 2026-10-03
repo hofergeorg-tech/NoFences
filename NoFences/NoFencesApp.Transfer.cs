@@ -6,11 +6,6 @@ namespace NoFences
     /// <summary>Export/import of fences (and user styles) as one file.</summary>
     public sealed partial class NoFencesApp
     {
-        private void AddTransferItems(ToolStripItemCollection items)
-        {
-            items.Add(Strings.ExportFences, null, (_, _) => ExportFences());
-            items.Add(Strings.ImportFences, null, (_, _) => ImportFences());
-        }
 
         internal void ExportFences()
         {

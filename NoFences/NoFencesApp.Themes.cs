@@ -40,23 +40,5 @@ namespace NoFences
             return (themes.Count, errors);
         }
 
-        private void AddThemeItems(ToolStripItemCollection items)
-        {
-            items.Add(new ToolStripMenuItem(Strings.Animations, null, (_, _) =>
-            {
-                Store.Config.Animations = !Store.Config.Animations;
-                Store.RequestSave();
-            }) { Checked = Store.Config.Animations });
-
-            var custom = new ToolStripMenuItem(Strings.CustomThemes);
-            custom.DropDownItems.Add(Strings.OpenThemesFolder, null, (_, _) =>
-                Process.Start(new ProcessStartInfo(ThemesFolder) { UseShellExecute = true }));
-            custom.DropDownItems.Add(Strings.ReloadThemes, null, (_, _) =>
-            {
-                LoadCustomThemes(report: true);
-                ApplyToAll();
-            });
-            items.Add(custom);
-        }
     }
 }

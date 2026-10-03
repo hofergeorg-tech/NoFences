@@ -268,7 +268,7 @@ namespace NoFences.Util
         public static string CountdownReached => T("It's time!", "Es ist so weit!", "Ci siamo!");
         public static string CountdownTitleLabel => T("Title", "Titel", "Titolo");
         public static string CountdownDateLabel => T("Date and time", "Datum und Uhrzeit", "Data e ora");
-        public static string WidgetPlaytime => T("Playtime (SC Playtime)", "Spielzeit (SC Playtime)", "Tempo di gioco (SC Playtime)");
+        public static string WidgetPlaytime => T("Playtime", "Spielzeit", "Tempo di gioco");
         public static string PlaytimeGame => T("Game", "Spiel", "Gioco");
         public static string PlaytimeLastPlayed => T("Most recently played", "Zuletzt gespieltes Spiel", "Giocato più di recente");
         public static string PlaytimeNoSessions => T("No playtime recorded yet.", "Noch keine Spielzeit aufgezeichnet.", "Nessun tempo di gioco registrato.");
@@ -276,7 +276,9 @@ namespace NoFences.Util
         public static string PlaytimeWeek => T("This week", "Diese Woche", "Questa settimana");
         public static string PlaytimeMonth => T("This month", "Diesen Monat", "Questo mese");
         public static string PlaytimeTotal => T("Total", "Gesamt", "Totale");
-        public static string PlaytimeMissing => T("SC Playtime not found. It records how long you play your games; this widget shows it.",
+        public static string PlaytimeMissing => T("No playtime data found. This widget shows the playtime of your games as recorded by the free tool SC Playtime (works for any game).",
+                                                  "Keine Spielzeit-Daten gefunden. Das Widget zeigt die Spielzeit deiner Spiele, die das kostenlose Tool SC Playtime aufzeichnet (für beliebige Spiele).",
+                                                  "Nessun dato sul tempo di gioco. Questo widget mostra il tempo di gioco registrato dallo strumento gratuito SC Playtime (per qualsiasi gioco)."); this widget shows it.",
                                                   "SC Playtime nicht gefunden. Es zeichnet auf, wie lange du deine Spiele spielst, dieses Widget zeigt es an.",
                                                   "SC Playtime non trovato. Registra quanto giochi ai tuoi giochi; questo widget lo mostra.");
         public static string DriveDefaultName(DriveType type) => type switch

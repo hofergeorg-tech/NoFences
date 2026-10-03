@@ -30,16 +30,6 @@ namespace NoFences
                     w.ApplyLayoutForCurrentScreens();
             }, null);
 
-        private void AddBackupItems(ToolStripItemCollection items)
-        {
-            var restore = new ToolStripMenuItem(Strings.RestoreBackup);
-            var backups = Store.ListBackups().Take(10).ToList();
-            if (backups.Count == 0)
-                restore.DropDownItems.Add(new ToolStripMenuItem(Strings.NoBackups) { Enabled = false });
-            foreach (var (path, time) in backups)
-                restore.DropDownItems.Add(time.ToString("dd.MM.yyyy  HH:mm"), null, (_, _) => RestoreBackup(path, time));
-            items.Add(restore);
-        }
 
         internal void RestoreBackup(string path, DateTime time)
         {
