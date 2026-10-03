@@ -38,6 +38,9 @@ namespace NoFences
 
         void TogglePinToDesktop(FenceInfo info);
 
+        /// <summary>Adds "Tools ▸" (search, screen ruler, desktop assistant, tidy up) to a menu.</summary>
+        void AddToolItems(ToolStripItemCollection items);
+
         /// <summary>Adds the app's "Settings…" and "Language ▸" to a menu.</summary>
         void AddAppSettingsItems(ToolStripItemCollection items);
 

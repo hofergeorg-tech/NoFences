@@ -14,7 +14,7 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 - **Mode concentration** : le minuteur passe à un profil choisi pendant les tours de concentration.
 - **Raccourcis de profil** Ctrl+Alt+F1…F9 (F10 : toutes les barrières) et un **fond d'écran par profil**.
 - **Assistant de bureau** : range les icônes du bureau dans de nouvelles barrières par type (proposé au premier démarrage).
-- **Règle à l'écran** en pixels, centimètres ou pouces (zone de notification → Règle à l'écran).
+- **Règle à l'écran** en pixels, centimètres ou pouces (Outils ▸ Règle à l'écran – dans la zone de notification et le menu de chaque barrière).
 
 ### Modifications
 - **Menus groupés** : Nouveau widget ▸ Temps et planning / Infos et actualités / Système / Jeux et médias ; Style ▸ De base /

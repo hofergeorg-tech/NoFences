@@ -280,10 +280,7 @@ namespace NoFences
             menu.Items.Add(new ToolStripMenuItem(Strings.ShowFences, null, (_, _) => ToggleVisible()) { Checked = fencesVisible });
             AddProfileItems(menu.Items);
             AddPeekItems(menu.Items);
-            AddSearchItem(menu.Items);
-            menu.Items.Add(Strings.SortNow, null, (_, _) => SortDesktopNow());
-            menu.Items.Add(Strings.AssistantMenu, null, (_, _) => RunDesktopAssistant());
-            menu.Items.Add(Strings.RulerMenu, null, (_, _) => RulerWindow.Toggle());
+            AddToolItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             // Everything else lives in the settings window
             AddAppSettingsItems(menu.Items);

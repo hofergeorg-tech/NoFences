@@ -37,7 +37,7 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
 
 ## Search across all fences
 
-**Ctrl+Alt+F** (or tray → Search fences…) opens a search box. It finds everything in your fences – links, folder
+**Ctrl+Alt+F** (or right-click the tray icon or a fence → Tools ▸ Search fences…) opens a search box. It finds everything in your fences – links, folder
 contents, tabs and note texts – even letters in order ("ffx" finds Firefox) – and also Start menu apps and Windows
 settings pages ("bluetooth", "sound"). Type a calculation like `12*7` or `200*15%` and Enter copies the result.
 **Enter** opens the result, **↑↓** choose, **Esc** closes. The shortcut can be changed in Settings → Desktop.
@@ -103,13 +103,13 @@ choose (e.g. "Focus" with only work fences) while a focus round runs, and back i
 
 ## Desktop assistant
 
-Tray → **Desktop assistant…** (also offered on the first start) sorts what's on your desktop into new fences – games,
+Tray or fence menu → Tools ▸ **Desktop assistant…** (also offered on the first start) sorts what's on your desktop into new fences – games,
 programs, documents, pictures, music & videos, archives, folders – each in a fitting style. Nothing is moved; the fences
 link to the files. To hide the originals: right-click the desktop → View → Show desktop icons.
 
 ## Screen ruler
 
-Tray → **Screen ruler** puts a ruler above everything: drag to move, drag the end to change the length, double-click or
+Tray or fence menu → Tools ▸ **Screen ruler** puts a ruler above everything: drag to move, drag the end to change the length, double-click or
 space turns it, arrow keys nudge it (Shift: 10 px), U or the menu switches between pixels, centimetres and inches
 (real size, from the size your monitor reports). A red line follows the mouse and shows the distance. Esc closes it.
 

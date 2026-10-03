@@ -14,7 +14,7 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Focus mode**: the focus timer switches to a chosen profile during focus rounds.
 - **Profile shortcuts** Ctrl+Alt+F1…F9 (F10: all fences) and a **wallpaper per profile**.
 - **Desktop assistant**: sorts desktop icons into new fences by kind (offered on the first start).
-- **Screen ruler** in pixels, centimetres or inches (tray → Screen ruler).
+- **Screen ruler** in pixels, centimetres or inches (Tools ▸ Screen ruler – in the tray and every fence menu).
 
 ### Changed
 - **Grouped menus**: New widget ▸ Time & planning / Info & news / System / Games & media; Style ▸ Basic / Gaming & tech /

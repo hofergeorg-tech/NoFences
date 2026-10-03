@@ -13,7 +13,7 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Fokus-Modus**: Der Fokus-Timer wechselt während der Fokus-Runden zu einem gewählten Profil.
 - **Profil-Tastenkürzel** Strg+Alt+F1…F9 (F10: alle Fences) und ein **Hintergrundbild pro Profil**.
 - **Desktop-Assistent**: sortiert Desktop-Symbole nach Art in neue Fences (wird beim ersten Start angeboten).
-- **Bildschirm-Lineal** in Pixel, Zentimeter oder Zoll (Tray → Bildschirm-Lineal).
+- **Bildschirm-Lineal** in Pixel, Zentimeter oder Zoll (Werkzeuge ▸ Bildschirm-Lineal – im Tray und in jedem Fence-Menü).
 
 ### Geändert
 - **Gruppierte Menüs**: Neues Widget ▸ Zeit & Planung / Info & News / System / Spiele & Medien; Style ▸ Basis /

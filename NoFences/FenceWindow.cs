@@ -897,6 +897,7 @@ namespace NoFences
             menu.Items.Add(Strings.NewNote, null, (_, _) => app.CreateFence(FenceKind.Note));
             app.AddCreateExtrasItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
+            app.AddToolItems(menu.Items);
             app.AddAppSettingsItems(menu.Items);
             menu.Items.Add(new ToolStripMenuItem(Strings.Autostart, null, (_, _) => NoFencesApp.ToggleAutostart()) { Checked = SystemSettings.AutostartEnabled });
             NoFencesApp.AddDocumentItems(menu.Items);

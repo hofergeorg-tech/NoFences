@@ -59,12 +59,24 @@ namespace NoFences
 
         internal static Task<List<SearchItem>> StartMenuAppsAsync() => startMenuApps ??= Task.Run(FenceSearch.StartMenuApps);
 
-        private void AddSearchItem(ToolStripItemCollection items)
+        private ToolStripMenuItem SearchItem()
         {
             var search = new ToolStripMenuItem(Strings.SearchMenu, null, (_, _) => OpenSearch());
             if (Store.Config.SearchHotkey != "Off")
                 search.ShortcutKeyDisplayString = Strings.HotkeyName(Store.Config.SearchHotkey);
-            items.Add(search);
+            return search;
+        }
+
+        /// <summary>"Tools ▸": search, screen ruler, desktop assistant, tidy up – in the tray and every fence menu.</summary>
+        public void AddToolItems(ToolStripItemCollection items)
+        {
+            var tools = new ToolStripMenuItem(Strings.ToolsMenu);
+            tools.DropDownItems.Add(SearchItem());
+            tools.DropDownItems.Add(Strings.RulerMenu, null, (_, _) => RulerWindow.Toggle());
+            tools.DropDownItems.Add(new ToolStripSeparator());
+            tools.DropDownItems.Add(Strings.AssistantMenu, null, (_, _) => RunDesktopAssistant());
+            tools.DropDownItems.Add(Strings.SortNow, null, (_, _) => SortDesktopNow());
+            items.Add(tools);
         }
 
         private void DisposeSearch() => searchHotkey?.Dispose();

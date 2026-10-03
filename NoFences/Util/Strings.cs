@@ -126,7 +126,8 @@ namespace NoFences.Util
         public static string ProfileHowTo => T("Assign fences: right-click a fence → Show in profile", "Fences zuordnen: Rechtsklick auf ein Fence → In Profil zeigen", "Assegna recinti: clic destro su un recinto → Mostra nel profilo", "Attribuer des barrières : clic droit sur une barrière → Afficher dans le profil", "Asignar vallas: clic derecho en una valla → Mostrar en el perfil");
         public static string ProfileFenceMenu => T("Show in profile", "In Profil zeigen", "Mostra nel profilo", "Afficher dans le profil", "Mostrar en el perfil");
         public static string ProfileFenceHint => T("No check = in every profile", "Ohne Haken = in allen Profilen", "Nessuna spunta = in tutti i profili", "Aucune coche = dans tous les profils", "Sin marca = en todos los perfiles");
-        public static string RulerTitle => T("Ruler", "Lineal", "Righello", "Règle", "Regla");
+        public static string ToolsMenu => T("Tools", "Werkzeuge", "Strumenti", "Outils", "Herramientas");
+        public static string RulerTitle =>T("Ruler", "Lineal", "Righello", "Règle", "Regla");
         public static string RulerMenu => T("Screen ruler", "Bildschirm-Lineal", "Righello sullo schermo", "Règle à l'écran", "Regla en pantalla");
         public static string RulerTurn => T("Turn (space)", "Drehen (Leertaste)", "Ruota (spazio)", "Tourner (espace)", "Girar (espacio)");
         public static string RulerHelp => T("Drag to move, drag the end to resize, arrows nudge, Esc closes",

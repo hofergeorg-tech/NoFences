@@ -40,7 +40,7 @@ Astuce : pour un bureau rangé, créez un dossier comme `Documents\Barrières\Tr
 
 ## Rechercher dans toutes les barrières
 
-**Ctrl+Alt+F** (ou zone de notification → Rechercher dans les barrières…) ouvre une zone de recherche. Elle trouve tout
+**Ctrl+Alt+F** (ou clic droit sur l'icône de notification ou une barrière → Outils ▸ Rechercher dans les barrières…) ouvre une zone de recherche. Elle trouve tout
 dans vos barrières – raccourcis, contenu des dossiers, onglets et textes des notes – même des lettres dans l'ordre
 (« ffx » trouve Firefox) – ainsi que les applications du menu Démarrer et les pages des paramètres Windows
 (« bluetooth », « son »). Tapez un calcul comme `12*7` ou `200*15%` : Entrée copie le résultat. **Entrée** ouvre le
@@ -111,14 +111,14 @@ barrières de travail) et revient pendant les pauses.
 
 ## Assistant de bureau
 
-Zone de notification → **Assistant de bureau…** (proposé aussi au premier démarrage) range ce qui se trouve sur votre
+Menu de la zone de notification ou d'une barrière → Outils ▸ **Assistant de bureau…** (proposé aussi au premier démarrage) range ce qui se trouve sur votre
 bureau dans de nouvelles barrières – jeux, programmes, documents, images, musique et vidéos, archives, dossiers –,
 chacune dans un style adapté. Rien n'est déplacé : les barrières pointent vers les fichiers. Pour masquer les
 originaux : clic droit sur le bureau → Affichage → Afficher les icônes du bureau.
 
 ## Règle à l'écran
 
-Zone de notification → **Règle à l'écran** place une règle au-dessus de tout : glisser pour la déplacer, glisser
+Menu de la zone de notification ou d'une barrière → Outils ▸ **Règle à l'écran** place une règle au-dessus de tout : glisser pour la déplacer, glisser
 l'extrémité pour l'allonger, double-clic ou espace pour la tourner, flèches pour l'ajuster au pixel (Maj : 10 px), U ou
 le menu passe entre pixels, centimètres et pouces (taille réelle, d'après la taille indiquée par l'écran). Une ligne
 rouge suit la souris et affiche la distance. Échap la ferme.

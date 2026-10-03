@@ -30,6 +30,7 @@ namespace NoFences
             public Guid? CurrentVirtualDesktop => null;
             public void TogglePinToDesktop(FenceInfo info) { }
             public void AddAppSettingsItems(ToolStripItemCollection items) { }
+            public void AddToolItems(ToolStripItemCollection items) { }
             public IReadOnlyList<string> Profiles => Array.Empty<string>();
             public string? ActiveProfile => null;
             public void SwitchProfile(string? profile, bool automatic = false) { }

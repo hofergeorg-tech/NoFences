@@ -14,7 +14,7 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Modalità concentrazione**: il timer passa a un profilo scelto durante i giri di concentrazione.
 - **Scorciatoie dei profili** Ctrl+Alt+F1…F9 (F10: tutti i recinti) e uno **sfondo per profilo**.
 - **Assistente desktop**: ordina le icone del desktop in nuovi recinti per tipo (proposto al primo avvio).
-- **Righello sullo schermo** in pixel, centimetri o pollici (barra → Righello sullo schermo).
+- **Righello sullo schermo** in pixel, centimetri o pollici (Strumenti ▸ Righello sullo schermo – nella barra e in ogni menu dei recinti).
 
 ### Modifiche
 - **Menu raggruppati**: Nuovo widget ▸ Tempo e pianificazione / Info e notizie / Sistema / Giochi e media; Stile ▸ Base /

@@ -14,7 +14,7 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 - **Modo concentración**: el temporizador cambia a un perfil elegido durante las rondas de concentración.
 - **Atajos de perfil** Ctrl+Alt+F1…F9 (F10: todas las vallas) y un **fondo de pantalla por perfil**.
 - **Asistente de escritorio**: ordena los iconos del escritorio en vallas nuevas por tipo (se ofrece en el primer inicio).
-- **Regla en pantalla** en píxeles, centímetros o pulgadas (bandeja → Regla en pantalla).
+- **Regla en pantalla** en píxeles, centímetros o pulgadas (Herramientas ▸ Regla en pantalla – en la bandeja y en el menú de cada valla).
 
 ### Cambios
 - **Menús agrupados**: Nuevo widget ▸ Tiempo y planificación / Información y noticias / Sistema / Juegos y multimedia;

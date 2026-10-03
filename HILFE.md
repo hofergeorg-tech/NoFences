@@ -39,7 +39,7 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 
 ## In allen Fences suchen
 
-**Strg+Alt+F** (oder Tray → Fences durchsuchen…) öffnet ein Suchfeld. Es findet alles in deinen Fences – Verknüpfungen,
+**Strg+Alt+F** (oder Rechtsklick auf das Tray-Icon oder ein Fence → Werkzeuge ▸ Fences durchsuchen…) öffnet ein Suchfeld. Es findet alles in deinen Fences – Verknüpfungen,
 Ordnerinhalte, Reiter und Notiztexte – sogar Buchstaben in Reihenfolge („ffx“ findet Firefox) – und außerdem
 Startmenü-Apps und Windows-Einstellungsseiten („bluetooth“, „sound“). Tipp eine Rechnung wie `12*7` oder `200*15%`,
 Enter kopiert das Ergebnis. **Enter** öffnet den Treffer, **↑↓** wählen, **Esc** schließt. Das Tastenkürzel änderst
@@ -107,14 +107,14 @@ Pausen zurück.
 
 ## Desktop-Assistent
 
-Tray → **Desktop-Assistent…** (wird auch beim ersten Start angeboten) sortiert, was auf deinem Desktop liegt, in neue
+Tray- oder Fence-Menü → Werkzeuge ▸ **Desktop-Assistent…** (wird auch beim ersten Start angeboten) sortiert, was auf deinem Desktop liegt, in neue
 Fences – Spiele, Programme, Dokumente, Bilder, Musik & Videos, Archive, Ordner –, jeweils mit passendem Style. Es wird
 nichts verschoben, die Fences verweisen auf die Dateien. Um die Originale auszublenden: Rechtsklick auf den Desktop →
 Ansicht → Desktopsymbole anzeigen.
 
 ## Bildschirm-Lineal
 
-Tray → **Bildschirm-Lineal** legt ein Lineal über alles: ziehen verschiebt, das Ende ziehen ändert die Länge,
+Tray- oder Fence-Menü → Werkzeuge ▸ **Bildschirm-Lineal** legt ein Lineal über alles: ziehen verschiebt, das Ende ziehen ändert die Länge,
 Doppelklick oder Leertaste dreht es, Pfeiltasten verschieben pixelgenau (Shift: 10 px), U oder das Menü wechselt
 zwischen Pixel, Zentimeter und Zoll (echte Größe, aus der Größe, die dein Monitor meldet). Eine rote Linie folgt der
 Maus und zeigt den Abstand. Esc schließt es.

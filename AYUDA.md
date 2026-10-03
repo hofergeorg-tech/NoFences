@@ -38,7 +38,7 @@ Consejo: para un escritorio ordenado, crea una carpeta como `Documentos\Vallas\T
 
 ## Buscar en todas las vallas
 
-**Ctrl+Alt+F** (o bandeja → Buscar en las vallas…) abre un cuadro de búsqueda. Encuentra todo en tus vallas – accesos
+**Ctrl+Alt+F** (o clic derecho en el icono de la bandeja o en una valla → Herramientas ▸ Buscar en las vallas…) abre un cuadro de búsqueda. Encuentra todo en tus vallas – accesos
 directos, contenido de carpetas, pestañas y textos de notas – incluso letras en orden («ffx» encuentra Firefox) – y
 también aplicaciones del menú Inicio y páginas de la configuración de Windows («bluetooth», «sonido»). Escribe un cálculo
 como `12*7` o `200*15%` e Intro copia el resultado. **Intro** abre el resultado, **↑↓** para elegir, **Esc** cierra. El
@@ -105,14 +105,14 @@ vuelve en los descansos.
 
 ## Asistente de escritorio
 
-Bandeja → **Asistente de escritorio…** (también se ofrece en el primer inicio) ordena lo que hay en tu escritorio en
+Menú de la bandeja o de una valla → Herramientas ▸ **Asistente de escritorio…** (también se ofrece en el primer inicio) ordena lo que hay en tu escritorio en
 vallas nuevas – juegos, programas, documentos, imágenes, música y vídeos, archivos comprimidos, carpetas –, cada una con
 un estilo adecuado. No se mueve nada: las vallas enlazan a los archivos. Para ocultar los originales: clic derecho en el
 escritorio → Ver → Mostrar iconos del escritorio.
 
 ## Regla en pantalla
 
-Bandeja → **Regla en pantalla** pone una regla encima de todo: arrastra para moverla, arrastra el extremo para alargarla,
+Menú de la bandeja o de una valla → Herramientas ▸ **Regla en pantalla** pone una regla encima de todo: arrastra para moverla, arrastra el extremo para alargarla,
 doble clic o espacio la gira, las flechas la ajustan píxel a píxel (Mayús: 10 px), U o el menú cambia entre píxeles,
 centímetros y pulgadas (tamaño real, según el tamaño que indica el monitor). Una línea roja sigue al ratón y muestra la
 distancia. Esc la cierra.
