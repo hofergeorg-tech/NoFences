@@ -30,6 +30,8 @@ namespace NoFences.Widgets
 
         private void OnClipboardChanged()
         {
+            if (PreviewMode)
+                return;
             try
             {
                 var data = Clipboard.GetDataObject();

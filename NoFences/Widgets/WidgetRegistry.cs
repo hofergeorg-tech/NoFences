@@ -19,6 +19,12 @@ namespace NoFences.Widgets
             ("network", () => Strings.WidgetNetwork, new Size(260, 230)),
             ("clipboard", () => Strings.WidgetClipboard, new Size(280, 300)),
             ("battery", () => Strings.WidgetBattery, new Size(220, 170)),
+            ("games", () => Strings.WidgetGames, new Size(480, 330)),
+            ("agenda", () => Strings.WidgetAgenda, new Size(300, 320)),
+            ("photos", () => Strings.WidgetPhotos, new Size(360, 260)),
+            ("focus", () => Strings.WidgetFocus, new Size(230, 280)),
+            ("news", () => Strings.WidgetNews, new Size(340, 360)),
+            ("ticker", () => Strings.WidgetTicker, new Size(320, 260)),
         };
 
         public static FenceWidget? Create(FenceInfo info, IFenceHost host)
@@ -29,6 +35,12 @@ namespace NoFences.Widgets
                 info.WidgetType = "playtime";
                 // The old widget stored a game name, the new one needs the game's exe
                 info.WidgetOption = null;
+                host.RequestSave();
+            }
+
+            void Set(string? option)
+            {
+                info.WidgetOption = option;
                 host.RequestSave();
             }
 
@@ -60,6 +72,12 @@ namespace NoFences.Widgets
                 "network" => new NetworkWidget(),
                 "clipboard" => new ClipboardWidget(),
                 "battery" => new BatteryWidget(),
+                "games" => new GamesWidget(() => info.WidgetOption, Set),
+                "agenda" => new AgendaWidget(() => info.WidgetOption, Set),
+                "photos" => new PhotoWidget(() => info.WidgetOption, Set),
+                "focus" => new FocusWidget(() => info.WidgetOption, Set, host.Notify),
+                "news" => new NewsWidget(() => info.WidgetOption, Set),
+                "ticker" => new TickerWidget(() => info.WidgetOption, Set),
                 _ => null
             };
         }

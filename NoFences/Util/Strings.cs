@@ -1,4 +1,5 @@
-using System.Globalization;
+﻿using System.Globalization;
+using NoFences.Model;
 
 namespace NoFences.Util
 {
@@ -19,6 +20,9 @@ namespace NoFences.Util
 
         private static string T(string en, string de, string it) => Effective switch { "de" => de, "it" => it, _ => en };
 
+        private static string T(string en, string de, string it, string fr, string es) =>
+            Effective switch { "de" => de, "it" => it, "fr" => fr, "es" => es, _ => en };
+
         public static string LanguageName(string code) => code switch
         {
             "en" => "English",
@@ -36,6 +40,7 @@ namespace NoFences.Util
         public static string ThemeName(string id) => id switch
         {
             "default" => T("Standard (glass)", "Standard (Glas)", "Standard (vetro)"),
+            "windows" => T("Windows accent color", "Windows-Akzentfarbe", "Colore d'accento di Windows", "Couleur d'accentuation Windows", "Color de énfasis de Windows"),
             "starcitizen" => "Star Citizen (HUD)",
             "retroarcade" => "Retro-Arcade",
             "hardware" => T("Hardware (circuit board)", "Hardware (Platine)", "Hardware (circuito)"),
@@ -69,7 +74,9 @@ namespace NoFences.Util
         public static string Help => T("Help", "Hilfe", "Guida");
         public static string WhatsNew => T("What's new?", "Was ist neu?", "Novità");
         public static string About => T("About NoFences", "Über NoFences", "Informazioni su NoFences");
-        public static string LanguageMenu => "Sprache · Language · Lingua";
+        public static string BackupLabel => T("Backup:", "Sicherung:", "Backup:", "Sauvegarde :", "Copia:");
+        public static string RestoreShort => T("Restore", "Wiederherstellen", "Ripristina", "Restaurer", "Restaurar");
+        public static string LanguageMenu =>"Sprache · Language · Lingua";
         public static string AppSettings =>T("Settings…", "Einstellungen…", "Impostazioni…");
         public static string NewFence => T("New fence", "Neuer Fence", "Nuovo recinto");
         public static string NewFolderFence => T("New folder fence…", "Neuer Ordner-Fence…", "Nuovo recinto cartella…");
@@ -374,6 +381,168 @@ namespace NoFences.Util
             "• Puoi disattivarlo in qualsiasi momento nelle impostazioni; l'attività viene rimossa.\n\n" +
             "Attivare la misurazione degli FPS?");
         public static string FpsDeclined => T("FPS measurement stays off (no admin rights granted).", "FPS-Messung bleibt aus (keine Adminrechte erteilt).", "La misurazione degli FPS resta disattivata (diritti di amministratore non concessi).");
+
+        #endregion
+
+        #region More widgets
+
+        public static string WidgetGames => T("Games (Steam, Epic, GOG, Xbox)", "Spiele (Steam, Epic, GOG, Xbox)", "Giochi (Steam, Epic, GOG, Xbox)", "Jeux (Steam, Epic, GOG, Xbox)", "Juegos (Steam, Epic, GOG, Xbox)");
+        public static string GamesSearching => T("Looking for installed games…", "Suche installierte Spiele…", "Cerco i giochi installati…", "Recherche des jeux installés…", "Buscando juegos instalados…");
+        public static string GamesNone => T("No games found from Steam, Epic, GOG or the Xbox app.", "Keine Spiele aus Steam, Epic, GOG oder der Xbox-App gefunden.", "Nessun gioco trovato da Steam, Epic, GOG o dall'app Xbox.", "Aucun jeu trouvé dans Steam, Epic, GOG ou l'application Xbox.", "No se encontraron juegos de Steam, Epic, GOG o la app de Xbox.");
+        public static string GamesHide(string name) => T($"Hide \"{name}\"", $"„{name}“ ausblenden", $"Nascondi «{name}»", $"Masquer « {name} »", $"Ocultar «{name}»");
+        public static string GamesShowHidden(int n) => T($"Show hidden games ({n})", $"Ausgeblendete Spiele zeigen ({n})", $"Mostra giochi nascosti ({n})", $"Afficher les jeux masqués ({n})", $"Mostrar juegos ocultos ({n})");
+        public static string GamesSortByName => T("Sort by name", "Nach Name sortieren", "Ordina per nome", "Trier par nom", "Ordenar por nombre");
+        public static string GamesRescan => T("Search again", "Erneut suchen", "Cerca di nuovo", "Rechercher à nouveau", "Buscar de nuevo");
+
+        public static string WidgetAgenda => T("Appointments (calendar)", "Termine (Kalender)", "Appuntamenti (calendario)", "Rendez-vous (agenda)", "Citas (calendario)");
+        public static string AgendaHint => T("Double-click and paste the link of your calendar (.ics) – from Google, Outlook or iCloud.", "Doppelklick und den Link deines Kalenders (.ics) einfügen – aus Google, Outlook oder iCloud.", "Doppio clic e incolla il link del tuo calendario (.ics) – da Google, Outlook o iCloud.", "Double-cliquez et collez le lien de votre agenda (.ics) – Google, Outlook ou iCloud.", "Haz doble clic y pega el enlace de tu calendario (.ics): Google, Outlook o iCloud.");
+        public static string AgendaPrompt => T(
+            "Calendar links (.ics), one per line.\nGoogle: Calendar settings → \"Secret address in iCal format\". Outlook: Settings → Calendar → Shared calendars → Publish → ICS. iCloud: share the calendar publicly.",
+            "Kalender-Links (.ics), einer pro Zeile.\nGoogle: Kalendereinstellungen → „Privatadresse im iCal-Format“. Outlook: Einstellungen → Kalender → Freigegebene Kalender → Veröffentlichen → ICS. iCloud: Kalender öffentlich freigeben.",
+            "Link dei calendari (.ics), uno per riga.\nGoogle: impostazioni del calendario → \"Indirizzo segreto in formato iCal\". Outlook: Impostazioni → Calendario → Calendari condivisi → Pubblica → ICS. iCloud: condividi il calendario pubblicamente.",
+            "Liens d'agenda (.ics), un par ligne.\nGoogle : paramètres de l'agenda → « Adresse secrète au format iCal ». Outlook : Paramètres → Calendrier → Calendriers partagés → Publier → ICS. iCloud : partager l'agenda publiquement.",
+            "Enlaces de calendario (.ics), uno por línea.\nGoogle: configuración del calendario → «Dirección secreta en formato iCal». Outlook: Configuración → Calendario → Calendarios compartidos → Publicar → ICS. iCloud: comparte el calendario públicamente.");
+        public static string AgendaSet => T("Calendar links…", "Kalender-Links…", "Link dei calendari…", "Liens d'agenda…", "Enlaces de calendario…");
+        public static string AgendaFailed => T("The calendar could not be loaded. Check the link.", "Der Kalender konnte nicht geladen werden. Prüfe den Link.", "Impossibile caricare il calendario. Controlla il link.", "Impossible de charger l'agenda. Vérifiez le lien.", "No se pudo cargar el calendario. Comprueba el enlace.");
+        public static string AgendaEmpty => T("No appointments in the next two weeks.", "Keine Termine in den nächsten zwei Wochen.", "Nessun appuntamento nelle prossime due settimane.", "Aucun rendez-vous dans les deux prochaines semaines.", "No hay citas en las próximas dos semanas.");
+        public static string AgendaTomorrow => T("Tomorrow", "Morgen", "Domani", "Demain", "Mañana");
+        public static string AgendaAllDay => T("all day", "ganztägig", "tutto il giorno", "journée", "todo el día");
+
+        public static string WidgetPhotos => T("Photo frame", "Fotorahmen", "Cornice foto", "Cadre photo", "Marco de fotos");
+        public static string PhotosHint => T("Double-click to choose a folder with pictures.", "Doppelklick, um einen Ordner mit Bildern auszuwählen.", "Doppio clic per scegliere una cartella di immagini.", "Double-cliquez pour choisir un dossier d'images.", "Haz doble clic para elegir una carpeta de imágenes.");
+        public static string PhotosNone => T("No pictures in this folder.", "Keine Bilder in diesem Ordner.", "Nessuna immagine in questa cartella.", "Aucune image dans ce dossier.", "No hay imágenes en esta carpeta.");
+        public static string PhotosChoose => T("Choose picture folder…", "Bilderordner wählen…", "Scegli cartella immagini…", "Choisir le dossier d'images…", "Elegir carpeta de imágenes…");
+        public static string PhotosInterval => T("Change picture every", "Bild wechseln alle", "Cambia immagine ogni", "Changer d'image toutes les", "Cambiar imagen cada");
+        public static string PhotosShowFile => T("Show in Explorer", "Im Explorer zeigen", "Mostra in Esplora file", "Afficher dans l'Explorateur", "Mostrar en el Explorador");
+
+        public static string WidgetFocus => T("Focus timer (Pomodoro)", "Fokus-Timer (Pomodoro)", "Timer di concentrazione (Pomodoro)", "Minuteur de concentration (Pomodoro)", "Temporizador de concentración (Pomodoro)");
+        public static string FocusStart => T("Start", "Start", "Avvia", "Démarrer", "Iniciar");
+        public static string FocusPause => T("Pause", "Pause", "Pausa", "Pause", "Pausa");
+        public static string FocusReset => T("Reset", "Zurücksetzen", "Azzera", "Réinitialiser", "Reiniciar");
+        public static string FocusRound(int n) => T($"Focus · round {n}", $"Fokus · Runde {n}", $"Concentrazione · giro {n}", $"Concentration · tour {n}", $"Concentración · ronda {n}");
+        public static string FocusShortBreak => T("Short break", "Kurze Pause", "Pausa breve", "Courte pause", "Descanso corto");
+        public static string FocusLongBreak => T("Long break", "Lange Pause", "Pausa lunga", "Longue pause", "Descanso largo");
+        public static string FocusBreak(int minutes) => T($"Time for a {minutes}-minute break!", $"Zeit für {minutes} Minuten Pause!", $"È ora di una pausa di {minutes} minuti!", $"C'est l'heure d'une pause de {minutes} minutes !", $"¡Hora de un descanso de {minutes} minutos!");
+        public static string FocusBackToWork => T("Break's over – next focus round.", "Pause vorbei – nächste Fokus-Runde.", "Pausa finita – prossimo giro di concentrazione.", "Fin de la pause – prochain tour de concentration.", "Se acabó el descanso: siguiente ronda de concentración.");
+        public static string FocusTiming => T("Timing", "Zeiten", "Tempi", "Durées", "Tiempos");
+        public static string FocusPreset(int focus, int shortBreak, int longBreak) => T(
+            $"{focus} min focus · {shortBreak}/{longBreak} min break", $"{focus} Min. Fokus · {shortBreak}/{longBreak} Min. Pause", $"{focus} min concentrazione · {shortBreak}/{longBreak} min pausa",
+            $"{focus} min de concentration · {shortBreak}/{longBreak} min de pause", $"{focus} min de concentración · {shortBreak}/{longBreak} min de descanso");
+        public static string FocusSkip => T("Skip to next phase", "Zur nächsten Phase springen", "Passa alla fase successiva", "Passer à la phase suivante", "Saltar a la siguiente fase");
+
+        public static string WidgetNews => T("News (RSS)", "News (RSS)", "Notizie (RSS)", "Actualités (RSS)", "Noticias (RSS)");
+        public static string NewsHint => T("Double-click to choose news feeds.", "Doppelklick, um News-Feeds auszuwählen.", "Doppio clic per scegliere i feed di notizie.", "Double-cliquez pour choisir des flux d'actualités.", "Haz doble clic para elegir fuentes de noticias.");
+        public static string NewsPrompt => T("Feed links (RSS or Atom), one per line – or add one of these:", "Feed-Links (RSS oder Atom), einer pro Zeile – oder einen davon hinzufügen:", "Link dei feed (RSS o Atom), uno per riga – oppure aggiungine uno di questi:", "Liens de flux (RSS ou Atom), un par ligne – ou ajoutez l'un de ceux-ci :", "Enlaces de fuentes (RSS o Atom), uno por línea, o añade uno de estos:");
+        public static string NewsSet => T("News feeds…", "News-Feeds…", "Feed di notizie…", "Flux d'actualités…", "Fuentes de noticias…");
+
+        public static string WidgetTicker => T("Prices (stocks, crypto)", "Kurse (Aktien, Krypto)", "Quotazioni (azioni, cripto)", "Cours (actions, crypto)", "Cotizaciones (acciones, cripto)");
+        public static string TickerSet => T("Symbols…", "Symbole…", "Simboli…", "Symboles…", "Símbolos…");
+        public static string TickerPrompt => T(
+            "Symbols as on Yahoo Finance, one per line (up to 12): AAPL, MSFT, ^GDAXI (DAX), ^ATX, BTC-EUR, ETH-EUR, EURUSD=X …",
+            "Symbole wie bei Yahoo Finance, eines pro Zeile (bis zu 12): AAPL, MSFT, ^GDAXI (DAX), ^ATX, BTC-EUR, ETH-EUR, EURUSD=X …",
+            "Simboli come su Yahoo Finance, uno per riga (fino a 12): AAPL, MSFT, FTSEMIB.MI, ^GDAXI, BTC-EUR, ETH-EUR, EURUSD=X …",
+            "Symboles comme sur Yahoo Finance, un par ligne (jusqu'à 12) : AAPL, MSFT, ^FCHI (CAC 40), ^GDAXI, BTC-EUR, ETH-EUR, EURUSD=X …",
+            "Símbolos como en Yahoo Finance, uno por línea (hasta 12): AAPL, MSFT, ^IBEX, ^GDAXI, BTC-EUR, ETH-EUR, EURUSD=X …");
+
+        #endregion
+
+        #region Sync
+
+        public static string SectionSync => T("Use on several PCs", "Auf mehreren PCs nutzen", "Usa su più PC", "Utiliser sur plusieurs PC", "Usar en varios PC");
+        public static string SyncHint => T(
+            "Keep fences, notes, playtime and styles in a shared folder such as OneDrive – every PC that points to it shows the same fences. Positions are kept per monitor setup.",
+            "Fences, Notizen, Spielzeit und Styles in einem gemeinsamen Ordner wie OneDrive ablegen – jeder PC, der darauf zeigt, hat dieselben Fences. Positionen gelten pro Monitor-Anordnung.",
+            "Conserva recinti, note, tempo di gioco e stili in una cartella condivisa come OneDrive: ogni PC che la usa mostra gli stessi recinti. Le posizioni valgono per ogni disposizione dei monitor.",
+            "Gardez barrières, notes, temps de jeu et styles dans un dossier partagé comme OneDrive : chaque PC qui l'utilise affiche les mêmes barrières. Les positions sont gardées par configuration d'écrans.",
+            "Guarda vallas, notas, tiempo de juego y estilos en una carpeta compartida como OneDrive: cada PC que la use muestra las mismas vallas. Las posiciones se guardan por configuración de monitores.");
+        public static string SyncChoose => T("Choose shared folder…", "Gemeinsamen Ordner wählen…", "Scegli cartella condivisa…", "Choisir le dossier partagé…", "Elegir carpeta compartida…");
+        public static string SyncChooseTitle => T("Shared folder for NoFences (e.g. in OneDrive)", "Gemeinsamer Ordner für NoFences (z. B. in OneDrive)", "Cartella condivisa per NoFences (ad es. in OneDrive)", "Dossier partagé pour NoFences (par ex. dans OneDrive)", "Carpeta compartida para NoFences (p. ej. en OneDrive)");
+        public static string SyncExistingQuestion => T(
+            "This folder already contains NoFences settings (probably from your other PC).\n\nYes: use them on this PC too.\nNo: replace them with this PC's fences.",
+            "In diesem Ordner liegen schon NoFences-Einstellungen (vermutlich von deinem anderen PC).\n\nJa: diese auch auf diesem PC verwenden.\nNein: mit den Fences dieses PCs überschreiben.",
+            "Questa cartella contiene già impostazioni di NoFences (probabilmente dall'altro PC).\n\nSì: usale anche su questo PC.\nNo: sostituiscile con i recinti di questo PC.",
+            "Ce dossier contient déjà des réglages NoFences (sans doute de votre autre PC).\n\nOui : les utiliser aussi sur ce PC.\nNon : les remplacer par les barrières de ce PC.",
+            "Esta carpeta ya contiene ajustes de NoFences (probablemente de tu otro PC).\n\nSí: usarlos también en este PC.\nNo: reemplazarlos por las vallas de este PC.");
+        public static string SyncActive(string folder) => T($"Shared folder: {folder}", $"Gemeinsamer Ordner: {folder}", $"Cartella condivisa: {folder}", $"Dossier partagé : {folder}", $"Carpeta compartida: {folder}");
+        public static string SyncStop => T("Stop sharing (keep a copy on this PC)", "Nicht mehr teilen (Kopie auf diesem PC behalten)", "Smetti di condividere (tieni una copia su questo PC)", "Arrêter le partage (garder une copie sur ce PC)", "Dejar de compartir (guardar una copia en este PC)");
+        public static string SyncStopQuestion => T(
+            "Copy the shared fences to this PC and stop using the shared folder? NoFences restarts.",
+            "Die gemeinsamen Fences auf diesen PC kopieren und den gemeinsamen Ordner nicht mehr verwenden? NoFences startet neu.",
+            "Copiare i recinti condivisi su questo PC e smettere di usare la cartella condivisa? NoFences si riavvia.",
+            "Copier les barrières partagées sur ce PC et ne plus utiliser le dossier partagé ? NoFences redémarre.",
+            "¿Copiar las vallas compartidas a este PC y dejar de usar la carpeta compartida? NoFences se reinicia.");
+        public static string SyncPortable => T("Not available in portable mode (the data lives next to NoFences.exe).", "Im portablen Modus nicht verfügbar (die Daten liegen neben NoFences.exe).", "Non disponibile in modalità portatile (i dati sono accanto a NoFences.exe).", "Indisponible en mode portable (les données sont à côté de NoFences.exe).", "No disponible en modo portátil (los datos están junto a NoFences.exe).");
+        public static string SyncReloaded => T("Fences updated from another PC.", "Fences von einem anderen PC aktualisiert.", "Recinti aggiornati da un altro PC.", "Barrières mises à jour depuis un autre PC.", "Vallas actualizadas desde otro PC.");
+
+        #endregion
+
+        #region Automation and search
+
+        public static string ProfileSwitchedAuto(string name) => T($"Profile: {name} (automatic)", $"Profil: {name} (automatisch)", $"Profilo: {name} (automatico)", $"Profil : {name} (automatique)", $"Perfil: {name} (automático)");
+        public static string SectionAutomation => T("Automation", "Automatik", "Automazione", "Automatisation", "Automatización");
+        public static string SectionProfileRules => T("Switch profiles automatically", "Profile automatisch wechseln", "Cambia profilo automaticamente", "Changer de profil automatiquement", "Cambiar de perfil automáticamente");
+        public static string RulesHint => T(
+            "E.g. \"Gaming\" while a game runs, \"Work\" on weekdays from 8 to 17. A running program wins over a time rule; when no rule applies, the previous profile comes back.",
+            "Z. B. „Gaming“, solange ein Spiel läuft, „Arbeit“ werktags von 8 bis 17 Uhr. Ein laufendes Programm hat Vorrang vor einer Zeitregel; gilt keine Regel mehr, kommt das vorherige Profil zurück.",
+            "Ad es. \"Gaming\" mentre è in esecuzione un gioco, \"Lavoro\" nei giorni feriali dalle 8 alle 17. Un programma in esecuzione ha la precedenza su una regola oraria; quando nessuna regola vale più, torna il profilo precedente.",
+            "Par ex. « Jeux » pendant qu'un jeu tourne, « Travail » en semaine de 8 h à 17 h. Un programme en cours l'emporte sur une règle horaire ; quand plus aucune règle ne s'applique, le profil précédent revient.",
+            "P. ej. «Juegos» mientras se ejecuta un juego, «Trabajo» entre semana de 8 a 17. Un programa en ejecución tiene prioridad sobre una regla horaria; cuando ya no se aplica ninguna regla, vuelve el perfil anterior.");
+        public static string RuleAdd => T("Add rule…", "Regel hinzufügen…", "Aggiungi regola…", "Ajouter une règle…", "Añadir regla…");
+        public static string RuleEdit => T("Edit…", "Bearbeiten…", "Modifica…", "Modifier…", "Editar…");
+        public static string RuleRemove => T("Remove", "Entfernen", "Rimuovi", "Supprimer", "Quitar");
+        public static string RuleTitle => T("Profile rule", "Profilregel", "Regola del profilo", "Règle de profil", "Regla de perfil");
+        public static string RuleProfile => T("Switch to profile", "Zu Profil wechseln", "Passa al profilo", "Passer au profil", "Cambiar al perfil");
+        public static string RuleByProgram => T("While this program runs:", "Solange dieses Programm läuft:", "Mentre è in esecuzione questo programma:", "Tant que ce programme tourne :", "Mientras se ejecuta este programa:");
+        public static string RuleByTime => T("On these days and times:", "An diesen Tagen und Uhrzeiten:", "In questi giorni e orari:", "Ces jours et heures :", "En estos días y horas:");
+        public static string RuleFrom => T("from", "von", "dalle", "de", "de");
+        public static string RuleTo => T("to", "bis", "alle", "à", "a");
+        public static string RuleWhileRunning(string profile, string program) => T(
+            $"{profile} – while {program} runs", $"{profile} – solange {program} läuft", $"{profile} – mentre è in esecuzione {program}",
+            $"{profile} – tant que {program} tourne", $"{profile} – mientras se ejecuta {program}");
+        public static string RuleAtTimes(string profile, string days, string from, string to) => $"{profile} – {days}  {from}–{to}";
+        public static string SectionFullscreen => T("Full screen", "Vollbild", "Schermo intero", "Plein écran", "Pantalla completa");
+        public static string HideOnFullscreen => T("Hide fences while a program runs full screen", "Fences ausblenden, solange ein Programm im Vollbild läuft", "Nascondi i recinti mentre un programma è a schermo intero", "Masquer les barrières pendant qu'un programme est en plein écran", "Ocultar las vallas mientras un programa está en pantalla completa");
+        public static string HideOnFullscreenHint => T(
+            "Games, videos and presentations: only fences on that monitor are hidden, and they come back right after.",
+            "Spiele, Videos und Präsentationen: Nur die Fences auf diesem Monitor werden ausgeblendet, danach sind sie sofort wieder da.",
+            "Giochi, video e presentazioni: vengono nascosti solo i recinti su quel monitor e tornano subito dopo.",
+            "Jeux, vidéos et présentations : seules les barrières de cet écran sont masquées, et elles reviennent juste après.",
+            "Juegos, vídeos y presentaciones: solo se ocultan las vallas de ese monitor y vuelven justo después.");
+        public static string SectionAutoTheme => T("Light and dark style", "Heller und dunkler Style", "Stile chiaro e scuro", "Style clair et sombre", "Estilo claro y oscuro");
+        public static string AutoThemeLabel => T("Switch automatically", "Automatisch wechseln", "Cambia automaticamente", "Changer automatiquement", "Cambiar automáticamente");
+        public static string AutoThemeModeName(AutoThemeMode mode) => mode switch
+        {
+            AutoThemeMode.Windows => T("Like Windows (light/dark mode)", "Wie Windows (heller/dunkler Modus)", "Come Windows (modalità chiara/scura)", "Comme Windows (mode clair/sombre)", "Como Windows (modo claro/oscuro)"),
+            AutoThemeMode.Time => T("By time of day", "Nach Uhrzeit", "In base all'ora", "Selon l'heure", "Según la hora"),
+            _ => T("Off", "Aus", "Disattivato", "Désactivé", "Desactivado")
+        };
+        public static string LightThemeLabel => T("Light style", "Heller Style", "Stile chiaro", "Style clair", "Estilo claro");
+        public static string DarkThemeLabel => T("Dark style", "Dunkler Style", "Stile scuro", "Style sombre", "Estilo oscuro");
+        public static string DarkTimesLabel => T("Dark from / to", "Dunkel von / bis", "Scuro dalle / alle", "Sombre de / à", "Oscuro de / a");
+        public static string AutoThemeHint => T(
+            "Applies to fences without their own style.", "Gilt für Fences ohne eigenen Style.", "Vale per i recinti senza uno stile proprio.",
+            "S'applique aux barrières sans style propre.", "Se aplica a las vallas sin estilo propio.");
+        public static string ThemeGlobalAutoHint => T(
+            "Light/dark switching is on (Automation), so the light and dark styles set there are used.",
+            "Der Hell/Dunkel-Wechsel ist an (Automatik), daher gelten die dort gewählten Styles.",
+            "Il cambio chiaro/scuro è attivo (Automazione), quindi valgono gli stili scelti lì.",
+            "Le changement clair/sombre est activé (Automatisation) : ce sont les styles choisis là-bas qui s'appliquent.",
+            "El cambio claro/oscuro está activado (Automatización), así que se usan los estilos elegidos allí.");
+        public static string SectionSearch => T("Search", "Suche", "Ricerca", "Recherche", "Búsqueda");
+        public static string SearchMenu => T("Search fences…", "Fences durchsuchen…", "Cerca nei recinti…", "Rechercher dans les barrières…", "Buscar en las vallas…");
+        public static string SearchHotkeyLabel => T("Shortcut:", "Tastenkürzel:", "Scorciatoia:", "Raccourci :", "Atajo:");
+        public static string SearchHint => T(
+            "Finds everything in your fences – links, folder contents, tabs and notes – and opens it with Enter.",
+            "Findet alles in deinen Fences – Verknüpfungen, Ordnerinhalte, Reiter und Notizen – und öffnet es mit Enter.",
+            "Trova tutto nei tuoi recinti – collegamenti, contenuto delle cartelle, schede e note – e lo apre con Invio.",
+            "Trouve tout dans vos barrières – raccourcis, contenu des dossiers, onglets et notes – et l'ouvre avec Entrée.",
+            "Encuentra todo en tus vallas – accesos directos, contenido de carpetas, pestañas y notas – y lo abre con Intro.");
+        public static string SearchPlaceholder => T("Search in all fences…", "In allen Fences suchen…", "Cerca in tutti i recinti…", "Rechercher dans toutes les barrières…", "Buscar en todas las vallas…");
+        public static string SearchFooter(int n) => T($"{n} items in your fences", $"{n} Einträge in deinen Fences", $"{n} elementi nei tuoi recinti", $"{n} éléments dans vos barrières", $"{n} elementos en tus vallas");
+        public static string SearchNothing => T("Nothing found", "Nichts gefunden", "Nessun risultato", "Aucun résultat", "No se encontró nada");
+        public static string SearchKeys => T("Enter opens · ↑↓ choose · Esc closes", "Enter öffnet · ↑↓ auswählen · Esc schließt", "Invio apre · ↑↓ scegli · Esc chiude", "Entrée ouvre · ↑↓ choisir · Échap ferme", "Intro abre · ↑↓ elegir · Esc cierra");
+        public static string SearchInFence(string fence) => T($"in {fence}", $"in {fence}", $"in {fence}", $"dans {fence}", $"en {fence}");
+        public static string SearchInNote(string fence) => T($"Note: {fence}", $"Notiz: {fence}", $"Nota: {fence}", $"Note : {fence}", $"Nota: {fence}");
 
         #endregion
 

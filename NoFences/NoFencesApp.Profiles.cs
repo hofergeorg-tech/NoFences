@@ -13,12 +13,16 @@ namespace NoFences
 
         public string? ActiveProfile => Store.Config.ActiveProfile;
 
-        public void SwitchProfile(string? profile)
+        /// <param name="automatic">Switched by a profile rule; a manual switch ends what the rule started.</param>
+        public void SwitchProfile(string? profile, bool automatic = false)
         {
+            if (!automatic)
+                ruleActive = false;
             Store.Config.ActiveProfile = profile != null && Store.Config.Profiles.Contains(profile) ? profile : null;
             Store.RequestSave();
             ApplyVisibility();
-            ShowBalloon(Strings.ProfileSwitched(Store.Config.ActiveProfile ?? Strings.ProfileAll));
+            var name = Store.Config.ActiveProfile ?? Strings.ProfileAll;
+            ShowBalloon(automatic ? Strings.ProfileSwitchedAuto(name) : Strings.ProfileSwitched(name));
         }
 
         /// <summary>Asks for a name and adds the profile; null if cancelled or it exists.</summary>

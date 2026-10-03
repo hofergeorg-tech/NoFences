@@ -27,6 +27,9 @@ namespace NoFences
             "Ctrl+Alt+D" => (Native.MOD_CONTROL | Native.MOD_ALT, Keys.D),
             "Ctrl+Alt+Space" => (Native.MOD_CONTROL | Native.MOD_ALT, Keys.Space),
             "Ctrl+Shift+D" => (Native.MOD_CONTROL | Native.MOD_SHIFT, Keys.D),
+            "Ctrl+Alt+F" => (Native.MOD_CONTROL | Native.MOD_ALT, Keys.F),
+            "Ctrl+Shift+F" => (Native.MOD_CONTROL | Native.MOD_SHIFT, Keys.F),
+            "Ctrl+Alt+S" => (Native.MOD_CONTROL | Native.MOD_ALT, Keys.S),
             _ => (0, Keys.None)
         };
 
@@ -64,6 +67,7 @@ namespace NoFences
             if (!fencesVisible)
                 ToggleVisible();
             peeking = true;
+            ApplyVisibility(); // fences hidden by a full-screen program come back for the peek
             foreach (var w in windows)
                 w.SetPeek(true);
             peekForeground = Native.GetForegroundWindow();
@@ -76,6 +80,7 @@ namespace NoFences
             peeking = false;
             foreach (var w in windows)
                 w.SetPeek(false);
+            ApplyVisibility();
         }
 
         private void WatchPeek()

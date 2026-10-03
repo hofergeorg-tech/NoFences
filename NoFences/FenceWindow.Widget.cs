@@ -26,6 +26,11 @@ namespace NoFences
                 widget = WidgetRegistry.Create(Info, app);
                 if (widget == null)
                     return;
+                widget.Invalidated = () =>
+                {
+                    if (IsHandleCreated && !IsDisposed)
+                        Invalidate();
+                };
                 widgetTimer.Interval = widget.RefreshMs;
                 widgetTimer.Tick -= WidgetTick;
                 widgetTimer.Tick += WidgetTick;

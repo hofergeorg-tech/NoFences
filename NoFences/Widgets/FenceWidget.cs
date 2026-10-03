@@ -10,6 +10,12 @@ namespace NoFences.Widgets
     {
         public abstract string Type { get; }
 
+        /// <summary>
+        /// Set by the preview renderer: widgets with online or personal data (games, calendar, news …)
+        /// then never load anything real, so the images only ever show the demo content.
+        /// </summary>
+        public static bool PreviewMode { get; internal set; }
+
         /// <summary>How often <see cref="Refresh"/> runs, in milliseconds.</summary>
         public virtual int RefreshMs => 1000;
 
@@ -25,6 +31,17 @@ namespace NoFences.Widgets
 
         /// <summary>Whether the point is clickable (hand cursor).</summary>
         public virtual bool IsClickable(Point p) => false;
+
+        /// <summary>Mouse wheel over the fence; true if handled (e.g. scrolled).</summary>
+        public virtual bool Wheel(int delta) => false;
+
+        /// <summary>Tooltip for the point, e.g. a game's name under its cover.</summary>
+        public virtual string? TooltipAt(Point p) => null;
+
+        /// <summary>Set by the fence: call to redraw now (e.g. after a download finished).</summary>
+        public Action? Invalidated { get; set; }
+
+        protected void RequestRedraw() => Invalidated?.Invoke();
 
         public virtual void AddMenuItems(ToolStripItemCollection items, IWin32Window owner) { }
 

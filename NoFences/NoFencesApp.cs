@@ -26,6 +26,7 @@ namespace NoFences
         {
             Store.Load();
             Strings.Language = Store.Config.Language;
+            appliedTheme = DefaultThemeId;
             var themeErrors = LoadCustomThemesQuiet().Errors;
             var firstStart = Store.Config.Fences.Count == 0;
             foreach (var info in Store.Config.Fences)
@@ -54,6 +55,9 @@ namespace NoFences
             InitFps();
             InitVirtualDesktops();
             InitPlaytime();
+            InitAutomation();
+            InitSearch();
+            InitSync();
             if (themeErrors.Count > 0)
                 ShowBalloon(Strings.ThemeErrors(string.Join("\n", themeErrors)), timeout: 10_000);
 
@@ -90,6 +94,8 @@ namespace NoFences
             balloonAction = onClick;
             tray.ShowBalloonTip(timeout, "NoFences", text, ToolTipIcon.Info);
         }
+
+        public void Notify(string text) => ShowBalloon(text, timeout: 8000);
 
         internal static void OpenUrl(string url) => Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
 
@@ -158,7 +164,7 @@ namespace NoFences
             ShowBalloon(Strings.SortNowDone(count));
         }
 
-        public FenceTheme ThemeFor(FenceInfo info) => ThemeRegistry.Get(info.Theme ?? Store.Config.Theme);
+        public FenceTheme ThemeFor(FenceInfo info) => ThemeRegistry.Get(info.Theme ?? appliedTheme ?? Store.Config.Theme);
 
         public void RequestSave() => Store.RequestSave();
 
@@ -231,6 +237,7 @@ namespace NoFences
 
         internal void ApplyToAll()
         {
+            appliedTheme = DefaultThemeId;
             Store.RequestSave();
             foreach (var w in windows)
             {
@@ -263,6 +270,7 @@ namespace NoFences
             menu.Items.Add(new ToolStripMenuItem(Strings.ShowFences, null, (_, _) => ToggleVisible()) { Checked = fencesVisible });
             AddProfileItems(menu.Items);
             AddPeekItems(menu.Items);
+            AddSearchItem(menu.Items);
             menu.Items.Add(Strings.SortNow, null, (_, _) => SortDesktopNow());
             menu.Items.Add(new ToolStripSeparator());
             // Everything else lives in the settings window
@@ -284,6 +292,9 @@ namespace NoFences
             DisposeFps();
             virtualDesktopTimer.Dispose();
             DisposePlaytime();
+            DisposeAutomation();
+            DisposeSearch();
+            DisposeSync();
             sorter.Dispose();
             tray.Visible = false;
             tray.Dispose();

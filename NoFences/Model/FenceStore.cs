@@ -35,18 +35,106 @@ namespace NoFences.Model
         {
             var exeDir = AppContext.BaseDirectory;
             IsPortable = File.Exists(Path.Combine(exeDir, PortableMarker)) || File.Exists(Path.Combine(exeDir, ConfigFileName));
-            DataDirectory = IsPortable
+            LocalDirectory = IsPortable
                 ? exeDir
                 : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "NoFences");
-            Directory.CreateDirectory(DataDirectory);
+            Directory.CreateDirectory(LocalDirectory);
+            SyncFolder = ReadSyncPointer(LocalDirectory);
+            DataDirectory = SyncFolder ?? LocalDirectory;
 
             saveTimer.Tick += (_, _) => SaveNow();
         }
 
+        #region Sync folder
+
+        private const string SyncPointerFile = "sync-folder.txt";
+
+        /// <summary>Where the data lives without sync (and where the sync pointer is kept).</summary>
+        public string LocalDirectory { get; }
+
+        /// <summary>A folder shared with other PCs (e.g. in OneDrive), or null.</summary>
+        public string? SyncFolder { get; }
+
+        /// <summary>The files that move into a sync folder.</summary>
+        public static readonly string[] SyncedFiles = { ConfigFileName, "playtime.json" };
+
+        private static string? ReadSyncPointer(string localDirectory)
+        {
+            try
+            {
+                var pointer = Path.Combine(localDirectory, SyncPointerFile);
+                if (!File.Exists(pointer))
+                    return null;
+                var folder = File.ReadAllText(pointer).Trim();
+                // An unavailable folder (OneDrive not signed in yet) falls back to the local data
+                return folder.Length > 0 && Directory.Exists(folder) ? folder : null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Points this PC at <paramref name="folder"/>. Unless <paramref name="useExisting"/>, this PC's
+        /// files are copied there first. Takes effect after a restart.
+        /// </summary>
+        public void StartSync(string folder, bool useExisting)
+        {
+            SaveNow();
+            Directory.CreateDirectory(folder);
+            if (!useExisting)
+                CopyData(DataDirectory, folder);
+            File.WriteAllText(Path.Combine(LocalDirectory, SyncPointerFile), folder);
+        }
+
+        /// <summary>Copies the shared data back to this PC and stops syncing (after a restart).</summary>
+        public void StopSync()
+        {
+            SaveNow();
+            if (SyncFolder != null)
+                CopyData(SyncFolder, LocalDirectory);
+            File.Delete(Path.Combine(LocalDirectory, SyncPointerFile));
+        }
+
+        private static void CopyData(string from, string to)
+        {
+            if (string.Equals(Path.GetFullPath(from), Path.GetFullPath(to), StringComparison.OrdinalIgnoreCase))
+                return;
+            foreach (var name in SyncedFiles)
+                TryCopy(Path.Combine(from, name), Path.Combine(to, name));
+            var themes = Path.Combine(from, "themes");
+            if (Directory.Exists(themes))
+            {
+                Directory.CreateDirectory(Path.Combine(to, "themes"));
+                foreach (var file in Directory.EnumerateFiles(themes, "*.json"))
+                    TryCopy(file, Path.Combine(to, "themes", Path.GetFileName(file)));
+            }
+        }
+
+        public static bool HasConfig(string folder) => File.Exists(Path.Combine(folder, ConfigFileName));
+
+        private string? lastWritten;
+
+        /// <summary>Whether fences.json on disk is something else than what this PC wrote last (another PC saved).</summary>
+        public bool ChangedOnDisk()
+        {
+            try
+            {
+                return File.Exists(ConfigPath) && lastWritten != null && File.ReadAllText(ConfigPath) != lastWritten;
+            }
+            catch (IOException)
+            {
+                return false; // being written right now; the next check sees it
+            }
+        }
+
+        #endregion
+
         /// <summary>Store in a given folder (tests).</summary>
         public FenceStore(string dataDirectory)
         {
-            DataDirectory = dataDirectory;
+            DataDirectory = LocalDirectory = dataDirectory;
             IsPortable = true;
             Directory.CreateDirectory(DataDirectory);
             saveTimer.Tick += (_, _) => SaveNow();
@@ -58,7 +146,9 @@ namespace NoFences.Model
             {
                 try
                 {
-                    Config = JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(ConfigPath), JsonOptions) ?? new AppConfig();
+                    var json = File.ReadAllText(ConfigPath);
+                    Config = JsonSerializer.Deserialize<AppConfig>(json, JsonOptions) ?? new AppConfig();
+                    lastWritten = json;
                     return;
                 }
                 catch (Exception e)
@@ -87,8 +177,10 @@ namespace NoFences.Model
             try
             {
                 var tmp = ConfigPath + ".tmp";
-                File.WriteAllText(tmp, JsonSerializer.Serialize(Config, JsonOptions));
+                var json = JsonSerializer.Serialize(Config, JsonOptions);
+                File.WriteAllText(tmp, json);
                 File.Move(tmp, ConfigPath, overwrite: true);
+                lastWritten = json;
             }
             catch (Exception e)
             {

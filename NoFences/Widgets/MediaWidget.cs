@@ -41,6 +41,8 @@ namespace NoFences.Widgets
 
         public override void Refresh()
         {
+            if (PreviewMode)
+                return;
             // The preview must never show what's really playing on this PC
             if (preview)
                 return;

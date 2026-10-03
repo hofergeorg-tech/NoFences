@@ -674,6 +674,9 @@ namespace NoFences
             if (IsWidget)
             {
                 Cursor = widget?.IsClickable(e.Location) == true ? Cursors.Hand : Cursors.Default;
+                var tip = widget?.TooltipAt(e.Location) ?? "";
+                if (toolTip.GetToolTip(this) != tip)
+                    toolTip.SetToolTip(this, tip);
                 return;
             }
 
@@ -795,6 +798,12 @@ namespace NoFences
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             base.OnMouseWheel(e);
+            if (IsWidget)
+            {
+                if (widget?.Wheel(e.Delta) == true)
+                    Invalidate();
+                return;
+            }
             if (MaxScroll == 0)
                 return;
             var step = (itemHeight + Px(8)) / 2;

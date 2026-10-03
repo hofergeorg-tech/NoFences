@@ -35,6 +35,32 @@ namespace NoFences
                 option = place.ToOption();
                 title = $"{name()} {place.Name}";
             }
+            else if (type == "agenda")
+            {
+                option = AgendaWidget.AskUrls(null, null);
+            }
+            else if (type == "news")
+            {
+                option = NewsWidget.AskFeeds(null, null);
+            }
+            else if (type == "ticker")
+            {
+                option = TickerWidget.DefaultSymbols;
+            }
+            else if (type == "photos")
+            {
+                using var dialog = new FolderBrowserDialog
+                {
+                    Description = Strings.PhotosChoose.TrimEnd('…'),
+                    UseDescriptionForTitle = true,
+                    SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
+                };
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    option = PhotoWidget.Format(60, dialog.SelectedPath);
+                    title = Path.GetFileName(dialog.SelectedPath.TrimEnd('\\'));
+                }
+            }
             AddFence(new FenceInfo
             {
                 Name = title,

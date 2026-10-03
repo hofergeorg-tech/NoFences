@@ -42,6 +42,28 @@ namespace NoFences.Model
         /// <summary>The active profile; null = show all fences.</summary>
         public string? ActiveProfile { get; set; }
 
+        /// <summary>Automatic profile switching (program running, time of day).</summary>
+        public List<ProfileRule> ProfileRules { get; set; } = new();
+
+        /// <summary>Hide fences on a monitor while a program runs full screen there (games, videos).</summary>
+        public bool HideOnFullscreen { get; set; } = true;
+
+        /// <summary>Switch the default style between <see cref="LightTheme"/> and <see cref="DarkTheme"/> automatically.</summary>
+        public AutoThemeMode AutoTheme { get; set; }
+
+        public string LightTheme { get; set; } = "postit";
+
+        public string DarkTheme { get; set; } = "default";
+
+        public string DarkFrom { get; set; } = "19:00";
+
+        public string DarkTo { get; set; } = "07:00";
+
+        /// <summary>Shortcut for the search across all fences.</summary>
+        public string SearchHotkey { get; set; } = "Ctrl+Alt+F";
+
+        public static readonly IReadOnlyList<string> SearchHotkeys = new[] { "Ctrl+Alt+F", "Ctrl+Shift+F", "Ctrl+Alt+S", "Off" };
+
         public List<FenceInfo> Fences { get; set; } = new();
     }
 }

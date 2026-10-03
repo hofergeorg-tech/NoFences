@@ -22,6 +22,7 @@ namespace NoFences
             public void ToggleFps() { }
             public FenceTheme ThemeFor(FenceInfo info) => ThemeRegistry.Get(info.Theme);
             public void RequestSave() { }
+            public void Notify(string text) { }
             public void CreateFence(FenceKind kind, string? name = null) { }
             public void RemoveFence(FenceWindow window) { }
             public void AddCreateExtrasItems(ToolStripItemCollection items) { }
@@ -53,6 +54,7 @@ namespace NoFences
         public static void Run(string outDir)
         {
             Directory.CreateDirectory(outDir);
+            Widgets.FenceWidget.PreviewMode = true;
             // Show what a user style from a JSON file looks like, too.
             ThemeRegistry.SetCustom(new[] { JsonTheme.Parse(JsonTheme.ExampleJson, "example") });
             var samples = CreateSampleFiles(Path.Combine(Path.GetTempPath(), "NoFencesPreview"));
@@ -188,6 +190,29 @@ namespace NoFences
                 ("clipboard", "work", new Size(280, 260)),
                 ("battery", "nature", new Size(220, 170)),
             });
+            RenderWidgetSheet(outDir, host, "widgets-extra-docs.png", new (string, string, Size)[]
+            {
+                ("games", "gaming", new Size(420, 330)),
+                ("agenda", "windows", new Size(290, 330)),
+                ("focus", "hobby", new Size(230, 280)),
+                ("news", "documents", new Size(330, 330)),
+                ("ticker", "finance", new Size(320, 270)),
+                ("photos", "photos", new Size(330, 250)),
+            });
+        }
+
+        /// <summary>A made-up game cover: gradient with the title.</summary>
+        private static Bitmap DemoCover(string title, Color a, Color b)
+        {
+            var bitmap = new Bitmap(240, 360);
+            using var g = Graphics.FromImage(bitmap);
+            using var brush = new LinearGradientBrush(new Rectangle(0, 0, 240, 360), a, b, 70f);
+            g.FillRectangle(brush, 0, 0, 240, 360);
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+            using var font = new Font("Segoe UI Black", 26, FontStyle.Bold, GraphicsUnit.Pixel);
+            using var format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far };
+            g.DrawString(title, font, Brushes.White, new RectangleF(10, 0, 220, 330), format);
+            return bitmap;
         }
 
         /// <summary>The language flags at menu size and enlarged (flags.png).</summary>
@@ -224,6 +249,77 @@ namespace NoFences
                 case Widgets.MediaWidget media:
                     media.SetPreview("Midnight Drive", "The Synthwave Band", "Spotify", null, TimeSpan.FromSeconds(83), TimeSpan.FromSeconds(214));
                     break;
+                case Widgets.GamesWidget games:
+                    var palette = new (string, Color, Color)[]
+                    {
+                        ("STAR VOYAGE", Color.FromArgb(20, 30, 80), Color.FromArgb(120, 60, 200)),
+                        ("KART RUSH", Color.FromArgb(220, 60, 40), Color.FromArgb(250, 190, 40)),
+                        ("DEEP FOREST", Color.FromArgb(20, 70, 40), Color.FromArgb(120, 190, 90)),
+                        ("NEON CITY", Color.FromArgb(40, 10, 60), Color.FromArgb(230, 40, 160)),
+                        ("ICE PEAK", Color.FromArgb(40, 90, 150), Color.FromArgb(220, 240, 255)),
+                        ("DUNE RIDERS", Color.FromArgb(150, 80, 30), Color.FromArgb(240, 200, 120)),
+                        ("ROBO LAB", Color.FromArgb(40, 40, 50), Color.FromArgb(90, 200, 220)),
+                        ("PIXEL QUEST", Color.FromArgb(30, 120, 90), Color.FromArgb(250, 230, 90)),
+                    };
+                    games.SetPreview(palette.Select((p, i) => (new Widgets.GameInfo($"demo:{i}", p.Item1, Widgets.GameSource.Steam, "", null, null, DateTime.Now.AddDays(-i)),
+                        (Bitmap?)DemoCover(p.Item1, p.Item2, p.Item3))));
+                    break;
+                case Widgets.AgendaWidget agenda:
+                    var d = DateTime.Today;
+                    agenda.SetPreview(new[]
+                    {
+                        new Widgets.CalendarEvent(d.AddHours(9), d.AddHours(9.5), "Team stand-up", false),
+                        new Widgets.CalendarEvent(d.AddHours(23), d.AddHours(23.5), "Release NoFences", false),
+                        new Widgets.CalendarEvent(d.AddDays(1), d.AddDays(2), "Anna's birthday", true),
+                        new Widgets.CalendarEvent(d.AddDays(1).AddHours(18), d.AddDays(1).AddHours(19.5), "Football training", false),
+                        new Widgets.CalendarEvent(d.AddDays(2).AddHours(10), d.AddDays(2).AddHours(11), "Dentist", false),
+                        new Widgets.CalendarEvent(d.AddDays(3).AddHours(20), d.AddDays(3).AddHours(23), "Game night", false),
+                    });
+                    break;
+                case Widgets.FocusWidget focus:
+                    focus.SetPreview(TimeSpan.FromMinutes(17.4), true, 2);
+                    break;
+                case Widgets.NewsWidget news:
+                    var n = DateTime.Now;
+                    news.SetPreview(new[]
+                    {
+                        new Widgets.NewsItem("New open-source desktop tools are on the rise", "https://example.com", n.AddMinutes(-12), "Tech Daily"),
+                        new Widgets.NewsItem("Weekend weather: sunny with a chance of clouds", "https://example.com", n.AddMinutes(-48), "Daily News"),
+                        new Widgets.NewsItem("Local team wins the cup after penalty shoot-out", "https://example.com", n.AddHours(-2), "Sports"),
+                        new Widgets.NewsItem("Five tips for a tidy desktop", "https://example.com", n.AddHours(-5), "Tech Daily"),
+                        new Widgets.NewsItem("Museum night draws record crowds", "https://example.com", n.AddHours(-9), "Daily News"),
+                        new Widgets.NewsItem("Space probe sends first close-up images", "https://example.com", n.AddDays(-1), "Science"),
+                    });
+                    break;
+                case Widgets.TickerWidget ticker:
+                    double[] Wave(double start, double drift, int seed)
+                    {
+                        var rnd = new Random(seed);
+                        var v = start;
+                        return Enumerable.Range(0, 40).Select(_ => v += start * (drift / 40 + (rnd.NextDouble() - 0.5) * 0.004)).ToArray();
+                    }
+                    ticker.SetPreview(new[]
+                    {
+                        new Widgets.Quote("BTC-EUR", "Bitcoin EUR", 75491.81, 0.0123, "EUR", Wave(74500, 0.013, 1)),
+                        new Widgets.Quote("^GDAXI", "DAX", 24312.40, -0.0041, "EUR", Wave(24400, -0.004, 2)),
+                        new Widgets.Quote("^ATX", "ATX", 4521.10, 0.0068, "EUR", Wave(4490, 0.007, 3)),
+                        new Widgets.Quote("AAPL", "Apple Inc.", 248.37, 0.0152, "USD", Wave(244, 0.015, 4)),
+                    });
+                    break;
+                case Widgets.PhotoWidget photo:
+                    var picture = new Bitmap(800, 600);
+                    using (var g = Graphics.FromImage(picture))
+                    {
+                        using var sky = new LinearGradientBrush(new Rectangle(0, 0, 800, 420), Color.FromArgb(255, 140, 90), Color.FromArgb(80, 60, 140), 90f);
+                        g.FillRectangle(sky, 0, 0, 800, 600);
+                        g.SmoothingMode = SmoothingMode.AntiAlias;
+                        using var sun = new SolidBrush(Color.FromArgb(255, 220, 120));
+                        g.FillEllipse(sun, 470, 250, 160, 160);
+                        using var hills = new SolidBrush(Color.FromArgb(40, 30, 60));
+                        g.FillPolygon(hills, new[] { new Point(0, 600), new Point(0, 380), new Point(180, 300), new Point(360, 400), new Point(560, 330), new Point(800, 420), new Point(800, 600) });
+                    }
+                    photo.SetPreview(picture);
+                    break;
                 case Widgets.ClipboardWidget clipboard:
                     foreach (var text in new[] { "https://github.com/hofergeorg-tech/NoFences", "Meeting moved to 3 pm", "C:\\Projects\\report-2026.docx", "Thanks for the update!\nSee you tomorrow" }.Reverse())
                         clipboard.History.Add(text);
@@ -247,6 +343,9 @@ namespace NoFences
                         "countdown" => Widgets.CountdownWidget.Format(new DateTime(DateTime.Now.Year, 12, 24, 18, 0, 0), "Weihnachten"),
                         "playtime" => DemoGame,
                         "weather" => new Widgets.WeatherPlace("Wien", 48.2085, 16.3721).ToOption(),
+                        "agenda" => "https://example.com/calendar.ics",
+                        "news" => "https://example.com/feed.xml",
+                        "photos" => Widgets.PhotoWidget.Format(60, @"C:\Pictures\Holidays"),
                         _ => null
                     }
                 };

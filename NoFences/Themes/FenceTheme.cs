@@ -201,6 +201,7 @@ namespace NoFences.Themes
         private static readonly List<FenceTheme> BuiltIn = new FenceTheme[]
         {
             new DefaultTheme(),
+            new WindowsAccentTheme(),
             new StarCitizenTheme(),
             new RetroArcadeTheme(),
             new HardwareTheme(),

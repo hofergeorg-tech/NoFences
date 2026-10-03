@@ -57,6 +57,7 @@ namespace NoFences
             {
                 (Strings.SectionGeneral, BuildGeneral),
                 (Strings.SectionDesktop, BuildDesktop),
+                (Strings.SectionAutomation, BuildAutomation),
                 (Strings.SectionUpdates, BuildUpdates),
                 (Strings.SectionFps, BuildFps),
                 (Strings.SectionData, BuildData),
@@ -133,7 +134,7 @@ namespace NoFences
                 var selected = nav.SelectedIndex;
                 Text = Strings.SettingsTitle;
                 for (var p = 0; p < pages.Count; p++)
-                    pages[p] = (new[] { Strings.SectionGeneral, Strings.SectionDesktop, Strings.SectionUpdates, Strings.SectionFps, Strings.SectionData }[p], pages[p].Build);
+                    pages[p] = (new[] { Strings.SectionGeneral, Strings.SectionDesktop, Strings.SectionAutomation, Strings.SectionUpdates, Strings.SectionFps, Strings.SectionData }[p], pages[p].Build);
                 nav.Items.Clear();
                 nav.Items.AddRange(pages.Select(x => (object)x.Title).ToArray());
                 BeginInvoke(() => nav.SelectedIndex = selected);
@@ -153,11 +154,113 @@ namespace NoFences
                 Config.Theme = themes[i].Id;
                 app.ApplyToAll();
             }));
+            if (Config.AutoTheme != AutoThemeMode.Off)
+                Hint(grid, Strings.ThemeGlobalAutoHint, ContentWidth);
             Wide(grid, Check(Strings.Animations, Config.Animations, v =>
             {
                 Config.Animations = v;
                 app.Store.RequestSave();
             }));
+        }
+
+        private void BuildAutomation(FlowLayoutPanel page)
+        {
+            // Profile rules
+            var rules = Section(page, Strings.SectionProfileRules, ContentWidth);
+            Hint(rules, Strings.RulesHint, ContentWidth);
+            var list = new ListBox { Width = ContentWidth, Height = 110, IntegralHeight = false };
+            void Fill()
+            {
+                list.Items.Clear();
+                list.Items.AddRange(Config.ProfileRules.Select(r => (object)ProfileRuleDialog.Describe(r)).ToArray());
+            }
+            Fill();
+            Wide(rules, list);
+            var buttons = new FlowLayoutPanel { AutoSize = true, WrapContents = false };
+            buttons.Controls.Add(Action(Strings.RuleAdd, () =>
+            {
+                if (app.Profiles.Count == 0 && app.NewProfile(this) == null)
+                    return;
+                using var dialog = new ProfileRuleDialog(app.Profiles, null);
+                if (dialog.ShowDialog(this) != DialogResult.OK)
+                    return;
+                Config.ProfileRules.Add(dialog.Rule);
+                app.Store.RequestSave();
+                Fill();
+            }));
+            buttons.Controls.Add(Action(Strings.RuleEdit, () =>
+            {
+                if (list.SelectedIndex < 0)
+                    return;
+                using var dialog = new ProfileRuleDialog(app.Profiles, Config.ProfileRules[list.SelectedIndex]);
+                if (dialog.ShowDialog(this) != DialogResult.OK)
+                    return;
+                Config.ProfileRules[list.SelectedIndex] = dialog.Rule;
+                app.Store.RequestSave();
+                Fill();
+            }));
+            buttons.Controls.Add(Action(Strings.RuleRemove, () =>
+            {
+                if (list.SelectedIndex < 0)
+                    return;
+                Config.ProfileRules.RemoveAt(list.SelectedIndex);
+                app.Store.RequestSave();
+                Fill();
+            }));
+            list.DoubleClick += (_, _) => ((Button)buttons.Controls[1]).PerformClick();
+            Wide(rules, buttons);
+
+            // Full screen
+            var fullscreen = Section(page, Strings.SectionFullscreen, ContentWidth);
+            Wide(fullscreen, Check(Strings.HideOnFullscreen, Config.HideOnFullscreen, v =>
+            {
+                Config.HideOnFullscreen = v;
+                app.Store.RequestSave();
+            }));
+            Hint(fullscreen, Strings.HideOnFullscreenHint, ContentWidth);
+
+            // Light/dark style
+            var style = Section(page, Strings.SectionAutoTheme, ContentWidth);
+            var themes = ThemeRegistry.All.ToList();
+            var modes = Enum.GetValues<AutoThemeMode>();
+            var light = Choice(themes.Select(t => t.DisplayName), themes.FindIndex(t => t.Id == ThemeRegistry.Get(Config.LightTheme).Id), i =>
+            {
+                Config.LightTheme = themes[i].Id;
+                app.ApplyToAll();
+            });
+            var dark = Choice(themes.Select(t => t.DisplayName), themes.FindIndex(t => t.Id == ThemeRegistry.Get(Config.DarkTheme).Id), i =>
+            {
+                Config.DarkTheme = themes[i].Id;
+                app.ApplyToAll();
+            });
+            DateTimePicker Time(string value, Action<string> changed)
+            {
+                var picker = new DateTimePicker { Format = DateTimePickerFormat.Custom, CustomFormat = "HH:mm", ShowUpDown = true, Width = 80, Value = DateTime.Today + ProfileRule.ParseTime(value) };
+                picker.ValueChanged += (_, _) =>
+                {
+                    changed(picker.Value.ToString("HH:mm", System.Globalization.CultureInfo.InvariantCulture));
+                    app.ApplyToAll();
+                };
+                return picker;
+            }
+            var from = Time(Config.DarkFrom, v => Config.DarkFrom = v);
+            var to = Time(Config.DarkTo, v => Config.DarkTo = v);
+            void UpdateEnabled()
+            {
+                light.Enabled = dark.Enabled = Config.AutoTheme != AutoThemeMode.Off;
+                from.Enabled = to.Enabled = Config.AutoTheme == AutoThemeMode.Time;
+            }
+            Row(style, Strings.AutoThemeLabel, Choice(modes.Select(Strings.AutoThemeModeName), Array.IndexOf(modes, Config.AutoTheme), i =>
+            {
+                Config.AutoTheme = modes[i];
+                app.ApplyToAll();
+                UpdateEnabled();
+            }));
+            Row(style, Strings.LightThemeLabel, light);
+            Row(style, Strings.DarkThemeLabel, dark);
+            Row(style, Strings.DarkTimesLabel, from, to);
+            UpdateEnabled();
+            Hint(style, Strings.AutoThemeHint, ContentWidth);
         }
 
         private void BuildDesktop(FlowLayoutPanel page)
@@ -189,6 +292,15 @@ namespace NoFences
                     }
                 }));
             Hint(profiles, Strings.ProfileHowTo, ContentWidth);
+
+            var search = Section(page, Strings.SectionSearch, ContentWidth);
+            Row(search, Strings.SearchHotkeyLabel, Choice(AppConfig.SearchHotkeys.Select(Strings.HotkeyName), IndexOf(AppConfig.SearchHotkeys, Config.SearchHotkey), i =>
+            {
+                Config.SearchHotkey = AppConfig.SearchHotkeys[i];
+                app.Store.RequestSave();
+                app.UpdateSearchHotkey(notifyIfTaken: true);
+            }, 180));
+            Hint(search, Strings.SearchHint, ContentWidth);
 
             var sort = Section(page, Strings.SectionAutoSort, ContentWidth);
             Wide(sort, Check(Strings.AutoSortEnabled, Config.AutoSortEnabled, v =>
@@ -246,7 +358,7 @@ namespace NoFences
                 var pick = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList, Width = 180 };
                 pick.Items.AddRange(times.Cast<object>().ToArray());
                 pick.SelectedIndex = 0;
-                Row(grid, Strings.RestoreBackup, pick, Action(Strings.RestoreBackup, () =>
+                Row(grid, Strings.BackupLabel, pick, Action(Strings.RestoreShort, () =>
                 {
                     var b = backups[Math.Max(0, pick.SelectedIndex)];
                     app.RestoreBackup(b.Path, b.Time);
@@ -255,6 +367,22 @@ namespace NoFences
             else
             {
                 Hint(grid, Strings.NoBackups, ContentWidth);
+            }
+
+            var sync = Section(page, Strings.SectionSync, ContentWidth);
+            if (app.Store.IsPortable)
+            {
+                Hint(sync, Strings.SyncPortable, ContentWidth);
+            }
+            else if (app.Store.SyncFolder is { } folder)
+            {
+                Hint(sync, Strings.SyncActive(folder), ContentWidth);
+                Wide(sync, Action(Strings.SyncStop, () => app.StopSync(this)));
+            }
+            else
+            {
+                Hint(sync, Strings.SyncHint, ContentWidth);
+                Wide(sync, Action(Strings.SyncChoose, () => app.ChooseSyncFolder(this)));
             }
 
             var styles = Section(page, Strings.CustomThemes, ContentWidth);
@@ -283,7 +411,7 @@ namespace NoFences
                 var flag = Flags.For(Strings.Languages[e.Index], flagHeight);
                 e.Graphics.DrawImage(flag, e.Bounds.X + 4, e.Bounds.Y + (e.Bounds.Height - flag.Height) / 2, flag.Width, flag.Height);
                 var textX = e.Bounds.X + 4 + flagHeight * 3 / 2 + 8;
-                TextRenderer.DrawText(e.Graphics, box.Items[e.Index].ToString(), e.Font ?? box.Font,
+                TextRenderer.DrawText(e.Graphics, box.Items[e.Index]?.ToString(), e.Font ?? box.Font,
                     new Rectangle(textX, e.Bounds.Y, e.Bounds.Right - textX, e.Bounds.Height), e.ForeColor,
                     TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
                 e.DrawFocusRectangle();

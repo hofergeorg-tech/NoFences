@@ -41,7 +41,7 @@ namespace NoFences
         {
             foreach (var w in windows)
             {
-                var visible = ShouldBeVisible(w.Info);
+                var visible = ShouldBeVisible(w.Info) && !HiddenByFullscreen(w);
                 if (w.Visible != visible)
                     w.Visible = visible;
             }

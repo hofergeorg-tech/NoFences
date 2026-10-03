@@ -36,6 +36,8 @@ namespace NoFences.Widgets
 
         public override void Refresh()
         {
+            if (PreviewMode)
+                return;
             var option = getOption();
             if (option != reportFor)
             {
