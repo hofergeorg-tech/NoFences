@@ -1,7 +1,7 @@
 # NoFences Hilfe
 
 NoFences legt Boxen („Fences“) auf deinen Desktop, die deine Icons ordnen – dazu Notizen und Widgets.
-English: [HELP.md](HELP.md) · Italiano: [AIUTO.md](AIUTO.md)
+English: [HELP.md](HELP.md) · Italiano: [AIUTO.md](AIUTO.md) · Français : [AIDE.md](AIDE.md) · Español: [AYUDA.md](AYUDA.md)
 
 ## Erste Schritte
 
@@ -9,8 +9,9 @@ English: [HELP.md](HELP.md) · Italiano: [AIUTO.md](AIUTO.md)
 - **Rechtsklick auf einen Fence** (Titel oder leere Fläche) öffnet sein Menü: Einstellungen, Style, Umbenennen,
   neuer Fence oder neues Widget, Löschen.
 - **Rechtsklick auf einen Eintrag** zeigt das normale Explorer-Menü. Mit Shift + Rechtsklick kommt stattdessen das Fence-Menü.
-- Das **Tray-Icon** (unten rechts, evtl. hinter dem ^-Pfeil) legt Fences an, blendet sie ein und aus und öffnet die
-  **Einstellungen** für alles, was die ganze App betrifft.
+- Das **Tray-Icon** (unten rechts, evtl. hinter dem ^-Pfeil) legt Fences an, blendet sie ein und aus, wechselt Profile
+  und öffnet die **Einstellungen** für alles, was die ganze App betrifft. Die **Sprache** findest du im Tray und in
+  jedem Fence-Menü.
 
 ## Arten von Fences
 
@@ -19,7 +20,7 @@ English: [HELP.md](HELP.md) · Italiano: [AIUTO.md](AIUTO.md)
 - **Ordner-Fence**: zeigt den Inhalt eines Ordners. Reingezogene Dateien werden dorthin **verschoben** (mit Strg kopiert),
   sie verschwinden also wirklich vom Desktop.
 - **Notiz**: ein Post-it mit Text, siehe unten.
-- **Widget**: Live-Inhalt – Uhr, System-Monitor, Laufwerke, Papierkorb, Spielzeit, Countdown, siehe unten.
+- **Widget**: Live-Inhalt – Uhr, Wetter, Spiele, Termine und mehr, siehe unten.
 - **Zuletzt verwendet**: die 20 zuletzt geöffneten Dateien (nur lesen).
 - **Schnellstart-Leiste**: ein schmaler Verknüpfungs-Fence nur mit Icons; die Namen erscheinen als Tooltip.
 
@@ -31,10 +32,16 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 - **Strg+Klick** wählt mehrere Einträge, **Shift+Klick** einen Bereich; Ziehen auf freier Fläche zeichnet ein Auswahlrechteck.
 - Ein angeklickter Fence reagiert auf die Tastatur: **Enter** öffnet, **F2** benennt um, **Entf** entfernt
   (Verknüpfungs-Fence: nur den Verweis; Ordner-Fence: Papierkorb), **Strg+A**, **Strg+C**, Pfeiltasten, **Esc**.
-- **Lostippen** sucht; das Suchwort steht oben rechts, Esc beendet die Suche.
+- **Lostippen** sucht in diesem Fence; das Suchwort steht oben rechts, Esc beendet die Suche.
 - Fence-Menü → **Sortieren nach**: manuell, Name, Typ, Änderungsdatum oder Größe.
 - **Reiter** (Verknüpfungs-Fences): Fence-Menü → Reiter hinzufügen. Klick wechselt, Doppelklick benennt um, Einträge auf einen
   Reiter ziehen verschiebt sie dorthin.
+
+## In allen Fences suchen
+
+**Strg+Alt+F** (oder Tray → Fences durchsuchen…) öffnet ein Suchfeld. Es findet alles in deinen Fences – Verknüpfungen,
+Ordnerinhalte, Reiter und Notiztexte – sogar Buchstaben in Reihenfolge („ffx“ findet Firefox). **Enter** öffnet den
+Treffer, **↑↓** wählen, **Esc** schließt. Das Tastenkürzel änderst du unter Einstellungen → Desktop.
 
 ## Verschieben, Größe, Umbenennen
 
@@ -44,6 +51,7 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 - **Gesperrte** Fences lassen sich nicht verschieben oder ändern. **Einklappen wenn Maus weg** verkleinert auf die Titelleiste.
 - **Immer im Vordergrund** hält einen Fence über allen Fenstern (über Spielen nur im Modus „Randloses Fenster“).
 - **Nur auf diesem virtuellen Desktop** zeigt einen Fence nur auf dem aktuellen virtuellen Desktop (Win+Strg+Pfeiltasten).
+- **Strg+Alt+D** holt alle Fences vor die offenen Fenster; Esc oder ein Klick daneben schickt sie zurück.
 
 ## Notizen
 
@@ -55,7 +63,7 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 
 ## Widgets
 
-Tray- oder Fence-Menü → **Neues Widget**:
+Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem Mausrad.
 
 - **Uhr & Kalender**.
 - **System-Monitor**: CPU, RAM, GPU-Last und -Temperatur (NVIDIA) und **FPS**, wenn aktiviert (siehe unten).
@@ -71,12 +79,43 @@ Tray- oder Fence-Menü → **Neues Widget**:
 - **Zwischenablage-Verlauf**: die letzten 15 kopierten Texte; anklicken kopiert sie erneut. Nur solange NoFences läuft,
   Passwörter aus Passwort-Managern werden übersprungen.
 - **Akku**: Ladestand, ob geladen wird, Restzeit (Laptops).
+- **Spiele**: deine installierten Spiele aus Steam (mit Cover), Epic, GOG und der Xbox-App; zuletzt gespielte zuerst.
+  Klick startet ein Spiel. Im Menü Spiele ausblenden, nach Name sortieren oder erneut suchen.
+- **Termine**: die nächsten zwei Wochen aus Kalender-Links (.ics). Google: Kalendereinstellungen → „Privatadresse im
+  iCal-Format“; Outlook: Einstellungen → Kalender → Freigegebene Kalender → Veröffentlichen → ICS; iCloud: Kalender
+  öffentlich freigeben. Mehrere Kalender: ein Link pro Zeile. Wiederkehrende Termine werden unterstützt.
+- **Fotorahmen**: Diashow eines Bilderordners (auch Unterordner), alle 10 s bis 15 min. Klick zeigt das nächste Bild,
+  Doppelklick öffnet es.
+- **Fokus-Timer (Pomodoro)**: 25 Minuten Fokus, 5 Minuten Pause, nach vier Runden eine lange Pause (oder 50/10, 15/3).
+  Ton und Benachrichtigung bei jedem Wechsel.
+- **News**: Schlagzeilen aus RSS- oder Atom-Feeds (fertige Knöpfe für Tagesschau, ORF, heise, BBC und mehr); Klick
+  öffnet den Artikel.
+- **Kurse**: Aktien, Indizes und Krypto mit der Veränderung seit gestern und einem Tagesverlauf, mit Symbolen wie bei
+  Yahoo Finance: `AAPL`, `^GDAXI` (DAX), `^ATX`, `BTC-EUR`. Alle fünf Minuten aktualisiert; nur zur Information.
 
 ## Profile
 
 Fences in Profile wie „Arbeit“ und „Gaming“ gruppieren und im Tray (**Profil ▸**) oder unter **Einstellungen → Desktop**
 umschalten. Rechtsklick auf ein Fence → **In Profil zeigen** ordnet es zu; ein Fence ohne Profil erscheint in allen
 Profilen. Neue Fences gehören zum gerade aktiven Profil.
+
+## Automatik (Einstellungen → Automatik)
+
+- **Profile automatisch wechseln**: „Gaming“, solange ein bestimmtes Programm läuft, „Arbeit“ werktags von 8 bis 17 Uhr
+  usw. Ein laufendes Programm hat Vorrang vor einer Zeitregel; gilt keine Regel mehr, kommt das vorherige Profil zurück.
+  Wechselst du selbst, endet, was die Regel begonnen hat.
+- **Vollbild**: Solange ein Spiel, Video oder eine Präsentation einen Monitor füllt, werden die Fences auf diesem
+  Monitor ausgeblendet.
+- **Heller und dunkler Style**: Der Standard-Style wechselt mit dem hellen/dunklen Modus von Windows oder zu festen
+  Uhrzeiten – z. B. tagsüber Post-it, abends Glas. Fences mit eigenem Style behalten ihn.
+- Der Style **Windows-Akzentfarbe** übernimmt die Farbe aus Einstellungen → Personalisierung → Farben.
+
+## Mehrere PCs
+
+Einstellungen → Daten & Styles → **Gemeinsamen Ordner wählen…**, z. B. in OneDrive. Fences, Notizen, Spielzeit und
+eigene Styles liegen dann dort, und jeder PC, der auf denselben Ordner zeigt, hat dieselben Fences. Positionen gelten
+pro Monitor-Anordnung, Laptop und Desktop-PC können sie also verschieden anordnen. Speichert ein anderer PC, lädt
+NoFences nach ein paar Sekunden neu. „Nicht mehr teilen“ kopiert alles zurück auf diesen PC.
 
 ## FPS-Messung (optional)
 
@@ -94,19 +133,23 @@ hinzufügen. Neue Desktop-Dateien, die passen, wandern in diesen Fence (auch fer
 ## Styles
 
 Den Standard wählst du unter **Einstellungen → Allgemein**, pro Fence im Fence-Menü → Style oder in den Fence-Einstellungen
-mit Live-Vorschau. Es gibt 24 Styles – Glas, Star Citizen HUD, Retro-Arcade, Hardware, Nerd, Hobby, Arbeit, Familie, Gaming,
-Finanzen, Social, Dokumente, Multimedia, Musik, Sport, Fotos, Reisen, Kochen, Natur und Post-it in fünf Farben.
+mit Live-Vorschau. Es gibt 25 Styles – Glas, Windows-Akzentfarbe, Star Citizen HUD, Retro-Arcade, Hardware, Nerd, Hobby,
+Arbeit, Familie, Gaming, Finanzen, Social, Dokumente, Multimedia, Musik, Sport, Fotos, Reisen, Kochen, Natur und Post-it
+in fünf Farben.
 
 **Eigene Styles**: Einstellungen → Daten & Styles → Styles-Ordner öffnen. `beispiel-mocha.json` kopieren, Farben ändern
 (`#RRGGBB` oder `#RRGGBBAA`) und neu laden. Eigene Styles tragen einen ★.
 
 ## Einstellungen (Tray → Einstellungen)
 
-- **Allgemein**: Sprache (automatisch, English, Deutsch, Italiano), mit Windows starten, Dateiendungen, Standard-Style, Animationen.
-- **Desktop**: Doppelklick auf den Desktop blendet Fences aus/ein; Tastenkürzel, um Fences nach vorne zu holen (Strg+Alt+D); Einsortieren.
-- **Updates**: NoFences prüft GitHub und installiert neue Versionen mit einem Klick.
+- **Allgemein**: Sprache (automatisch, English, Deutsch, Italiano, Français, Español), mit Windows starten, Dateiendungen,
+  Standard-Style, Animationen.
+- **Desktop**: Doppelklick auf den Desktop blendet Fences aus/ein; Tastenkürzel, um Fences nach vorne zu holen
+  (Strg+Alt+D); Profile; Tastenkürzel für die Suche (Strg+Alt+F); Einsortieren.
+- **Automatik**: Profilregeln, Vollbild, heller und dunkler Style (siehe oben).
+- **Updates**: NoFences prüft GitHub und installiert neue Versionen mit einem Klick; Spenden.
 - **FPS-Messung**: siehe oben.
-- **Daten & Styles**: Fences exportieren/importieren (z. B. für einen zweiten PC), Sicherung wiederherstellen (alle 12 Stunden), Ordner.
+- **Daten & Styles**: Fences exportieren/importieren, Sicherung wiederherstellen (alle 12 Stunden), gemeinsamer Ordner, Ordner.
 
 ## Häufige Fragen
 
@@ -116,9 +159,13 @@ Bei einem Verknüpfungs-Fence nicht, er verweist nur darauf. Bei einem Ordner-Fe
 **Windows zeigt beim Start eine SmartScreen-Warnung.**
 Die EXE ist noch nicht signiert. Auf „Weitere Informationen“ → „Trotzdem ausführen“ klicken.
 
+**Was geht ins Internet?**
+Nur, was du einrichtest: die Update-Prüfung (GitHub), Wetter (Open-Meteo), deine Kalender-Links, News-Feeds und Kurse
+(Yahoo Finance). Sonst wird nichts gesendet.
+
 **Wo liegen meine Einstellungen?**
-In `%LocalAppData%\NoFences\fences.json` (Sicherungen daneben). Liegt eine leere `portable.txt` neben der `NoFences.exe`,
-werden sie stattdessen neben der EXE gespeichert.
+In `%LocalAppData%\NoFences\fences.json` (Sicherungen daneben) oder im gemeinsamen Ordner, wenn du einen gewählt hast.
+Liegt eine leere `portable.txt` neben der `NoFences.exe`, werden sie stattdessen neben der EXE gespeichert.
 
 **Wie deinstalliere ich NoFences?**
 Einstellungen → Allgemein: „Mit Windows starten“ abhaken; FPS-Messung ausschalten, falls genutzt; Tray → Beenden;

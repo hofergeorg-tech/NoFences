@@ -1,7 +1,7 @@
 # NoFences
 
 Free, open-source desktop fences for Windows 10/11 – plus sticky notes and widgets.
-English · Deutsch · Italiano
+English · Deutsch · Italiano · Français · Español
 
 > **This is a fork of [Twometer/NoFences](https://github.com/Twometer/NoFences)**, created by
 > [Twometer](https://github.com/Twometer) and its contributors. All credit for the original idea and
@@ -28,19 +28,27 @@ English · Deutsch · Italiano
 **Widgets** – clock & calendar, system monitor (CPU, RAM, GPU, optional FPS), drives, recycle bin,
 **playtime** of any game (pick its exe, NoFences records how long it runs), a **countdown**, **weather**
 (Open-Meteo, no account), **now playing** with media controls, **network** rate and ping, **clipboard history** and
-**battery**.
+**battery**, your installed **games** (Steam with covers, Epic, GOG, Xbox), **appointments** from calendar links
+(.ics), a **photo frame**, a **focus timer** (Pomodoro), **news** (RSS/Atom) and **prices** (stocks, crypto).
 
 ![Widgets](docs/widgets-docs.png)
 ![More widgets](docs/widgets-more-docs.png)
+![Even more widgets](docs/widgets-extra-docs.png)
 
-**Profiles** – group fences into profiles like "Work" and "Gaming" and switch between them from the tray.
+**Search** – Ctrl+Alt+F searches everything in all fences: links, folder contents, tabs and notes.
 
-**Styles** – 24 built-in styles (glass, Star Citizen HUD, Retro-Arcade, Hardware, Nerd, Hobby, Work, Family, Gaming,
-Finance, Social, Documents, Multimedia, Music, Sport, Photos, Travel, Cooking, Nature, Post-it ×5) plus your own as JSON
-files; optional animations.
+**Profiles & automation** – group fences into profiles like "Work" and "Gaming"; switch by hand or automatically while
+a program runs or at set times. Fences hide while something runs full screen, and the default style can follow
+Windows' light/dark mode or the clock.
 
-**App** – settings window, English / German / Italian, built-in updates with one click, export/import, automatic
-backups, help and changelog inside the app.
+**Several PCs** – keep fences in a shared folder (e.g. OneDrive); positions stay per monitor setup.
+
+**Styles** – 25 built-in styles (glass, Windows accent color, Star Citizen HUD, Retro-Arcade, Hardware, Nerd, Hobby,
+Work, Family, Gaming, Finance, Social, Documents, Multimedia, Music, Sport, Photos, Travel, Cooking, Nature, Post-it ×5)
+plus your own as JSON files; optional animations.
+
+**App** – settings window, five languages (English, Deutsch, Italiano, Français, Español), built-in updates with one
+click, export/import, automatic backups, help and changelog inside the app.
 
 ## Download
 
@@ -48,8 +56,13 @@ Get `NoFences.exe` from the [latest release](https://github.com/hofergeorg-tech/
 file, no installation, no .NET needed. Windows may show a SmartScreen warning because the exe isn't code-signed yet:
 "More info" → "Run anyway".
 
-**Help:** [English](HELP.md) · [Deutsch](HILFE.md) · [Italiano](AIUTO.md) – also in the app (tray → Help).
-**Changes:** [English](CHANGELOG.md) · [Deutsch](CHANGELOG.de.md) · [Italiano](CHANGELOG.it.md)
+**Help:** [English](HELP.md) · [Deutsch](HILFE.md) · [Italiano](AIUTO.md) · [Français](AIDE.md) · [Español](AYUDA.md)
+– also in the app (tray → Help).
+**Changes:** [English](CHANGELOG.md) · [Deutsch](CHANGELOG.de.md) · [Italiano](CHANGELOG.it.md) ·
+[Français](CHANGELOG.fr.md) · [Español](CHANGELOG.es.md)
+
+**Online:** only what you set up – update checks (GitHub), weather (Open-Meteo), your calendar links, news feeds and
+prices (Yahoo Finance; for information only).
 
 ## FPS measurement
 
@@ -78,7 +91,8 @@ dotnet test NoFences.Tests/NoFences.Tests.csproj
 ## Configuration
 
 Stored in `%LocalAppData%\NoFences\` (`fences.json`, `playtime.json`, `backups\`, `themes\`). Fences from NoFences 1.x are
-migrated automatically. **Portable mode:** put an empty `portable.txt` next to `NoFences.exe`.
+migrated automatically. **Portable mode:** put an empty `portable.txt` next to `NoFences.exe`. With a shared folder
+(Settings → Data & styles), the data lives there and `sync-folder.txt` in the local folder points to it.
 
 ## Credits
 

@@ -1,6 +1,8 @@
 # Registro delle modifiche
 
-Tutte le modifiche importanti a questo fork. English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md)
+Tutte le modifiche importanti a questo fork.
+English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
+Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
 ## [2.4.0] - 2026-10-03
 
@@ -12,8 +14,18 @@ Tutte le modifiche importanti a questo fork. English: [CHANGELOG.md](CHANGELOG.m
 - **Conto alla rovescia** fino a una data, con titolo.
 - Widget **meteo** (Open-Meteo, senza account), **in riproduzione** con controlli, **rete** con grafico e ping,
   **cronologia appunti** (solo in memoria, rispetta i gestori di password) e **batteria**.
+- Widget **giochi**: i giochi installati da Steam (con copertina), Epic, GOG e dall'app Xbox; un clic li avvia.
+- **Appuntamenti** dai link dei calendari (.ics: Google, Outlook, iCloud), anche ricorrenti.
+- Widget **cornice foto**, **timer di concentrazione (Pomodoro)**, **notizie** (RSS/Atom con feed pronti) e
+  **quotazioni** (azioni, indici, cripto).
+- **Ricerca in tutti i recinti** (Ctrl+Alt+F): collegamenti, contenuto delle cartelle, schede e note.
 - **Profili** come "Lavoro" e "Gaming": si cambiano dalla barra, i recinti si assegnano con clic destro → Mostra nel profilo.
-- Menu **Lingua** nella barra e in ogni menu dei recinti.
+- **Automazione**: cambio di profilo mentre è in esecuzione un programma o a orari fissi; recinti nascosti mentre
+  qualcosa è a schermo intero; stile predefinito chiaro/scuro secondo Windows o l'ora.
+- **Più PC**: i recinti in una cartella condivisa come OneDrive.
+- Stile **Colore d'accento di Windows** – 25 stili in totale.
+- **Francese e spagnolo**; menu **Lingua** con bandiere nella barra e in ogni menu dei recinti.
+- Pulsante **Dona** (Informazioni e Impostazioni → Aggiornamenti).
 - **Misurazione FPS** (facoltativa, disattivata di default): un piccolo supporto con diritti di amministratore conta i
   fotogrammi del programma in primo piano; Windows lo chiede una volta, le impostazioni spiegano perché.
 - Recinto **"File recenti"** e **barra di avvio rapido** (solo icone, nomi come suggerimento).
@@ -22,10 +34,11 @@ Tutte le modifiche importanti a questo fork. English: [CHANGELOG.md](CHANGELOG.m
 - **Esporta/importa** recinti e stili personali, ad es. per un altro PC.
 - **Finestra delle impostazioni** (barra → Impostazioni) con tutte le opzioni generali; il menu della barra è molto più corto.
 - **Impostazioni del recinto** ridisegnate, con sezioni e anteprima dal vivo.
-- **Lingue**: inglese, tedesco e **italiano**; automatica (lingua di Windows, altrimenti inglese) o scelta nelle impostazioni.
+- **Lingue**: inglese, tedesco, **italiano**, **francese** e **spagnolo**; automatica (lingua di Windows, altrimenti
+  inglese) o scelta nelle impostazioni.
 - **Finestra Informazioni** con versione, riconoscimenti e link.
-- **8 nuovi stili**: Documenti, Multimedia, Musica, Sport, Foto, Viaggi, Cucina, Natura – 24 stili in totale; ogni stile
-  ha un colore d'accento per i widget.
+- **8 nuovi stili**: Documenti, Multimedia, Musica, Sport, Foto, Viaggi, Cucina, Natura; ogni stile ha un colore
+  d'accento per i widget.
 
 ### Correzioni
 - OK nelle impostazioni di un recinto collegamenti rimuoveva tutti i collegamenti.

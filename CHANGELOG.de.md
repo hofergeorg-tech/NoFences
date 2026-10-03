@@ -1,6 +1,8 @@
 # Änderungsprotokoll
 
-Alle wichtigen Änderungen an diesem Fork. English version: [CHANGELOG.md](CHANGELOG.md).
+Alle wichtigen Änderungen an diesem Fork.
+English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
+Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
 ## [2.4.0] - 2026-10-03
 
@@ -11,8 +13,18 @@ Alle wichtigen Änderungen an diesem Fork. English version: [CHANGELOG.md](CHANG
 - **Countdown** bis zu einem Datum mit Titel.
 - Widgets **Wetter** (Open-Meteo, ohne Konto), **Medien** mit Steuerung, **Netzwerk** mit Verlauf und Ping,
   **Zwischenablage-Verlauf** (nur im Speicher, Passwort-Manager werden respektiert) und **Akku**.
+- Widget **Spiele**: installierte Spiele aus Steam (mit Cover), Epic, GOG und der Xbox-App; Klick startet.
+- **Termine** aus Kalender-Links (.ics: Google, Outlook, iCloud), auch wiederkehrende.
+- Widgets **Fotorahmen**, **Fokus-Timer (Pomodoro)**, **News** (RSS/Atom mit fertigen Feeds) und **Kurse** (Aktien,
+  Indizes, Krypto).
+- **Suche in allen Fences** (Strg+Alt+F): Verknüpfungen, Ordnerinhalte, Reiter und Notizen.
 - **Profile** wie „Arbeit“ und „Gaming“: im Tray umschalten, Fences per Rechtsklick → In Profil zeigen zuordnen.
-- Menü **Sprache** im Tray und in jedem Fence-Menü.
+- **Automatik**: Profil wechseln, solange ein Programm läuft oder zu festen Zeiten; Fences ausblenden, solange etwas im
+  Vollbild läuft; heller/dunkler Standard-Style nach Windows oder Uhrzeit.
+- **Mehrere PCs**: Fences in einem gemeinsamen Ordner wie OneDrive ablegen.
+- Style **Windows-Akzentfarbe** – insgesamt 25 Styles.
+- **Französisch und Spanisch**; Menü **Sprache** mit Flaggen im Tray und in jedem Fence-Menü.
+- Knopf **Spenden** (Info-Fenster und Einstellungen → Updates).
 - **FPS-Messung** (optional, standardmäßig aus): Ein kleiner Helfer mit Administratorrechten zählt die Bilder des Programms
   im Vordergrund; Windows fragt einmal, die Einstellungen erklären, warum.
 - Fence **„Zuletzt verwendet“** und **Schnellstart-Leiste** (nur Icons, Namen als Tooltip).
@@ -21,7 +33,8 @@ Alle wichtigen Änderungen an diesem Fork. English version: [CHANGELOG.md](CHANG
 - **Export/Import** von Fences und eigenen Styles, z. B. für einen zweiten PC.
 - **Einstellungsfenster** (Tray → Einstellungen) mit allem, was die ganze App betrifft; das Tray-Menü ist viel kürzer.
 - **Fence-Einstellungen** neu gestaltet, mit Bereichen und Live-Vorschau.
-- **Sprachen**: Englisch, Deutsch und **Italienisch**; automatisch (Windows-Sprache, sonst Englisch) oder in den Einstellungen gewählt.
+- **Sprachen**: Englisch, Deutsch, **Italienisch**, **Französisch** und **Spanisch**; automatisch (Windows-Sprache,
+  sonst Englisch) oder in den Einstellungen gewählt.
 - **Info-Fenster** mit Version, Credits und Links.
 - **8 neue Styles**: Dokumente, Multimedia, Musik, Sport, Fotos, Reisen, Kochen, Natur – insgesamt 24 Styles; jeder Style hat
   eine Akzentfarbe für Widgets.

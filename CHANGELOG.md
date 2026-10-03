@@ -1,7 +1,9 @@
 # Changelog
 
 All notable changes to this fork. Format based on [Keep a Changelog](https://keepachangelog.com/),
-versions follow [Semantic Versioning](https://semver.org/). German version: [CHANGELOG.de.md](CHANGELOG.de.md).
+versions follow [Semantic Versioning](https://semver.org/).
+Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
+Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
 ## [2.4.0] - 2026-10-03
 
@@ -12,8 +14,18 @@ versions follow [Semantic Versioning](https://semver.org/). German version: [CHA
 - **Countdown** to a date with a title.
 - **Weather** (Open-Meteo, no account), **now playing** with media controls, **network** with graph and ping,
   **clipboard history** (in memory only, password managers respected) and **battery** widgets.
+- **Games** widget: installed games from Steam (with covers), Epic, GOG and the Xbox app; click to play.
+- **Appointments** from calendar links (.ics: Google, Outlook, iCloud), including recurring events.
+- **Photo frame**, **focus timer (Pomodoro)**, **news** (RSS/Atom with ready-made feeds) and **prices** (stocks,
+  indices, crypto) widgets.
+- **Search across all fences** (Ctrl+Alt+F): links, folder contents, tabs and notes.
 - **Profiles** like "Work" and "Gaming": switch in the tray, assign fences via right-click → Show in profile.
-- **Language** menu in the tray and in every fence menu.
+- **Automation**: switch profiles while a program runs or at set times; hide fences while something runs full screen;
+  light/dark default style following Windows or the clock.
+- **Several PCs**: keep fences in a shared folder such as OneDrive.
+- **Windows accent color** style – 25 styles in total.
+- **French and Spanish**; a **language** menu with flags in the tray and in every fence menu.
+- **Donate** button (About and Settings → Updates).
 - **FPS measurement** (optional, off by default): a small helper with administrator rights counts the frames of the
   program in front; Windows asks once, the settings explain why.
 - **Recent files** fence and **quick-launch bar** (icons only, names as tooltips).
@@ -22,7 +34,8 @@ versions follow [Semantic Versioning](https://semver.org/). German version: [CHA
 - **Export/import** of fences and own styles, e.g. for another PC.
 - **Settings window** (tray → Settings) with everything app-wide; the tray menu is much shorter.
 - **Fence settings** redesigned with sections and a live preview.
-- **Languages**: English, German and **Italian**; automatic (Windows language, English otherwise) or chosen in the settings.
+- **Languages**: English, German, **Italian**, **French** and **Spanish**; automatic (Windows language, English
+  otherwise) or chosen in the settings.
 - **About window** with version, credits and links.
 - **8 new styles**: Documents, Multimedia, Music, Sport, Photos, Travel, Cooking, Nature – 24 styles in total; every
   style has an accent color for widgets.

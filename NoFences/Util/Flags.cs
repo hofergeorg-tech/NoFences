@@ -29,6 +29,13 @@ namespace NoFences.Util
                     case "it":
                         Stripes(g, r, horizontal: false, Color.FromArgb(0, 146, 70), Color.White, Color.FromArgb(206, 43, 55));
                         break;
+                    case "fr":
+                        Stripes(g, r, horizontal: false, Color.FromArgb(0, 35, 149), Color.White, Color.FromArgb(237, 41, 57));
+                        break;
+                    case "es":
+                        // Red, yellow twice as high, red
+                        Stripes(g, r, horizontal: true, Color.FromArgb(170, 21, 27), Color.FromArgb(241, 191, 0), Color.FromArgb(241, 191, 0), Color.FromArgb(170, 21, 27));
+                        break;
                     case "en":
                         UnionJack(g, r);
                         break;
@@ -36,7 +43,7 @@ namespace NoFences.Util
                         Globe(g, new RectangleF((width - height) / 2f, 0, height, height));
                         break;
                 }
-                if (language is "de" or "it" or "en")
+                if (language is "de" or "it" or "en" or "fr" or "es")
                 {
                     using var border = new Pen(Color.FromArgb(90, 0, 0, 0));
                     g.SmoothingMode = SmoothingMode.None;

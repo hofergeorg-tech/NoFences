@@ -85,7 +85,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: pwsh
         run: |
-          # Release notes = this version's changelog section: English, then German and Italian folded
+          # Release notes = this version's changelog section: English, then the other languages folded
           $version = $env:GITHUB_REF_NAME.TrimStart('v')
           function Section($file) {
             $text = Get-Content $file -Raw -Encoding utf8
@@ -95,7 +95,7 @@ jobs:
           $en = Section CHANGELOG.md
           if (-not $en) { throw "No section for $version in CHANGELOG.md" }
           $notes = $en
-          foreach ($lang in @(@("CHANGELOG.de.md", "Deutsch"), @("CHANGELOG.it.md", "Italiano"))) {
+          foreach ($lang in @(@("CHANGELOG.de.md", "Deutsch"), @("CHANGELOG.it.md", "Italiano"), @("CHANGELOG.fr.md", "Français"), @("CHANGELOG.es.md", "Español"))) {
             $section = Section $lang[0]
             if ($section) { $notes += "`n`n<details><summary>$($lang[1])</summary>`n`n$section`n`n</details>" }
           }

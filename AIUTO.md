@@ -1,61 +1,68 @@
 # Guida di NoFences
 
-NoFences mette sul desktop dei riquadri ("recinti") che tengono in ordine le icone, oltre a note e widget.
-English: [HELP.md](HELP.md) · Deutsch: [HILFE.md](HILFE.md)
+NoFences mette sul desktop dei riquadri ("recinti") che tengono in ordine le icone, più note e widget.
+English: [HELP.md](HELP.md) · Deutsch: [HILFE.md](HILFE.md) · Français : [AIDE.md](AIDE.md) · Español: [AYUDA.md](AYUDA.md)
 
 ## Primi passi
 
-- Al primo avvio c'è un recinto vuoto. Trascinaci sopra file o cartelle.
-- **Clic destro su un recinto** (titolo o spazio vuoto) apre il suo menu: impostazioni, stile, rinomina, nuovo recinto
-  o widget, elimina.
-- **Clic destro su un elemento** mostra il normale menu di Esplora file. Maiusc + clic destro mostra invece il menu del recinto.
-- L'**icona nella barra delle applicazioni** (in basso a destra, forse dietro la freccia ^) crea recinti, li mostra o
-  nasconde e apre le **Impostazioni** generali.
+- Dopo il primo avvio c'è un recinto vuoto. Trascinaci sopra file o cartelle.
+- **Clic destro su un recinto** (titolo o spazio vuoto) per il suo menu: impostazioni, stile, rinomina, nuovo recinto o
+  widget, elimina.
+- **Clic destro su un elemento** per il normale menu di Esplora file. Maiusc + clic destro mostra invece il menu del recinto.
+- L'**icona nella barra** (in basso a destra, forse dietro la freccia ^) crea recinti, li mostra/nasconde, cambia profilo
+  e apre le **Impostazioni** generali. La **lingua** si trova nella barra e in ogni menu dei recinti.
 
 ## Tipi di recinto
 
 - **Recinto collegamenti** (predefinito): collegamenti a file e cartelle. I file restano dove sono, quindi anche sul
-  desktop. Se elimini l'originale, sparisce anche dal recinto.
-- **Recinto cartella**: mostra il contenuto di una cartella. I file trascinati vengono **spostati** lì (tieni premuto
-  Ctrl per copiarli), quindi lasciano davvero il desktop.
+  desktop. Eliminando l'originale sparisce anche dal recinto.
+- **Recinto cartella**: mostra il contenuto di una cartella. I file trascinati vengono **spostati** in quella cartella
+  (con Ctrl copiati), quindi lasciano davvero il desktop.
 - **Nota**: un post-it con testo, vedi sotto.
-- **Widget**: contenuto dal vivo – orologio, monitor di sistema, unità, cestino, tempo di gioco, conto alla rovescia.
+- **Widget**: contenuto dal vivo – orologio, meteo, giochi, appuntamenti e altro, vedi sotto.
 - **File recenti**: gli ultimi 20 file aperti (sola lettura).
 - **Barra di avvio rapido**: un recinto collegamenti sottile con sole icone; i nomi appaiono come suggerimento.
 
-Consiglio: per un desktop in ordine, crea una cartella come `Documenti\Recinti\Lavoro` e usala come recinto cartella.
+Suggerimento: per un desktop ordinato, crea una cartella come `Documenti\Recinti\Lavoro` e usala come recinto cartella.
 
 ## Lavorare con gli elementi
 
 - Doppio clic apre un elemento. Trascina gli elementi per riordinarli, su un altro recinto per spostarli o in Esplora file.
-- **Ctrl+clic** seleziona più elementi, **Maiusc+clic** un intervallo; trascinando sullo spazio vuoto disegni un rettangolo di selezione.
-- Un recinto cliccato risponde alla tastiera: **Invio** apre, **F2** rinomina, **Canc** rimuove (recinto collegamenti:
-  solo il collegamento; recinto cartella: cestino), **Ctrl+A**, **Ctrl+C**, frecce, **Esc**.
-- **Digita** per cercare; il testo appare in alto a destra, Esc termina la ricerca.
+- **Ctrl+clic** seleziona più elementi, **Maiusc+clic** un intervallo; trascinando nello spazio vuoto si disegna un rettangolo.
+- Un recinto cliccato ascolta la tastiera: **Invio** apre, **F2** rinomina, **Canc** rimuove (recinto collegamenti: solo
+  il collegamento; recinto cartella: cestino), **Ctrl+A**, **Ctrl+C**, frecce, **Esc**.
+- **Basta digitare** per cercare in quel recinto; il testo appare in alto a destra, Esc termina.
 - Menu del recinto → **Ordina per**: manuale, nome, tipo, data di modifica o dimensione.
-- **Schede** (recinti collegamenti): menu del recinto → Aggiungi scheda. Clic per cambiare, doppio clic per rinominare,
-  trascina gli elementi su una scheda per spostarli lì.
+- **Schede** (recinti collegamenti): menu → Aggiungi scheda. Clic per cambiare, doppio clic per rinominare, trascina gli
+  elementi su una scheda per spostarli lì.
+
+## Cercare in tutti i recinti
+
+**Ctrl+Alt+F** (o barra → Cerca nei recinti…) apre una casella di ricerca. Trova tutto nei tuoi recinti – collegamenti,
+contenuto delle cartelle, schede e testi delle note – anche lettere in ordine ("ffx" trova Firefox). **Invio** apre il
+risultato, **↑↓** scegli, **Esc** chiude. La scorciatoia si cambia in Impostazioni → Desktop.
 
 ## Spostare, ridimensionare, rinominare
 
 - Trascina la barra del titolo per spostare, i bordi per ridimensionare. **Doppio clic sul titolo** per rinominare.
 - I recinti si **agganciano** ai bordi dello schermo e agli altri recinti; tieni premuto **Alt** per posizionarli liberamente.
-- Le posizioni vengono ricordate **per configurazione dei monitor**: scollega e ricollega un monitor e i recinti tornano al loro posto.
-- I recinti **bloccati** non si possono spostare né modificare. **Comprimi quando il mouse è fuori** riduce il recinto alla barra del titolo.
-- **Sempre in primo piano** tiene un recinto sopra tutte le finestre (sopra i giochi solo in modalità "finestra senza bordi").
+- Le posizioni vengono ricordate **per configurazione dei monitor**: scollega e ricollega un monitor e i recinti tornano.
+- I recinti **bloccati** non si possono spostare né modificare. **Comprimi quando il mouse è fuori** li riduce alla barra del titolo.
+- **Sempre in primo piano** tiene un recinto sopra tutte le finestre (sui giochi solo in modalità "finestra senza bordi").
 - **Solo su questo desktop virtuale** mostra un recinto solo sul desktop virtuale attuale (Win+Ctrl+frecce).
+- **Ctrl+Alt+D** porta tutti i recinti davanti alle finestre aperte; Esc o un clic altrove li rimanda indietro.
 
 ## Note
 
 - **Doppio clic** per scrivere; **Esc** o un clic fuori salva.
 - Le righe che iniziano con `[ ]` diventano caselle; un clic le spunta e barra la riga.
-- Indirizzi web e percorsi sono sottolineati e si aprono con un clic. Il testo trascinato su una nota viene aggiunto in fondo.
-- Menu del recinto → **Promemoria…**: all'ora scelta NoFences emette un suono e mostra una notifica.
+- Indirizzi web e percorsi sono sottolineati e si aprono con un clic. Il testo trascinato su una nota viene aggiunto.
+- Menu del recinto → **Promemoria…**: a quell'ora NoFences emette un suono e mostra una notifica.
 - Stile post-it in giallo, rosa, verde, blu e arancione.
 
 ## Widget
 
-Menu della barra o del recinto → **Nuovo widget**:
+Menu della barra o del recinto → **Nuovo widget**. I widget con un elenco scorrono con la rotellina del mouse.
 
 - **Orologio e calendario**.
 - **Monitor di sistema**: CPU, RAM, carico e temperatura della GPU (NVIDIA) e **FPS**, se attivati (vedi sotto).
@@ -71,12 +78,42 @@ Menu della barra o del recinto → **Nuovo widget**:
 - **Cronologia appunti**: gli ultimi 15 testi copiati; un clic li copia di nuovo. Conservati solo finché NoFences è
   aperto; le password dei gestori di password vengono ignorate.
 - **Batteria**: carica, se è in carica, tempo rimanente (portatili).
+- **Giochi**: i giochi installati da Steam (con copertina), Epic, GOG e dall'app Xbox; prima quelli giocati di recente.
+  Un clic avvia il gioco. Dal menu puoi nascondere giochi, ordinarli per nome o cercare di nuovo.
+- **Appuntamenti**: le prossime due settimane dai link dei calendari (.ics). Google: impostazioni del calendario →
+  "Indirizzo segreto in formato iCal"; Outlook: Impostazioni → Calendario → Calendari condivisi → Pubblica → ICS; iCloud:
+  condividi il calendario pubblicamente. Più calendari: un link per riga. Gli eventi ricorrenti sono supportati.
+- **Cornice foto**: presentazione di una cartella di immagini (anche sottocartelle), ogni 10 s fino a 15 min. Un clic
+  mostra l'immagine successiva, doppio clic la apre.
+- **Timer di concentrazione (Pomodoro)**: 25 minuti di concentrazione, 5 di pausa, una pausa lunga dopo quattro giri
+  (oppure 50/10, 15/3). Un suono e una notifica segnalano ogni cambio.
+- **Notizie**: titoli da feed RSS o Atom (pulsanti pronti per ANSA, Tagesschau, BBC e altri); un clic apre l'articolo.
+- **Quotazioni**: azioni, indici e cripto con la variazione da ieri e il grafico della giornata, con i simboli di Yahoo
+  Finance come `AAPL`, `FTSEMIB.MI`, `^GDAXI`, `BTC-EUR`. Aggiornate ogni cinque minuti; solo a scopo informativo.
 
 ## Profili
 
 Raggruppa i recinti in profili come "Lavoro" e "Gaming" e passa dall'uno all'altro nella barra (**Profilo ▸**) o in
 **Impostazioni → Desktop**. Clic destro su un recinto → **Mostra nel profilo** per assegnarlo; un recinto senza profilo
 appare in tutti i profili. I nuovi recinti appartengono al profilo attivo.
+
+## Automazione (Impostazioni → Automazione)
+
+- **Cambia profilo automaticamente**: "Gaming" mentre è in esecuzione un certo programma, "Lavoro" nei giorni feriali
+  dalle 8 alle 17 e così via. Un programma in esecuzione ha la precedenza su una regola oraria; quando nessuna regola
+  vale più, torna il profilo precedente. Se cambi a mano, termina ciò che la regola aveva avviato.
+- **Schermo intero**: mentre un gioco, un video o una presentazione riempie un monitor, i recinti su quel monitor
+  vengono nascosti.
+- **Stile chiaro e scuro**: lo stile predefinito cambia con la modalità chiara/scura di Windows o a orari fissi – ad es.
+  post-it di giorno e vetro la sera. I recinti con uno stile proprio lo mantengono.
+- Lo stile **Colore d'accento di Windows** prende il colore da Impostazioni → Personalizzazione → Colori.
+
+## Più PC
+
+Impostazioni → Dati e stili → **Scegli cartella condivisa…**, ad es. in OneDrive. Recinti, note, tempo di gioco e stili
+personali si trovano poi lì, e ogni PC che usa la stessa cartella mostra gli stessi recinti. Le posizioni valgono per
+ogni disposizione dei monitor, quindi portatile e PC fisso possono disporli in modo diverso. Quando un altro PC salva,
+NoFences ricarica dopo pochi secondi. "Smetti di condividere" copia tutto di nuovo su questo PC.
 
 ## Misurazione FPS (facoltativa)
 
@@ -94,32 +131,40 @@ un modello. I nuovi file del desktop che corrispondono finiscono in quel recinto
 ## Stili
 
 Lo stile predefinito si sceglie in **Impostazioni → Generale**, per singolo recinto dal menu → Stile o nelle impostazioni
-del recinto con anteprima dal vivo. Ci sono 24 stili – vetro, HUD Star Citizen, Retro-Arcade, Hardware, Nerd, Hobby,
-Lavoro, Famiglia, Gaming, Finanza, Social, Documenti, Multimedia, Musica, Sport, Foto, Viaggi, Cucina, Natura e post-it
-in cinque colori.
+del recinto con anteprima dal vivo. Ci sono 25 stili – vetro, colore d'accento di Windows, HUD Star Citizen, Retro-Arcade,
+Hardware, Nerd, Hobby, Lavoro, Famiglia, Gaming, Finanza, Social, Documenti, Multimedia, Musica, Sport, Foto, Viaggi,
+Cucina, Natura e post-it in cinque colori.
 
 **Stili personali**: Impostazioni → Dati e stili → Apri cartella degli stili. Copia `beispiel-mocha.json`, cambia i colori
 (`#RRGGBB` o `#RRGGBBAA`) e ricarica. Gli stili personali hanno una ★.
 
 ## Impostazioni (barra → Impostazioni)
 
-- **Generale**: lingua (automatica, English, Deutsch, Italiano), avvio con Windows, estensioni, stile predefinito, animazioni.
-- **Desktop**: doppio clic sul desktop nasconde/mostra i recinti; scorciatoia per portarli in primo piano (Ctrl+Alt+D); ordinamento.
-- **Aggiornamenti**: NoFences controlla GitHub e installa le nuove versioni con un clic.
+- **Generale**: lingua (automatica, English, Deutsch, Italiano, Français, Español), avvio con Windows, estensioni, stile
+  predefinito, animazioni.
+- **Desktop**: doppio clic sul desktop nasconde/mostra i recinti; scorciatoia per portarli in primo piano (Ctrl+Alt+D);
+  profili; scorciatoia per la ricerca (Ctrl+Alt+F); ordinamento.
+- **Automazione**: regole dei profili, schermo intero, stile chiaro e scuro (vedi sopra).
+- **Aggiornamenti**: NoFences controlla GitHub e installa le nuove versioni con un clic; donazioni.
 - **Misurazione FPS**: vedi sopra.
-- **Dati e stili**: esporta/importa recinti (ad es. per un altro PC), ripristina un backup (ogni 12 ore), cartelle.
+- **Dati e stili**: esporta/importa recinti, ripristina un backup (ogni 12 ore), cartella condivisa, cartelle.
 
 ## Domande frequenti
 
-**Posso eliminare l'originale dopo averlo trascinato in un recinto?**
-In un recinto collegamenti no, il recinto vi rimanda soltanto. In un recinto cartella il file è stato spostato, quindi non resta nulla da eliminare.
+**Posso eliminare l'originale dopo aver trascinato un'icona in un recinto?**
+In un recinto collegamenti no, il recinto si limita a collegarlo. In un recinto cartella il file è stato spostato, quindi
+non resta nulla da eliminare.
 
 **Windows mostra un avviso di SmartScreen all'avvio.**
-L'eseguibile non è ancora firmato. Clicca su "Ulteriori informazioni" → "Esegui comunque".
+L'eseguibile non è ancora firmato. Fai clic su "Ulteriori informazioni" → "Esegui comunque".
+
+**Cosa va su Internet?**
+Solo ciò che imposti tu: il controllo degli aggiornamenti (GitHub), il meteo (Open-Meteo), i link dei tuoi calendari, i
+feed di notizie e le quotazioni (Yahoo Finance). Nient'altro viene inviato.
 
 **Dove sono le mie impostazioni?**
-In `%LocalAppData%\NoFences\fences.json` (i backup accanto). Con un file vuoto `portable.txt` accanto a `NoFences.exe`
-vengono invece salvate accanto all'eseguibile.
+In `%LocalAppData%\NoFences\fences.json` (backup accanto) o nella cartella condivisa, se ne hai scelta una. Con un file
+vuoto `portable.txt` accanto a `NoFences.exe` vengono invece salvate accanto all'eseguibile.
 
 **Come si disinstalla?**
 Impostazioni → Generale: togli "Avvia con Windows"; disattiva la misurazione FPS se usata; barra → Esci; elimina

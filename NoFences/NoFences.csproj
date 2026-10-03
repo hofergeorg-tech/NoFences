@@ -50,7 +50,11 @@
     <!-- WithCulture=false: otherwise ".de." makes MSBuild move it into a German satellite assembly -->
     <EmbeddedResource Include="..\CHANGELOG.de.md" LogicalName="CHANGELOG.de.md" WithCulture="false" />
     <EmbeddedResource Include="..\CHANGELOG.it.md" LogicalName="CHANGELOG.it.md" WithCulture="false" />
+    <EmbeddedResource Include="..\CHANGELOG.fr.md" LogicalName="CHANGELOG.fr.md" WithCulture="false" />
+    <EmbeddedResource Include="..\CHANGELOG.es.md" LogicalName="CHANGELOG.es.md" WithCulture="false" />
     <EmbeddedResource Include="..\AIUTO.md" LogicalName="AIUTO.md" />
+    <EmbeddedResource Include="..\AIDE.md" LogicalName="AIDE.md" />
+    <EmbeddedResource Include="..\AYUDA.md" LogicalName="AYUDA.md" />
   </ItemGroup>
 
 </Project>

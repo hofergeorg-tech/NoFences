@@ -4,21 +4,21 @@ using NoFences.Model;
 namespace NoFences.Util
 {
     /// <summary>
-    /// UI texts in English, German and Italian. The language follows Windows ("auto") unless chosen in
-    /// the settings; anything that isn't German or Italian falls back to English.
+    /// UI texts in English, German, Italian, French and Spanish. The language follows Windows ("auto")
+    /// unless chosen in the settings; any other Windows language falls back to English.
     /// </summary>
     public static class Strings
     {
-        public static readonly IReadOnlyList<string> Languages = new[] { "auto", "en", "de", "it" };
+        public static readonly IReadOnlyList<string> Languages = new[] { "auto", "en", "de", "it", "fr", "es" };
 
-        /// <summary>"auto", "en", "de" or "it" (from the settings).</summary>
+        private static readonly string[] Supported = { "en", "de", "it", "fr", "es" };
+
+        /// <summary>"auto" or one of the supported language codes (from the settings).</summary>
         public static string Language { get; set; } = "auto";
 
-        public static string Effective => Language is "en" or "de" or "it"
+        public static string Effective => Supported.Contains(Language)
             ? Language
-            : CultureInfo.CurrentUICulture.TwoLetterISOLanguageName switch { "de" => "de", "it" => "it", _ => "en" };
-
-        private static string T(string en, string de, string it) => Effective switch { "de" => de, "it" => it, _ => en };
+            : Supported.Contains(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName) ? CultureInfo.CurrentUICulture.TwoLetterISOLanguageName : "en";
 
         private static string T(string en, string de, string it, string fr, string es) =>
             Effective switch { "de" => de, "it" => it, "fr" => fr, "es" => es, _ => en };
@@ -28,42 +28,47 @@ namespace NoFences.Util
             "en" => "English",
             "de" => "Deutsch",
             "it" => "Italiano",
-            _ => T("Automatic (Windows language)", "Automatisch (Windows-Sprache)", "Automatica (lingua di Windows)")
+            "fr" => "Français",
+            "es" => "Español",
+            _ => T("Automatic (Windows language)", "Automatisch (Windows-Sprache)", "Automatica (lingua di Windows)", "Automatique (langue de Windows)", "Automático (idioma de Windows)")
         };
 
         // Documents shown in the app
-        public static string HelpDocument => Effective switch { "de" => "HILFE.md", "it" => "AIUTO.md", _ => "HELP.md" };
-        public static string ChangelogDocument => Effective switch { "de" => "CHANGELOG.de.md", "it" => "CHANGELOG.it.md", _ => "CHANGELOG.md" };
+        public static string HelpDocument => Effective switch { "de" => "HILFE.md", "it" => "AIUTO.md", "fr" => "AIDE.md", "es" => "AYUDA.md", _ => "HELP.md" };
+        public static string ChangelogDocument => Effective switch
+        {
+            "de" => "CHANGELOG.de.md", "it" => "CHANGELOG.it.md", "fr" => "CHANGELOG.fr.md", "es" => "CHANGELOG.es.md", _ => "CHANGELOG.md"
+        };
 
         #region Style names
 
         public static string ThemeName(string id) => id switch
         {
-            "default" => T("Standard (glass)", "Standard (Glas)", "Standard (vetro)"),
+            "default" => T("Standard (glass)", "Standard (Glas)", "Standard (vetro)", "Standard (verre)", "Estándar (cristal)"),
             "windows" => T("Windows accent color", "Windows-Akzentfarbe", "Colore d'accento di Windows", "Couleur d'accentuation Windows", "Color de énfasis de Windows"),
             "starcitizen" => "Star Citizen (HUD)",
             "retroarcade" => "Retro-Arcade",
-            "hardware" => T("Hardware (circuit board)", "Hardware (Platine)", "Hardware (circuito)"),
-            "nerd" => T("Nerd (terminal)", "Nerd (Terminal)", "Nerd (terminale)"),
-            "hobby" => T("Hobby (pinboard)", "Hobby (Pinnwand)", "Hobby (bacheca)"),
-            "work" => T("Work (business)", "Arbeit (Business)", "Lavoro (business)"),
-            "family" => T("Family", "Familie", "Famiglia"),
+            "hardware" => T("Hardware (circuit board)", "Hardware (Platine)", "Hardware (circuito)", "Matériel (circuit imprimé)", "Hardware (placa de circuito)"),
+            "nerd" => T("Nerd (terminal)", "Nerd (Terminal)", "Nerd (terminale)", "Geek (terminal)", "Friki (terminal)"),
+            "hobby" => T("Hobby (pinboard)", "Hobby (Pinnwand)", "Hobby (bacheca)", "Loisirs (tableau en liège)", "Aficiones (tablón de corcho)"),
+            "work" => T("Work (business)", "Arbeit (Business)", "Lavoro (business)", "Travail (business)", "Trabajo (negocios)"),
+            "family" => T("Family", "Familie", "Famiglia", "Famille", "Familia"),
             "gaming" => "Gaming (RGB)",
-            "finance" => T("Finance (trading desk)", "Finanzen (Börse)", "Finanza (borsa)"),
-            "social" => "Social",
-            "documents" => T("Documents", "Dokumente", "Documenti"),
-            "multimedia" => "Multimedia",
-            "music" => T("Music", "Musik", "Musica"),
-            "sport" => "Sport",
-            "photos" => T("Photos", "Fotos", "Foto"),
-            "travel" => T("Travel", "Reisen", "Viaggi"),
-            "cooking" => T("Cooking", "Kochen", "Cucina"),
-            "nature" => T("Nature", "Natur", "Natura"),
-            "postit" => T("Post-it (yellow)", "Post-it (Gelb)", "Post-it (giallo)"),
-            "postit-pink" => T("Post-it (pink)", "Post-it (Rosa)", "Post-it (rosa)"),
-            "postit-green" => T("Post-it (green)", "Post-it (Grün)", "Post-it (verde)"),
-            "postit-blue" => T("Post-it (blue)", "Post-it (Blau)", "Post-it (blu)"),
-            "postit-orange" => T("Post-it (orange)", "Post-it (Orange)", "Post-it (arancione)"),
+            "finance" => T("Finance (trading desk)", "Finanzen (Börse)", "Finanza (borsa)", "Finance (salle de marché)", "Finanzas (bolsa)"),
+            "social" => T("Social", "Social", "Social", "Réseaux sociaux", "Redes sociales"),
+            "documents" => T("Documents", "Dokumente", "Documenti", "Documents", "Documentos"),
+            "multimedia" => T("Multimedia", "Multimedia", "Multimedia", "Multimédia", "Multimedia"),
+            "music" => T("Music", "Musik", "Musica", "Musique", "Música"),
+            "sport" => T("Sport", "Sport", "Sport", "Sport", "Deporte"),
+            "photos" => T("Photos", "Fotos", "Foto", "Photos", "Fotos"),
+            "travel" => T("Travel", "Reisen", "Viaggi", "Voyages", "Viajes"),
+            "cooking" => T("Cooking", "Kochen", "Cucina", "Cuisine", "Cocina"),
+            "nature" => T("Nature", "Natur", "Natura", "Nature", "Naturaleza"),
+            "postit" => T("Post-it (yellow)", "Post-it (Gelb)", "Post-it (giallo)", "Post-it (jaune)", "Pósit (amarillo)"),
+            "postit-pink" => T("Post-it (pink)", "Post-it (Rosa)", "Post-it (rosa)", "Post-it (rose)", "Pósit (rosa)"),
+            "postit-green" => T("Post-it (green)", "Post-it (Grün)", "Post-it (verde)", "Post-it (vert)", "Pósit (verde)"),
+            "postit-blue" => T("Post-it (blue)", "Post-it (Blau)", "Post-it (blu)", "Post-it (bleu)", "Pósit (azul)"),
+            "postit-orange" => T("Post-it (orange)", "Post-it (Orange)", "Post-it (arancione)", "Post-it (orange)", "Pósit (naranja)"),
             _ => id
         };
 
@@ -71,293 +76,323 @@ namespace NoFences.Util
 
         #region Menus and fences
 
-        public static string Help => T("Help", "Hilfe", "Guida");
-        public static string WhatsNew => T("What's new?", "Was ist neu?", "Novità");
-        public static string About => T("About NoFences", "Über NoFences", "Informazioni su NoFences");
+        public static string Help => T("Help", "Hilfe", "Guida", "Aide", "Ayuda");
+        public static string WhatsNew => T("What's new?", "Was ist neu?", "Novità", "Nouveautés", "Novedades");
+        public static string About => T("About NoFences", "Über NoFences", "Informazioni su NoFences", "À propos de NoFences", "Acerca de NoFences");
         public static string BackupLabel => T("Backup:", "Sicherung:", "Backup:", "Sauvegarde :", "Copia:");
         public static string RestoreShort => T("Restore", "Wiederherstellen", "Ripristina", "Restaurer", "Restaurar");
-        public static string LanguageMenu =>"Sprache · Language · Lingua";
-        public static string AppSettings =>T("Settings…", "Einstellungen…", "Impostazioni…");
-        public static string NewFence => T("New fence", "Neuer Fence", "Nuovo recinto");
-        public static string NewFolderFence => T("New folder fence…", "Neuer Ordner-Fence…", "Nuovo recinto cartella…");
-        public static string FirstFence => T("First fence", "Erster Fence", "Primo recinto");
-        public static string ChooseFolder => T("Choose the folder this fence should show", "Ordner wählen, den dieser Fence anzeigen soll", "Scegli la cartella da mostrare in questo recinto");
-        public static string Settings => T("Fence settings…", "Fence-Einstellungen…", "Impostazioni recinto…");
-        public static string Locked => T("Locked", "Gesperrt", "Bloccato");
-        public static string AutoCollapse => T("Collapse when not hovered", "Einklappen wenn Maus weg", "Comprimi quando il mouse è fuori");
-        public static string RemoveItem => T("Remove from fence", "Aus Fence entfernen", "Rimuovi dal recinto");
-        public static string OpenFolder => T("Open folder in Explorer", "Ordner im Explorer öffnen", "Apri cartella in Esplora file");
-        public static string DeleteFence => T("Delete fence", "Fence löschen", "Elimina recinto");
-        public static string ReallyDelete(string name) => T($"Really delete the fence \"{name}\"?", $"Fence \"{name}\" wirklich löschen?", $"Eliminare davvero il recinto \"{name}\"?");
-        public static string ReallyDeleteFolderNote => T("The folder and its files are not touched.", "Der Ordner und seine Dateien bleiben unangetastet.", "La cartella e i suoi file non vengono toccati.");
-        public static string ShowFences => T("Show fences", "Fences anzeigen", "Mostra recinti");
-        public static string Autostart => T("Start with Windows", "Mit Windows starten", "Avvia con Windows");
-        public static string ShowExtensions => T("Show file extensions", "Dateiendungen anzeigen", "Mostra estensioni dei file");
-        public static string ExtFollowExplorer => T("Like Explorer", "Wie im Explorer", "Come in Esplora file");
-        public static string ExtAlways => T("Always", "Immer", "Sempre");
-        public static string ExtNever => T("Never", "Nie", "Mai");
-        public static string Theme => T("Style", "Style", "Stile");
-        public static string ThemeGlobal => T("Default style", "Standard-Style", "Stile predefinito");
-        public static string ThemeInherit => T("(use default style)", "(Standard-Style verwenden)", "(usa lo stile predefinito)");
-        public static string OpenDataFolder => T("Open config folder", "Konfigurationsordner öffnen", "Apri cartella di configurazione");
-        public static string Exit => T("Exit", "Beenden", "Esci");
-        public static string Rename => T("Rename", "Umbenennen", "Rinomina");
-        public static string NewName => T("New name:", "Neuer Name:", "Nuovo nome:");
-        public static string RenameFailed(string reason) => T($"Could not rename: {reason}", $"Umbenennen nicht möglich: {reason}", $"Impossibile rinominare: {reason}");
-        public static string Search => T("Search", "Suche", "Cerca");
-        public static string AlwaysOnTop => T("Always on top", "Immer im Vordergrund", "Sempre in primo piano");
-        public static string ProfileAll => T("All fences", "Alle Fences", "Tutti i recinti");
-        public static string ProfileMenu(string active) => T($"Profile: {active}", $"Profil: {active}", $"Profilo: {active}");
-        public static string ProfileNew => T("New profile…", "Neues Profil…", "Nuovo profilo…");
-        public static string ProfileDelete => T("Delete profile", "Profil löschen", "Elimina profilo");
-        public static string ProfileNamePrompt => T("Name of the profile (e.g. Work, Gaming):", "Name des Profils (z. B. Arbeit, Gaming):", "Nome del profilo (es. Lavoro, Gaming):");
+        public static string LanguageMenu => "Language · Sprache · Lingua · Langue · Idioma";
+        public static string AppSettings => T("Settings…", "Einstellungen…", "Impostazioni…", "Paramètres…", "Configuración…");
+        public static string NewFence => T("New fence", "Neuer Fence", "Nuovo recinto", "Nouvelle barrière", "Nueva valla");
+        public static string NewFolderFence => T("New folder fence…", "Neuer Ordner-Fence…", "Nuovo recinto cartella…", "Nouvelle barrière de dossier…", "Nueva valla de carpeta…");
+        public static string FirstFence => T("First fence", "Erster Fence", "Primo recinto", "Première barrière", "Primera valla");
+        public static string ChooseFolder => T("Choose the folder this fence should show", "Ordner wählen, den dieser Fence anzeigen soll", "Scegli la cartella da mostrare in questo recinto", "Choisissez le dossier à afficher dans cette barrière", "Elige la carpeta que mostrará esta valla");
+        public static string Settings => T("Fence settings…", "Fence-Einstellungen…", "Impostazioni recinto…", "Paramètres de la barrière…", "Configuración de la valla…");
+        public static string Locked => T("Locked", "Gesperrt", "Bloccato", "Verrouillée", "Bloqueada");
+        public static string AutoCollapse => T("Collapse when not hovered", "Einklappen wenn Maus weg", "Comprimi quando il mouse è fuori", "Replier quand la souris s'éloigne", "Contraer cuando el ratón se aleja");
+        public static string RemoveItem => T("Remove from fence", "Aus Fence entfernen", "Rimuovi dal recinto", "Retirer de la barrière", "Quitar de la valla");
+        public static string OpenFolder => T("Open folder in Explorer", "Ordner im Explorer öffnen", "Apri cartella in Esplora file", "Ouvrir le dossier dans l'Explorateur", "Abrir carpeta en el Explorador");
+        public static string DeleteFence => T("Delete fence", "Fence löschen", "Elimina recinto", "Supprimer la barrière", "Eliminar valla");
+        public static string ReallyDelete(string name) => T($"Really delete the fence \"{name}\"?", $"Fence \"{name}\" wirklich löschen?", $"Eliminare davvero il recinto \"{name}\"?", $"Supprimer vraiment la barrière « {name} » ?", $"¿Eliminar de verdad la valla «{name}»?");
+        public static string ReallyDeleteFolderNote => T("The folder and its files are not touched.", "Der Ordner und seine Dateien bleiben unangetastet.", "La cartella e i suoi file non vengono toccati.", "Le dossier et ses fichiers ne sont pas touchés.", "La carpeta y sus archivos no se tocan.");
+        public static string ShowFences => T("Show fences", "Fences anzeigen", "Mostra recinti", "Afficher les barrières", "Mostrar vallas");
+        public static string Autostart => T("Start with Windows", "Mit Windows starten", "Avvia con Windows", "Démarrer avec Windows", "Iniciar con Windows");
+        public static string ShowExtensions => T("Show file extensions", "Dateiendungen anzeigen", "Mostra estensioni dei file", "Afficher les extensions", "Mostrar extensiones de archivo");
+        public static string ExtFollowExplorer => T("Like Explorer", "Wie im Explorer", "Come in Esplora file", "Comme l'Explorateur", "Como el Explorador");
+        public static string ExtAlways => T("Always", "Immer", "Sempre", "Toujours", "Siempre");
+        public static string ExtNever => T("Never", "Nie", "Mai", "Jamais", "Nunca");
+        public static string Theme => T("Style", "Style", "Stile", "Style", "Estilo");
+        public static string ThemeGlobal => T("Default style", "Standard-Style", "Stile predefinito", "Style par défaut", "Estilo predeterminado");
+        public static string ThemeInherit => T("(use default style)", "(Standard-Style verwenden)", "(usa lo stile predefinito)", "(utiliser le style par défaut)", "(usar el estilo predeterminado)");
+        public static string OpenDataFolder => T("Open config folder", "Konfigurationsordner öffnen", "Apri cartella di configurazione", "Ouvrir le dossier de configuration", "Abrir carpeta de configuración");
+        public static string Exit => T("Exit", "Beenden", "Esci", "Quitter", "Salir");
+        public static string Rename => T("Rename", "Umbenennen", "Rinomina", "Renommer", "Cambiar nombre");
+        public static string NewName => T("New name:", "Neuer Name:", "Nuovo nome:", "Nouveau nom :", "Nuevo nombre:");
+        public static string RenameFailed(string reason) => T($"Could not rename: {reason}", $"Umbenennen nicht möglich: {reason}", $"Impossibile rinominare: {reason}", $"Impossible de renommer : {reason}", $"No se pudo cambiar el nombre: {reason}");
+        public static string Search => T("Search", "Suche", "Cerca", "Rechercher", "Buscar");
+        public static string AlwaysOnTop => T("Always on top", "Immer im Vordergrund", "Sempre in primo piano", "Toujours au premier plan", "Siempre visible");
+        public static string ProfileAll => T("All fences", "Alle Fences", "Tutti i recinti", "Toutes les barrières", "Todas las vallas");
+        public static string ProfileMenu(string active) => T($"Profile: {active}", $"Profil: {active}", $"Profilo: {active}", $"Profil : {active}", $"Perfil: {active}");
+        public static string ProfileNew => T("New profile…", "Neues Profil…", "Nuovo profilo…", "Nouveau profil…", "Nuevo perfil…");
+        public static string ProfileDelete => T("Delete profile", "Profil löschen", "Elimina profilo", "Supprimer le profil", "Eliminar perfil");
+        public static string ProfileNamePrompt => T("Name of the profile (e.g. Work, Gaming):", "Name des Profils (z. B. Arbeit, Gaming):", "Nome del profilo (es. Lavoro, Gaming):", "Nom du profil (par ex. Travail, Jeux) :", "Nombre del perfil (p. ej. Trabajo, Juegos):");
         public static string ProfileDeleteConfirm(string name) => T(
             $"Delete the profile \"{name}\"? The fences stay; they just no longer belong to it.",
             $"Profil „{name}“ löschen? Die Fences bleiben erhalten, sie gehören nur nicht mehr dazu.",
-            $"Eliminare il profilo «{name}»? I recinti restano, semplicemente non ne fanno più parte.");
-        public static string ProfileSwitched(string name) => T($"Profile: {name}", $"Profil: {name}", $"Profilo: {name}");
-        public static string ProfileHowTo => T("Assign fences: right-click a fence → Show in profile", "Fences zuordnen: Rechtsklick auf ein Fence → In Profil zeigen", "Assegna recinti: clic destro su un recinto → Mostra nel profilo");
-        public static string ProfileFenceMenu => T("Show in profile", "In Profil zeigen", "Mostra nel profilo");
-        public static string ProfileFenceHint => T("No check = in every profile", "Ohne Haken = in allen Profilen", "Nessuna spunta = in tutti i profili");
-        public static string ProfileLabel => T("Active profile", "Aktives Profil", "Profilo attivo");
-        public static string SectionProfiles => T("Profiles", "Profile", "Profili");
-        public static string OnlyThisDesktop =>T("Only on this virtual desktop", "Nur auf diesem virtuellen Desktop", "Solo su questo desktop virtuale");
-        public static string DropHint => T("Drop files or folders here", "Dateien oder Ordner hierher ziehen", "Trascina qui file o cartelle");
-        public static string FolderMissing(string path) => T($"Folder not found:\n{path}", $"Ordner nicht gefunden:\n{path}", $"Cartella non trovata:\n{path}");
+            $"Eliminare il profilo «{name}»? I recinti restano, semplicemente non ne fanno più parte.",
+            $"Supprimer le profil « {name} » ? Les barrières restent, elles n'en font simplement plus partie.",
+            $"¿Eliminar el perfil «{name}»? Las vallas se quedan; simplemente dejan de pertenecer a él.");
+        public static string ProfileSwitched(string name) => T($"Profile: {name}", $"Profil: {name}", $"Profilo: {name}", $"Profil : {name}", $"Perfil: {name}");
+        public static string ProfileHowTo => T("Assign fences: right-click a fence → Show in profile", "Fences zuordnen: Rechtsklick auf ein Fence → In Profil zeigen", "Assegna recinti: clic destro su un recinto → Mostra nel profilo", "Attribuer des barrières : clic droit sur une barrière → Afficher dans le profil", "Asignar vallas: clic derecho en una valla → Mostrar en el perfil");
+        public static string ProfileFenceMenu => T("Show in profile", "In Profil zeigen", "Mostra nel profilo", "Afficher dans le profil", "Mostrar en el perfil");
+        public static string ProfileFenceHint => T("No check = in every profile", "Ohne Haken = in allen Profilen", "Nessuna spunta = in tutti i profili", "Aucune coche = dans tous les profils", "Sin marca = en todos los perfiles");
+        public static string ProfileLabel => T("Active profile", "Aktives Profil", "Profilo attivo", "Profil actif", "Perfil activo");
+        public static string SectionProfiles => T("Profiles", "Profile", "Profili", "Profils", "Perfiles");
+        public static string OnlyThisDesktop => T("Only on this virtual desktop", "Nur auf diesem virtuellen Desktop", "Solo su questo desktop virtuale", "Seulement sur ce bureau virtuel", "Solo en este escritorio virtual");
+        public static string DropHint => T("Drop files or folders here", "Dateien oder Ordner hierher ziehen", "Trascina qui file o cartelle", "Déposez des fichiers ou dossiers ici", "Arrastra archivos o carpetas aquí");
+        public static string FolderMissing(string path) => T($"Folder not found:\n{path}", $"Ordner nicht gefunden:\n{path}", $"Cartella non trovata:\n{path}", $"Dossier introuvable :\n{path}", $"Carpeta no encontrada:\n{path}");
         public static string FirstStartHint => T("Drag files onto the fence. Right-click a fence for options; the tray icon has the settings and help.",
                                                  "Zieh Dateien auf den Fence. Rechtsklick auf einen Fence zeigt die Optionen, im Tray-Icon gibt es Einstellungen und Hilfe.",
-                                                 "Trascina i file nel recinto. Clic destro su un recinto per le opzioni; l'icona nella barra ha impostazioni e guida.");
+                                                 "Trascina i file nel recinto. Clic destro su un recinto per le opzioni; l'icona nella barra ha impostazioni e guida.",
+                                                 "Faites glisser des fichiers sur la barrière. Clic droit sur une barrière pour les options ; l'icône de la zone de notification contient les paramètres et l'aide.",
+                                                 "Arrastra archivos a la valla. Clic derecho en una valla para ver las opciones; el icono de la bandeja tiene la configuración y la ayuda.");
 
-        public static string SortBy => T("Sort by", "Sortieren nach", "Ordina per");
+        public static string SortBy => T("Sort by", "Sortieren nach", "Ordina per", "Trier par", "Ordenar por");
         public static string SortModeName(Model.FenceSortMode mode) => mode switch
         {
-            Model.FenceSortMode.Name => T("Name", "Name", "Nome"),
-            Model.FenceSortMode.Type => T("Type", "Typ", "Tipo"),
-            Model.FenceSortMode.Modified => T("Date modified (newest first)", "Änderungsdatum (neueste zuerst)", "Data di modifica (più recenti prima)"),
-            Model.FenceSortMode.Size => T("Size (largest first)", "Größe (größte zuerst)", "Dimensione (più grandi prima)"),
-            _ => T("Manual (drag & drop)", "Manuell (Drag & Drop)", "Manuale (trascina e rilascia)")
+            Model.FenceSortMode.Name => T("Name", "Name", "Nome", "Nom", "Nombre"),
+            Model.FenceSortMode.Type => T("Type", "Typ", "Tipo", "Type", "Tipo"),
+            Model.FenceSortMode.Modified => T("Date modified (newest first)", "Änderungsdatum (neueste zuerst)", "Data di modifica (più recenti prima)", "Date de modification (plus récent d'abord)", "Fecha de modificación (más recientes primero)"),
+            Model.FenceSortMode.Size => T("Size (largest first)", "Größe (größte zuerst)", "Dimensione (più grandi prima)", "Taille (plus grand d'abord)", "Tamaño (más grandes primero)"),
+            _ => T("Manual (drag & drop)", "Manuell (Drag & Drop)", "Manuale (trascina e rilascia)", "Manuel (glisser-déposer)", "Manual (arrastrar y soltar)")
         };
 
-        public static string AddTab => T("Add tab", "Reiter hinzufügen", "Aggiungi scheda");
-        public static string RenameTab => T("Rename tab", "Reiter umbenennen", "Rinomina scheda");
-        public static string RemoveTab => T("Remove tab (keeps its links)", "Reiter entfernen (Verknüpfungen bleiben)", "Rimuovi scheda (i collegamenti restano)");
-        public static string TabDefaultName(int n) => T($"Tab {n}", $"Reiter {n}", $"Scheda {n}");
+        public static string AddTab => T("Add tab", "Reiter hinzufügen", "Aggiungi scheda", "Ajouter un onglet", "Añadir pestaña");
+        public static string RenameTab => T("Rename tab", "Reiter umbenennen", "Rinomina scheda", "Renommer l'onglet", "Cambiar nombre de la pestaña");
+        public static string RemoveTab => T("Remove tab (keeps its links)", "Reiter entfernen (Verknüpfungen bleiben)", "Rimuovi scheda (i collegamenti restano)", "Supprimer l'onglet (les raccourcis restent)", "Quitar pestaña (los accesos directos se conservan)");
+        public static string TabDefaultName(int n) => T($"Tab {n}", $"Reiter {n}", $"Scheda {n}", $"Onglet {n}", $"Pestaña {n}");
 
-        public static string NewWidget => T("New widget", "Neues Widget", "Nuovo widget");
-        public static string NewRecent => T("New \"Recent files\" fence", "Neuer Fence „Zuletzt verwendet“", "Nuovo recinto \"File recenti\"");
-        public static string RecentName => T("Recent files", "Zuletzt verwendet", "File recenti");
-        public static string NewQuickLaunch => T("New quick-launch bar", "Neue Schnellstart-Leiste", "Nuova barra di avvio rapido");
-        public static string QuickLaunchName => T("Quick launch", "Schnellstart", "Avvio rapido");
-        public static string CompactMode => T("Icons only (compact)", "Nur Icons (kompakt)", "Solo icone (compatto)");
-        public static string NewNote => T("New note", "Neue Notiz", "Nuova nota");
-        public static string NoteName => T("Note", "Notiz", "Nota");
-        public static string EditNote => T("Edit note", "Notiz bearbeiten", "Modifica nota");
+        public static string NewWidget => T("New widget", "Neues Widget", "Nuovo widget", "Nouveau widget", "Nuevo widget");
+        public static string NewRecent => T("New \"Recent files\" fence", "Neuer Fence „Zuletzt verwendet“", "Nuovo recinto \"File recenti\"", "Nouvelle barrière « Fichiers récents »", "Nueva valla «Archivos recientes»");
+        public static string RecentName => T("Recent files", "Zuletzt verwendet", "File recenti", "Fichiers récents", "Archivos recientes");
+        public static string NewQuickLaunch => T("New quick-launch bar", "Neue Schnellstart-Leiste", "Nuova barra di avvio rapido", "Nouvelle barre de lancement rapide", "Nueva barra de inicio rápido");
+        public static string QuickLaunchName => T("Quick launch", "Schnellstart", "Avvio rapido", "Lancement rapide", "Inicio rápido");
+        public static string CompactMode => T("Icons only (compact)", "Nur Icons (kompakt)", "Solo icone (compatto)", "Icônes seules (compact)", "Solo iconos (compacto)");
+        public static string NewNote => T("New note", "Neue Notiz", "Nuova nota", "Nouvelle note", "Nueva nota");
+        public static string NoteName => T("Note", "Notiz", "Nota", "Note", "Nota");
+        public static string EditNote => T("Edit note", "Notiz bearbeiten", "Modifica nota", "Modifier la note", "Editar nota");
         public static string NoteHint => T("Double-click to write.\nLines starting with [ ] become checkboxes.",
                                            "Doppelklick zum Schreiben.\nZeilen mit [ ] am Anfang werden zu Kästchen.",
-                                           "Doppio clic per scrivere.\nLe righe che iniziano con [ ] diventano caselle.");
+                                           "Doppio clic per scrivere.\nLe righe che iniziano con [ ] diventano caselle.",
+                                           "Double-cliquez pour écrire.\nLes lignes commençant par [ ] deviennent des cases à cocher.",
+                                           "Haz doble clic para escribir.\nLas líneas que empiezan con [ ] se convierten en casillas.");
 
         #endregion
 
         #region Settings dialogs
 
-        public static string Name => T("Name", "Name", "Nome");
-        public static string Folder => T("Folder", "Ordner", "Cartella");
-        public static string Browse => T("Browse…", "Durchsuchen…", "Sfoglia…");
-        public static string TitleHeight => T("Title height", "Titelhöhe", "Altezza titolo");
-        public static string IconSize => T("Icon size", "Icongröße", "Dimensione icone");
-        public static string Background => T("Background", "Hintergrund", "Sfondo");
-        public static string Opacity => T("Opacity", "Deckkraft", "Opacità");
-        public static string Ok => T("OK", "OK", "OK");
-        public static string Cancel => T("Cancel", "Abbrechen", "Annulla");
-        public static string Close => T("Close", "Schließen", "Chiudi");
-        public static string Kind => T("Type", "Typ", "Tipo");
-        public static string KindLinks => T("Links (files stay where they are)", "Verknüpfungen (Dateien bleiben wo sie sind)", "Collegamenti (i file restano dove sono)");
-        public static string KindFolder => T("Folder (shows a folder's contents)", "Ordner (zeigt den Inhalt eines Ordners)", "Cartella (mostra il contenuto di una cartella)");
-        public static string KindNote => T("Note (sticky note with text)", "Notiz (Post-it mit Text)", "Nota (post-it con testo)");
-        public static string KindWidget => T("Widget", "Widget", "Widget");
-        public static string Preview => T("Preview", "Vorschau", "Anteprima");
-        public static string SectionGeneral => T("General", "Allgemein", "Generale");
-        public static string SectionAppearance => T("Appearance", "Aussehen", "Aspetto");
-        public static string SectionBehavior => T("Behavior", "Verhalten", "Comportamento");
-        public static string SectionAutoSort => T("Auto-sort from the desktop", "Vom Desktop einsortieren", "Ordina dal desktop");
-        public static string SectionDesktop => T("Desktop", "Desktop", "Desktop");
-        public static string SectionUpdates => T("Updates", "Updates", "Aggiornamenti");
-        public static string SectionFps => T("FPS measurement", "FPS-Messung", "Misurazione FPS");
-        public static string SectionData => T("Data & styles", "Daten & Styles", "Dati e stili");
-        public static string SettingsTitle => T("NoFences settings", "NoFences-Einstellungen", "Impostazioni di NoFences");
-        public static string LanguageLabel => T("Language", "Sprache", "Lingua");
-        public static string VersionLabel(Version v) => T($"Installed version: {v}", $"Installierte Version: {v}", $"Versione installata: {v}");
+        public static string Name => T("Name", "Name", "Nome", "Nom", "Nombre");
+        public static string Folder => T("Folder", "Ordner", "Cartella", "Dossier", "Carpeta");
+        public static string Browse => T("Browse…", "Durchsuchen…", "Sfoglia…", "Parcourir…", "Examinar…");
+        public static string TitleHeight => T("Title height", "Titelhöhe", "Altezza titolo", "Hauteur du titre", "Altura del título");
+        public static string IconSize => T("Icon size", "Icongröße", "Dimensione icone", "Taille des icônes", "Tamaño de iconos");
+        public static string Background => T("Background", "Hintergrund", "Sfondo", "Arrière-plan", "Fondo");
+        public static string Opacity => T("Opacity", "Deckkraft", "Opacità", "Opacité", "Opacidad");
+        public static string Ok => T("OK", "OK", "OK", "OK", "Aceptar");
+        public static string Cancel => T("Cancel", "Abbrechen", "Annulla", "Annuler", "Cancelar");
+        public static string Close => T("Close", "Schließen", "Chiudi", "Fermer", "Cerrar");
+        public static string Kind => T("Type", "Typ", "Tipo", "Type", "Tipo");
+        public static string KindLinks => T("Links (files stay where they are)", "Verknüpfungen (Dateien bleiben wo sie sind)", "Collegamenti (i file restano dove sono)", "Raccourcis (les fichiers restent où ils sont)", "Accesos directos (los archivos se quedan donde están)");
+        public static string KindFolder => T("Folder (shows a folder's contents)", "Ordner (zeigt den Inhalt eines Ordners)", "Cartella (mostra il contenuto di una cartella)", "Dossier (affiche le contenu d'un dossier)", "Carpeta (muestra el contenido de una carpeta)");
+        public static string KindNote => T("Note (sticky note with text)", "Notiz (Post-it mit Text)", "Nota (post-it con testo)", "Note (post-it avec du texte)", "Nota (pósit con texto)");
+        public static string KindWidget => T("Widget", "Widget", "Widget", "Widget", "Widget");
+        public static string Preview => T("Preview", "Vorschau", "Anteprima", "Aperçu", "Vista previa");
+        public static string SectionGeneral => T("General", "Allgemein", "Generale", "Général", "General");
+        public static string SectionAppearance => T("Appearance", "Aussehen", "Aspetto", "Apparence", "Apariencia");
+        public static string SectionBehavior => T("Behavior", "Verhalten", "Comportamento", "Comportement", "Comportamiento");
+        public static string SectionAutoSort => T("Auto-sort from the desktop", "Vom Desktop einsortieren", "Ordina dal desktop", "Ranger depuis le bureau", "Ordenar desde el escritorio");
+        public static string SectionDesktop => T("Desktop", "Desktop", "Desktop", "Bureau", "Escritorio");
+        public static string SectionUpdates => T("Updates", "Updates", "Aggiornamenti", "Mises à jour", "Actualizaciones");
+        public static string SectionFps => T("FPS measurement", "FPS-Messung", "Misurazione FPS", "Mesure des FPS", "Medición de FPS");
+        public static string SectionData => T("Data & styles", "Daten & Styles", "Dati e stili", "Données et styles", "Datos y estilos");
+        public static string SettingsTitle => T("NoFences settings", "NoFences-Einstellungen", "Impostazioni di NoFences", "Paramètres de NoFences", "Configuración de NoFences");
+        public static string LanguageLabel => T("Language", "Sprache", "Lingua", "Langue", "Idioma");
+        public static string VersionLabel(Version v) => T($"Installed version: {v}", $"Installierte Version: {v}", $"Versione installata: {v}", $"Version installée : {v}", $"Versión instalada: {v}");
         public static string FpsShortHint => T("Needs a small helper with administrator rights (Windows asks once). It only counts frames – no screen content, no input.",
                                                "Braucht einen kleinen Helfer mit Administratorrechten (Windows fragt einmal). Er zählt nur Bilder – keine Bildinhalte, keine Eingaben.",
-                                               "Richiede un piccolo programma di supporto con diritti di amministratore (Windows lo chiede una volta). Conta solo i fotogrammi, nessun contenuto e nessun input.");
-        public static string FpsEnabledLabel => T("Measure FPS of games", "FPS von Spielen messen", "Misura gli FPS dei giochi");
+                                               "Richiede un piccolo programma di supporto con diritti di amministratore (Windows lo chiede una volta). Conta solo i fotogrammi, nessun contenuto e nessun input.",
+                                               "Nécessite un petit assistant avec des droits d'administrateur (Windows le demande une fois). Il compte seulement les images – aucun contenu d'écran, aucune saisie.",
+                                               "Necesita un pequeño asistente con permisos de administrador (Windows lo pide una vez). Solo cuenta fotogramas: nada del contenido de la pantalla ni de lo que escribes.");
+        public static string FpsEnabledLabel => T("Measure FPS of games", "FPS von Spielen messen", "Misura gli FPS dei giochi", "Mesurer les FPS des jeux", "Medir los FPS de los juegos");
 
-        public static string AutoSort => T("Patterns", "Muster", "Schemi");
+        public static string AutoSort => T("Patterns", "Muster", "Schemi", "Modèles", "Patrones");
         public static string AutoSortHint => T("New desktop files matching these patterns go into this fence, e.g. *.pdf; *.docx",
                                                "Neue Desktop-Dateien, die passen, landen in diesem Fence, z. B. *.pdf; *.docx",
-                                               "I nuovi file sul desktop che corrispondono finiscono in questo recinto, ad es. *.pdf; *.docx");
-        public static string AddPreset => T("Add preset…", "Vorlage hinzufügen…", "Aggiungi modello…");
-        public static string PresetImages => T("Images", "Bilder", "Immagini");
-        public static string PresetDocuments => T("Documents", "Dokumente", "Documenti");
-        public static string PresetArchives => T("Archives", "Archive", "Archivi");
-        public static string PresetInstallers => T("Installers / programs", "Installer / Programme", "Installer / programmi");
-        public static string PresetVideos => T("Videos", "Videos", "Video");
-        public static string PresetMusic => T("Music", "Musik", "Musica");
-        public static string PresetShortcuts => T("Shortcuts", "Verknüpfungen", "Collegamenti");
+                                               "I nuovi file sul desktop che corrispondono finiscono in questo recinto, ad es. *.pdf; *.docx",
+                                               "Les nouveaux fichiers du bureau correspondant à ces modèles vont dans cette barrière, par ex. *.pdf; *.docx",
+                                               "Los archivos nuevos del escritorio que coincidan van a esta valla, p. ej. *.pdf; *.docx");
+        public static string AddPreset => T("Add preset…", "Vorlage hinzufügen…", "Aggiungi modello…", "Ajouter un modèle…", "Añadir plantilla…");
+        public static string PresetImages => T("Images", "Bilder", "Immagini", "Images", "Imágenes");
+        public static string PresetDocuments => T("Documents", "Dokumente", "Documenti", "Documents", "Documentos");
+        public static string PresetArchives => T("Archives", "Archive", "Archivi", "Archives", "Archivos comprimidos");
+        public static string PresetInstallers => T("Installers / programs", "Installer / Programme", "Installer / programmi", "Installateurs / programmes", "Instaladores / programas");
+        public static string PresetVideos => T("Videos", "Videos", "Video", "Vidéos", "Vídeos");
+        public static string PresetMusic => T("Music", "Musik", "Musica", "Musique", "Música");
+        public static string PresetShortcuts => T("Shortcuts", "Verknüpfungen", "Collegamenti", "Raccourcis", "Accesos directos");
 
         #endregion
 
         #region Desktop, sorting, peek
 
-        public static string AutoSortEnabled => T("Auto-sort new desktop files", "Neue Desktop-Dateien automatisch einsortieren", "Ordina automaticamente i nuovi file del desktop");
-        public static string SortNow => T("Tidy up desktop now", "Desktop jetzt aufräumen", "Riordina il desktop ora");
+        public static string AutoSortEnabled => T("Auto-sort new desktop files", "Neue Desktop-Dateien automatisch einsortieren", "Ordina automaticamente i nuovi file del desktop", "Ranger automatiquement les nouveaux fichiers du bureau", "Ordenar automáticamente los archivos nuevos del escritorio");
+        public static string SortNow => T("Tidy up desktop now", "Desktop jetzt aufräumen", "Riordina il desktop ora", "Ranger le bureau maintenant", "Ordenar el escritorio ahora");
         public static string SortNowNoRules => T("No fence has auto-sort patterns yet.\nSet them in a fence's settings.",
                                                  "Noch kein Fence hat Einsortier-Regeln.\nDu legst sie in den Fence-Einstellungen fest.",
-                                                 "Nessun recinto ha ancora regole di ordinamento.\nImpostale nelle impostazioni di un recinto.");
+                                                 "Nessun recinto ha ancora regole di ordinamento.\nImpostale nelle impostazioni di un recinto.",
+                                                 "Aucune barrière n'a encore de règles de rangement.\nDéfinissez-les dans les paramètres d'une barrière.",
+                                                 "Ninguna valla tiene aún reglas de ordenación.\nDefínelas en la configuración de una valla.");
         public static string SortNowDone(int n) => n == 1
-            ? T("1 file sorted into fences.", "1 Datei in Fences einsortiert.", "1 file ordinato nei recinti.")
-            : T($"{n} files sorted into fences.", $"{n} Dateien in Fences einsortiert.", $"{n} file ordinati nei recinti.");
-        public static string DoubleClickToggle => T("Double-click desktop to hide fences", "Doppelklick auf Desktop blendet Fences aus", "Doppio clic sul desktop nasconde i recinti");
-        public static string PeekMenu => T("Bring fences to front", "Fences nach vorne holen", "Porta i recinti in primo piano");
-        public static string PeekHotkey => T("Shortcut", "Tastenkürzel", "Scorciatoia");
+            ? T("1 file sorted into fences.", "1 Datei in Fences einsortiert.", "1 file ordinato nei recinti.", "1 fichier rangé dans les barrières.", "1 archivo ordenado en las vallas.")
+            : T($"{n} files sorted into fences.", $"{n} Dateien in Fences einsortiert.", $"{n} file ordinati nei recinti.", $"{n} fichiers rangés dans les barrières.", $"{n} archivos ordenados en las vallas.");
+        public static string DoubleClickToggle => T("Double-click desktop to hide fences", "Doppelklick auf Desktop blendet Fences aus", "Doppio clic sul desktop nasconde i recinti", "Double-clic sur le bureau pour masquer les barrières", "Doble clic en el escritorio para ocultar las vallas");
+        public static string PeekMenu => T("Bring fences to front", "Fences nach vorne holen", "Porta i recinti in primo piano", "Afficher les barrières au premier plan", "Traer las vallas al frente");
+        public static string PeekHotkey => T("Shortcut", "Tastenkürzel", "Scorciatoia", "Raccourci", "Atajo");
         public static string HotkeyName(string hotkey) => hotkey switch
         {
-            "Off" => T("Off", "Aus", "Disattivata"),
-            _ => Effective == "de" ? hotkey.Replace("Ctrl", "Strg").Replace("Space", "Leertaste")
-                : Effective == "it" ? hotkey.Replace("Space", "Spazio").Replace("Shift", "Maiusc")
-                : hotkey
+            "Off" => T("Off", "Aus", "Disattivata", "Désactivé", "Desactivado"),
+            _ => Effective switch
+            {
+                "de" => hotkey.Replace("Ctrl", "Strg").Replace("Space", "Leertaste"),
+                "it" => hotkey.Replace("Space", "Spazio").Replace("Shift", "Maiusc"),
+                "fr" => hotkey.Replace("Space", "Espace").Replace("Shift", "Maj"),
+                "es" => hotkey.Replace("Space", "Espacio").Replace("Shift", "Mayús"),
+                _ => hotkey
+            }
         };
         public static string HotkeyTaken(string hotkey) => T(
             $"The shortcut {HotkeyName(hotkey)} is already used by another program. Pick another one in the settings.",
             $"Das Tastenkürzel {HotkeyName(hotkey)} wird schon von einem anderen Programm verwendet. Wähle in den Einstellungen ein anderes.",
-            $"La scorciatoia {HotkeyName(hotkey)} è già usata da un altro programma. Scegline un'altra nelle impostazioni.");
+            $"La scorciatoia {HotkeyName(hotkey)} è già usata da un altro programma. Scegline un'altra nelle impostazioni.",
+            $"Le raccourci {HotkeyName(hotkey)} est déjà utilisé par un autre programme. Choisissez-en un autre dans les paramètres.",
+            $"El atajo {HotkeyName(hotkey)} ya lo usa otro programa. Elige otro en la configuración.");
 
         #endregion
 
         #region Updates, styles, backups, export
 
-        public static string CheckForUpdatesAuto => T("Check for updates automatically", "Automatisch nach Updates suchen", "Cerca aggiornamenti automaticamente");
-        public static string CheckForUpdatesNow => T("Check for updates now", "Jetzt nach Updates suchen", "Cerca aggiornamenti ora");
-        public static string InstallUpdate(Version v) => T($"Install update {v}", $"Update {v} installieren", $"Installa l'aggiornamento {v}");
-        public static string UpdateAvailable(Version v) => T($"NoFences {v} is available. Click here to install it.", $"NoFences {v} ist verfügbar. Hier klicken zum Installieren.", $"NoFences {v} è disponibile. Clicca qui per installarlo.");
-        public static string UpdateAvailableManual(Version v) => T($"NoFences {v} is available. Click here to open the download page.", $"NoFences {v} ist verfügbar. Hier klicken, um die Download-Seite zu öffnen.", $"NoFences {v} è disponibile. Clicca qui per aprire la pagina di download.");
-        public static string UpToDate(Version v) => T($"You have the latest version ({v}).", $"Du hast die neueste Version ({v}).", $"Hai l'ultima versione ({v}).");
-        public static string UpdateDownloading => T("Downloading update…", "Update wird heruntergeladen…", "Download dell'aggiornamento…");
-        public static string UpdateFailed(string reason) => T($"The update failed: {reason}\nThe download page will open instead.", $"Das Update ist fehlgeschlagen: {reason}\nStattdessen öffnet sich die Download-Seite.", $"L'aggiornamento non è riuscito: {reason}\nSi apre invece la pagina di download.");
-        public static string UpdateCheckFailed => T("Could not reach GitHub to check for updates.", "GitHub war für die Update-Prüfung nicht erreichbar.", "Impossibile raggiungere GitHub per cercare aggiornamenti.");
-        public static string Animations => T("Animations", "Animationen", "Animazioni");
-        public static string CustomThemes => T("Own styles", "Eigene Styles", "Stili personali");
-        public static string OpenThemesFolder => T("Open styles folder", "Styles-Ordner öffnen", "Apri cartella degli stili");
-        public static string ReloadThemes => T("Reload styles", "Styles neu laden", "Ricarica stili");
-        public static string ThemesLoaded(int n) => T($"{n} own style(s) loaded.", $"{n} eigene(r) Style(s) geladen.", $"{n} stile/i personale/i caricato/i.");
-        public static string ThemeErrors(string details) => T($"Some styles could not be loaded:\n{details}", $"Einige Styles konnten nicht geladen werden:\n{details}", $"Alcuni stili non sono stati caricati:\n{details}");
-        public static string RestoreBackup => T("Restore backup", "Sicherung wiederherstellen", "Ripristina backup");
-        public static string NoBackups => T("No backups yet", "Noch keine Sicherungen", "Ancora nessun backup");
+        public static string CheckForUpdatesAuto => T("Check for updates automatically", "Automatisch nach Updates suchen", "Cerca aggiornamenti automaticamente", "Rechercher les mises à jour automatiquement", "Buscar actualizaciones automáticamente");
+        public static string CheckForUpdatesNow => T("Check for updates now", "Jetzt nach Updates suchen", "Cerca aggiornamenti ora", "Rechercher les mises à jour maintenant", "Buscar actualizaciones ahora");
+        public static string InstallUpdate(Version v) => T($"Install update {v}", $"Update {v} installieren", $"Installa l'aggiornamento {v}", $"Installer la mise à jour {v}", $"Instalar la actualización {v}");
+        public static string UpdateAvailable(Version v) => T($"NoFences {v} is available. Click here to install it.", $"NoFences {v} ist verfügbar. Hier klicken zum Installieren.", $"NoFences {v} è disponibile. Clicca qui per installarlo.", $"NoFences {v} est disponible. Cliquez ici pour l'installer.", $"NoFences {v} está disponible. Haz clic aquí para instalarlo.");
+        public static string UpdateAvailableManual(Version v) => T($"NoFences {v} is available. Click here to open the download page.", $"NoFences {v} ist verfügbar. Hier klicken, um die Download-Seite zu öffnen.", $"NoFences {v} è disponibile. Clicca qui per aprire la pagina di download.", $"NoFences {v} est disponible. Cliquez ici pour ouvrir la page de téléchargement.", $"NoFences {v} está disponible. Haz clic aquí para abrir la página de descarga.");
+        public static string UpToDate(Version v) => T($"You have the latest version ({v}).", $"Du hast die neueste Version ({v}).", $"Hai l'ultima versione ({v}).", $"Vous avez la dernière version ({v}).", $"Tienes la última versión ({v}).");
+        public static string UpdateDownloading => T("Downloading update…", "Update wird heruntergeladen…", "Download dell'aggiornamento…", "Téléchargement de la mise à jour…", "Descargando la actualización…");
+        public static string UpdateFailed(string reason) => T($"The update failed: {reason}\nThe download page will open instead.", $"Das Update ist fehlgeschlagen: {reason}\nStattdessen öffnet sich die Download-Seite.", $"L'aggiornamento non è riuscito: {reason}\nSi apre invece la pagina di download.", $"La mise à jour a échoué : {reason}\nLa page de téléchargement va s'ouvrir.", $"La actualización falló: {reason}\nSe abrirá la página de descarga.");
+        public static string UpdateCheckFailed => T("Could not reach GitHub to check for updates.", "GitHub war für die Update-Prüfung nicht erreichbar.", "Impossibile raggiungere GitHub per cercare aggiornamenti.", "Impossible de joindre GitHub pour rechercher les mises à jour.", "No se pudo contactar con GitHub para buscar actualizaciones.");
+        public static string Animations => T("Animations", "Animationen", "Animazioni", "Animations", "Animaciones");
+        public static string CustomThemes => T("Own styles", "Eigene Styles", "Stili personali", "Styles personnels", "Estilos propios");
+        public static string OpenThemesFolder => T("Open styles folder", "Styles-Ordner öffnen", "Apri cartella degli stili", "Ouvrir le dossier des styles", "Abrir carpeta de estilos");
+        public static string ReloadThemes => T("Reload styles", "Styles neu laden", "Ricarica stili", "Recharger les styles", "Recargar estilos");
+        public static string ThemesLoaded(int n) => T($"{n} own style(s) loaded.", $"{n} eigene(r) Style(s) geladen.", $"{n} stile/i personale/i caricato/i.", $"{n} style(s) personnel(s) chargé(s).", $"{n} estilo(s) propio(s) cargado(s).");
+        public static string ThemeErrors(string details) => T($"Some styles could not be loaded:\n{details}", $"Einige Styles konnten nicht geladen werden:\n{details}", $"Alcuni stili non sono stati caricati:\n{details}", $"Certains styles n'ont pas pu être chargés :\n{details}", $"Algunos estilos no se pudieron cargar:\n{details}");
+        public static string RestoreBackup => T("Restore backup", "Sicherung wiederherstellen", "Ripristina backup", "Restaurer une sauvegarde", "Restaurar copia de seguridad");
+        public static string NoBackups => T("No backups yet", "Noch keine Sicherungen", "Ancora nessun backup", "Aucune sauvegarde pour l'instant", "Aún no hay copias de seguridad");
         public static string ConfirmRestore(DateTime time) => T(
             $"Restore all fences as they were on {time:g}?\nNoFences restarts; the current state is kept as a backup too.",
             $"Alle Fences auf den Stand vom {time:g} zurücksetzen?\nNoFences startet neu; der aktuelle Stand wird vorher ebenfalls gesichert.",
-            $"Ripristinare tutti i recinti com'erano il {time:g}?\nNoFences si riavvia; anche lo stato attuale viene salvato come backup.");
-        public static string ExportFences => T("Export fences…", "Fences exportieren…", "Esporta recinti…");
-        public static string ImportFences => T("Import fences…", "Fences importieren…", "Importa recinti…");
-        public static string ExportFilter => T("NoFences export (*.nofences.json)|*.nofences.json|JSON (*.json)|*.json", "NoFences-Export (*.nofences.json)|*.nofences.json|JSON (*.json)|*.json", "Esportazione NoFences (*.nofences.json)|*.nofences.json|JSON (*.json)|*.json");
-        public static string ExportDone(int n) => T($"{n} fences exported.", $"{n} Fences exportiert.", $"{n} recinti esportati.");
-        public static string ImportDone(int n) => T($"{n} fences imported.", $"{n} Fences importiert.", $"{n} recinti importati.");
-        public static string ImportFailed(string reason) => T($"Import failed: {reason}", $"Import fehlgeschlagen: {reason}", $"Importazione non riuscita: {reason}");
+            $"Ripristinare tutti i recinti com'erano il {time:g}?\nNoFences si riavvia; anche lo stato attuale viene salvato come backup.",
+            $"Restaurer toutes les barrières telles qu'elles étaient le {time:g} ?\nNoFences redémarre ; l'état actuel est aussi sauvegardé.",
+            $"¿Restaurar todas las vallas como estaban el {time:g}?\nNoFences se reinicia; el estado actual también se guarda como copia.");
+        public static string ExportFences => T("Export fences…", "Fences exportieren…", "Esporta recinti…", "Exporter les barrières…", "Exportar vallas…");
+        public static string ImportFences => T("Import fences…", "Fences importieren…", "Importa recinti…", "Importer des barrières…", "Importar vallas…");
+        public static string ExportFilter => T("NoFences export (*.nofences.json)|*.nofences.json|JSON (*.json)|*.json", "NoFences-Export (*.nofences.json)|*.nofences.json|JSON (*.json)|*.json", "Esportazione NoFences (*.nofences.json)|*.nofences.json|JSON (*.json)|*.json", "Export NoFences (*.nofences.json)|*.nofences.json|JSON (*.json)|*.json", "Exportación de NoFences (*.nofences.json)|*.nofences.json|JSON (*.json)|*.json");
+        public static string ExportDone(int n) => T($"{n} fences exported.", $"{n} Fences exportiert.", $"{n} recinti esportati.", $"{n} barrières exportées.", $"{n} vallas exportadas.");
+        public static string ImportDone(int n) => T($"{n} fences imported.", $"{n} Fences importiert.", $"{n} recinti importati.", $"{n} barrières importées.", $"{n} vallas importadas.");
+        public static string ImportFailed(string reason) => T($"Import failed: {reason}", $"Import fehlgeschlagen: {reason}", $"Importazione non riuscita: {reason}", $"Échec de l'importation : {reason}", $"Error al importar: {reason}");
 
         #endregion
 
         #region Reminders
 
-        public static string Reminder => T("Reminder…", "Erinnerung…", "Promemoria…");
-        public static string ReminderTitle => T("Remind me", "Erinnern", "Ricordami");
-        public static string ReminderIn1h => T("In 1 hour", "In 1 Stunde", "Tra 1 ora");
-        public static string ReminderTonight => T("Today 6 pm", "Heute 18:00", "Oggi alle 18:00");
-        public static string ReminderTomorrow => T("Tomorrow 9 am", "Morgen 9:00", "Domani alle 9:00");
-        public static string ReminderRemove => T("Remove", "Entfernen", "Rimuovi");
-        public static string ReminderDue(string name) => T($"Reminder: {name}", $"Erinnerung: {name}", $"Promemoria: {name}");
+        public static string Reminder => T("Reminder…", "Erinnerung…", "Promemoria…", "Rappel…", "Recordatorio…");
+        public static string ReminderTitle => T("Remind me", "Erinnern", "Ricordami", "Me rappeler", "Recordarme");
+        public static string ReminderIn1h => T("In 1 hour", "In 1 Stunde", "Tra 1 ora", "Dans 1 heure", "En 1 hora");
+        public static string ReminderTonight => T("Today 6 pm", "Heute 18:00", "Oggi alle 18:00", "Aujourd'hui 18 h", "Hoy a las 18:00");
+        public static string ReminderTomorrow => T("Tomorrow 9 am", "Morgen 9:00", "Domani alle 9:00", "Demain 9 h", "Mañana a las 9:00");
+        public static string ReminderRemove => T("Remove", "Entfernen", "Rimuovi", "Supprimer", "Quitar");
+        public static string ReminderDue(string name) => T($"Reminder: {name}", $"Erinnerung: {name}", $"Promemoria: {name}", $"Rappel : {name}", $"Recordatorio: {name}");
 
         #endregion
 
         #region Widgets
 
-        public static string WidgetClock => T("Clock & calendar", "Uhr & Kalender", "Orologio e calendario");
-        public static string WidgetSystem => T("System monitor (CPU, RAM, GPU, FPS)", "System-Monitor (CPU, RAM, GPU, FPS)", "Monitor di sistema (CPU, RAM, GPU, FPS)");
-        public static string WidgetDrives => T("Drives", "Laufwerke", "Unità");
-        public static string WidgetRecycleBin => T("Recycle bin", "Papierkorb", "Cestino");
-        public static string WidgetCountdown => T("Countdown", "Countdown", "Conto alla rovescia");
-        public static string CountdownSet => T("Set countdown…", "Countdown festlegen…", "Imposta conto alla rovescia…");
-        public static string CountdownHint => T("Double-click or right-click → Set countdown", "Doppelklick oder Rechtsklick → Countdown festlegen", "Doppio clic o clic destro → Imposta conto alla rovescia");
-        public static string CountdownDays(int n) => n == 1 ? T("1 day", "1 Tag", "1 giorno") : T($"{n} days", $"{n} Tage", $"{n} giorni");
-        public static string CountdownReached => T("It's time!", "Es ist so weit!", "Ci siamo!");
-        public static string CountdownTitleLabel => T("Title", "Titel", "Titolo");
-        public static string CountdownDateLabel => T("Date and time", "Datum und Uhrzeit", "Data e ora");
-        public static string WidgetPlaytime => T("Playtime", "Spielzeit", "Tempo di gioco");
-        public static string PlaytimeChoose => T("Choose game (exe)…", "Spiel auswählen (EXE)…", "Scegli gioco (exe)…");
+        public static string WidgetClock => T("Clock & calendar", "Uhr & Kalender", "Orologio e calendario", "Horloge et calendrier", "Reloj y calendario");
+        public static string WidgetSystem => T("System monitor (CPU, RAM, GPU, FPS)", "System-Monitor (CPU, RAM, GPU, FPS)", "Monitor di sistema (CPU, RAM, GPU, FPS)", "Moniteur système (CPU, RAM, GPU, FPS)", "Monitor del sistema (CPU, RAM, GPU, FPS)");
+        public static string WidgetDrives => T("Drives", "Laufwerke", "Unità", "Lecteurs", "Unidades");
+        public static string WidgetRecycleBin => T("Recycle bin", "Papierkorb", "Cestino", "Corbeille", "Papelera");
+        public static string WidgetCountdown => T("Countdown", "Countdown", "Conto alla rovescia", "Compte à rebours", "Cuenta atrás");
+        public static string CountdownSet => T("Set countdown…", "Countdown festlegen…", "Imposta conto alla rovescia…", "Définir le compte à rebours…", "Configurar cuenta atrás…");
+        public static string CountdownHint => T("Double-click or right-click → Set countdown", "Doppelklick oder Rechtsklick → Countdown festlegen", "Doppio clic o clic destro → Imposta conto alla rovescia", "Double-clic ou clic droit → Définir le compte à rebours", "Doble clic o clic derecho → Configurar cuenta atrás");
+        public static string CountdownDays(int n) => n == 1
+            ? T("1 day", "1 Tag", "1 giorno", "1 jour", "1 día")
+            : T($"{n} days", $"{n} Tage", $"{n} giorni", $"{n} jours", $"{n} días");
+        public static string CountdownReached => T("It's time!", "Es ist so weit!", "Ci siamo!", "C'est l'heure !", "¡Ya es la hora!");
+        public static string CountdownTitleLabel => T("Title", "Titel", "Titolo", "Titre", "Título");
+        public static string CountdownDateLabel => T("Date and time", "Datum und Uhrzeit", "Data e ora", "Date et heure", "Fecha y hora");
+        public static string WidgetPlaytime => T("Playtime", "Spielzeit", "Tempo di gioco", "Temps de jeu", "Tiempo de juego");
+        public static string PlaytimeChoose => T("Choose game (exe)…", "Spiel auswählen (EXE)…", "Scegli gioco (exe)…", "Choisir le jeu (exe)…", "Elegir juego (exe)…");
         public static string PlaytimeChooseHint => T("Double-click to choose the game's exe. NoFences then records how long it runs.",
                                                      "Doppelklick, um die EXE des Spiels auszuwählen. NoFences zeichnet dann auf, wie lange es läuft.",
-                                                     "Doppio clic per scegliere l'eseguibile del gioco. NoFences registra poi per quanto tempo è in esecuzione.");
-        public static string PlaytimeExeFilter => T("Programs (*.exe)|*.exe", "Programme (*.exe)|*.exe", "Programmi (*.exe)|*.exe");
-        public static string PlaytimeRunning => T("running", "läuft", "in corso");
-        public static string PlaytimeToday => T("today", "heute", "oggi");
-        public static string PlaytimeWeek => T("This week", "Diese Woche", "Questa settimana");
-        public static string PlaytimeMonth => T("This month", "Diesen Monat", "Questo mese");
-        public static string PlaytimeTotal => T("Total", "Gesamt", "Totale");
-        public static string WidgetWeather => T("Weather", "Wetter", "Meteo");
-        public static string WeatherHint => T("Double-click to choose a place.", "Doppelklick, um einen Ort auszuwählen.", "Doppio clic per scegliere una località.");
-        public static string WeatherChoose => T("Choose place…", "Ort auswählen…", "Scegli località…");
-        public static string WeatherUpdateNow => T("Update now", "Jetzt aktualisieren", "Aggiorna ora");
-        public static string WeatherPlaceLabel => T("Town or city:", "Ort oder Stadt:", "Località o città:");
-        public static string WeatherSearch => T("Search", "Suchen", "Cerca");
-        public static string WeatherLoading => T("Loading…", "Wird geladen…", "Caricamento…");
-        public static string WeatherOffline => T("No connection to the weather service.", "Keine Verbindung zum Wetterdienst.", "Nessuna connessione al servizio meteo.");
-        public static string WeatherNoPlace => T("No place found.", "Kein Ort gefunden.", "Nessuna località trovata.");
-        public static string WeatherCredit => T("Weather data: Open-Meteo.com", "Wetterdaten: Open-Meteo.com", "Dati meteo: Open-Meteo.com");
+                                                     "Doppio clic per scegliere l'eseguibile del gioco. NoFences registra poi per quanto tempo è in esecuzione.",
+                                                     "Double-cliquez pour choisir l'exe du jeu. NoFences enregistre ensuite combien de temps il tourne.",
+                                                     "Haz doble clic para elegir el exe del juego. NoFences registra luego cuánto tiempo se ejecuta.");
+        public static string PlaytimeExeFilter => T("Programs (*.exe)|*.exe", "Programme (*.exe)|*.exe", "Programmi (*.exe)|*.exe", "Programmes (*.exe)|*.exe", "Programas (*.exe)|*.exe");
+        public static string PlaytimeRunning => T("running", "läuft", "in corso", "en cours", "en curso");
+        public static string PlaytimeToday => T("today", "heute", "oggi", "aujourd'hui", "hoy");
+        public static string PlaytimeWeek => T("This week", "Diese Woche", "Questa settimana", "Cette semaine", "Esta semana");
+        public static string PlaytimeMonth => T("This month", "Diesen Monat", "Questo mese", "Ce mois-ci", "Este mes");
+        public static string PlaytimeTotal => T("Total", "Gesamt", "Totale", "Total", "Total");
+        public static string WidgetWeather => T("Weather", "Wetter", "Meteo", "Météo", "Tiempo");
+        public static string WeatherHint => T("Double-click to choose a place.", "Doppelklick, um einen Ort auszuwählen.", "Doppio clic per scegliere una località.", "Double-cliquez pour choisir un lieu.", "Haz doble clic para elegir un lugar.");
+        public static string WeatherChoose => T("Choose place…", "Ort auswählen…", "Scegli località…", "Choisir le lieu…", "Elegir lugar…");
+        public static string WeatherUpdateNow => T("Update now", "Jetzt aktualisieren", "Aggiorna ora", "Actualiser", "Actualizar ahora");
+        public static string WeatherPlaceLabel => T("Town or city:", "Ort oder Stadt:", "Località o città:", "Ville ou village :", "Ciudad o pueblo:");
+        public static string WeatherSearch => T("Search", "Suchen", "Cerca", "Rechercher", "Buscar");
+        public static string WeatherLoading => T("Loading…", "Wird geladen…", "Caricamento…", "Chargement…", "Cargando…");
+        public static string WeatherOffline => T("No connection to the weather service.", "Keine Verbindung zum Wetterdienst.", "Nessuna connessione al servizio meteo.", "Pas de connexion au service.", "Sin conexión con el servicio.");
+        public static string WeatherNoPlace => T("No place found.", "Kein Ort gefunden.", "Nessuna località trovata.", "Aucun lieu trouvé.", "No se encontró ningún lugar.");
+        public static string WeatherCredit => T("Weather data: Open-Meteo.com", "Wetterdaten: Open-Meteo.com", "Dati meteo: Open-Meteo.com", "Données météo : Open-Meteo.com", "Datos del tiempo: Open-Meteo.com");
         public static string WeatherDetails(double feelsLike, double wind) => T(
-            $"Feels like {feelsLike:0}° · wind {wind:0} km/h", $"Gefühlt {feelsLike:0}° · Wind {wind:0} km/h", $"Percepita {feelsLike:0}° · vento {wind:0} km/h");
+            $"Feels like {feelsLike:0}° · wind {wind:0} km/h", $"Gefühlt {feelsLike:0}° · Wind {wind:0} km/h", $"Percepita {feelsLike:0}° · vento {wind:0} km/h",
+            $"Ressenti {feelsLike:0}° · vent {wind:0} km/h", $"Sensación {feelsLike:0}° · viento {wind:0} km/h");
         public static string WeatherKindName(Widgets.WeatherKind kind) => kind switch
         {
-            Widgets.WeatherKind.Clear => T("Clear", "Klar", "Sereno"),
-            Widgets.WeatherKind.PartlyCloudy => T("Partly cloudy", "Teils bewölkt", "Parzialmente nuvoloso"),
-            Widgets.WeatherKind.Cloudy => T("Cloudy", "Bewölkt", "Nuvoloso"),
-            Widgets.WeatherKind.Fog => T("Fog", "Nebel", "Nebbia"),
-            Widgets.WeatherKind.Drizzle => T("Drizzle", "Nieselregen", "Pioviggine"),
-            Widgets.WeatherKind.Rain => T("Rain", "Regen", "Pioggia"),
-            Widgets.WeatherKind.Snow => T("Snow", "Schnee", "Neve"),
-            _ => T("Thunderstorm", "Gewitter", "Temporale")
+            Widgets.WeatherKind.Clear => T("Clear", "Klar", "Sereno", "Dégagé", "Despejado"),
+            Widgets.WeatherKind.PartlyCloudy => T("Partly cloudy", "Teils bewölkt", "Parzialmente nuvoloso", "Partiellement nuageux", "Parcialmente nublado"),
+            Widgets.WeatherKind.Cloudy => T("Cloudy", "Bewölkt", "Nuvoloso", "Nuageux", "Nublado"),
+            Widgets.WeatherKind.Fog => T("Fog", "Nebel", "Nebbia", "Brouillard", "Niebla"),
+            Widgets.WeatherKind.Drizzle => T("Drizzle", "Nieselregen", "Pioviggine", "Bruine", "Llovizna"),
+            Widgets.WeatherKind.Rain => T("Rain", "Regen", "Pioggia", "Pluie", "Lluvia"),
+            Widgets.WeatherKind.Snow => T("Snow", "Schnee", "Neve", "Neige", "Nieve"),
+            _ => T("Thunderstorm", "Gewitter", "Temporale", "Orage", "Tormenta")
         };
-        public static string WidgetMedia => T("Now playing (media)", "Medien (läuft gerade)", "In riproduzione (media)");
+        public static string WidgetMedia => T("Now playing (media)", "Medien (läuft gerade)", "In riproduzione (media)", "En cours de lecture (médias)", "Reproduciendo (multimedia)");
         public static string MediaNothing => T("Nothing is playing.\nMusic and videos from Spotify, browsers etc. appear here.",
                                               "Gerade läuft nichts.\nMusik und Videos aus Spotify, Browsern usw. erscheinen hier.",
-                                              "Nessuna riproduzione.\nMusica e video da Spotify, browser ecc. appaiono qui.");
-        public static string WidgetNetwork => T("Network", "Netzwerk", "Rete");
-        public static string WidgetClipboard => T("Clipboard history", "Zwischenablage-Verlauf", "Cronologia appunti");
+                                              "Nessuna riproduzione.\nMusica e video da Spotify, browser ecc. appaiono qui.",
+                                              "Aucune lecture en cours.\nLa musique et les vidéos de Spotify, des navigateurs, etc. apparaissent ici.",
+                                              "No se está reproduciendo nada.\nLa música y los vídeos de Spotify, navegadores, etc. aparecen aquí.");
+        public static string WidgetNetwork => T("Network", "Netzwerk", "Rete", "Réseau", "Red");
+        public static string WidgetClipboard => T("Clipboard history", "Zwischenablage-Verlauf", "Cronologia appunti", "Historique du presse-papiers", "Historial del portapapeles");
         public static string ClipboardHint => T("Copied texts appear here – click one to copy it again. Kept only until NoFences closes; passwords from password managers are skipped.",
                                                "Kopierte Texte erscheinen hier – anklicken kopiert sie erneut. Nur bis NoFences beendet wird; Passwörter aus Passwort-Managern werden übersprungen.",
-                                               "I testi copiati appaiono qui – fai clic per copiarli di nuovo. Conservati solo finché NoFences è aperto; le password dei gestori di password vengono ignorate.");
-        public static string ClipboardClear => T("Clear history", "Verlauf leeren", "Cancella cronologia");
-        public static string WidgetBattery => T("Battery", "Akku", "Batteria");
-        public static string BatteryNone => T("No battery found.", "Kein Akku gefunden.", "Nessuna batteria trovata.");
-        public static string BatteryCharging => T("Charging", "Wird geladen", "In carica");
-        public static string BatteryPlugged => T("Plugged in", "Am Netz", "Collegato");
-        public static string BatteryOnBattery => T("On battery", "Akkubetrieb", "A batteria");
-        public static string BatteryLeft(string time) => T($"{time} left", $"noch {time}", $"ancora {time}");
+                                               "I testi copiati appaiono qui – fai clic per copiarli di nuovo. Conservati solo finché NoFences è aperto; le password dei gestori di password vengono ignorate.",
+                                               "Les textes copiés apparaissent ici – cliquez pour les copier à nouveau. Conservés jusqu'à la fermeture de NoFences ; les mots de passe des gestionnaires de mots de passe sont ignorés.",
+                                               "Los textos copiados aparecen aquí: haz clic para copiarlos de nuevo. Solo se guardan hasta cerrar NoFences; las contraseñas de los gestores de contraseñas se omiten.");
+        public static string ClipboardClear => T("Clear history", "Verlauf leeren", "Cancella cronologia", "Effacer l'historique", "Borrar historial");
+        public static string WidgetBattery => T("Battery", "Akku", "Batteria", "Batterie", "Batería");
+        public static string BatteryNone => T("No battery found.", "Kein Akku gefunden.", "Nessuna batteria trovata.", "Aucune batterie trouvée.", "No se encontró ninguna batería.");
+        public static string BatteryCharging => T("Charging", "Wird geladen", "In carica", "En charge", "Cargando");
+        public static string BatteryPlugged => T("Plugged in", "Am Netz", "Collegato", "Sur secteur", "Conectado");
+        public static string BatteryOnBattery => T("On battery", "Akkubetrieb", "A batteria", "Sur batterie", "Con batería");
+        public static string BatteryLeft(string time) => T($"{time} left", $"noch {time}", $"ancora {time}", $"encore {time}", $"quedan {time}");
         public static string DriveDefaultName(DriveType type) => type switch
         {
-            DriveType.Removable => T("USB drive", "USB-Laufwerk", "Unità USB"),
-            DriveType.Network => T("Network", "Netzwerk", "Rete"),
-            _ => T("Local disk", "Lokaler Datenträger", "Disco locale")
+            DriveType.Removable => T("USB drive", "USB-Laufwerk", "Unità USB", "Clé USB", "Unidad USB"),
+            DriveType.Network => T("Network", "Netzwerk", "Rete", "Réseau", "Red"),
+            _ => T("Local disk", "Lokaler Datenträger", "Disco locale", "Disque local", "Disco local")
         };
-        public static string FreeSpace(string size) => T($"{size} free", $"{size} frei", $"{size} liberi");
-        public static string RecycleEmptyState => T("Empty", "Leer", "Vuoto");
+        public static string FreeSpace(string size) => T($"{size} free", $"{size} frei", $"{size} liberi", $"{size} libres", $"{size} libres");
+        public static string RecycleEmptyState => T("Empty", "Leer", "Vuoto", "Vide", "Vacía");
         public static string RecycleItems(long n, string size) => n == 1
-            ? T($"1 item · {size}", $"1 Element · {size}", $"1 elemento · {size}")
-            : T($"{n} items · {size}", $"{n} Elemente · {size}", $"{n} elementi · {size}");
-        public static string RecycleDropHint => T("Drop files here to delete", "Zum Löschen hierher ziehen", "Trascina qui per eliminare");
-        public static string RecycleEmptyAction => T("Empty recycle bin", "Papierkorb leeren", "Svuota cestino");
-        public static string GpuTemperature => T("GPU temp.", "GPU-Temp.", "Temp. GPU");
-        public static string FpsWaiting => T("waiting for a game…", "wartet auf ein Spiel…", "in attesa di un gioco…");
-        public static string FpsMenu => T("Measure FPS (admin helper)…", "FPS messen (Admin-Helfer)…", "Misura FPS (supporto amministratore)…");
-        public static string FpsTitle => T("Measure FPS – admin rights needed", "FPS messen – Administratorrechte nötig", "Misura FPS – servono diritti di amministratore");
+            ? T($"1 item · {size}", $"1 Element · {size}", $"1 elemento · {size}", $"1 élément · {size}", $"1 elemento · {size}")
+            : T($"{n} items · {size}", $"{n} Elemente · {size}", $"{n} elementi · {size}", $"{n} éléments · {size}", $"{n} elementos · {size}");
+        public static string RecycleDropHint => T("Drop files here to delete", "Zum Löschen hierher ziehen", "Trascina qui per eliminare", "Déposez ici pour supprimer", "Arrastra aquí para eliminar");
+        public static string RecycleEmptyAction => T("Empty recycle bin", "Papierkorb leeren", "Svuota cestino", "Vider la corbeille", "Vaciar la papelera");
+        public static string GpuTemperature => T("GPU temp.", "GPU-Temp.", "Temp. GPU", "Temp. GPU", "Temp. GPU");
+        public static string FpsWaiting => T("waiting for a game…", "wartet auf ein Spiel…", "in attesa di un gioco…", "en attente d'un jeu…", "esperando un juego…");
+        public static string FpsMenu => T("Measure FPS (admin helper)…", "FPS messen (Admin-Helfer)…", "Misura FPS (supporto amministratore)…", "Mesurer les FPS (assistant admin)…", "Medir FPS (asistente de administrador)…");
+        public static string FpsTitle => T("Measure FPS – admin rights needed", "FPS messen – Administratorrechte nötig", "Misura FPS – servono diritti di amministratore", "Mesurer les FPS – droits d'administrateur requis", "Medir FPS – se necesitan permisos de administrador");
         public static string FpsExplanation => T(
             "To measure the frame rate (FPS) of games, NoFences needs a small helper process with administrator rights. " +
             "Windows only gives the graphics output events (ETW) to programs with admin rights – MSI Afterburner and PresentMon work the same way.\n\n" +
@@ -379,8 +414,22 @@ namespace NoFences.Util
             "• Conta solo quante volte vengono mostrati i fotogrammi – nessun contenuto dello schermo, nessun input da tastiera o mouse.\n" +
             "• La prima volta Windows chiede il permesso (UAC). Poi il supporto crea un'attività nell'Utilità di pianificazione, così può avviarsi in seguito senza chiedere.\n" +
             "• Puoi disattivarlo in qualsiasi momento nelle impostazioni; l'attività viene rimossa.\n\n" +
-            "Attivare la misurazione degli FPS?");
-        public static string FpsDeclined => T("FPS measurement stays off (no admin rights granted).", "FPS-Messung bleibt aus (keine Adminrechte erteilt).", "La misurazione degli FPS resta disattivata (diritti di amministratore non concessi).");
+            "Attivare la misurazione degli FPS?",
+            "Pour mesurer la fréquence d'images (FPS) des jeux, NoFences a besoin d'un petit processus assistant avec des droits d'administrateur. " +
+            "Windows ne fournit les événements de sortie graphique (ETW) qu'aux programmes disposant de ces droits – MSI Afterburner et PresentMon fonctionnent de la même façon.\n\n" +
+            "• Seul cet assistant s'exécute en administrateur, pas NoFences.\n" +
+            "• Il compte seulement combien d'images sont affichées – aucun contenu d'écran, aucune saisie clavier ou souris.\n" +
+            "• La première fois, Windows demande l'autorisation (UAC). L'assistant crée ensuite une tâche dans le Planificateur de tâches pour démarrer plus tard sans demander.\n" +
+            "• Désactivable à tout moment dans les paramètres ; la tâche est alors supprimée.\n\n" +
+            "Activer la mesure des FPS ?",
+            "Para medir la tasa de fotogramas (FPS) de los juegos, NoFences necesita un pequeño proceso asistente con permisos de administrador. " +
+            "Windows solo entrega los eventos de salida gráfica (ETW) a programas con esos permisos; MSI Afterburner y PresentMon funcionan igual.\n\n" +
+            "• Solo este asistente se ejecuta como administrador, NoFences no.\n" +
+            "• Solo cuenta cuántos fotogramas se muestran: nada del contenido de la pantalla ni del teclado o el ratón.\n" +
+            "• La primera vez, Windows pide permiso (UAC). Después el asistente crea una tarea en el Programador de tareas para poder iniciarse sin preguntar.\n" +
+            "• Puedes desactivarlo cuando quieras en la configuración; la tarea se elimina.\n\n" +
+            "¿Activar la medición de FPS?");
+        public static string FpsDeclined => T("FPS measurement stays off (no admin rights granted).", "FPS-Messung bleibt aus (keine Adminrechte erteilt).", "La misurazione degli FPS resta disattivata (diritti di amministratore non concessi).", "La mesure des FPS reste désactivée (droits d'administrateur non accordés).", "La medición de FPS sigue desactivada (no se concedieron permisos de administrador).");
 
         #endregion
 
@@ -550,16 +599,22 @@ namespace NoFences.Util
 
         public static string AboutTagline => T("Free desktop fences, folder fences, sticky notes and widgets for Windows.",
                                                "Kostenlose Desktop-Fences, Ordner-Fences, Notizen und Widgets für Windows.",
-                                               "Recinti per il desktop, recinti cartella, note e widget gratuiti per Windows.");
-        public static string AboutSource => T("Source code and downloads on GitHub", "Quellcode und Downloads auf GitHub", "Codice sorgente e download su GitHub");
+                                               "Recinti per il desktop, recinti cartella, note e widget gratuiti per Windows.",
+                                               "Barrières de bureau, barrières de dossier, notes et widgets gratuits pour Windows.",
+                                               "Vallas de escritorio, vallas de carpeta, notas y widgets gratuitos para Windows.");
+        public static string AboutSource => T("Source code and downloads on GitHub", "Quellcode und Downloads auf GitHub", "Codice sorgente e download su GitHub", "Code source et téléchargements sur GitHub", "Código fuente y descargas en GitHub");
         public static string AboutCredits => T("Based on NoFences by Twometer and contributors — thank you!",
                                                "Basiert auf NoFences von Twometer und Mitwirkenden – danke!",
-                                               "Basato su NoFences di Twometer e collaboratori – grazie!");
-        public static string Donate => T("Donate (PayPal)", "Spenden (PayPal)", "Dona (PayPal)");
+                                               "Basato su NoFences di Twometer e collaboratori – grazie!",
+                                               "Basé sur NoFences de Twometer et ses contributeurs – merci !",
+                                               "Basado en NoFences de Twometer y colaboradores: ¡gracias!");
+        public static string Donate => T("Donate (PayPal)", "Spenden (PayPal)", "Dona (PayPal)", "Faire un don (PayPal)", "Donar (PayPal)");
         public static string DonateHint => T("NoFences is free. If you like it, a small donation helps keep it going – thank you!",
                                              "NoFences ist kostenlos. Wenn es dir gefällt, hilft eine kleine Spende beim Weitermachen – danke!",
-                                             "NoFences è gratuito. Se ti piace, una piccola donazione aiuta a portarlo avanti – grazie!");
-        public static string AboutLicense => T("Open source under the MIT license.", "Open Source unter der MIT-Lizenz.", "Open source con licenza MIT.");
+                                             "NoFences è gratuito. Se ti piace, una piccola donazione aiuta a portarlo avanti – grazie!",
+                                             "NoFences est gratuit. S'il vous plaît, un petit don aide à le faire vivre – merci !",
+                                             "NoFences es gratuito. Si te gusta, una pequeña donación ayuda a mantenerlo: ¡gracias!");
+        public static string AboutLicense => T("Open source under the MIT license.", "Open Source unter der MIT-Lizenz.", "Open source con licenza MIT.", "Open source sous licence MIT.", "Código abierto con licencia MIT.");
 
         #endregion
     }

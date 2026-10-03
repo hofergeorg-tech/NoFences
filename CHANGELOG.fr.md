@@ -1,0 +1,55 @@
+# Journal des modifications
+
+Toutes les modifications importantes de ce fork.
+English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
+Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
+
+## [2.4.0] - 2026-10-03
+
+### Nouveautés
+- **Widgets** : horloge et calendrier, moniteur système (CPU, RAM, charge et température du GPU, FPS), lecteurs,
+  corbeille, temps de jeu et compte à rebours. Menu de la zone de notification ou d'une barrière → Nouveau widget.
+- **Temps de jeu** pour n'importe quel jeu : choisissez son exe, NoFences enregistre combien de temps il tourne
+  (aujourd'hui, semaine, mois, total, en cours).
+- **Compte à rebours** jusqu'à une date, avec un titre.
+- Widgets **météo** (Open-Meteo, sans compte), **en cours de lecture** avec commandes, **réseau** avec graphique et
+  ping, **historique du presse-papiers** (en mémoire seulement, respecte les gestionnaires de mots de passe) et **batterie**.
+- Widget **jeux** : les jeux installés depuis Steam (avec jaquettes), Epic, GOG et l'application Xbox ; un clic les lance.
+- **Rendez-vous** depuis des liens d'agenda (.ics : Google, Outlook, iCloud), y compris récurrents.
+- Widgets **cadre photo**, **minuteur de concentration (Pomodoro)**, **actualités** (RSS/Atom avec flux prêts) et
+  **cours** (actions, indices, cryptos).
+- **Recherche dans toutes les barrières** (Ctrl+Alt+F) : raccourcis, contenu des dossiers, onglets et notes.
+- **Profils** comme « Travail » et « Jeux » : changement depuis la zone de notification, attribution par clic droit →
+  Afficher dans le profil.
+- **Automatisation** : changer de profil pendant qu'un programme tourne ou à heures fixes ; masquer les barrières en
+  plein écran ; style par défaut clair/sombre selon Windows ou l'heure.
+- **Plusieurs PC** : barrières dans un dossier partagé comme OneDrive.
+- Style **Couleur d'accentuation Windows** – 25 styles au total.
+- **Français et espagnol** ; menu **Langue** avec drapeaux dans la zone de notification et dans chaque barrière.
+- Bouton **Faire un don** (À propos et Paramètres → Mises à jour).
+- **Mesure des FPS** (facultative, désactivée par défaut) : un petit assistant avec droits d'administrateur compte les
+  images du programme au premier plan ; Windows demande une fois, les paramètres expliquent pourquoi.
+- Barrière **« Fichiers récents »** et **barre de lancement rapide** (icônes seules, noms en info-bulle).
+- **Onglets** dans les barrières de raccourcis.
+- **Seulement sur ce bureau virtuel** par barrière.
+- **Export/import** des barrières et des styles personnels, par ex. vers un autre PC.
+- **Fenêtre de paramètres** (zone de notification → Paramètres) pour tout ce qui concerne l'application ; le menu est
+  beaucoup plus court.
+- **Paramètres de barrière** repensés, avec sections et aperçu en direct.
+- **Fenêtre À propos** avec version, crédits et liens.
+- **8 nouveaux styles** : Documents, Multimédia, Musique, Sport, Photos, Voyages, Cuisine, Nature ; chaque style a une
+  couleur d'accent pour les widgets.
+
+### Corrections
+- OK dans les paramètres d'une barrière de raccourcis supprimait tous ses raccourcis.
+- Ouvrir les paramètres d'un widget provoquait un plantage.
+- Dans le post-it, les éléments débordaient en bas sur l'ombre du papier.
+- Le raccourci « Afficher les barrières au premier plan » était collé au texte du menu.
+- L'entrée sélectionnée dans la barre latérale des paramètres devenait illisible.
+
+## Versions précédentes
+
+Les versions 2.0.0 à 2.3.0 sont décrites dans le [journal en anglais](CHANGELOG.md). NoFences est basé sur
+[Twometer/NoFences](https://github.com/Twometer/NoFences) de Twometer et ses contributeurs.
+
+[2.4.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.0
