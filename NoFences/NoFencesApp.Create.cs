@@ -27,9 +27,7 @@ namespace NoFences
                 Kind = FenceKind.Widget,
                 WidgetType = type,
                 Width = size.Width,
-                Height = size.Height,
-                // The Star Citizen widget looks best in the HUD style
-                Theme = type == "starcitizen" ? "starcitizen" : null
+                Height = size.Height
             });
         }
 

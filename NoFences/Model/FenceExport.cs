@@ -19,10 +19,17 @@ namespace NoFences.Model
 
         public static FenceExport FromJson(string json)
         {
-            var export = JsonSerializer.Deserialize<FenceExport>(json, FenceStore.JsonOptions);
-            if (export == null || export.Format != "nofences-export")
-                throw new FormatException("Not a NoFences export file.");
-            return export;
+            // Check the marker in the file itself; the property's default value would let any JSON through.
+            using (var doc = JsonDocument.Parse(json))
+            {
+                var marker = doc.RootElement.ValueKind == JsonValueKind.Object
+                    ? doc.RootElement.EnumerateObject().FirstOrDefault(p => p.Name.Equals("Format", StringComparison.OrdinalIgnoreCase))
+                    : default;
+                if (marker.Value.ValueKind != JsonValueKind.String || marker.Value.GetString() != "nofences-export")
+                    throw new FormatException("Not a NoFences export file.");
+            }
+            return JsonSerializer.Deserialize<FenceExport>(json, FenceStore.JsonOptions)
+                   ?? throw new FormatException("Not a NoFences export file.");
         }
 
         public static FenceExport Create(IEnumerable<FenceInfo> fences, string? themesFolder)

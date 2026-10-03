@@ -143,7 +143,7 @@ namespace NoFences
                 ("system", "gaming", new Size(260, 300)),
                 ("drives", "hardware", new Size(300, 240)),
                 ("recyclebin", "nerd", new Size(220, 210)),
-                ("starcitizen", "starcitizen", new Size(270, 260)),
+                ("playtime", "starcitizen", new Size(270, 260)),
             };
             const int gap = 24;
             using var sheet = new Bitmap(items.Sum(i => i.Size.Width + gap) + gap, items.Max(i => i.Size.Height) + 2 * gap, PixelFormat.Format32bppArgb);

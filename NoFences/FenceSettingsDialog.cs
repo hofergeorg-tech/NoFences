@@ -55,6 +55,12 @@ namespace NoFences
             }
 
             kindBox.Items.AddRange(new object[] { Strings.KindLinks, Strings.KindFolder, Strings.KindNote }); // index = (int)FenceKind
+            // A widget can't be turned into another kind (or back); show it, but locked.
+            if (info.Kind == FenceKind.Widget)
+            {
+                kindBox.Items.Add(Strings.KindWidget);
+                kindBox.Enabled = false;
+            }
             themeBox.Items.Add(Strings.ThemeInherit);
             foreach (var t in ThemeRegistry.All)
                 themeBox.Items.Add(t.DisplayName);
@@ -101,7 +107,7 @@ namespace NoFences
 
             // Values
             nameBox.Text = info.Name;
-            kindBox.SelectedIndex = (int)info.Kind;
+            kindBox.SelectedIndex = Math.Min((int)info.Kind, kindBox.Items.Count - 1);
             folderBox.Text = info.FolderPath ?? "";
             var themeIndex = info.Theme == null ? 0 : ThemeRegistry.All.ToList().FindIndex(t => t.Id == info.Theme) + 1;
             themeBox.SelectedIndex = Math.Max(0, themeIndex);

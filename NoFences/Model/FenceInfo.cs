@@ -91,6 +91,9 @@ namespace NoFences.Model
         /// <summary>Widget fences: which widget ("clock", "system", "drives", "recyclebin", "starcitizen").</summary>
         public string? WidgetType { get; set; }
 
+        /// <summary>Widget-specific choice, e.g. the game shown by the playtime widget (null = default).</summary>
+        public string? WidgetOption { get; set; }
+
         /// <summary>Icons only, no names (quick-launch bar); names show as tooltips.</summary>
         public bool Compact { get; set; }
 

@@ -23,7 +23,7 @@ namespace NoFences
             if (widget?.Type != Info.WidgetType)
             {
                 DisposeWidget();
-                widget = WidgetRegistry.Create(Info.WidgetType, app);
+                widget = WidgetRegistry.Create(Info, app);
                 if (widget == null)
                     return;
                 widgetTimer.Interval = widget.RefreshMs;

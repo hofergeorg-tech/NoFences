@@ -31,7 +31,10 @@ namespace NoFences.Util
         public static string WidgetSystem => T("System monitor (CPU, RAM, GPU, FPS)", "System-Monitor (CPU, RAM, GPU, FPS)");
         public static string WidgetDrives => T("Drives", "Laufwerke");
         public static string WidgetRecycleBin => T("Recycle bin", "Papierkorb");
-        public static string WidgetStarCitizen => T("Star Citizen playtime", "Star Citizen Spielzeit");
+        public static string WidgetPlaytime => T("Playtime (SC Playtime)", "Spielzeit (SC Playtime)");
+        public static string PlaytimeGame => T("Game", "Spiel");
+        public static string PlaytimeLastPlayed => T("Most recently played", "Zuletzt gespieltes Spiel");
+        public static string PlaytimeNoSessions => T("No playtime recorded yet.", "Noch keine Spielzeit aufgezeichnet.");
         public static string DriveDefaultName(DriveType type) => type switch
         {
             DriveType.Removable => T("USB drive", "USB-Laufwerk"),
@@ -67,8 +70,8 @@ namespace NoFences.Util
         public static string PlaytimeWeek => T("This week", "Diese Woche");
         public static string PlaytimeMonth => T("This month", "Diesen Monat");
         public static string PlaytimeTotal => T("Total", "Gesamt");
-        public static string ScPlaytimeMissing => T("SC Playtime not found. It records your playtime; this widget shows it.",
-                                                    "SC Playtime nicht gefunden. Es zeichnet deine Spielzeit auf, dieses Widget zeigt sie an.");
+        public static string PlaytimeMissing => T("SC Playtime not found. It records how long you play your games; this widget shows it.",
+                                                    "SC Playtime nicht gefunden. Es zeichnet auf, wie lange du deine Spiele spielst, dieses Widget zeigt es an.");
         public static string About => T("About NoFences", "Über NoFences");
         public static string AboutTagline => T("Free desktop fences, folder fences, sticky notes and widgets for Windows.",
                                                "Kostenlose Desktop-Fences, Ordner-Fences, Notizen und Widgets für Windows.");
@@ -191,6 +194,7 @@ namespace NoFences.Util
         public static string ReminderRemove => T("Remove", "Entfernen");
         public static string ReminderDue(string name) => T($"Reminder: {name}", $"Erinnerung: {name}");
         public static string AlwaysOnTop => T("Always on top", "Immer im Vordergrund");
+        public static string KindWidget => T("Widget", "Widget");
         public static string NewNote => T("New note", "Neue Notiz");
         public static string NoteName => T("Note", "Notiz");
         public static string EditNote => T("Edit note", "Notiz bearbeiten");
