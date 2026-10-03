@@ -18,6 +18,7 @@ namespace NoFences
             public bool ShowExtensions => false;
             public bool Animations => false;
             public bool FpsEnabled => true;
+            public PlaytimeLog Playtime { get; } = DemoPlaytime();
             public void ToggleFps() { }
             public FenceTheme ThemeFor(FenceInfo info) => ThemeRegistry.Get(info.Theme);
             public void RequestSave() { }
@@ -27,6 +28,24 @@ namespace NoFences
             public Guid? CurrentVirtualDesktop => null;
             public void TogglePinToDesktop(FenceInfo info) { }
             public IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except) => Array.Empty<Rectangle>();
+        }
+
+        internal const string DemoGame = @"C:\Games\Space Game.exe";
+
+        /// <summary>Some made-up sessions for "Space Game.exe" so the playtime widget has something to show.</summary>
+        private static PlaytimeLog DemoPlaytime()
+        {
+            var log = new PlaytimeLog();
+            var today = DateTime.Today;
+            // Oldest first, as they would have been recorded
+            foreach (var (daysAgo, hour, minutes) in new[] { (20, 18, 240), (9, 21, 180), (3, 19, 60), (1, 20, 140), (0, 15, 95) })
+            {
+                var start = today.AddDays(-daysAgo).AddHours(hour);
+                log.Running(DemoGame, start, null);
+                var list = log.Games[PlaytimeLog.Key(DemoGame)];
+                list[^1] = list[^1] with { End = new DateTimeOffset(start.AddMinutes(minutes)).ToUnixTimeSeconds() };
+            }
+            return log;
         }
 
         public static void Run(string outDir)
@@ -157,7 +176,13 @@ namespace NoFences
             {
                 var name = Widgets.WidgetRegistry.Types.First(t => t.Type == type).Name();
                 var info = new FenceInfo { Name = name, Kind = FenceKind.Widget, WidgetType = type, Theme = theme, BackgroundAlpha = 140,
-                    WidgetOption = type == "countdown" ? Widgets.CountdownWidget.Format(new DateTime(DateTime.Now.Year, 12, 24, 18, 0, 0), "Weihnachten") : null };
+                    WidgetOption = type switch
+                    {
+                        "countdown" => Widgets.CountdownWidget.Format(new DateTime(DateTime.Now.Year, 12, 24, 18, 0, 0), "Weihnachten"),
+                        "playtime" => DemoGame,
+                        _ => null
+                    }
+                };
                 using var window = new FenceWindow(host, info) { Size = size };
                 window.ApplySettings();
                 window.RefreshWidgetForPreview();

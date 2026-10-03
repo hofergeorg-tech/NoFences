@@ -53,6 +53,7 @@ namespace NoFences
             InitBackupsAndScreens();
             InitFps();
             InitVirtualDesktops();
+            InitPlaytime();
             if (themeErrors.Count > 0)
                 ShowBalloon(Strings.ThemeErrors(string.Join("\n", themeErrors)), timeout: 10_000);
 
@@ -260,6 +261,7 @@ namespace NoFences
             DisposeBackupsAndScreens();
             DisposeFps();
             virtualDesktopTimer.Dispose();
+            DisposePlaytime();
             sorter.Dispose();
             tray.Visible = false;
             tray.Dispose();

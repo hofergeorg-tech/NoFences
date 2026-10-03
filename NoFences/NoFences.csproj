@@ -33,8 +33,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Reads sc-playtime's session database for the Star Citizen widget -->
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.*" />
     <!-- ETW real-time session for the (opt-in, elevated) FPS helper -->
     <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.*" />
   </ItemGroup>

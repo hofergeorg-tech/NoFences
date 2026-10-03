@@ -22,7 +22,8 @@ namespace NoFences.Widgets
             if (info.WidgetType == "starcitizen")
             {
                 info.WidgetType = "playtime";
-                info.WidgetOption ??= "Star Citizen";
+                // The old widget stored a game name, the new one needs the game's exe
+                info.WidgetOption = null;
                 host.RequestSave();
             }
 
@@ -32,11 +33,11 @@ namespace NoFences.Widgets
                 "system" => new SystemWidget(() => host.FpsEnabled, host.ToggleFps),
                 "drives" => new DrivesWidget(),
                 "recyclebin" => new RecycleBinWidget(),
-                "playtime" => new PlaytimeWidget(() => info.WidgetOption, game =>
+                "playtime" => new PlaytimeWidget(() => info.WidgetOption, exe =>
                 {
-                    info.WidgetOption = game;
+                    info.WidgetOption = exe;
                     host.RequestSave();
-                }),
+                }, () => host.Playtime),
                 "countdown" => new CountdownWidget(() => info.WidgetOption, option =>
                 {
                     info.WidgetOption = option;

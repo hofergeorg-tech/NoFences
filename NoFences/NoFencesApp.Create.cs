@@ -21,9 +21,19 @@ namespace NoFences
         public void CreateWidget(string type)
         {
             var (_, name, size) = WidgetRegistry.Types.First(t => t.Type == type);
+            // Playtime needs the game first; its name becomes the fence title.
+            string? option = null;
+            var title = name();
+            if (type == "playtime")
+            {
+                option = PlaytimeWidget.ChooseExe(null, null);
+                if (option != null)
+                    title = PlaytimeWidget.GameName(option);
+            }
             AddFence(new FenceInfo
             {
-                Name = name(),
+                Name = title,
+                WidgetOption = option,
                 Kind = FenceKind.Widget,
                 WidgetType = type,
                 Width = size.Width,

@@ -269,16 +269,16 @@ namespace NoFences.Util
         public static string CountdownTitleLabel => T("Title", "Titel", "Titolo");
         public static string CountdownDateLabel => T("Date and time", "Datum und Uhrzeit", "Data e ora");
         public static string WidgetPlaytime => T("Playtime", "Spielzeit", "Tempo di gioco");
-        public static string PlaytimeGame => T("Game", "Spiel", "Gioco");
-        public static string PlaytimeLastPlayed => T("Most recently played", "Zuletzt gespieltes Spiel", "Giocato più di recente");
-        public static string PlaytimeNoSessions => T("No playtime recorded yet.", "Noch keine Spielzeit aufgezeichnet.", "Nessun tempo di gioco registrato.");
+        public static string PlaytimeChoose => T("Choose game (exe)…", "Spiel auswählen (EXE)…", "Scegli gioco (exe)…");
+        public static string PlaytimeChooseHint => T("Double-click to choose the game's exe. NoFences then records how long it runs.",
+                                                     "Doppelklick, um die EXE des Spiels auszuwählen. NoFences zeichnet dann auf, wie lange es läuft.",
+                                                     "Doppio clic per scegliere l'eseguibile del gioco. NoFences registra poi per quanto tempo è in esecuzione.");
+        public static string PlaytimeExeFilter => T("Programs (*.exe)|*.exe", "Programme (*.exe)|*.exe", "Programmi (*.exe)|*.exe");
+        public static string PlaytimeRunning => T("running", "läuft", "in corso");
         public static string PlaytimeToday => T("today", "heute", "oggi");
         public static string PlaytimeWeek => T("This week", "Diese Woche", "Questa settimana");
         public static string PlaytimeMonth => T("This month", "Diesen Monat", "Questo mese");
         public static string PlaytimeTotal => T("Total", "Gesamt", "Totale");
-        public static string PlaytimeMissing => T("No playtime data found. This widget shows the playtime of your games as recorded by the free tool SC Playtime (works for any game).",
-                                                  "Keine Spielzeit-Daten gefunden. Das Widget zeigt die Spielzeit deiner Spiele, die das kostenlose Tool SC Playtime aufzeichnet (für beliebige Spiele).",
-                                                  "Nessun dato sul tempo di gioco. Questo widget mostra il tempo di gioco registrato dallo strumento gratuito SC Playtime (per qualsiasi gioco).");
         public static string DriveDefaultName(DriveType type) => type switch
         {
             DriveType.Removable => T("USB drive", "USB-Laufwerk", "Unità USB"),

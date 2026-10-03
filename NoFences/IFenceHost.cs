@@ -20,6 +20,9 @@ namespace NoFences
 
         void RequestSave();
 
+        /// <summary>Playtime recorded by NoFences for the playtime widgets.</summary>
+        PlaytimeLog Playtime { get; }
+
         void CreateFence(FenceKind kind, string? name = null);
 
         void RemoveFence(FenceWindow window);

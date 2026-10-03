@@ -59,6 +59,75 @@ namespace NoFences.Tests
         }
     }
 
+    public class PlaytimeLogTests
+    {
+        private const string Game = @"C:\Games\Space Game.exe";
+
+        /// <summary>Like the tracker: one call every 5 seconds while the game runs.</summary>
+        private static void Play(PlaytimeLog log, DateTime from, TimeSpan length, DateTime? processStart = null)
+        {
+            log.Running(Game, from, processStart);
+            for (var t = from.AddSeconds(5); t <= from + length; t = t.AddSeconds(5))
+                log.Running(Game, t, null);
+        }
+
+        [Fact]
+        public void Running_StartsAtProcessStartAndExtends()
+        {
+            var log = new PlaytimeLog();
+            var t0 = new DateTime(2026, 10, 3, 20, 0, 0);
+            Play(log, t0, TimeSpan.FromMinutes(30), processStart: t0.AddMinutes(-10)); // noticed 10 min late
+            var session = Assert.Single(log.SessionsOf(Game));
+            Assert.Equal(40, (session.End - session.Start) / 60, 1);
+        }
+
+        [Fact]
+        public void ShortGap_ContinuesTheSession()
+        {
+            var log = new PlaytimeLog();
+            var t0 = new DateTime(2026, 10, 3, 20, 0, 0);
+            Play(log, t0, TimeSpan.FromMinutes(10));
+            Play(log, t0.AddMinutes(11), TimeSpan.FromMinutes(10)); // NoFences restarted for a minute
+            Assert.Single(log.SessionsOf(Game));
+        }
+
+        [Fact]
+        public void LongGap_StartsANewSession_WithoutOverlap()
+        {
+            var log = new PlaytimeLog();
+            var t0 = new DateTime(2026, 10, 3, 20, 0, 0);
+            Play(log, t0, TimeSpan.FromMinutes(10));
+            // Game closed, started again an hour later; a bogus early process start must not overlap
+            Play(log, t0.AddMinutes(70), TimeSpan.FromMinutes(5), processStart: t0.AddMinutes(5));
+            var sessions = log.SessionsOf(Game).ToList();
+            Assert.Equal(2, sessions.Count);
+            Assert.True(sessions[1].Start >= sessions[0].End);
+        }
+
+        [Fact]
+        public void GamesAreKeyedByExeName()
+        {
+            var log = new PlaytimeLog();
+            log.Running(@"C:\A\game.exe", DateTime.Now, null);
+            Assert.Single(log.SessionsOf(@"D:\Other\GAME.EXE"));
+            Assert.Empty(log.SessionsOf(@"C:\A\other.exe"));
+        }
+
+        [Fact]
+        public void SaveAndLoad_RoundTrips()
+        {
+            using var dir = new TempFolder();
+            var path = Path.Combine(dir.Path, "playtime.json");
+            var log = new PlaytimeLog();
+            Play(log, new DateTime(2026, 10, 3, 20, 0, 0), TimeSpan.FromHours(1));
+            log.Save(path);
+
+            var loaded = PlaytimeLog.Load(path);
+            var s = Assert.Single(loaded.SessionsOf(Game.ToUpperInvariant()));
+            Assert.Equal(3600, s.End - s.Start);
+        }
+    }
+
     public class CountdownTests
     {
         [Fact]

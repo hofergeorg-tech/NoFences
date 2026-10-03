@@ -1,130 +1,98 @@
 # NoFences Help
 
-NoFences puts boxes ("fences") on your desktop that keep your icons organized. German version: [HILFE.md](HILFE.md).
+NoFences puts boxes ("fences") on your desktop that keep your icons organized, plus sticky notes and widgets.
+Deutsch: [HILFE.md](HILFE.md) · Italiano: [AIUTO.md](AIUTO.md)
 
 ## Getting started
 
 - After the first start there is one empty fence. Drag files or folders onto it.
-- **Right-click a fence** (title or empty space) for its menu: settings, style, lock, new fence, delete.
+- **Right-click a fence** (title or empty space) for its menu: settings, style, rename, new fence or widget, delete.
 - **Right-click an item** for the normal Explorer menu. Shift + right-click shows the fence menu instead.
-- The **tray icon** (bottom right, maybe behind the ^ arrow) has the app-wide options and "Exit".
+- The **tray icon** (bottom right, maybe behind the ^ arrow) creates fences, shows/hides them and opens the
+  **Settings** for everything app-wide.
 
-## Two kinds of fences
+## Kinds of fences
 
-- **Link fence** (default): shows links to files and folders. The files stay where they are, so they are
-  still on the desktop too. Deleting the original removes it from the fence as well.
+- **Link fence** (default): links to files and folders. The files stay where they are, so they are still on the
+  desktop too. Deleting the original removes it from the fence as well.
 - **Folder fence**: shows the contents of a folder. Dropping files onto it **moves** them into that folder
-  (hold Ctrl to copy), so they really leave the desktop. Create one via "New folder fence…".
-
-- **Note**: a sticky note with text instead of files. Create one via "New note".
+  (hold Ctrl to copy), so they really leave the desktop.
+- **Note**: a sticky note with text, see below.
+- **Widget**: live content – clock, system monitor, drives, recycle bin, playtime, countdown, see below.
+- **Recent files**: the 20 files you opened last (read-only).
+- **Quick-launch bar**: a slim link fence with icons only; names show as tooltips.
 
 Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use it as a folder fence.
 
 ## Working with items
 
-- Double-click opens an item.
-- Drag items to reorder them, onto another fence to move them there, or into Explorer.
-- Mouse wheel scrolls when a fence is full.
-- "Remove from fence" (link fences) only removes the link, never the file.
+- Double-click opens an item. Drag items to reorder them, onto another fence to move them there, or into Explorer.
+- **Ctrl+click** selects several items, **Shift+click** a range; dragging on empty space draws a selection rectangle.
+- A clicked fence listens to the keyboard: **Enter** opens, **F2** renames, **Delete** removes (link fences: only the
+  link; folder fences: recycle bin), **Ctrl+A**, **Ctrl+C**, arrow keys, **Esc**.
+- **Just type** to search; the search text shows top right, Esc ends it.
+- Fence menu → **Sort by**: manual, name, type, date modified or size.
+- **Tabs** (link fences): fence menu → Add tab. Click a tab to switch, double-click to rename, drag items onto a tab
+  to move them there.
 
-## Selection, keyboard and search
+## Moving, sizing, renaming
 
-- **Ctrl+click** selects several items, **Shift+click** a range; dragging on empty space draws a
-  **selection rectangle**. Selected items can be dragged together and handled with a right-click.
-- A clicked fence listens to the keyboard:
-  - **Enter** opens, **F2** renames, **Ctrl+C** copies, **Ctrl+A** selects all, arrow keys move the selection.
-  - **Delete**: in a link fence only the link is removed, in a folder fence the file goes to the recycle bin.
-  - **Just type** to search: the fence shows matching items only, the search text appears top right. **Esc** ends it.
+- Drag the title bar to move a fence, drag the edges to resize. **Double-click the title** to rename it.
+- Fences **snap** to screen edges and other fences; hold **Alt** to place freely.
+- Positions are remembered **per monitor setup**: unplug a monitor and plug it back in, and the fences return.
+- **Locked** fences can't be moved or changed. **Collapse when not hovered** shrinks a fence to its title bar.
+- **Always on top** keeps a fence above all windows (over games only in "borderless window" mode).
+- **Only on this virtual desktop** shows a fence only on the current virtual desktop (Win+Ctrl+arrows).
 
 ## Notes
 
-- **Double-click** a note to write; **Esc** or a click outside saves.
-- Lines starting with `[ ]` become checkboxes. A click ticks them (`[x]`) and strikes the line through.
-- Text you drag onto a note (e.g. from a browser) is appended at the bottom.
-- Web addresses and paths (e.g. `www.example.com`, `C:\Folder\File.pdf`) are underlined and open on click.
-- Fence menu → **Reminder…**: at that time NoFences plays a sound and shows a notification; clicking it brings the
-  note to the front. While a reminder is set, its time shows top right.
-- New notes use the Post-it style (yellow); pink, green, blue and orange are under fence menu → **Style**.
-- New notes and fences appear next to the mouse.
-- Fence menu → **Always on top** keeps a note above all windows. Over games this only works in
-  "borderless window" mode, not in exclusive full screen.
+- **Double-click** to write; **Esc** or a click outside saves.
+- Lines starting with `[ ]` become checkboxes; a click ticks them and strikes the line through.
+- Web addresses and paths are underlined and open on click. Text dragged onto a note is appended.
+- Fence menu → **Reminder…**: NoFences plays a sound and shows a notification at that time.
+- Post-it style in yellow, pink, green, blue and orange.
 
-## Moving and resizing
+## Widgets
 
-- Drag the title bar to move a fence, drag the edges to resize.
-- **Double-click the title bar** to rename the fence in place (Enter saves, Esc cancels).
-- **Locked** fences can't be moved, resized or dropped onto.
-- **Collapse when not hovered** shrinks the fence to its title bar until you point at it.
-- While moving or resizing, fences **snap** to screen edges and to other fences. Hold **Alt** to place freely.
-- NoFences remembers positions **per monitor setup**: unplug a monitor and plug it back in, and the fences
-  return to their places.
+Tray or fence menu → **New widget**:
 
-## Auto-sort
+- **Clock & calendar**.
+- **System monitor**: CPU, RAM, GPU load and temperature (NVIDIA), and **FPS** if enabled (see below).
+- **Drives**: fill level and free space; click opens the drive.
+- **Recycle bin**: drop files on it to delete them, double-click opens it, the menu empties it.
+- **Playtime**: today / this week / this month / total for a game, read from the free tool SC Playtime, which can
+  record any game. Pick the game in the widget's menu.
+- **Countdown**: days and hours until a date; double-click to set it.
 
-In a fence's settings, enter patterns under "Auto-sort from desktop", e.g. `*.pdf; *.docx`, or pick a preset
-(images, documents, archives, installers, videos, music, shortcuts).
+## FPS measurement (optional)
 
-- New files that land on the desktop and match are moved into that folder fence (or linked in a link fence).
-- Downloads are sorted once they are finished.
-- Tray → **Tidy up desktop now** sorts the files that are already on the desktop.
-- Tray → **Auto-sort new desktop files** switches it off and on.
-- Only your own desktop is watched, not the shared "Public" desktop.
+Windows only gives the frame-rate events to programs with administrator rights. NoFences therefore uses a small
+helper process that runs as administrator – NoFences itself does not. It only counts frames, no screen content,
+no input. Turn it on in **Settings → FPS measurement**; Windows asks once, after that a Task Scheduler task starts the
+helper without asking. Turning it off removes the task again.
 
-## Hiding fences
+## Auto-sort from the desktop
 
-- **Double-click an empty spot on the desktop** to hide all fences, double-click again to show them.
-  Switch this off in the tray menu.
-- Tray → **Show fences** does the same; double-clicking the tray icon too.
-
-## Bringing fences to the front
-
-- **Ctrl+Alt+D** lifts all fences above the open windows without minimizing anything.
-- They stay in front until you press the shortcut again, press **Esc**, click outside them or open an item.
-- Tray → **Shortcut**: Ctrl+Alt+Space, Ctrl+Shift+D or off. If another program already uses the shortcut,
-  NoFences tells you.
-
-## Sorting
-
-Fence menu → **Sort by**: manual (drag & drop), name, type, date modified (newest first) or size (largest first).
-Folders always come first. Reordering by dragging only works in manual mode.
-
-## Updates
-
-- Shortly after starting and then every 6 hours, NoFences checks GitHub for a new version.
-- If there is one, a notification appears. Clicking it (or tray → **Install update**) downloads it, swaps the exe
-  and restarts NoFences. "What's new?" then shows the changes.
-- Tray → **Check for updates now** checks right away; **Check for updates automatically** turns the check off.
-- Only the project's public GitHub page is queried; no data about you is sent.
+In a fence's settings, enter patterns under "Auto-sort from the desktop", e.g. `*.pdf; *.docx`, or add a preset.
+New desktop files that match move into that fence (finished downloads too). **Tidy up desktop now** (tray or settings)
+sorts what is already there.
 
 ## Styles
 
-16 styles: Standard (glass), Star Citizen (HUD), Retro-Arcade, Hardware, Nerd, Hobby, Work, Family, Gaming,
-Finance, Social and Post-it in five colors.
+Pick the default in **Settings → General**, or one per fence (fence menu → Style, or the fence settings with a live
+preview). There are 24 styles – glass, Star Citizen HUD, Retro-Arcade, Hardware, Nerd, Hobby, Work, Family, Gaming,
+Finance, Social, Documents, Multimedia, Music, Sport, Photos, Travel, Cooking, Nature and Post-it in five colors.
 
-- Tray → **Default style** sets the style for all fences.
-- Fence menu → **Style** overrides it for one fence.
-- Color and opacity are set in the fence settings (color only for the Standard style).
-- Tray → **Animations** turns smooth collapsing and the hover effects (Star Citizen, Gaming, Retro-Arcade) on and off.
+**Own styles**: Settings → Data & styles → Open styles folder. Copy `beispiel-mocha.json`, change the colors
+(`#RRGGBB` or `#RRGGBBAA`) and reload. Own styles carry a ★.
 
-### Own styles
+## Settings (tray → Settings)
 
-Tray → **Own styles → Open styles folder**. It contains `beispiel-mocha.json`: copy it, rename it, change the colors
-(`#RRGGBB` or `#RRGGBBAA`, AA being the opacity), then **Reload styles**. Own styles are marked with ★ in the
-style list. NoFences reports broken files with the reason.
-
-## Settings per fence
-
-Right-click → **Fence settings…**: name, type (links/folder), folder, style, sorting, title height, icon size, background
-color, opacity, auto-sort patterns, locked, collapse.
-
-## App options (tray menu)
-
-- **Start with Windows** (also in every fence menu).
-- **Show file extensions**: like Explorer, always or never.
-- **Open config folder**: where the settings are stored.
-- **Restore backup**: NoFences backs up the settings every 12 hours (the last 10 are kept). Clicking a backup
-  puts all fences back to that state and restarts NoFences.
-- **Exit**.
+- **General**: language (automatic, English, Deutsch, Italiano), start with Windows, file extensions, default style, animations.
+- **Desktop**: double-click on the desktop hides/shows fences; shortcut to bring fences to the front (Ctrl+Alt+D); auto-sort.
+- **Updates**: NoFences checks GitHub and installs new versions with one click.
+- **FPS measurement**: see above.
+- **Data & styles**: export/import fences (e.g. for another PC), restore a backup (made every 12 hours), folders.
 
 ## FAQ
 
@@ -132,14 +100,12 @@ color, opacity, auto-sort patterns, locked, collapse.
 In a link fence: no, the fence only links to it. In a folder fence the file was moved, so there is nothing left to delete.
 
 **Windows shows a SmartScreen warning when starting NoFences.**
-The exe is not code-signed yet. Click "More info" → "Run anyway". Signing is planned.
+The exe is not code-signed yet. Click "More info" → "Run anyway".
 
 **Where are my settings?**
-`%LocalAppData%\NoFences\fences.json`. With an empty `portable.txt` next to `NoFences.exe` they are kept next to the exe instead.
-
-**I lost a fence off-screen.**
-Restart NoFences; fences outside all screens are moved back automatically.
+`%LocalAppData%\NoFences\fences.json` (backups next to it). With an empty `portable.txt` next to `NoFences.exe` they
+are kept next to the exe instead.
 
 **How do I uninstall?**
-Tray → uncheck "Start with Windows", tray → Exit, then delete `NoFences.exe` and the folder `%LocalAppData%\NoFences`.
-Files in folder fences stay in their folders.
+Settings → General: uncheck "Start with Windows"; turn off FPS measurement if used; tray → Exit; delete `NoFences.exe`
+and the folder `%LocalAppData%\NoFences`. Files in folder fences stay in their folders.
