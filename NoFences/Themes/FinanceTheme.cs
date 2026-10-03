@@ -15,6 +15,9 @@ namespace NoFences.Themes
 
         public override string DisplayName => "Finanzen (Börse)";
 
+
+        public override Color Accent => Gold;
+
         public override int CornerPreference => 1;
 
         public override int MinAlpha => 200;

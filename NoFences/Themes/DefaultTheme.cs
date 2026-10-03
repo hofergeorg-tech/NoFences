@@ -1,4 +1,4 @@
-﻿using NoFences.Model;
+using NoFences.Model;
 
 namespace NoFences.Themes
 {
@@ -8,6 +8,9 @@ namespace NoFences.Themes
         public override string Id => "default";
 
         public override string DisplayName => "Standard (Glas)";
+
+
+        public override Color Accent => Color.FromArgb(120, 190, 255);
 
         public override bool UsesCustomColor => true;
 

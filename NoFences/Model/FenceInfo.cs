@@ -9,7 +9,10 @@ namespace NoFences.Model
         Folder,
 
         /// <summary>A sticky note: free text, lines starting with "[ ]" become checkboxes.</summary>
-        Note
+        Note,
+
+        /// <summary>Live content instead of files: clock, system monitor, drives, recycle bin, Star Citizen playtime.</summary>
+        Widget
     }
 
     public enum FenceSortMode
@@ -84,6 +87,18 @@ namespace NoFences.Model
         public string? AutoSortPatterns { get; set; }
 
         public FenceSortMode SortMode { get; set; } = FenceSortMode.Manual;
+
+        /// <summary>Widget fences: which widget ("clock", "system", "drives", "recyclebin", "starcitizen").</summary>
+        public string? WidgetType { get; set; }
+
+        /// <summary>Icons only, no names (quick-launch bar); names show as tooltips.</summary>
+        public bool Compact { get; set; }
+
+        /// <summary>Nothing can be dropped in, removed or renamed (e.g. "Recent files").</summary>
+        public bool ReadOnly { get; set; }
+
+        /// <summary>Show at most this many entries (0 = all), e.g. the 20 most recent files.</summary>
+        public int MaxItems { get; set; }
 
         /// <summary>Only used for <see cref="FenceKind.Note"/>; lines separated by '\n'.</summary>
         public string NoteText { get; set; } = "";

@@ -63,6 +63,9 @@ namespace NoFences.Themes
 
         public abstract void DrawInsertMarker(Graphics g, int x, int top, int height, float s);
 
+        /// <summary>Highlight color of the style, used by widgets for bars, the clock and "live" markers.</summary>
+        public virtual Color Accent => Color.FromArgb(0, 150, 255);
+
         /// <summary>Frosted-glass blur behind the fence. Off = clear, so the theme can paint free shapes.</summary>
         public virtual bool Glass => true;
 

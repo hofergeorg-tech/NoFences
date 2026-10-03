@@ -7,13 +7,16 @@ namespace NoFences.Themes
     {
         private static readonly Color Paper = Color.FromArgb(246, 248, 251);
         private static readonly Color Navy = Color.FromArgb(28, 58, 105);
-        private static readonly Color Accent = Color.FromArgb(0, 120, 212);
+        private static readonly Color AccentBlue = Color.FromArgb(0, 120, 212);
         private static readonly Color Text = Color.FromArgb(32, 36, 44);
         private static readonly Color Line = Color.FromArgb(200, 208, 220);
 
         public override string Id => "work";
 
         public override string DisplayName => "Arbeit (Business)";
+
+
+        public override Color Accent => AccentBlue;
 
         public override int CornerPreference => 3;
 

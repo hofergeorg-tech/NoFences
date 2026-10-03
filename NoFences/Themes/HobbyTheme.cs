@@ -17,6 +17,9 @@ namespace NoFences.Themes
 
         public override string DisplayName => "Hobby (Pinnwand)";
 
+
+        public override Color Accent => Pin;
+
         public override int MinAlpha => 215;
 
         public override int ContentInset => 5;

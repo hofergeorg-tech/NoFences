@@ -120,7 +120,7 @@ namespace NoFences
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (IsNote || Editing)
+            if (IsNote || IsWidget || Editing)
                 return base.ProcessCmdKey(ref msg, keyData);
 
             var key = keyData & Keys.KeyCode;
@@ -167,7 +167,7 @@ namespace NoFences
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
             base.OnKeyPress(e);
-            if (IsNote || Editing || char.IsControl(e.KeyChar))
+            if (IsNote || IsWidget || Editing || char.IsControl(e.KeyChar))
                 return;
             SetSearch(search + e.KeyChar);
             e.Handled = true;
@@ -265,7 +265,7 @@ namespace NoFences
         private void DeleteSelection()
         {
             var paths = SelectedInOrder();
-            if (paths.Count == 0 || Info.Locked)
+            if (paths.Count == 0 || Info.Locked || Info.ReadOnly)
                 return;
             if (Info.Kind == FenceKind.Links)
             {
@@ -284,7 +284,7 @@ namespace NoFences
         private void RenameSelection()
         {
             var path = anchorPath ?? SelectedInOrder().FirstOrDefault();
-            if (path == null || Info.Locked)
+            if (path == null || Info.Locked || Info.ReadOnly)
                 return;
             var name = Path.GetFileName(path.TrimEnd('\\'));
             using var dialog = new InputDialog(Strings.Rename, Strings.NewName, name, selectStem: File.Exists(path));

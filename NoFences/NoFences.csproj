@@ -33,6 +33,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Reads sc-playtime's session database for the Star Citizen widget -->
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.*" />
+    <!-- ETW real-time session for the (opt-in, elevated) FPS helper -->
+    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.*" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="NoFences.ico" LogicalName="NoFences.ico" />
     <!-- Help and changelog live in the repo root and are shown in-app -->
     <EmbeddedResource Include="..\HELP.md" LogicalName="HELP.md" />

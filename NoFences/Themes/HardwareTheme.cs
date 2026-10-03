@@ -15,6 +15,9 @@ namespace NoFences.Themes
 
         public override string DisplayName => "Hardware (Platine)";
 
+
+        public override Color Accent => Copper;
+
         public override int CornerPreference => 1;
 
         public override int MinAlpha => 185;

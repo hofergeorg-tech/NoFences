@@ -10,6 +10,54 @@ namespace NoFences.Util
         public static string HelpDocument => De ? "HILFE.md" : "HELP.md";
         public static string ChangelogDocument => De ? "CHANGELOG.de.md" : "CHANGELOG.md";
         public static string Help => T("Help", "Hilfe");
+        public static string NewWidget => T("New widget", "Neues Widget");
+        public static string NewRecent => T("New \"Recent files\" fence", "Neuer Fence „Zuletzt verwendet“");
+        public static string RecentName => T("Recent files", "Zuletzt verwendet");
+        public static string NewQuickLaunch => T("New quick-launch bar", "Neue Schnellstart-Leiste");
+        public static string QuickLaunchName => T("Quick launch", "Schnellstart");
+        public static string CompactMode => T("Icons only (compact)", "Nur Icons (kompakt)");
+        public static string WidgetClock => T("Clock & calendar", "Uhr & Kalender");
+        public static string WidgetSystem => T("System monitor (CPU, RAM, GPU, FPS)", "System-Monitor (CPU, RAM, GPU, FPS)");
+        public static string WidgetDrives => T("Drives", "Laufwerke");
+        public static string WidgetRecycleBin => T("Recycle bin", "Papierkorb");
+        public static string WidgetStarCitizen => T("Star Citizen playtime", "Star Citizen Spielzeit");
+        public static string DriveDefaultName(DriveType type) => type switch
+        {
+            DriveType.Removable => T("USB drive", "USB-Laufwerk"),
+            DriveType.Network => T("Network", "Netzwerk"),
+            _ => T("Local disk", "Lokaler Datenträger")
+        };
+        public static string FreeSpace(string size) => T($"{size} free", $"{size} frei");
+        public static string RecycleEmptyState => T("Empty", "Leer");
+        public static string RecycleItems(long n, string size) => n == 1 ? T($"1 item · {size}", $"1 Element · {size}") : T($"{n} items · {size}", $"{n} Elemente · {size}");
+        public static string RecycleDropHint => T("Drop files here to delete", "Zum Löschen hierher ziehen");
+        public static string RecycleEmptyAction => T("Empty recycle bin", "Papierkorb leeren");
+        public static string GpuTemperature => T("GPU temp.", "GPU-Temp.");
+        public static string FpsWaiting => T("waiting for a game…", "wartet auf ein Spiel…");
+        public static string FpsMenu => T("Measure FPS (admin helper)…", "FPS messen (Admin-Helfer)…");
+        public static string FpsTitle => T("Measure FPS – admin rights needed", "FPS messen – Administratorrechte nötig");
+        public static string FpsExplanation => T(
+            "To measure the frame rate (FPS) of games, NoFences needs a small helper process with administrator rights. " +
+            "Windows only gives the graphics output events (ETW) to programs with admin rights – MSI Afterburner and PresentMon work the same way.\n\n" +
+            "• Only this helper runs as administrator, NoFences itself does not.\n" +
+            "• It only counts how often frames are shown – no screen content, no keyboard or mouse input.\n" +
+            "• The first time, Windows asks for permission (UAC). The helper then creates a task in the Task Scheduler so it can start later without asking.\n" +
+            "• Turn it off at any time in the same menu; the task is removed again.\n\n" +
+            "Enable FPS measurement?",
+            "Um die Bildrate (FPS) von Spielen zu messen, braucht NoFences einen kleinen Hilfsprozess mit Administratorrechten. " +
+            "Windows gibt die nötigen Ereignisse der Grafikausgabe (ETW) nur an Programme mit Adminrechten – MSI Afterburner und PresentMon machen es genauso.\n\n" +
+            "• Nur dieser Helfer läuft als Administrator, NoFences selbst nicht.\n" +
+            "• Er zählt nur, wie oft Bilder ausgegeben werden – keine Bildschirminhalte, keine Tastatur- oder Mauseingaben.\n" +
+            "• Beim ersten Mal fragt Windows nach Erlaubnis (UAC). Danach legt der Helfer eine Aufgabe in der Aufgabenplanung an, damit er später ohne Nachfrage starten kann.\n" +
+            "• Ausschalten jederzeit im selben Menü; die Aufgabe wird dabei wieder entfernt.\n\n" +
+            "FPS-Messung aktivieren?");
+        public static string FpsDeclined => T("FPS measurement stays off (no admin rights granted).", "FPS-Messung bleibt aus (keine Adminrechte erteilt).");
+        public static string PlaytimeToday => T("today", "heute");
+        public static string PlaytimeWeek => T("This week", "Diese Woche");
+        public static string PlaytimeMonth => T("This month", "Diesen Monat");
+        public static string PlaytimeTotal => T("Total", "Gesamt");
+        public static string ScPlaytimeMissing => T("SC Playtime not found. It records your playtime; this widget shows it.",
+                                                    "SC Playtime nicht gefunden. Es zeichnet deine Spielzeit auf, dieses Widget zeigt sie an.");
         public static string About => T("About NoFences", "Über NoFences");
         public static string AboutTagline => T("Free desktop fences, folder fences, sticky notes and widgets for Windows.",
                                                "Kostenlose Desktop-Fences, Ordner-Fences, Notizen und Widgets für Windows.");

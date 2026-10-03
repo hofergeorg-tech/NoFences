@@ -50,6 +50,7 @@ namespace NoFences
             InitUpdates();
             InitReminders();
             InitBackupsAndScreens();
+            InitFps();
             if (themeErrors.Count > 0)
                 ShowBalloon(Strings.ThemeErrors(string.Join("\n", themeErrors)), timeout: 10_000);
 
@@ -232,6 +233,7 @@ namespace NoFences
             menu.Items.Add(Strings.NewFence, null, (_, _) => CreateFence(FenceKind.Links));
             menu.Items.Add(Strings.NewFolderFence, null, (_, _) => CreateFence(FenceKind.Folder));
             menu.Items.Add(Strings.NewNote, null, (_, _) => CreateFence(FenceKind.Note));
+            AddCreateExtrasItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(new ToolStripMenuItem(Strings.ShowFences, null, (_, _) => ToggleVisible()) { Checked = fencesVisible });
             menu.Items.Add(new ToolStripMenuItem(Strings.DoubleClickToggle, null, (_, _) =>
@@ -261,6 +263,7 @@ namespace NoFences
             }
             menu.Items.Add(style);
             AddThemeItems(menu.Items);
+            menu.Items.Add(new ToolStripMenuItem(Strings.FpsMenu, null, (_, _) => ToggleFps()) { Checked = FpsEnabled });
 
             var ext = new ToolStripMenuItem(Strings.ShowExtensions);
             void ExtOption(string text, bool? value) => ext.DropDownItems.Add(new ToolStripMenuItem(text, null, (_, _) =>
@@ -294,6 +297,7 @@ namespace NoFences
             DisposeUpdates();
             DisposeReminders();
             DisposeBackupsAndScreens();
+            DisposeFps();
             sorter.Dispose();
             tray.Visible = false;
             tray.Dispose();

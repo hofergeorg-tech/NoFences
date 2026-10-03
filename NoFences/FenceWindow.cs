@@ -119,6 +119,7 @@ namespace NoFences
             titleFont = theme.CreateTitleFont(titleHeight);
             labelFont = theme.CreateLabelFont(scale);
             ApplyNoteSettings();
+            ApplyWidgetSettings();
 
             if (IsHandleCreated)
             {
@@ -146,6 +147,8 @@ namespace NoFences
             else
                 entries = Info.Files.Select(FenceEntry.FromPath).OfType<FenceEntry>().ToList();
             entries = ApplySearch(FenceEntry.Sort(entries, Info.SortMode));
+            if (Info.MaxItems > 0 && entries.Count > Info.MaxItems)
+                entries = entries.Take(Info.MaxItems).ToList();
             selection.RemoveWhere(p => !entries.Any(e => e.Path.Equals(p, StringComparison.OrdinalIgnoreCase)));
 
             if (hoverPath != null && !entries.Any(x => x.Path == hoverPath))
@@ -235,8 +238,17 @@ namespace NoFences
         private void Relayout()
         {
             iconPx = Px(Info.IconSize);
-            itemWidth = Math.Max(Px(75), iconPx + Px(28));
-            itemHeight = Px(4) + iconPx + Px(4) + (labelFont?.Height ?? Px(16)) * 2 + Px(4);
+            if (Info.Compact)
+            {
+                // Quick-launch bar: icons only, names as tooltips
+                itemWidth = iconPx + Px(12);
+                itemHeight = iconPx + Px(12);
+            }
+            else
+            {
+                itemWidth = Math.Max(Px(75), iconPx + Px(28));
+                itemHeight = Px(4) + iconPx + Px(4) + (labelFont?.Height ?? Px(16)) * 2 + Px(4);
+            }
 
             var pad = Px(10 + theme.ContentInset);
             var gap = Px(8);
@@ -316,6 +328,8 @@ namespace NoFences
 
             if (IsNote)
                 DrawNote(g, view);
+            else if (IsWidget)
+                DrawWidget(g);
             else if (entries.Count == 0)
                 DrawEmptyHint(g, view);
 
@@ -333,10 +347,12 @@ namespace NoFences
                 {
                     // Shell images can be smaller than requested (e.g. wide thumbnails); center them in the icon box.
                     var ix = r.X + (r.Width - icon.Width) / 2;
-                    var iy = r.Y + Px(4) + (iconPx - icon.Height) / 2;
+                    var iy = Info.Compact ? r.Y + (r.Height - icon.Height) / 2 : r.Y + Px(4) + (iconPx - icon.Height) / 2;
                     g.DrawImage(icon, ix, iy, icon.Width, icon.Height);
                 }
 
+                if (Info.Compact)
+                    continue;
                 var labelTop = r.Y + Px(4) + iconPx + Px(4);
                 var labelRect = new RectangleF(r.X + Px(2), labelTop, r.Width - Px(4), r.Bottom - labelTop);
                 var name = entry.GetDisplayName(app.ShowExtensions);
@@ -650,12 +666,18 @@ namespace NoFences
                 UpdateNoteCursor(e.Location);
                 return;
             }
+            if (IsWidget)
+            {
+                Cursor = widget?.IsClickable(e.Location) == true ? Cursors.Hand : Cursors.Default;
+                return;
+            }
 
             var index = HitTestItem(e.Location);
             var path = index >= 0 ? entries[index].Path : null;
             if (path != hoverPath)
             {
                 hoverPath = path;
+                UpdateCompactTooltip(path);
                 Invalidate();
             }
 
@@ -699,13 +721,19 @@ namespace NoFences
                     NoteClick(e.Location);
                 return;
             }
+            if (IsWidget)
+            {
+                if (e.Clicks == 1 && widget?.Click(e.Location) == true)
+                    Invalidate();
+                return;
+            }
             SelectionMouseDown(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            if (!IsNote)
+            if (!IsNote && !IsWidget)
                 SelectionMouseUp(e);
             mouseDownAt = null;
             mouseDownPath = null;
@@ -730,6 +758,11 @@ namespace NoFences
             base.OnMouseDoubleClick(e);
             if (e.Button != MouseButtons.Left)
                 return;
+            if (IsWidget)
+            {
+                widget?.DoubleClick(e.Location);
+                return;
+            }
             if (IsNote)
             {
                 // A fast double click on a checkbox toggles twice; don't also open the editor then.
@@ -793,7 +826,11 @@ namespace NoFences
                 menu.Items.Add(Strings.EditNote, null, (_, _) => StartEditNote());
                 menu.Items.Add(new ToolStripMenuItem(Strings.Reminder, null, (_, _) => EditReminder()) { Checked = Info.ReminderAt != null });
             }
-            if (entry != null && Info.Kind == FenceKind.Links)
+            if (IsWidget)
+                widget?.AddMenuItems(menu.Items, this);
+            if (Info.Kind == FenceKind.Links && !Info.ReadOnly)
+                menu.Items.Add(new ToolStripMenuItem(Strings.CompactMode, null, (_, _) => { Info.Compact = !Info.Compact; app.RequestSave(); ReloadEntries(); }) { Checked = Info.Compact });
+            if (entry != null && Info.Kind == FenceKind.Links && !Info.ReadOnly)
                 menu.Items.Add(Strings.RemoveItem, null, (_, _) => RemoveLink(entry.Path));
             if (Info.Kind == FenceKind.Folder && Directory.Exists(Info.FolderPath))
                 menu.Items.Add(Strings.OpenFolder, null, (_, _) => FenceEntry.FromPath(Info.FolderPath!)?.Open());
@@ -822,6 +859,7 @@ namespace NoFences
             menu.Items.Add(Strings.NewFence, null, (_, _) => app.CreateFence(FenceKind.Links));
             menu.Items.Add(Strings.NewFolderFence, null, (_, _) => app.CreateFence(FenceKind.Folder));
             menu.Items.Add(Strings.NewNote, null, (_, _) => app.CreateFence(FenceKind.Note));
+            app.AddCreateExtrasItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(new ToolStripMenuItem(Strings.Autostart, null, (_, _) => NoFencesApp.ToggleAutostart()) { Checked = SystemSettings.AutostartEnabled });
             NoFencesApp.AddDocumentItems(menu.Items);
@@ -935,7 +973,9 @@ namespace NoFences
         {
             if (IsNote)
                 return !Info.Locked && !Editing && e.Data?.GetDataPresent(DataFormats.UnicodeText) == true ? DragDropEffects.Copy : DragDropEffects.None;
-            if (Info.Locked || e.Data?.GetDataPresent(DataFormats.FileDrop) != true)
+            if (IsWidget)
+                return !Info.Locked && e.Data != null && widget?.AcceptsDrop(e.Data) == true ? DragDropEffects.Move : DragDropEffects.None;
+            if (Info.Locked || Info.ReadOnly || e.Data?.GetDataPresent(DataFormats.FileDrop) != true)
                 return DragDropEffects.None;
 
             var internalItem = GetInternal(e.Data);
@@ -1020,6 +1060,14 @@ namespace NoFences
                 return;
             }
 
+            if (IsWidget)
+            {
+                if (e.Data != null)
+                    widget?.Drop(e.Data, this);
+                Invalidate();
+                return;
+            }
+
             var files = e.Data?.GetData(DataFormats.FileDrop) as string[] ?? Array.Empty<string>();
             var internalItem = GetInternal(e.Data);
 
@@ -1091,6 +1139,9 @@ namespace NoFences
                 labelFormat.Dispose();
                 labelFormatSingleLine.Dispose();
                 DisposeNote();
+                DisposeWidget();
+                widgetTimer.Dispose();
+                toolTip.Dispose();
                 DisposeAnimations();
                 shellContextMenu.DestroyHandle();
             }

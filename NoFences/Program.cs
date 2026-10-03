@@ -9,6 +9,19 @@ namespace NoFences
         private static void Main(string[] args)
         {
             CleanInheritedEnvironment();
+            // Elevated FPS helper modes (no UI, no single-instance lock)
+            if (args.Length >= 1 && args[0] == "--fps-helper")
+            {
+                var parent = args.Length >= 2 && int.TryParse(args[1], out var pid) ? pid : 0;
+                FpsHelper.Run(parent, registerTask: args.Contains("--register-task"));
+                return;
+            }
+            if (args.Length == 1 && args[0] == "--fps-helper-uninstall")
+            {
+                FpsHelper.UnregisterTask();
+                return;
+            }
+
             args = UpdateChecker.FinishUpdate(args);
             if (args.Length == 1 && args[0] == "--install-update")
             {

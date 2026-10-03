@@ -55,6 +55,9 @@ namespace NoFences.Themes
 
         public override string DisplayName => name;
 
+
+        public override Color Accent => Ink;
+
         public override bool Glass => false;
 
         public override bool WindowShadow => false;

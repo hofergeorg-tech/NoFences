@@ -15,6 +15,9 @@ namespace NoFences.Themes
 
         public override string DisplayName => "Social";
 
+
+        public override Color Accent => Color.White;
+
         public override int MinAlpha => 190;
 
         public override int ContentInset => 3;

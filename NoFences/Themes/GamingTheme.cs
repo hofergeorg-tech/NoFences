@@ -16,6 +16,9 @@ namespace NoFences.Themes
 
         public override string DisplayName => "Gaming (RGB)";
 
+
+        public override Color Accent => Purple;
+
         public override int CornerPreference => 1;
 
         public override int MinAlpha => 200;

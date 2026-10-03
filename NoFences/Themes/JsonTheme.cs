@@ -51,6 +51,9 @@ namespace NoFences.Themes
 
         public override string DisplayName => d.Name + " ★";
 
+
+        public override Color Accent => accent;
+
         public override bool Glass => d.Glass;
 
         public override int CornerPreference => d.CornerRadius <= 0 ? 1 : d.CornerRadius <= 4 ? 3 : 2;

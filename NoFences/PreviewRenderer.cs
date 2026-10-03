@@ -17,10 +17,13 @@ namespace NoFences
         {
             public bool ShowExtensions => false;
             public bool Animations => false;
+            public bool FpsEnabled => true;
+            public void ToggleFps() { }
             public FenceTheme ThemeFor(FenceInfo info) => ThemeRegistry.Get(info.Theme);
             public void RequestSave() { }
             public void CreateFence(FenceKind kind, string? name = null) { }
             public void RemoveFence(FenceWindow window) { }
+            public void AddCreateExtrasItems(ToolStripItemCollection items) { }
             public IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except) => Array.Empty<Rectangle>();
         }
 
@@ -84,6 +87,39 @@ namespace NoFences
 
             RenderNotes(outDir, host);
             RenderDialog(AboutDialog.CreateForPreview(), Path.Combine(outDir, "about.png"));
+            RenderWidgets(outDir, host);
+        }
+
+        /// <summary>All widgets once, in fitting styles (with this PC's real data).</summary>
+        private static void RenderWidgets(string outDir, IFenceHost host)
+        {
+            var items = new (string Type, string Theme, Size Size)[]
+            {
+                ("clock", "default", new Size(280, 320)),
+                ("system", "gaming", new Size(260, 300)),
+                ("drives", "hardware", new Size(300, 240)),
+                ("recyclebin", "nerd", new Size(220, 210)),
+                ("starcitizen", "starcitizen", new Size(270, 260)),
+            };
+            const int gap = 24;
+            using var sheet = new Bitmap(items.Sum(i => i.Size.Width + gap) + gap, items.Max(i => i.Size.Height) + 2 * gap, PixelFormat.Format32bppArgb);
+            using var g = Graphics.FromImage(sheet);
+            DrawBackdrop(g, new Rectangle(Point.Empty, sheet.Size));
+            var x = gap;
+            foreach (var (type, theme, size) in items)
+            {
+                var name = Widgets.WidgetRegistry.Types.First(t => t.Type == type).Name();
+                var info = new FenceInfo { Name = name, Kind = FenceKind.Widget, WidgetType = type, Theme = theme, BackgroundAlpha = 140 };
+                using var window = new FenceWindow(host, info) { Size = size };
+                window.ApplySettings();
+                window.RefreshWidgetForPreview();
+                var state = g.Save();
+                g.TranslateTransform(x, gap);
+                window.PaintFence(g);
+                g.Restore(state);
+                x += size.Width + gap;
+            }
+            sheet.Save(Path.Combine(outDir, "widgets.png"), ImageFormat.Png);
         }
 
         /// <summary>Draws a dialog offscreen (it is never shown).</summary>

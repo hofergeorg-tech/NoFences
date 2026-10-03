@@ -15,6 +15,9 @@ namespace NoFences.Themes
 
         public override string DisplayName => "Familie";
 
+
+        public override Color Accent => Heart;
+
         public override int MinAlpha => 205;
 
         public override int ContentInset => 3;

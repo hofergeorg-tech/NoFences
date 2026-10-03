@@ -18,6 +18,9 @@ namespace NoFences.Themes
 
         public override string DisplayName => "Nerd (Terminal)";
 
+
+        public override Color Accent => Green;
+
         public override int CornerPreference => 3;
 
         public override int MinAlpha => 200;
