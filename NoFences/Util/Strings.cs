@@ -10,6 +10,13 @@ namespace NoFences.Util
         public static string HelpDocument => De ? "HILFE.md" : "HELP.md";
         public static string ChangelogDocument => De ? "CHANGELOG.de.md" : "CHANGELOG.md";
         public static string Help => T("Help", "Hilfe");
+        public static string About => T("About NoFences", "Über NoFences");
+        public static string AboutTagline => T("Free desktop fences, folder fences, sticky notes and widgets for Windows.",
+                                               "Kostenlose Desktop-Fences, Ordner-Fences, Notizen und Widgets für Windows.");
+        public static string AboutSource => T("Source code and downloads on GitHub", "Quellcode und Downloads auf GitHub");
+        public static string AboutCredits => T("Based on NoFences by Twometer and contributors — thank you!",
+                                               "Basiert auf NoFences von Twometer und Mitwirkenden – danke!");
+        public static string AboutLicense => T("Open source under the MIT license.", "Open Source unter der MIT-Lizenz.");
         public static string WhatsNew => T("What's new?", "Was ist neu?");
         public static string FirstStartHint => T("Drag files onto the fence. Right-click a fence for options; the tray icon has Help.",
                                                  "Zieh Dateien auf den Fence. Rechtsklick auf einen Fence zeigt die Optionen, im Tray-Icon gibt es die Hilfe.");

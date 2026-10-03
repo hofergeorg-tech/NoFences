@@ -83,6 +83,23 @@ namespace NoFences
             overview.Save(Path.Combine(outDir, "styles.png"), ImageFormat.Png);
 
             RenderNotes(outDir, host);
+            RenderDialog(AboutDialog.CreateForPreview(), Path.Combine(outDir, "about.png"));
+        }
+
+        /// <summary>Draws a dialog offscreen (it is never shown).</summary>
+        internal static void RenderDialog(Form form, string path)
+        {
+            using (form)
+            {
+                form.StartPosition = FormStartPosition.Manual;
+                form.Location = new Point(-32000, -32000);
+                form.Show();
+                Application.DoEvents();
+                using var bmp = new Bitmap(form.Width, form.Height);
+                form.DrawToBitmap(bmp, new Rectangle(Point.Empty, form.Size));
+                bmp.Save(path, ImageFormat.Png);
+                form.Hide();
+            }
         }
 
         /// <summary>Sample sticky notes in a few styles, including checkboxes.</summary>

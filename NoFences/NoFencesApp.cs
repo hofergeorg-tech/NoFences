@@ -93,6 +93,7 @@ namespace NoFences
         {
             items.Add(Strings.Help, null, (_, _) => DocumentViewer.ShowDocument(Strings.HelpDocument, Strings.Help));
             items.Add(Strings.WhatsNew, null, (_, _) => DocumentViewer.ShowDocument(Strings.ChangelogDocument, Strings.WhatsNew));
+            items.Add(Strings.About, null, (_, _) => AboutDialog.ShowSingle());
         }
 
         /// <summary>Shows the changelog once after an update (not on the very first start).</summary>
