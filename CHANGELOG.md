@@ -5,6 +5,19 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.4.1] - 2026-10-03
+
+### Changed
+- **Grouped menus**: New widget ▸ Time & planning / Info & news / System / Games & media; Style ▸ Basic / Gaming & tech /
+  Work & everyday / Leisure / Post-it / Own styles.
+- **News** look clearer: semibold headlines on up to two lines, the source in the style's accent color, separators.
+
+### Fixed
+- The news and prices widgets said "No connection to the weather service" when a feed failed.
+- A web page entered as a news feed now finds the feed the page announces, or says clearly that it is not a feed.
+- A failed update no longer clears headlines, prices or appointments that were already shown; retries after 30 seconds.
+- Problems with online widgets are written to log.txt in the data folder.
+
 ## [2.4.0] - 2026-10-03
 
 ### Added
@@ -154,6 +167,7 @@ First release of this fork. Rewritten on .NET 10; based on
 
 Original NoFences by Twometer, see [Twometer/NoFences](https://github.com/Twometer/NoFences).
 
+[2.4.1]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.1
 [2.4.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.0
 [2.3.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.3.0
 [2.2.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.2.0

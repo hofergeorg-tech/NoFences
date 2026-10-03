@@ -27,6 +27,17 @@ namespace NoFences.Widgets
             ("ticker", () => Strings.WidgetTicker, new Size(320, 260)),
         };
 
+        public enum Group { Time, Info, System, GamesMedia }
+
+        /// <summary>Menu groups, in menu order, with the widget types they contain (in that order too).</summary>
+        public static IReadOnlyList<(Group Group, string[] Types)> Groups { get; } = new (Group, string[])[]
+        {
+            (Group.Time, new[] { "clock", "countdown", "agenda", "focus" }),
+            (Group.Info, new[] { "weather", "news", "ticker" }),
+            (Group.System, new[] { "system", "network", "drives", "battery", "recyclebin", "clipboard" }),
+            (Group.GamesMedia, new[] { "games", "playtime", "media", "photos" }),
+        };
+
         public static FenceWidget? Create(FenceInfo info, IFenceHost host)
         {
             // Fences created as "Star Citizen playtime" before the widget became generic

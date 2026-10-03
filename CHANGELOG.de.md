@@ -4,6 +4,19 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.4.1] - 2026-10-03
+
+### Geändert
+- **Gruppierte Menüs**: Neues Widget ▸ Zeit & Planung / Info & News / System / Spiele & Medien; Style ▸ Basis /
+  Gaming & Technik / Arbeit & Alltag / Freizeit / Post-it / Eigene Styles.
+- **News** übersichtlicher: halbfette Überschriften auf bis zu zwei Zeilen, die Quelle in der Akzentfarbe des Styles, Trennlinien.
+
+### Behoben
+- News- und Kurs-Widget meldeten „Keine Verbindung zum Wetterdienst“, wenn ein Feed nicht ging.
+- Eine Webseite als News-Feed findet jetzt den Feed, den die Seite angibt, oder sagt klar, dass es kein Feed ist.
+- Ein fehlgeschlagenes Update löscht keine schon angezeigten Schlagzeilen, Kurse oder Termine mehr; neuer Versuch nach 30 Sekunden.
+- Probleme der Online-Widgets landen in log.txt im Datenordner.
+
 ## [2.4.0] - 2026-10-03
 
 ### Neu
@@ -154,6 +167,7 @@ Erste Version dieses Forks. Neu aufgebaut auf .NET 10, basierend auf
 
 Original-NoFences von Twometer, siehe [Twometer/NoFences](https://github.com/Twometer/NoFences).
 
+[2.4.1]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.1
 [2.4.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.0
 [2.3.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.3.0
 [2.2.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.2.0

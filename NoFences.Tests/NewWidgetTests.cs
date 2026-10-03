@@ -110,6 +110,14 @@ namespace NoFences.Tests
         }
 
         [Fact]
+        public void Registry_EveryWidgetIsInExactlyOneMenuGroup()
+        {
+            var grouped = WidgetRegistry.Groups.SelectMany(g => g.Types).ToList();
+            Assert.Equal(grouped.Count, grouped.Distinct().Count());
+            Assert.Equal(WidgetRegistry.Types.Select(t => t.Type).OrderBy(t => t), grouped.OrderBy(t => t));
+        }
+
+        [Fact]
         public void Registry_CreatesEveryOfferedWidget()
         {
             var host = new PreviewRenderer.Host();

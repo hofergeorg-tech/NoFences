@@ -4,6 +4,19 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
+## [2.4.1] - 2026-10-03
+
+### Cambios
+- **Menús agrupados**: Nuevo widget ▸ Tiempo y planificación / Información y noticias / Sistema / Juegos y multimedia;
+  Estilo ▸ Básicos / Juegos y tecnología / Trabajo y día a día / Ocio / Pósit / Estilos propios.
+- **Noticias** más claras: titulares en negrita en hasta dos líneas, la fuente en el color de acento, líneas separadoras.
+
+### Correcciones
+- Los widgets de noticias y cotizaciones decían «Sin conexión con el servicio» cuando fallaba una fuente.
+- Una página web introducida como fuente ahora encuentra la fuente que anuncia la página, o indica claramente que no lo es.
+- Una actualización fallida ya no borra titulares, cotizaciones ni citas ya mostrados; nuevo intento tras 30 segundos.
+- Los problemas de los widgets en línea se escriben en log.txt en la carpeta de datos.
+
 ## [2.4.0] - 2026-10-03
 
 ### Novedades
@@ -51,4 +64,5 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 Las versiones 2.0.0 a 2.3.0 se describen en el [registro en inglés](CHANGELOG.md). NoFences se basa en
 [Twometer/NoFences](https://github.com/Twometer/NoFences) de Twometer y sus colaboradores.
 
+[2.4.1]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.1
 [2.4.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.0

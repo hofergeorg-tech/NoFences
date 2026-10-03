@@ -67,15 +67,19 @@ namespace NoFences.Widgets
                         var ics = await Web.Http.GetStringAsync(Web.NormalizeUrl(url));
                         all.AddRange(IcsCalendar.Parse(ics, from, to));
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         anyFailed = true;
+                        // The link is personal (a secret calendar address): log only the host
+                        Log.Write("Calendar", $"{(Uri.TryCreate(Web.NormalizeUrl(url), UriKind.Absolute, out var u) ? u.Host : "?")}: {Log.Describe(e)}");
                     }
                 }
-                events = all.OrderBy(e => e.Start).ToList();
+                // A failed update keeps the appointments that are already there
+                if (!(anyFailed && all.Count == 0) || option != loadedFor)
+                    events = all.OrderBy(e => e.Start).ToList();
                 failed = anyFailed && all.Count == 0;
                 loadedFor = option;
-                nextFetch = DateTime.UtcNow + (failed ? TimeSpan.FromMinutes(2) : UpdateEvery);
+                nextFetch = DateTime.UtcNow + (failed ? TimeSpan.FromSeconds(30) : UpdateEvery);
                 RequestRedraw();
             }
             finally

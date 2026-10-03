@@ -68,16 +68,19 @@ namespace NoFences.Widgets
                         var json = await Web.Http.GetStringAsync($"https://query1.finance.yahoo.com/v8/finance/chart/{Uri.EscapeDataString(s)}?range=1d&interval=15m");
                         return ParseChart(json, s);
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        Log.Write("Prices", $"{s}: {Log.Describe(e)}");
                         return null;
                     }
                 }).ToList();
-                var results = await Task.WhenAll(tasks);
-                quotes = results.OfType<Quote>().ToList();
-                failed = quotes.Count == 0 && symbols.Count > 0;
+                var results = (await Task.WhenAll(tasks)).OfType<Quote>().ToList();
+                // A failed update keeps the prices that are already there
+                if (results.Count > 0 || option != loadedFor)
+                    quotes = results;
+                failed = results.Count == 0 && symbols.Count > 0;
                 loadedFor = option;
-                nextFetch = DateTime.UtcNow + (failed ? TimeSpan.FromMinutes(2) : UpdateEvery);
+                nextFetch = DateTime.UtcNow + (failed ? TimeSpan.FromSeconds(30) : UpdateEvery);
                 RequestRedraw();
             }
             finally
@@ -126,7 +129,10 @@ namespace NoFences.Widgets
             var line = c.Label.GetHeight(c.G) + c.Px(2);
             if (quotes.Count == 0)
             {
-                c.Text(failed ? Strings.WeatherOffline : Strings.WeatherLoading, new RectangleF(c.Area.X, c.Area.Y, c.Area.Width, line));
+                if (failed)
+                    c.TextWrapped(Strings.TickerFailed, c.Area.X, c.Area.Y, c.Area.Width, c.Label, 3);
+                else
+                    c.Text(Strings.WeatherLoading, new RectangleF(c.Area.X, c.Area.Y, c.Area.Width, line));
                 return;
             }
 

@@ -4,6 +4,19 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.4.1] - 2026-10-03
+
+### Modifications
+- **Menus groupés** : Nouveau widget ▸ Temps et planning / Infos et actualités / Système / Jeux et médias ; Style ▸ De base /
+  Jeux et technique / Travail et quotidien / Loisirs / Post-it / Styles personnels.
+- **Actualités** plus lisibles : titres en gras sur deux lignes au plus, la source dans la couleur d'accent, séparateurs.
+
+### Corrections
+- Les widgets actualités et cours affichaient « Pas de connexion au service » quand un flux échouait.
+- Une page web saisie comme flux trouve maintenant le flux annoncé par la page, ou indique clairement que ce n'est pas un flux.
+- Une mise à jour échouée n'efface plus les titres, cours ou rendez-vous déjà affichés ; nouvel essai après 30 secondes.
+- Les problèmes des widgets en ligne sont écrits dans log.txt dans le dossier des données.
+
 ## [2.4.0] - 2026-10-03
 
 ### Nouveautés
@@ -52,4 +65,5 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 Les versions 2.0.0 à 2.3.0 sont décrites dans le [journal en anglais](CHANGELOG.md). NoFences est basé sur
 [Twometer/NoFences](https://github.com/Twometer/NoFences) de Twometer et ses contributeurs.
 
+[2.4.1]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.1
 [2.4.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.0

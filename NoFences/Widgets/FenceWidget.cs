@@ -81,6 +81,34 @@ namespace NoFences.Widgets
             Theme.DrawLabel(G, text, rect, font ?? Label, format, S);
         }
 
+        /// <summary>
+        /// Text that wraps onto at most <paramref name="maxLines"/> lines (ellipsis after the last word that
+        /// fits); returns the height used.
+        /// </summary>
+        public float TextWrapped(string text, float x, float y, float width, Font font, int maxLines)
+        {
+            using var format = new StringFormat { Trimming = StringTrimming.EllipsisWord, FormatFlags = StringFormatFlags.LineLimit };
+            var lineHeight = font.GetHeight(G);
+            var needed = G.MeasureString(text, font, (int)width, format).Height;
+            var height = Math.Min(needed, lineHeight * maxLines + 1);
+            Theme.DrawLabel(G, text, new RectangleF(x, y, width, height), font, format, S);
+            return height;
+        }
+
+        /// <summary>Small secondary text (dates, sources) in a dimmed color, without the style's effects.</summary>
+        public float Muted(string text, float x, float y, Font font, Color? color = null)
+        {
+            using var brush = new SolidBrush(color ?? Color.FromArgb(Math.Max(170, (int)Theme.HintColor.A), Theme.HintColor));
+            var oldHint = G.TextRenderingHint;
+            G.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+            // Default format (with its small side padding) so it lines up with the labels above it
+            using var format = new StringFormat();
+            G.DrawString(text, font, brush, x, y, format);
+            var width = G.MeasureString(text, font, PointF.Empty, format).Width - font.Size / 3;
+            G.TextRenderingHint = oldHint;
+            return width;
+        }
+
         /// <summary>A font of the theme's note family at a pixel size (dispose it).</summary>
         public Font Sized(float px, FontStyle style = FontStyle.Regular) => new(Big.FontFamily, Math.Max(6, px), style, GraphicsUnit.Pixel);
 

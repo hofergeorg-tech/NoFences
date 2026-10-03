@@ -32,6 +32,8 @@ namespace NoFences.Widgets
         private string? loadedFor;
         private DateTime nextFetch;
         private bool fetching, failed;
+        private string? lastError;
+        private bool wrongLinks;
         private float scroll, maxScroll;
 
         public NewsWidget(Func<string?> getOption, Action<string?> setOption)
@@ -69,27 +71,92 @@ namespace NoFences.Widgets
             try
             {
                 var all = new List<NewsItem>();
+                var problems = new List<string>();
+                var onlyWrongLinks = true;
                 foreach (var url in AgendaWidget.Urls(option))
                 {
                     try
                     {
-                        all.AddRange(ParseFeed(await Web.Http.GetStringAsync(url)));
+                        all.AddRange(ParseFeed(await LoadFeedAsync(url)));
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine($"Feed {url}: {e.Message}");
+                        Log.Write("News", $"{url}: {Log.Describe(e)}");
+                        problems.Add(Explain(url, e));
+                        onlyWrongLinks &= e is NotAFeedException;
                     }
                 }
-                items = all.OrderByDescending(i => i.Published ?? DateTime.MinValue).Take(60).ToList();
+                var error = problems.Count > 0 ? string.Join("\n", problems) : null;
+                // A failed update keeps the headlines that are already there
+                if (all.Count > 0 || option != loadedFor)
+                    items = all.OrderByDescending(i => i.Published ?? DateTime.MinValue).Take(60).ToList();
                 failed = all.Count == 0;
+                lastError = failed ? error : null;
+                wrongLinks = failed && onlyWrongLinks;
                 loadedFor = option;
-                nextFetch = DateTime.UtcNow + (failed ? TimeSpan.FromMinutes(3) : UpdateEvery);
+                // A web page won't turn into a feed: no point in asking every 30 seconds
+                nextFetch = DateTime.UtcNow + (failed && !wrongLinks ? TimeSpan.FromSeconds(30) : UpdateEvery);
                 RequestRedraw();
             }
             finally
             {
                 fetching = false;
             }
+        }
+
+        /// <summary>The address is a web page, not a feed (and the page names no working feed either).</summary>
+        public sealed class NotAFeedException : Exception
+        {
+        }
+
+        /// <summary>
+        /// Loads a feed. A web page instead of a feed is common ("I pasted the site's address"); then the
+        /// feed the page announces (&lt;link rel="alternate" type="application/rss+xml"&gt;) is used.
+        /// </summary>
+        private static async Task<string> LoadFeedAsync(string url)
+        {
+            var text = await Web.Http.GetStringAsync(url);
+            if (!LooksLikeHtml(text))
+                return text;
+            var feed = DiscoverFeed(text, url);
+            if (feed == null || feed == url)
+                throw new NotAFeedException();
+            text = await Web.Http.GetStringAsync(feed);
+            return LooksLikeHtml(text) ? throw new NotAFeedException() : text;
+        }
+
+        public static bool LooksLikeHtml(string text)
+        {
+            var start = text.TrimStart().Length > 300 ? text.TrimStart()[..300] : text.TrimStart();
+            return start.StartsWith("<!DOCTYPE html", StringComparison.OrdinalIgnoreCase) || start.Contains("<html", StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>The RSS/Atom link a web page announces in its head, made absolute; null if none.</summary>
+        public static string? DiscoverFeed(string html, string pageUrl)
+        {
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(html, "<link\\b[^>]*>", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+            {
+                var tag = m.Value;
+                if (!tag.Contains("alternate", StringComparison.OrdinalIgnoreCase)
+                    || !(tag.Contains("application/rss+xml", StringComparison.OrdinalIgnoreCase) || tag.Contains("application/atom+xml", StringComparison.OrdinalIgnoreCase)))
+                    continue;
+                var href = System.Text.RegularExpressions.Regex.Match(tag, "href\\s*=\\s*[\"']([^\"']+)[\"']", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                if (href.Success && Uri.TryCreate(new Uri(pageUrl), System.Net.WebUtility.HtmlDecode(href.Groups[1].Value), out var feed))
+                    return feed.AbsoluteUri;
+            }
+            return null;
+        }
+
+        /// <summary>A short, friendly reason for the widget (the details go to the log).</summary>
+        private static string Explain(string url, Exception e)
+        {
+            var host = Uri.TryCreate(url, UriKind.Absolute, out var u) ? u.Host.Replace("www.", "") : url;
+            return e switch
+            {
+                NotAFeedException => Strings.NewsNotAFeed(host),
+                System.Xml.XmlException => Strings.NewsBroken(host),
+                _ => Strings.NewsUnreachable(host)
+            };
         }
 
         /// <summary>RSS 2.0, RSS 1.0 (RDF) and Atom.</summary>
@@ -140,6 +207,18 @@ namespace NoFences.Widgets
             return null;
         }
 
+        /// <summary>Feed titles are often long ("Hacker News: Front Page", "heise online News"); keep the name part.</summary>
+        public static string ShortSource(string source)
+        {
+            var s = source.Trim();
+            var colon = s.IndexOfAny(new[] { ':', '|', '–', '—' });
+            if (colon > 2)
+                s = s[..colon].Trim();
+            if (s.EndsWith(" News", StringComparison.OrdinalIgnoreCase) && s.Length > 12)
+                s = s[..^5];
+            return s.Length > 28 ? s[..28].TrimEnd() + "…" : s;
+        }
+
         /// <summary>"5 min", "3 h", "2 d" since publishing.</summary>
         public static string Age(DateTime published, DateTime now)
         {
@@ -162,7 +241,17 @@ namespace NoFences.Widgets
             }
             if (items.Count == 0)
             {
-                c.Text(failed ? Strings.WeatherOffline : Strings.WeatherLoading, new RectangleF(c.Area.X, c.Area.Y, c.Area.Width, line));
+                if (!failed)
+                {
+                    c.Text(Strings.WeatherLoading, new RectangleF(c.Area.X, c.Area.Y, c.Area.Width, line));
+                    return;
+                }
+                var used = c.TextWrapped(wrongLinks ? Strings.NewsCheckLinks : Strings.NewsFailed, c.Area.X, c.Area.Y, c.Area.Width, c.Label, 3);
+                if (lastError != null)
+                {
+                    using var detail = new Font(c.Label.FontFamily, c.Label.Size * 0.84f, FontStyle.Regular, c.Label.Unit);
+                    c.TextWrapped(lastError, c.Area.X, c.Area.Y + used + c.Px(6), c.Area.Width, detail, 4);
+                }
                 return;
             }
 
@@ -170,19 +259,32 @@ namespace NoFences.Widgets
             c.G.SetClip(c.Area);
             float y = c.Area.Y - scroll;
             var now = DateTime.Now;
-            using var small = c.Sized(c.Label.GetHeight(c.G) * 0.78f);
-            var smallLine = small.GetHeight(c.G) + c.Px(1);
-            foreach (var item in items)
+            // Headline semibold and a little larger, up to two lines; source and age small and dimmed below
+            using var title = new Font(c.Label.FontFamily, c.Label.Size * 1.08f, FontStyle.Bold, c.Label.Unit);
+            using var small = new Font(c.Label.FontFamily, c.Label.Size * 0.84f, FontStyle.Regular, c.Label.Unit);
+            var smallLine = small.GetHeight(c.G);
+            var gap = c.Px(7);
+            using var separator = new Pen(Color.FromArgb(45, c.Theme.HintColor));
+            for (var i = 0; i < items.Count; i++)
             {
-                var rect = new RectangleF(c.Area.X, y, c.Area.Width, line + smallLine + c.Px(6));
-                if (rect.Bottom > c.Area.Top && rect.Top < c.Area.Bottom)
+                var item = items[i];
+                var top = y;
+                // Measure (and draw) only rows near the visible area; others count with a typical height
+                var visible = y < c.Area.Bottom + c.Px(40) && y > c.Area.Top - c.Px(120);
+                var titleHeight = visible
+                    ? c.TextWrapped(item.Title, c.Area.X, y, c.Area.Width, title, 2)
+                    : title.GetHeight(c.G) * 1.5f;
+                y += titleHeight + c.Px(2);
+                if (visible)
                 {
-                    c.Text(item.Title, new RectangleF(c.Area.X, y, c.Area.Width, line));
-                    var meta = item.Published is { } p ? $"{Age(p, now)} · {item.Source}" : item.Source;
-                    c.Text(meta, new RectangleF(c.Area.X, y + line, c.Area.Width, smallLine), small);
-                    rows.Add((rect, item));
+                    var x = c.Area.X + c.Muted(ShortSource(item.Source), c.Area.X, y, small, Color.FromArgb(230, c.Theme.Accent));
+                    if (item.Published is { } p)
+                        c.Muted($"  ·  {Age(p, now)}", x, y, small);
                 }
-                y += rect.Height;
+                y += smallLine + gap;
+                rows.Add((new RectangleF(c.Area.X, top, c.Area.Width, y - top), item));
+                if (visible && i < items.Count - 1)
+                    c.G.DrawLine(separator, c.Area.X, y - gap / 2f, c.Area.Right, y - gap / 2f);
             }
             c.G.Restore(state);
             maxScroll = Math.Max(0, y + scroll - c.Area.Bottom);

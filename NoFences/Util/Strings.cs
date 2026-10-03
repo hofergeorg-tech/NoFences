@@ -152,7 +152,23 @@ namespace NoFences.Util
         public static string RemoveTab => T("Remove tab (keeps its links)", "Reiter entfernen (Verknüpfungen bleiben)", "Rimuovi scheda (i collegamenti restano)", "Supprimer l'onglet (les raccourcis restent)", "Quitar pestaña (los accesos directos se conservan)");
         public static string TabDefaultName(int n) => T($"Tab {n}", $"Reiter {n}", $"Scheda {n}", $"Onglet {n}", $"Pestaña {n}");
 
-        public static string NewWidget => T("New widget", "Neues Widget", "Nuovo widget", "Nouveau widget", "Nuevo widget");
+        public static string WidgetGroupName(Widgets.WidgetRegistry.Group group) => group switch
+        {
+            Widgets.WidgetRegistry.Group.Time => T("Time & planning", "Zeit & Planung", "Tempo e pianificazione", "Temps et planning", "Tiempo y planificación"),
+            Widgets.WidgetRegistry.Group.Info => T("Info & news", "Info & News", "Info e notizie", "Infos et actualités", "Información y noticias"),
+            Widgets.WidgetRegistry.Group.System => T("System", "System", "Sistema", "Système", "Sistema"),
+            _ => T("Games & media", "Spiele & Medien", "Giochi e media", "Jeux et médias", "Juegos y multimedia")
+        };
+        public static string ThemeGroupName(Themes.ThemeRegistry.Group group) => group switch
+        {
+            Themes.ThemeRegistry.Group.Basic => T("Basic", "Basis", "Base", "De base", "Básicos"),
+            Themes.ThemeRegistry.Group.GamingTech => T("Gaming & tech", "Gaming & Technik", "Gaming e tecnologia", "Jeux et technique", "Juegos y tecnología"),
+            Themes.ThemeRegistry.Group.WorkLife => T("Work & everyday", "Arbeit & Alltag", "Lavoro e quotidiano", "Travail et quotidien", "Trabajo y día a día"),
+            Themes.ThemeRegistry.Group.Leisure => T("Leisure", "Freizeit", "Tempo libero", "Loisirs", "Ocio"),
+            Themes.ThemeRegistry.Group.PostIt => "Post-it",
+            _ => T("Own styles", "Eigene Styles", "Stili personali", "Styles personnels", "Estilos propios")
+        };
+        public static string NewWidget =>T("New widget", "Neues Widget", "Nuovo widget", "Nouveau widget", "Nuevo widget");
         public static string NewRecent => T("New \"Recent files\" fence", "Neuer Fence „Zuletzt verwendet“", "Nuovo recinto \"File recenti\"", "Nouvelle barrière « Fichiers récents »", "Nueva valla «Archivos recientes»");
         public static string RecentName => T("Recent files", "Zuletzt verwendet", "File recenti", "Fichiers récents", "Archivos recientes");
         public static string NewQuickLaunch => T("New quick-launch bar", "Neue Schnellstart-Leiste", "Nuova barra di avvio rapido", "Nouvelle barre de lancement rapide", "Nueva barra de inicio rápido");
@@ -482,10 +498,32 @@ namespace NoFences.Util
         public static string WidgetNews => T("News (RSS)", "News (RSS)", "Notizie (RSS)", "Actualités (RSS)", "Noticias (RSS)");
         public static string NewsHint => T("Double-click to choose news feeds.", "Doppelklick, um News-Feeds auszuwählen.", "Doppio clic per scegliere i feed di notizie.", "Double-cliquez pour choisir des flux d'actualités.", "Haz doble clic para elegir fuentes de noticias.");
         public static string NewsPrompt => T("Feed links (RSS or Atom), one per line – or add one of these:", "Feed-Links (RSS oder Atom), einer pro Zeile – oder einen davon hinzufügen:", "Link dei feed (RSS o Atom), uno per riga – oppure aggiungine uno di questi:", "Liens de flux (RSS ou Atom), un par ligne – ou ajoutez l'un de ceux-ci :", "Enlaces de fuentes (RSS o Atom), uno por línea, o añade uno de estos:");
+        public static string NewsFailed => T("The news feeds could not be loaded. NoFences tries again every 30 seconds.",
+                                             "Die News-Feeds konnten nicht geladen werden. NoFences versucht es alle 30 Sekunden erneut.",
+                                             "Impossibile caricare i feed di notizie. NoFences riprova ogni 30 secondi.",
+                                             "Impossible de charger les flux d'actualités. NoFences réessaie toutes les 30 secondes.",
+                                             "No se pudieron cargar las fuentes de noticias. NoFences lo vuelve a intentar cada 30 segundos.");
+        public static string NewsNotAFeed(string host) => T(
+            $"{host}: this is a web page, not a news feed (RSS/Atom).", $"{host}: Das ist eine Webseite, kein News-Feed (RSS/Atom).",
+            $"{host}: è una pagina web, non un feed di notizie (RSS/Atom).", $"{host} : c'est une page web, pas un flux d'actualités (RSS/Atom).",
+            $"{host}: es una página web, no una fuente de noticias (RSS/Atom).");
+        public static string NewsCheckLinks => T(
+            "No news feed found at these addresses. Right-click → News feeds… to pick a feed (or one of the ready-made ones).",
+            "Unter diesen Adressen gibt es keinen News-Feed. Rechtsklick → News-Feeds… und einen Feed eintragen (oder einen der fertigen wählen).",
+            "A questi indirizzi non c'è un feed di notizie. Clic destro → Feed di notizie… per inserirne uno (o sceglierne uno pronto).",
+            "Aucun flux d'actualités à ces adresses. Clic droit → Flux d'actualités… pour en saisir un (ou en choisir un tout prêt).",
+            "En estas direcciones no hay ninguna fuente de noticias. Clic derecho → Fuentes de noticias… para poner una (o elegir una ya preparada).");
+        public static string NewsBroken(string host) => T($"{host}: the feed is damaged.", $"{host}: Der Feed ist fehlerhaft.", $"{host}: il feed è danneggiato.", $"{host} : le flux est endommagé.", $"{host}: la fuente está dañada.");
+        public static string NewsUnreachable(string host) => T($"{host} can't be reached.", $"{host} ist nicht erreichbar.", $"{host} non è raggiungibile.", $"{host} est injoignable.", $"{host} no está disponible.");
         public static string NewsSet => T("News feeds…", "News-Feeds…", "Feed di notizie…", "Flux d'actualités…", "Fuentes de noticias…");
 
         public static string WidgetTicker => T("Prices (stocks, crypto)", "Kurse (Aktien, Krypto)", "Quotazioni (azioni, cripto)", "Cours (actions, crypto)", "Cotizaciones (acciones, cripto)");
-        public static string TickerSet => T("Symbols…", "Symbole…", "Simboli…", "Symboles…", "Símbolos…");
+        public static string TickerFailed => T("Prices could not be loaded. NoFences tries again every 30 seconds.",
+                                              "Die Kurse konnten nicht geladen werden. NoFences versucht es alle 30 Sekunden erneut.",
+                                              "Impossibile caricare le quotazioni. NoFences riprova ogni 30 secondi.",
+                                              "Impossible de charger les cours. NoFences réessaie toutes les 30 secondes.",
+                                              "No se pudieron cargar las cotizaciones. NoFences lo vuelve a intentar cada 30 segundos.");
+        public static string TickerSet =>T("Symbols…", "Symbole…", "Simboli…", "Symboles…", "Símbolos…");
         public static string TickerPrompt => T(
             "Symbols as on Yahoo Finance, one per line (up to 12): AAPL, MSFT, ^GDAXI (DAX), ^ATX, BTC-EUR, ETH-EUR, EURUSD=X …",
             "Symbole wie bei Yahoo Finance, eines pro Zeile (bis zu 12): AAPL, MSFT, ^GDAXI (DAX), ^ATX, BTC-EUR, ETH-EUR, EURUSD=X …",

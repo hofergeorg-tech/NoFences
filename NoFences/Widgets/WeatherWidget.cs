@@ -60,8 +60,9 @@ namespace NoFences.Widgets
                 failed = false;
                 nextFetch = DateTime.UtcNow + UpdateEvery;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Log.Write("Weather", Log.Describe(e));
                 // Offline or service down: keep the last report and try again soon
                 failed = true;
                 reportFor = option;

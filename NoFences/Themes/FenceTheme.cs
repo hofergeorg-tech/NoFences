@@ -228,6 +228,19 @@ namespace NoFences.Themes
         public static void SetCustom(IEnumerable<FenceTheme> custom) =>
             All = BuiltIn.Concat(custom.Where(c => BuiltIn.All(b => !b.Id.Equals(c.Id, StringComparison.OrdinalIgnoreCase)))).ToList();
 
+        public enum Group { Basic, GamingTech, WorkLife, Leisure, PostIt, Own }
+
+        /// <summary>The menu group of a style; user styles (JSON) go to "Own".</summary>
+        public static Group GroupOf(FenceTheme theme) => theme.Id switch
+        {
+            "default" or "windows" => Group.Basic,
+            "starcitizen" or "retroarcade" or "gaming" or "hardware" or "nerd" => Group.GamingTech,
+            "work" or "finance" or "documents" or "social" or "family" => Group.WorkLife,
+            "hobby" or "music" or "multimedia" or "sport" or "photos" or "travel" or "cooking" or "nature" => Group.Leisure,
+            _ when theme.Id.StartsWith("postit", StringComparison.OrdinalIgnoreCase) => Group.PostIt,
+            _ => Group.Own
+        };
+
         public static FenceTheme Get(string? id) =>
             All.FirstOrDefault(t => t.Id.Equals(id, StringComparison.OrdinalIgnoreCase)) ?? All[0];
     }

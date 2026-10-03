@@ -200,6 +200,27 @@ namespace NoFences.Tests
         }
 
         [Fact]
+        public void WebPage_InsteadOfFeed_IsRecognizedAndItsFeedFound()
+        {
+            var html = """
+                <!DOCTYPE html><html lang="en"><head><title>Comm-Link</title>
+                <link rel="canonical" href="https://example.com/en/comm-link">
+                <link rel="alternate" type="application/rss+xml" title="RSS" href="/comm-link/rss?x=1&amp;y=2"/>
+                </head><body></body></html>
+                """;
+            Assert.True(NewsWidget.LooksLikeHtml(html));
+            Assert.False(NewsWidget.LooksLikeHtml("<?xml version=\"1.0\"?><rss version=\"2.0\"></rss>"));
+            Assert.Equal("https://example.com/comm-link/rss?x=1&y=2", NewsWidget.DiscoverFeed(html, "https://example.com/en/comm-link"));
+            Assert.Null(NewsWidget.DiscoverFeed("<html><head></head></html>", "https://example.com/"));
+        }
+
+        [Theory]
+        [InlineData("Hacker News: Front Page", "Hacker News")]
+        [InlineData("heise online News", "heise online")]
+        [InlineData("BBC News", "BBC News")]
+        public void ShortSource(string feedTitle, string expected) => Assert.Equal(expected, NewsWidget.ShortSource(feedTitle));
+
+        [Fact]
         public void YahooChart()
         {
             var json = """

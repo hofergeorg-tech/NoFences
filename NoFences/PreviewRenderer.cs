@@ -199,6 +199,12 @@ namespace NoFences
                 ("ticker", "finance", new Size(320, 270)),
                 ("photos", "photos", new Size(330, 250)),
             });
+            // Checking: news in a wide dark style, as people actually use it
+            RenderWidgetSheet(outDir, host, "check-news.png", new (string, string, Size)[]
+            {
+                ("news", "multimedia", new Size(685, 344)),
+                ("news", "postit", new Size(330, 330)),
+            });
         }
 
         /// <summary>A made-up game cover: gradient with the title.</summary>
@@ -284,6 +290,7 @@ namespace NoFences
                     news.SetPreview(new[]
                     {
                         new Widgets.NewsItem("New open-source desktop tools are on the rise", "https://example.com", n.AddMinutes(-12), "Tech Daily"),
+                        new Widgets.NewsItem("Ask HN: What's the most underrated tool you use every day, and why do you still rely on it after all these years?", "https://example.com", n.AddMinutes(-31), "Hacker News: Front Page"),
                         new Widgets.NewsItem("Weekend weather: sunny with a chance of clouds", "https://example.com", n.AddMinutes(-48), "Daily News"),
                         new Widgets.NewsItem("Local team wins the cup after penalty shoot-out", "https://example.com", n.AddHours(-2), "Sports"),
                         new Widgets.NewsItem("Five tips for a tidy desktop", "https://example.com", n.AddHours(-5), "Tech Daily"),

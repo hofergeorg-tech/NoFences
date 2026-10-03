@@ -4,6 +4,19 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.4.1] - 2026-10-03
+
+### Modifiche
+- **Menu raggruppati**: Nuovo widget ▸ Tempo e pianificazione / Info e notizie / Sistema / Giochi e media; Stile ▸ Base /
+  Gaming e tecnologia / Lavoro e quotidiano / Tempo libero / Post-it / Stili personali.
+- **Notizie** più leggibili: titoli in grassetto su un massimo di due righe, la fonte nel colore d'accento, linee di separazione.
+
+### Correzioni
+- I widget notizie e quotazioni dicevano "Nessuna connessione al servizio meteo" quando un feed non funzionava.
+- Una pagina web inserita come feed ora trova il feed indicato dalla pagina, oppure dice chiaramente che non è un feed.
+- Un aggiornamento non riuscito non cancella più titoli, quotazioni o appuntamenti già mostrati; nuovo tentativo dopo 30 secondi.
+- I problemi dei widget online vengono scritti in log.txt nella cartella dei dati.
+
 ## [2.4.0] - 2026-10-03
 
 ### Novità
@@ -68,6 +81,7 @@ Prima versione di questo fork: riscritto su .NET 10, recinti cartella, ordinamen
 icona nella barra, guida e registro delle modifiche nell'app. Basato su
 [Twometer/NoFences](https://github.com/Twometer/NoFences) di Twometer e collaboratori.
 
+[2.4.1]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.1
 [2.4.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.0
 [2.3.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.3.0
 [2.2.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.2.0

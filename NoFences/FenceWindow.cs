@@ -875,8 +875,14 @@ namespace NoFences
 
             var style = new ToolStripMenuItem(Strings.Theme);
             style.DropDownItems.Add(new ToolStripMenuItem(Strings.ThemeInherit, null, (_, _) => SetTheme(null)) { Checked = Info.Theme == null });
-            foreach (var t in ThemeRegistry.All)
-                style.DropDownItems.Add(new ToolStripMenuItem(t.DisplayName, null, (_, _) => SetTheme(t.Id)) { Checked = Info.Theme == t.Id });
+            // Grouped (Basic, Gaming & tech, …); the group holding the current style is checked too
+            foreach (var group in ThemeRegistry.All.GroupBy(ThemeRegistry.GroupOf).OrderBy(g => g.Key))
+            {
+                var sub = new ToolStripMenuItem(Strings.ThemeGroupName(group.Key)) { Checked = group.Any(t => t.Id == Info.Theme) };
+                foreach (var t in group)
+                    sub.DropDownItems.Add(new ToolStripMenuItem(t.DisplayName, null, (_, _) => SetTheme(t.Id)) { Checked = Info.Theme == t.Id });
+                style.DropDownItems.Add(sub);
+            }
             menu.Items.Add(style);
 
             var sort = new ToolStripMenuItem(Strings.SortBy);
