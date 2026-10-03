@@ -11,7 +11,7 @@ namespace NoFences
         public const string Original = "https://github.com/Twometer/NoFences";
 
         /// <summary>PayPal donation link; empty = no donate button anywhere.</summary>
-        public const string DonateUrl = "";
+        public const string DonateUrl = "https://www.paypal.com/donate/?business=USLSACVSEY8YW&no_recurring=0&item_name=Coffee+donation&currency_code=EUR";
 
         public static bool CanDonate => DonateUrl.Length > 0;
 

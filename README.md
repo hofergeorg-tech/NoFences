@@ -87,6 +87,12 @@ migrated automatically. **Portable mode:** put an empty `portable.txt` next to `
 - Shell context menu (`Win32/ShellContextMenu.cs`): Andreas Johansson, based on FileBrowser from CodeProject.
 - Fork maintained by Georg Hofer – [www.georg-hofer.com](https://www.georg-hofer.com).
 
+## Support
+
+NoFences is free. If you like it, you can buy me a coffee:
+[donate via PayPal](https://www.paypal.com/donate/?business=USLSACVSEY8YW&no_recurring=0&item_name=Coffee+donation&currency_code=EUR)
+– also in the app under About and Settings → Updates. Thank you!
+
 ## License
 
 MIT, see [LICENSE](LICENSE). The original copyright notice by Twometer is kept as required.
