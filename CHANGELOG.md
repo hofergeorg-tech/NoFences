@@ -5,6 +5,12 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.4.2] - 2026-10-03
+
+### Changed
+- **Clean up folders** (was: Clean up Downloads): add more folders than Downloads; all are searched together, with a
+  column showing where each item lies. The folder list is kept.
+
 ## [2.4.1] - 2026-10-03
 
 ### Added

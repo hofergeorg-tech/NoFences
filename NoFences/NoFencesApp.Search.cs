@@ -74,7 +74,7 @@ namespace NoFences
             tools.DropDownItems.Add(SearchItem());
             tools.DropDownItems.Add(Strings.RulerMenu, null, (_, _) => RulerWindow.Toggle());
             tools.DropDownItems.Add(Strings.ColorPickerMenu, null, (_, _) => PickColor());
-            tools.DropDownItems.Add(Strings.DownloadsMenu, null, (_, _) => DownloadsCleaner.Show());
+            tools.DropDownItems.Add(Strings.DownloadsMenu, null, (_, _) => DownloadsCleaner.Show(Store.Config, Store.RequestSave));
             tools.DropDownItems.Add(new ToolStripSeparator());
             tools.DropDownItems.Add(Strings.AssistantMenu, null, (_, _) => RunDesktopAssistant());
             tools.DropDownItems.Add(Strings.SortNow, null, (_, _) => SortDesktopNow());

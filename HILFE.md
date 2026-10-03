@@ -130,12 +130,13 @@ Doppelklick oder Leertaste dreht es, Pfeiltasten verschieben pixelgenau (Shift: 
 zwischen Pixel, Zentimeter und Zoll (echte Größe, aus der Größe, die dein Monitor meldet). Eine rote Linie folgt der
 Maus und zeigt den Abstand. Esc schließt es.
 
-## Farbpipette und Downloads
+## Farbpipette und Aufräumen
 
 - Werkzeuge ▸ **Farbpipette**: Der Bildschirm friert ein, eine Lupe folgt der Maus; ein Klick kopiert die Farbe als
   `#RRGGBB` (Shift+Klick: `rgb(…)`), Esc bricht ab.
-- Werkzeuge ▸ **Downloads aufräumen…**: zeigt, was seit einer Woche, einem Monat, drei Monaten oder einem Jahr im
-  Downloads-Ordner liegt, größte zuerst; Gewähltes wandert in den Papierkorb (wiederherstellbar).
+- Werkzeuge ▸ **Ordner aufräumen…**: zeigt, was seit einer Woche, einem Monat, drei Monaten oder einem Jahr unberührt
+  liegt, größte zuerst; Gewähltes wandert in den Papierkorb (wiederherstellbar). Zu Beginn ist es der Downloads-Ordner;
+  **Ordner hinzufügen…** nimmt weitere dazu (Desktop, Videos, ein Spiele-Ordner …), die Liste bleibt gespeichert.
 
 ## Profile
 

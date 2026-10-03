@@ -4,6 +4,12 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.4.2] - 2026-10-03
+
+### Modifiche
+- **Pulisci cartelle** (prima: Pulisci Download): aggiungi altre cartelle oltre a Download; vengono cercate tutte
+  insieme, una colonna mostra dove si trova ogni elemento. L'elenco delle cartelle viene salvato.
+
 ## [2.4.1] - 2026-10-03
 
 ### Novità

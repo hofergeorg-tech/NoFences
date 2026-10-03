@@ -4,6 +4,12 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
+## [2.4.2] - 2026-10-03
+
+### Cambios
+- **Limpiar carpetas** (antes: Limpiar Descargas): añade más carpetas además de Descargas; se revisan todas juntas y una
+  columna muestra dónde está cada elemento. La lista de carpetas se guarda.
+
 ## [2.4.1] - 2026-10-03
 
 ### Novedades

@@ -68,6 +68,9 @@ namespace NoFences.Model
 
         public string DarkTo { get; set; } = "07:00";
 
+        /// <summary>Folders the clean-up tool looks in; empty = the Downloads folder.</summary>
+        public List<string> CleanupFolders { get; set; } = new();
+
         /// <summary>Shortcut for a new note at the mouse.</summary>
         public string QuickNoteHotkey { get; set; } = "Ctrl+Alt+N";
 

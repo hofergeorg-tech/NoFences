@@ -4,6 +4,12 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.4.2] - 2026-10-03
+
+### Geändert
+- **Ordner aufräumen** (vorher: Downloads aufräumen): weitere Ordner neben Downloads hinzufügen; alle werden zusammen
+  durchsucht, eine Spalte zeigt, wo ein Eintrag liegt. Die Ordnerliste bleibt gespeichert.
+
 ## [2.4.1] - 2026-10-03
 
 ### Neu

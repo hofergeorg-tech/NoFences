@@ -128,12 +128,13 @@ doble clic o espacio la gira, las flechas la ajustan píxel a píxel (Mayús: 10
 centímetros y pulgadas (tamaño real, según el tamaño que indica el monitor). Una línea roja sigue al ratón y muestra la
 distancia. Esc la cierra.
 
-## Cuentagotas y Descargas
+## Cuentagotas y limpieza
 
 - Herramientas ▸ **Cuentagotas**: la pantalla se congela y una lupa sigue al ratón; un clic copia el color como `#RRGGBB`
   (Mayús+clic: `rgb(…)`), Esc cancela.
-- Herramientas ▸ **Limpiar Descargas…**: muestra lo que lleva una semana, un mes, tres meses o un año en la carpeta
-  Descargas, primero lo más grande; lo elegido va a la papelera (se puede restaurar).
+- Herramientas ▸ **Limpiar carpetas…**: muestra lo que lleva una semana, un mes, tres meses o un año sin tocarse, primero
+  lo más grande; lo elegido va a la papelera (se puede restaurar). Al principio es la carpeta Descargas; **Añadir
+  carpeta…** añade más (escritorio, vídeos, una carpeta de juegos…) y la lista se guarda.
 
 ## Perfiles
 

@@ -128,12 +128,13 @@ allungarlo, doppio clic o spazio lo ruota, le frecce lo spostano al pixel (Maius
 pixel, centimetri e pollici (dimensione reale, da quella comunicata dal monitor). Una linea rossa segue il mouse e
 mostra la distanza. Esc lo chiude.
 
-## Contagocce e Download
+## Contagocce e pulizia
 
 - Strumenti ▸ **Contagocce**: lo schermo si blocca e una lente segue il mouse; un clic copia il colore come `#RRGGBB`
   (Maiusc+clic: `rgb(…)`), Esc annulla.
-- Strumenti ▸ **Pulisci Download…**: mostra ciò che è fermo nella cartella Download da una settimana, un mese, tre mesi o
-  un anno, i più grandi prima; gli elementi scelti vanno nel cestino (ripristinabili).
+- Strumenti ▸ **Pulisci cartelle…**: mostra ciò che è fermo da una settimana, un mese, tre mesi o un anno, i più grandi
+  prima; gli elementi scelti vanno nel cestino (ripristinabili). All'inizio è la cartella Download; **Aggiungi
+  cartella…** ne aggiunge altre (desktop, video, una cartella di giochi …) e l'elenco viene salvato.
 
 ## Profili
 

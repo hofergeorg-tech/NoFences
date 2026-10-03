@@ -135,12 +135,13 @@ l'extrémité pour l'allonger, double-clic ou espace pour la tourner, flèches p
 le menu passe entre pixels, centimètres et pouces (taille réelle, d'après la taille indiquée par l'écran). Une ligne
 rouge suit la souris et affiche la distance. Échap la ferme.
 
-## Pipette et téléchargements
+## Pipette et nettoyage
 
 - Outils ▸ **Pipette de couleur** : l'écran se fige et une loupe suit la souris ; un clic copie la couleur en `#RRGGBB`
   (Maj+clic : `rgb(…)`), Échap annule.
-- Outils ▸ **Nettoyer les téléchargements…** : liste ce qui traîne dans le dossier Téléchargements depuis une semaine, un
-  mois, trois mois ou un an, les plus gros d'abord ; les éléments choisis vont à la corbeille (restaurables).
+- Outils ▸ **Nettoyer des dossiers…** : liste ce qui n'a pas bougé depuis une semaine, un mois, trois mois ou un an, les
+  plus gros d'abord ; les éléments choisis vont à la corbeille (restaurables). Au départ, c'est le dossier
+  Téléchargements ; **Ajouter un dossier…** en ajoute d'autres (bureau, vidéos, un dossier de jeux…), la liste est gardée.
 
 ## Profils
 

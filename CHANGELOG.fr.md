@@ -4,6 +4,12 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.4.2] - 2026-10-03
+
+### Modifications
+- **Nettoyer des dossiers** (avant : Nettoyer les téléchargements) : ajoutez d'autres dossiers que Téléchargements ; tous
+  sont parcourus ensemble, une colonne indique où se trouve chaque élément. La liste des dossiers est gardée.
+
 ## [2.4.1] - 2026-10-03
 
 ### Nouveautés

@@ -123,12 +123,13 @@ Tray or fence menu → Tools ▸ **Screen ruler** puts a ruler above everything:
 space turns it, arrow keys nudge it (Shift: 10 px), U or the menu switches between pixels, centimetres and inches
 (real size, from the size your monitor reports). A red line follows the mouse and shows the distance. Esc closes it.
 
-## Color picker and Downloads
+## Color picker and clean-up
 
 - Tools ▸ **Color picker**: the screen freezes and a magnifier follows the mouse; a click copies the color as `#RRGGBB`
   (Shift+click: `rgb(…)`), Esc cancels.
-- Tools ▸ **Clean up Downloads…**: lists what has been lying in your Downloads folder for a week, month, three months
-  or a year, biggest first; the chosen items go to the recycle bin (restorable).
+- Tools ▸ **Clean up folders…**: lists what has been lying untouched for a week, month, three months or a year, biggest
+  first, and moves the chosen items to the recycle bin (restorable). It starts with Downloads; **Add folder…** adds more
+  (desktop, videos, a game folder …), and the list is kept.
 
 ## Profiles
 

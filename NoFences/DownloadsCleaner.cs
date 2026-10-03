@@ -17,23 +17,29 @@ namespace NoFences
         private static DownloadsCleaner? open;
         private static readonly int[] Ages = { 7, 30, 90, 365 };
 
-        private readonly ListView list = new() { View = View.Details, CheckBoxes = true, FullRowSelect = true, Width = 560, Height = 300 };
+        private readonly ListView list = new() { View = View.Details, CheckBoxes = true, FullRowSelect = true, Width = 640, Height = 300 };
+        private readonly ListBox folderList = new() { Width = 520, Height = 76, IntegralHeight = false };
         private readonly ComboBox age = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 160 };
         private readonly Label total = new() { AutoSize = true, Margin = new Padding(0, 8, 0, 0) };
         private readonly Button recycle = new() { AutoSize = true };
-        private readonly string folder = DownloadsFolder();
+        private readonly Model.AppConfig config;
+        private readonly Action save;
         private List<Entry> entries = new();
+        private int scanVersion;
 
-        public static new void Show()
+        public static void Show(Model.AppConfig config, Action save)
         {
             if (open is { IsDisposed: false })
             {
                 open.Activate();
                 return;
             }
-            open = new DownloadsCleaner();
+            open = new DownloadsCleaner(config, save);
             ((Form)open).Show();
         }
+
+        /// <summary>The folders to clean up; Downloads until the user chooses others.</summary>
+        private List<string> Folders => config.CleanupFolders.Count > 0 ? config.CleanupFolders : new List<string> { DownloadsFolder() };
 
         /// <summary>The user's Downloads folder (also when it was moved to another drive).</summary>
         public static string DownloadsFolder()
@@ -56,8 +62,10 @@ namespace NoFences
         public static List<Entry> Old(IEnumerable<Entry> all, DateTime now, int days) =>
             all.Where(e => now - e.Modified >= TimeSpan.FromDays(days)).OrderByDescending(e => e.Size).ToList();
 
-        private DownloadsCleaner()
+        private DownloadsCleaner(Model.AppConfig config, Action save)
         {
+            this.config = config;
+            this.save = save;
             Text = Strings.DownloadsTitle;
             StartPosition = FormStartPosition.CenterScreen;
             AutoScaleMode = AutoScaleMode.Dpi;
@@ -68,25 +76,47 @@ namespace NoFences
             Padding = new Padding(16);
             Font = SystemFonts.MessageBoxFont ?? Font;
 
-            list.Columns.Add(Strings.Name, 300);
+            list.Columns.Add(Strings.Name, 280);
+            list.Columns.Add(Strings.Folder, 120);
             list.Columns.Add(Strings.DownloadsSize, 100, HorizontalAlignment.Right);
-            list.Columns.Add(Strings.DownloadsAge, 130, HorizontalAlignment.Right);
+            list.Columns.Add(Strings.DownloadsAge, 120, HorizontalAlignment.Right);
             list.ItemChecked += (_, _) => UpdateTotal();
             age.Items.AddRange(Ages.Select(d => (object)Strings.DownloadsOlderThan(d)).ToArray());
             age.SelectedIndex = 1;
             age.SelectedIndexChanged += (_, _) => Fill();
             recycle.Text = Strings.DownloadsRecycle;
             recycle.Click += (_, _) => Recycle();
+            // Opens the folder of the chosen item, else the chosen folder of the list above
             var openFolder = new Button { Text = Strings.OpenFolder, AutoSize = true };
-            openFolder.Click += (_, _) => Process.Start(new ProcessStartInfo(folder) { UseShellExecute = true });
+            openFolder.Click += (_, _) =>
+            {
+                var target = list.SelectedItems.Count > 0 ? Path.GetDirectoryName(((Entry)list.SelectedItems[0].Tag!).Path)
+                    : folderList.SelectedItem as string ?? Folders[0];
+                if (target != null && Directory.Exists(target))
+                    Process.Start(new ProcessStartInfo(target) { UseShellExecute = true });
+            };
             var close = new Button { Text = Strings.Close, AutoSize = true, DialogResult = DialogResult.Cancel };
             CancelButton = close;
 
-            var top = new FlowLayoutPanel { AutoSize = true, WrapContents = false };
+            // Folders to look in: Downloads by default, more can be added
+            var addFolder = new Button { Text = Strings.CleanupAddFolder, AutoSize = true };
+            addFolder.Click += (_, _) => AddFolder();
+            var removeFolder = new Button { Text = Strings.RuleRemove, AutoSize = true };
+            removeFolder.Click += (_, _) => RemoveFolder();
+            var folderButtons = new FlowLayoutPanel { FlowDirection = FlowDirection.TopDown, AutoSize = true, WrapContents = false };
+            folderButtons.Controls.Add(addFolder);
+            folderButtons.Controls.Add(removeFolder);
+            var folderRow = new FlowLayoutPanel { AutoSize = true, WrapContents = false };
+            folderRow.Controls.Add(folderList);
+            folderRow.Controls.Add(folderButtons);
+            FillFolders();
+
+            var top = new FlowLayoutPanel { AutoSize = true, WrapContents = false, Margin = new Padding(0, 10, 0, 0) };
             top.Controls.Add(new Label { Text = Strings.DownloadsShow, AutoSize = true, Margin = new Padding(0, 6, 6, 0) });
             top.Controls.Add(age);
             var layout = new FlowLayoutPanel { FlowDirection = FlowDirection.TopDown, AutoSize = true, Dock = DockStyle.Fill, WrapContents = false };
-            layout.Controls.Add(new Label { Text = folder, AutoSize = true, ForeColor = SystemColors.GrayText, Margin = new Padding(0, 0, 0, 6) });
+            layout.Controls.Add(new Label { Text = Strings.CleanupFolders, AutoSize = true, Margin = new Padding(0, 0, 0, 4) });
+            layout.Controls.Add(folderRow);
             layout.Controls.Add(top);
             layout.Controls.Add(list);
             layout.Controls.Add(total);
@@ -94,30 +124,75 @@ namespace NoFences
             buttons.Controls.AddRange(new Control[] { close, recycle, openFolder });
             Controls.Add(layout);
             Controls.Add(buttons);
-            Shown += async (_, _) =>
-            {
-                total.Text = Strings.WeatherLoading;
-                entries = await Task.Run(Scan);
-                Fill();
-            };
+            Shown += async (_, _) => await RescanAsync();
         }
 
-        private List<Entry> Scan()
+        private void FillFolders()
+        {
+            folderList.Items.Clear();
+            folderList.Items.AddRange(Folders.Cast<object>().ToArray());
+        }
+
+        private async void AddFolder()
+        {
+            using var dialog = new FolderBrowserDialog { Description = Strings.CleanupAddFolder.TrimEnd('…'), UseDescriptionForTitle = true };
+            if (dialog.ShowDialog(this) != DialogResult.OK)
+                return;
+            // The first own choice keeps Downloads in the list (it was only implied before)
+            if (config.CleanupFolders.Count == 0)
+                config.CleanupFolders.Add(DownloadsFolder());
+            if (!config.CleanupFolders.Contains(dialog.SelectedPath, StringComparer.OrdinalIgnoreCase))
+                config.CleanupFolders.Add(dialog.SelectedPath);
+            save();
+            FillFolders();
+            await RescanAsync();
+        }
+
+        private async void RemoveFolder()
+        {
+            if (folderList.SelectedItem is not string folder)
+                return;
+            if (config.CleanupFolders.Count == 0)
+                config.CleanupFolders.Add(DownloadsFolder());
+            config.CleanupFolders.RemoveAll(f => string.Equals(f, folder, StringComparison.OrdinalIgnoreCase));
+            save();
+            FillFolders();
+            await RescanAsync();
+        }
+
+        private async Task RescanAsync()
+        {
+            var version = ++scanVersion;
+            total.Text = Strings.WeatherLoading;
+            var folders = Folders.ToList();
+            var found = await Task.Run(() => folders.SelectMany(Scan).ToList());
+            // A newer scan (folder added meanwhile) wins
+            if (version != scanVersion || IsDisposed)
+                return;
+            entries = found;
+            Fill();
+        }
+
+        private static List<Entry> Scan(string folder)
         {
             var result = new List<Entry>();
             if (!Directory.Exists(folder))
                 return result;
-            foreach (var info in new DirectoryInfo(folder).EnumerateFileSystemInfos())
+            try
             {
-                try
+                foreach (var info in new DirectoryInfo(folder).EnumerateFileSystemInfos())
                 {
-                    if ((info.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0)
-                        continue;
-                    var size = info is FileInfo f ? f.Length : FolderSize((DirectoryInfo)info);
-                    result.Add(new Entry(info.FullName, info.Name, size, info.LastWriteTime, info is DirectoryInfo));
+                    try
+                    {
+                        if ((info.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0)
+                            continue;
+                        var size = info is FileInfo f ? f.Length : FolderSize((DirectoryInfo)info);
+                        result.Add(new Entry(info.FullName, info.Name, size, info.LastWriteTime, info is DirectoryInfo));
+                    }
+                    catch (Exception) { }
                 }
-                catch (Exception) { }
             }
+            catch (Exception) { }
             return result;
         }
 
@@ -142,6 +217,7 @@ namespace NoFences
             foreach (var e in Old(entries, now, days))
             {
                 var item = new ListViewItem((e.IsFolder ? "📁 " : "") + e.Name) { Tag = e };
+                item.SubItems.Add(Path.GetFileName(Path.GetDirectoryName(e.Path)) ?? "");
                 item.SubItems.Add(DrivesWidget.FormatSize(e.Size));
                 item.SubItems.Add(Strings.CountdownDays((int)(now - e.Modified).TotalDays));
                 list.Items.Add(item);

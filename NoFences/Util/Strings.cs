@@ -126,8 +126,10 @@ namespace NoFences.Util
         public static string ProfileHowTo => T("Assign fences: right-click a fence → Show in profile", "Fences zuordnen: Rechtsklick auf ein Fence → In Profil zeigen", "Assegna recinti: clic destro su un recinto → Mostra nel profilo", "Attribuer des barrières : clic droit sur une barrière → Afficher dans le profil", "Asignar vallas: clic derecho en una valla → Mostrar en el perfil");
         public static string ProfileFenceMenu => T("Show in profile", "In Profil zeigen", "Mostra nel profilo", "Afficher dans le profil", "Mostrar en el perfil");
         public static string ProfileFenceHint => T("No check = in every profile", "Ohne Haken = in allen Profilen", "Nessuna spunta = in tutti i profili", "Aucune coche = dans tous les profils", "Sin marca = en todos los perfiles");
-        public static string DownloadsMenu => T("Clean up Downloads…", "Downloads aufräumen…", "Pulisci Download…", "Nettoyer les téléchargements…", "Limpiar Descargas…");
-        public static string DownloadsTitle => T("Clean up Downloads", "Downloads aufräumen", "Pulisci Download", "Nettoyer les téléchargements", "Limpiar Descargas");
+        public static string DownloadsMenu => T("Clean up folders…", "Ordner aufräumen…", "Pulisci cartelle…", "Nettoyer des dossiers…", "Limpiar carpetas…");
+        public static string DownloadsTitle => T("Clean up folders", "Ordner aufräumen", "Pulisci cartelle", "Nettoyer des dossiers", "Limpiar carpetas");
+        public static string CleanupFolders => T("Look in these folders (Downloads to start with):", "In diesen Ordnern suchen (zu Beginn Downloads):", "Cerca in queste cartelle (all'inizio Download):", "Chercher dans ces dossiers (Téléchargements au départ) :", "Buscar en estas carpetas (al principio, Descargas):");
+        public static string CleanupAddFolder => T("Add folder…", "Ordner hinzufügen…", "Aggiungi cartella…", "Ajouter un dossier…", "Añadir carpeta…");
         public static string DownloadsShow => T("Show what's untouched for", "Zeigen, was liegt seit", "Mostra ciò che è fermo da", "Afficher ce qui n'a pas bougé depuis", "Mostrar lo que lleva sin tocarse");
         public static string DownloadsOlderThan(int days) => days switch
         {
