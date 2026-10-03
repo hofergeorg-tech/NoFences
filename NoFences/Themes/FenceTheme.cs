@@ -210,7 +210,15 @@ namespace NoFences.Themes
             new FamilyTheme(),
             new GamingTheme(),
             new FinanceTheme(),
-            new SocialTheme()
+            new SocialTheme(),
+            new DocumentsTheme(),
+            new MultimediaTheme(),
+            new MusicTheme(),
+            new SportTheme(),
+            new PhotosTheme(),
+            new TravelTheme(),
+            new CookingTheme(),
+            new NatureTheme()
         }.Concat(PostItTheme.AllColors()).ToList();
 
         public static IReadOnlyList<FenceTheme> All { get; private set; } = BuiltIn;

@@ -231,7 +231,8 @@ namespace NoFences
 
         private int Px(float logical) => (int)Math.Round(logical * scale);
 
-        private int ViewHeight => Math.Max(0, ClientSize.Height - titleHeight);
+        // Without the theme's bottom margin (e.g. the Post-it's shadow), so items stay on the paper.
+        private int ViewHeight => Math.Max(0, ClientSize.Height - titleHeight - Px(theme.BottomInset));
 
         private int MaxScroll => Math.Max(0, contentHeight - ViewHeight);
 
