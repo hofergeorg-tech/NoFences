@@ -18,6 +18,7 @@ namespace NoFences.Widgets
         private readonly Func<string?> getOption;
         private readonly Action<string?> setOption;
         private readonly Action<string> notify;
+        private readonly IFenceHost? host;
         private Phase phase = Phase.Focus;
         private int round = 1;
         private bool running;
@@ -25,11 +26,16 @@ namespace NoFences.Widgets
         private DateTime lastTick;
         private RectangleF startButton, resetButton;
 
-        public FocusWidget(Func<string?> getOption, Action<string?> setOption, Action<string> notify)
+        /// <summary>Focus mode switched the profile; this one comes back in breaks and when stopped.</summary>
+        private bool profileSwitched;
+        private string? profileBefore;
+
+        public FocusWidget(Func<string?> getOption, Action<string?> setOption, Action<string> notify, IFenceHost? host = null)
         {
             this.getOption = getOption;
             this.setOption = setOption;
             this.notify = notify;
+            this.host = host;
             left = Length(Phase.Focus);
         }
 
@@ -37,8 +43,43 @@ namespace NoFences.Widgets
 
         public override int RefreshMs => 500;
 
-        private (int Focus, int Short, int Long) Timing =>
-            int.TryParse(getOption(), out var i) && i >= 0 && i < Presets.Length ? Presets[i] : Presets[0];
+        /// <summary>Stored as "presetIndex|profile" (the profile part optional).</summary>
+        public static (int Preset, string? Profile) ParseOption(string? option)
+        {
+            var parts = (option ?? "").Split('|', 2);
+            var preset = int.TryParse(parts[0], out var i) && i >= 0 && i < Presets.Length ? i : 0;
+            return (preset, parts.Length > 1 && parts[1].Length > 0 ? parts[1] : null);
+        }
+
+        public static string FormatOption(int preset, string? profile) => profile == null ? preset.ToString() : $"{preset}|{profile}";
+
+        private (int Focus, int Short, int Long) Timing => Presets[ParseOption(getOption()).Preset];
+
+        private string? FocusProfile => ParseOption(getOption()).Profile;
+
+        /// <summary>Focus mode: the chosen profile while a focus round runs, the previous one otherwise.</summary>
+        private void UpdateFocusProfile()
+        {
+            if (host == null)
+                return;
+            var wanted = running && phase == Phase.Focus ? FocusProfile : null;
+            if (wanted != null && host.Profiles.Contains(wanted))
+            {
+                if (!profileSwitched)
+                {
+                    profileBefore = host.ActiveProfile;
+                    profileSwitched = true;
+                }
+                if (host.ActiveProfile != wanted)
+                    host.SwitchProfile(wanted, automatic: true);
+            }
+            else if (profileSwitched)
+            {
+                profileSwitched = false;
+                if (host.ActiveProfile != profileBefore)
+                    host.SwitchProfile(profileBefore, automatic: true);
+            }
+        }
 
         private TimeSpan Length(Phase p) => TimeSpan.FromMinutes(p switch
         {
@@ -74,6 +115,7 @@ namespace NoFences.Widgets
                     left = Length(phase);
                     SystemSounds.Asterisk.Play();
                     notify(phase == Phase.Focus ? Strings.FocusBackToWork : Strings.FocusBreak(Length(phase).Minutes));
+                    UpdateFocusProfile();
                 }
             }
             if (lastTick != DateTime.MaxValue)
@@ -139,6 +181,7 @@ namespace NoFences.Widgets
             {
                 running = !running;
                 lastTick = DateTime.UtcNow;
+                UpdateFocusProfile();
                 return true;
             }
             if (resetButton.Contains(p))
@@ -147,6 +190,7 @@ namespace NoFences.Widgets
                 phase = Phase.Focus;
                 round = 1;
                 left = Length(Phase.Focus);
+                UpdateFocusProfile();
                 return true;
             }
             return false;
@@ -154,6 +198,7 @@ namespace NoFences.Widgets
 
         public override void AddMenuItems(ToolStripItemCollection menu, IWin32Window owner)
         {
+            var (preset, profile) = ParseOption(getOption());
             var timing = new ToolStripMenuItem(Strings.FocusTiming);
             for (var i = 0; i < Presets.Length; i++)
             {
@@ -161,19 +206,46 @@ namespace NoFences.Widgets
                 var (f, s, l) = Presets[i];
                 timing.DropDownItems.Add(new ToolStripMenuItem(Strings.FocusPreset(f, s, l), null, (_, _) =>
                 {
-                    setOption(index.ToString());
+                    setOption(FormatOption(index, profile));
                     if (!running)
                         left = Length(phase);
                     RequestRedraw();
-                }) { Checked = Timing == Presets[i] });
+                }) { Checked = preset == i });
             }
             menu.Add(timing);
+
+            // Focus mode: switch to a profile (e.g. "Focus" with only work fences) while concentrating
+            if (host != null)
+            {
+                var mode = new ToolStripMenuItem(Strings.FocusProfileMenu);
+                mode.DropDownItems.Add(new ToolStripMenuItem(Strings.FocusProfileNone, null, (_, _) => SetFocusProfile(preset, null)) { Checked = profile == null });
+                foreach (var p in host.Profiles)
+                    mode.DropDownItems.Add(new ToolStripMenuItem(p, null, (_, _) => SetFocusProfile(preset, p)) { Checked = profile == p });
+                if (host.Profiles.Count == 0)
+                    mode.DropDownItems.Add(new ToolStripMenuItem(Strings.FocusProfileHint) { Enabled = false });
+                menu.Add(mode);
+            }
+
             menu.Add(Strings.FocusSkip, null, (_, _) =>
             {
                 (phase, round) = After(phase, round);
                 left = Length(phase);
+                UpdateFocusProfile();
                 RequestRedraw();
             });
+        }
+
+        private void SetFocusProfile(int preset, string? profile)
+        {
+            setOption(FormatOption(preset, profile));
+            UpdateFocusProfile();
+        }
+
+        public override void Dispose()
+        {
+            // Closing the widget mid-focus gives the previous profile back
+            running = false;
+            UpdateFocusProfile();
         }
     }
 }

@@ -1,5 +1,6 @@
 using NoFences.Model;
 using NoFences.Util;
+using NoFences.Win32;
 
 namespace NoFences
 {
@@ -11,6 +12,52 @@ namespace NoFences
     {
         public IReadOnlyList<string> Profiles => Store.Config.Profiles;
 
+        private readonly List<GlobalHotkey> profileHotkeys = new();
+
+        /// <summary>
+        /// Ctrl+Alt+F1…F9 switch to profile 1…9, Ctrl+Alt+F10 shows all fences. (Not Ctrl+Alt+digits:
+        /// that's AltGr on many keyboards and would take away { [ ] } and friends.)
+        /// </summary>
+        internal void UpdateProfileHotkeys()
+        {
+            foreach (var h in profileHotkeys)
+                h.Dispose();
+            profileHotkeys.Clear();
+            if (!Store.Config.ProfileHotkeys || Store.Config.Profiles.Count == 0)
+                return;
+            Register(Keys.F10, null);
+            for (var i = 0; i < Math.Min(9, Store.Config.Profiles.Count); i++)
+                Register(Keys.F1 + i, Store.Config.Profiles[i]);
+
+            void Register(Keys key, string? profile)
+            {
+                var hotkey = new GlobalHotkey(Native.MOD_CONTROL | Native.MOD_ALT, key);
+                if (!hotkey.Registered)
+                {
+                    hotkey.Dispose();
+                    return;
+                }
+                hotkey.Pressed += (_, _) => SwitchProfile(profile);
+                profileHotkeys.Add(hotkey);
+            }
+        }
+
+        /// <summary>"Ctrl+Alt+F2" for the second profile, for menus.</summary>
+        internal string? ProfileHotkeyText(string? profile)
+        {
+            if (!Store.Config.ProfileHotkeys)
+                return null;
+            var index = profile == null ? 9 : Store.Config.Profiles.IndexOf(profile);
+            return index is >= 0 and <= 9 ? Strings.HotkeyName($"Ctrl+Alt+F{index + 1}") : null;
+        }
+
+        private void DisposeProfileHotkeys()
+        {
+            foreach (var h in profileHotkeys)
+                h.Dispose();
+            profileHotkeys.Clear();
+        }
+
         public string? ActiveProfile => Store.Config.ActiveProfile;
 
         /// <param name="automatic">Switched by a profile rule; a manual switch ends what the rule started.</param>
@@ -21,6 +68,7 @@ namespace NoFences
             Store.Config.ActiveProfile = profile != null && Store.Config.Profiles.Contains(profile) ? profile : null;
             Store.RequestSave();
             ApplyVisibility();
+            ApplyProfileWallpaper(Store.Config.ActiveProfile);
             var name = Store.Config.ActiveProfile ?? Strings.ProfileAll;
             ShowBalloon(automatic ? Strings.ProfileSwitchedAuto(name) : Strings.ProfileSwitched(name));
         }
@@ -35,6 +83,7 @@ namespace NoFences
             if (name.Length == 0 || Store.Config.Profiles.Contains(name))
                 return null;
             Store.Config.Profiles.Add(name);
+            UpdateProfileHotkeys();
             Store.RequestSave();
             return name;
         }
@@ -44,6 +93,8 @@ namespace NoFences
             if (MessageBox.Show(Strings.ProfileDeleteConfirm(profile), "NoFences", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
             Store.Config.Profiles.Remove(profile);
+            Store.Config.ProfileWallpapers.Remove(profile);
+            UpdateProfileHotkeys();
             foreach (var f in Store.Config.Fences)
             {
                 f.Profiles?.Remove(profile);
@@ -79,9 +130,9 @@ namespace NoFences
         private void AddProfileItems(ToolStripItemCollection items)
         {
             var menu = new ToolStripMenuItem(Strings.ProfileMenu(ActiveProfile ?? Strings.ProfileAll));
-            menu.DropDownItems.Add(new ToolStripMenuItem(Strings.ProfileAll, null, (_, _) => SwitchProfile(null)) { Checked = ActiveProfile == null });
+            menu.DropDownItems.Add(new ToolStripMenuItem(Strings.ProfileAll, null, (_, _) => SwitchProfile(null)) { Checked = ActiveProfile == null, ShortcutKeyDisplayString = ProfileHotkeyText(null) });
             foreach (var p in Profiles.ToList())
-                menu.DropDownItems.Add(new ToolStripMenuItem(p, null, (_, _) => SwitchProfile(p)) { Checked = ActiveProfile == p });
+                menu.DropDownItems.Add(new ToolStripMenuItem(p, null, (_, _) => SwitchProfile(p)) { Checked = ActiveProfile == p, ShortcutKeyDisplayString = ProfileHotkeyText(p) });
             menu.DropDownItems.Add(new ToolStripSeparator());
             menu.DropDownItems.Add(Strings.ProfileNew, null, (_, _) =>
             {
@@ -95,6 +146,7 @@ namespace NoFences
                     delete.DropDownItems.Add(p, null, (_, _) => DeleteProfile(p));
                 menu.DropDownItems.Add(delete);
             }
+            AddWallpaperItems(menu.DropDownItems);
             menu.DropDownItems.Add(new ToolStripSeparator());
             menu.DropDownItems.Add(new ToolStripMenuItem(Strings.ProfileHowTo) { Enabled = false });
             items.Add(menu);

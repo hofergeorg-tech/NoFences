@@ -6,6 +6,15 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 
 ## [2.4.1] - 2026-10-03
 
+### Neu
+- Die **Suche** findet auch Startmenü-Apps und Windows-Einstellungsseiten und rechnet (`12*7`, `200*15%`; Enter kopiert).
+- Widgets **Bildschirmzeit** (benutzte Programme heute / 7 Tage, bleibt auf diesem PC), **Sound** (Lautstärke, Stumm,
+  Mikrofon, Wiedergabegerät wechseln) und **Dienst-Status** (RSI, Discord, Epic Games, GitHub … aus ihren Statusseiten).
+- **Fokus-Modus**: Der Fokus-Timer wechselt während der Fokus-Runden zu einem gewählten Profil.
+- **Profil-Tastenkürzel** Strg+Alt+F1…F9 (F10: alle Fences) und ein **Hintergrundbild pro Profil**.
+- **Desktop-Assistent**: sortiert Desktop-Symbole nach Art in neue Fences (wird beim ersten Start angeboten).
+- **Bildschirm-Lineal** in Pixel, Zentimeter oder Zoll (Tray → Bildschirm-Lineal).
+
 ### Geändert
 - **Gruppierte Menüs**: Neues Widget ▸ Zeit & Planung / Info & News / System / Spiele & Medien; Style ▸ Basis /
   Gaming & Technik / Arbeit & Alltag / Freizeit / Post-it / Eigene Styles.

@@ -35,7 +35,16 @@ English · Deutsch · Italiano · Français · Español
 ![More widgets](docs/widgets-more-docs.png)
 ![Even more widgets](docs/widgets-extra-docs.png)
 
-**Search** – Ctrl+Alt+F searches everything in all fences: links, folder contents, tabs and notes.
+Also **screen time**, **sound** (volume, mute, switch playback device) and **service status** (RSI, Discord, Epic …):
+
+![Tool widgets](docs/widgets-tools-docs.png)
+
+**Search** – Ctrl+Alt+F searches everything in all fences (links, folder contents, tabs, notes), Start menu apps and
+Windows settings, and calculates (`12*7`).
+
+**Tools** – a desktop assistant that sorts your desktop icons into fences, and a screen ruler (px, cm, in).
+
+![Screen ruler](docs/ruler.png)
 
 **Profiles & automation** – group fences into profiles like "Work" and "Gaming"; switch by hand or automatically while
 a program runs or at set times. Fences hide while something runs full screen, and the default style can follow

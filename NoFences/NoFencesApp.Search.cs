@@ -35,14 +35,29 @@ namespace NoFences
         /// <summary>Opens a result: the file, or for a note, brings the fences to the front.</summary>
         internal void OpenSearchResult(SearchItem item)
         {
-            if (item.Path != null)
+            switch (item.Kind)
             {
-                FenceEntry.FromPath(item.Path)?.Open();
-                return;
+                case SearchKind.Calculation:
+                    try { Clipboard.SetText(item.Path ?? ""); } catch (System.Runtime.InteropServices.ExternalException) { }
+                    return;
+                case SearchKind.Setting:
+                    try { OpenUrl(item.Path!); } catch (Exception) { }
+                    return;
+                case SearchKind.Note:
+                    StartPeek();
+                    windows.FirstOrDefault(w => w.Info == item.Fence)?.Activate();
+                    return;
+                default:
+                    if (item.Path != null)
+                        FenceEntry.FromPath(item.Path)?.Open();
+                    return;
             }
-            StartPeek();
-            windows.FirstOrDefault(w => w.Info == item.Fence)?.Activate();
         }
+
+        /// <summary>Start menu shortcuts, read once in the background and kept for later searches.</summary>
+        private static Task<List<SearchItem>>? startMenuApps;
+
+        internal static Task<List<SearchItem>> StartMenuAppsAsync() => startMenuApps ??= Task.Run(FenceSearch.StartMenuApps);
 
         private void AddSearchItem(ToolStripItemCollection items)
         {
@@ -64,6 +79,7 @@ namespace NoFences
         private readonly ListBox results = new() { BorderStyle = BorderStyle.None, Dock = DockStyle.Fill, DrawMode = DrawMode.OwnerDrawFixed, IntegralHeight = false };
         private readonly Label hint = new() { Dock = DockStyle.Bottom, AutoSize = false, ForeColor = SystemColors.GrayText, TextAlign = ContentAlignment.MiddleLeft };
         private readonly List<SearchItem> all;
+        private readonly int fenceItemCount;
         private List<SearchItem> shown = new();
 
         public static void ShowSingle(NoFencesApp app)
@@ -85,6 +101,22 @@ namespace NoFences
         {
             this.app = app;
             all = FenceSearch.Collect(app.Store.Config.Fences, app.ShowExtensions);
+            fenceItemCount = all.Count;
+            all.AddRange(SettingsPages.All());
+            // Start menu apps join as soon as they are read (the first time takes a moment)
+            var apps = NoFencesApp.StartMenuAppsAsync();
+            if (apps.IsCompleted)
+                all.AddRange(apps.Result);
+            else
+                apps.ContinueWith(t =>
+                {
+                    if (t.IsCompletedSuccessfully && !IsDisposed)
+                        BeginInvoke(() =>
+                        {
+                            all.AddRange(t.Result);
+                            Update();
+                        });
+                }, TaskScheduler.Default);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             ControlBox = false;
             Text = "";
@@ -107,7 +139,7 @@ namespace NoFences
             results.Font = Font;
             results.ItemHeight = (int)(40 * scale);
             hint.Height = (int)(24 * scale);
-            hint.Text = Strings.SearchFooter(all.Count);
+            hint.Text = Strings.SearchFooter(fenceItemCount);
 
             var gap = new Panel { Dock = DockStyle.Top, Height = (int)(10 * scale) };
             Controls.Add(results);
@@ -126,14 +158,22 @@ namespace NoFences
 
         private new void Update()
         {
+            if (IsDisposed)
+                return;
             shown = FenceSearch.Find(all, box.Text);
+            // A calculation comes first: "12*7" → "= 84"
+            if (FenceSearch.Calculation(box.Text) is { } calc)
+                shown.Insert(0, calc);
             results.BeginUpdate();
             results.Items.Clear();
             results.Items.AddRange(shown.Cast<object>().ToArray());
             if (shown.Count > 0)
                 results.SelectedIndex = 0;
             results.EndUpdate();
-            hint.Text = box.Text.Trim().Length == 0 ? Strings.SearchFooter(all.Count) : shown.Count == 0 ? Strings.SearchNothing : Strings.SearchKeys;
+            hint.Text = box.Text.Trim().Length == 0 ? Strings.SearchFooter(fenceItemCount)
+                : shown.Count == 0 ? Strings.SearchNothing
+                : shown[0].Kind == SearchKind.Calculation ? Strings.SearchCopyResult
+                : Strings.SearchKeys;
         }
 
         private void DrawResult(object? sender, DrawItemEventArgs e)
@@ -144,19 +184,32 @@ namespace NoFences
             var item = shown[e.Index];
             var selected = (e.State & DrawItemState.Selected) != 0;
             var iconSize = e.Bounds.Height - 8;
-            var icon = item.Path != null ? IconCache.Shared.Get(item.Path, 32) : null;
+            var icon = item.Kind is SearchKind.FenceItem or SearchKind.App && item.Path != null ? IconCache.Shared.Get(item.Path, 32) : null;
             var iconRect = new Rectangle(e.Bounds.X + 6, e.Bounds.Y + 4, iconSize, iconSize);
             if (icon != null)
+            {
                 e.Graphics.DrawImage(icon, iconRect);
-            else if (item.Path == null)
-                TextRenderer.DrawText(e.Graphics, "📝", Font, iconRect, e.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+            }
+            else
+            {
+                var glyph = item.Kind switch { SearchKind.Note => "📝", SearchKind.Setting => "⚙", SearchKind.Calculation => "=", _ => "" };
+                using var glyphFont = new Font(Font.FontFamily, Font.Size * 1.4f);
+                TextRenderer.DrawText(e.Graphics, glyph, glyphFont, iconRect, e.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+            }
 
             var textX = iconRect.Right + 10;
             var half = e.Bounds.Height / 2;
             using var bold = new Font(Font, FontStyle.Bold);
             TextRenderer.DrawText(e.Graphics, item.Name, bold, new Rectangle(textX, e.Bounds.Y + 2, e.Bounds.Right - textX - 6, half),
                 e.ForeColor, TextFormatFlags.Bottom | TextFormatFlags.EndEllipsis | TextFormatFlags.NoPrefix);
-            var detail = item.Path == null ? Strings.SearchInNote(item.FenceName) : Strings.SearchInFence(item.FenceName);
+            var detail = item.Kind switch
+            {
+                SearchKind.Note => Strings.SearchInNote(item.FenceName),
+                SearchKind.App => Strings.SearchApp,
+                SearchKind.Setting => Strings.SearchWindowsSettings,
+                SearchKind.Calculation => item.FenceName,
+                _ => Strings.SearchInFence(item.FenceName)
+            };
             TextRenderer.DrawText(e.Graphics, detail, Font, new Rectangle(textX, e.Bounds.Y + half, e.Bounds.Right - textX - 6, half - 2),
                 selected ? e.ForeColor : SystemColors.GrayText, TextFormatFlags.Top | TextFormatFlags.EndEllipsis | TextFormatFlags.NoPrefix);
         }

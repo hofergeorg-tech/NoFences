@@ -35,7 +35,8 @@ namespace NoFences
         private bool ShouldBeVisible(FenceInfo info) =>
             fencesVisible
             && (info.VirtualDesktop == null || CurrentVirtualDesktop == null || info.VirtualDesktop == CurrentVirtualDesktop)
-            && info.InProfile(Store.Config.ActiveProfile);
+            // The focus timer drives focus mode's profile switch, so it must not hide itself
+            && (info.InProfile(Store.Config.ActiveProfile) || info.WidgetType == "focus");
 
         private void ApplyVisibility()
         {

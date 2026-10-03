@@ -6,6 +6,16 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 
 ## [2.4.1] - 2026-10-03
 
+### Novedades
+- La **búsqueda** encuentra también aplicaciones del menú Inicio y páginas de la configuración de Windows, y calcula
+  (`12*7`, `200*15%`; Intro copia).
+- Widgets de **tiempo de pantalla** (programas usados hoy / 7 días, se queda en este PC), **sonido** (volumen, silencio,
+  micrófono, cambiar dispositivo) y **estado de servicios** (RSI, Discord, Epic Games, GitHub… según sus páginas de estado).
+- **Modo concentración**: el temporizador cambia a un perfil elegido durante las rondas de concentración.
+- **Atajos de perfil** Ctrl+Alt+F1…F9 (F10: todas las vallas) y un **fondo de pantalla por perfil**.
+- **Asistente de escritorio**: ordena los iconos del escritorio en vallas nuevas por tipo (se ofrece en el primer inicio).
+- **Regla en pantalla** en píxeles, centímetros o pulgadas (bandeja → Regla en pantalla).
+
 ### Cambios
 - **Menús agrupados**: Nuevo widget ▸ Tiempo y planificación / Información y noticias / Sistema / Juegos y multimedia;
   Estilo ▸ Básicos / Juegos y tecnología / Trabajo y día a día / Ocio / Pósit / Estilos propios.

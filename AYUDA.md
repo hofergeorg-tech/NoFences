@@ -39,8 +39,10 @@ Consejo: para un escritorio ordenado, crea una carpeta como `Documentos\Vallas\T
 ## Buscar en todas las vallas
 
 **Ctrl+Alt+F** (o bandeja → Buscar en las vallas…) abre un cuadro de búsqueda. Encuentra todo en tus vallas – accesos
-directos, contenido de carpetas, pestañas y textos de notas – incluso letras en orden («ffx» encuentra Firefox). **Intro**
-abre el resultado, **↑↓** para elegir, **Esc** cierra. El atajo se cambia en Configuración → Escritorio.
+directos, contenido de carpetas, pestañas y textos de notas – incluso letras en orden («ffx» encuentra Firefox) – y
+también aplicaciones del menú Inicio y páginas de la configuración de Windows («bluetooth», «sonido»). Escribe un cálculo
+como `12*7` o `200*15%` e Intro copia el resultado. **Intro** abre el resultado, **↑↓** para elegir, **Esc** cierra. El
+atajo se cambia en Configuración → Escritorio.
 
 ## Mover, cambiar el tamaño, cambiar el nombre
 
@@ -90,12 +92,38 @@ Menú de la bandeja o de una valla → **Nuevo widget**. Los widgets con listas 
 - **Noticias**: titulares de fuentes RSS o Atom (botones listos para El País, BBC, heise y otros); un clic abre el artículo.
 - **Cotizaciones**: acciones, índices y criptomonedas con la variación desde ayer y un gráfico del día, con símbolos de
   Yahoo Finance como `AAPL`, `^IBEX`, `^GDAXI`, `BTC-EUR`. Se actualizan cada cinco minutos; solo a título informativo.
+- **Tiempo de pantalla**: qué programas usaste y cuánto tiempo hoy o en los últimos 7 días (clic en «hoy ⇄» para
+  cambiar). Solo se registra mientras existe el widget y estás en el PC; se queda en este PC.
+- **Sonido**: volumen del dispositivo de reproducción actual (clic en la barra o rueda del ratón), silenciar altavoces y
+  micrófono, y cambiar con un clic a otro dispositivo (auriculares ↔ altavoces).
+- **Estado de servicios**: si RSI, Discord, Epic Games, GitHub y otros tienen problemas ahora mismo, según sus páginas
+  de estado públicas; un clic en una línea abre la página.
+
+Cada widget tiene sus propios ajustes en su menú. El menú del temporizador de concentración incluye además el **modo
+concentración**: durante una ronda cambia a un perfil que elijas (p. ej. «Concentración» solo con vallas de trabajo) y
+vuelve en los descansos.
+
+## Asistente de escritorio
+
+Bandeja → **Asistente de escritorio…** (también se ofrece en el primer inicio) ordena lo que hay en tu escritorio en
+vallas nuevas – juegos, programas, documentos, imágenes, música y vídeos, archivos comprimidos, carpetas –, cada una con
+un estilo adecuado. No se mueve nada: las vallas enlazan a los archivos. Para ocultar los originales: clic derecho en el
+escritorio → Ver → Mostrar iconos del escritorio.
+
+## Regla en pantalla
+
+Bandeja → **Regla en pantalla** pone una regla encima de todo: arrastra para moverla, arrastra el extremo para alargarla,
+doble clic o espacio la gira, las flechas la ajustan píxel a píxel (Mayús: 10 px), U o el menú cambia entre píxeles,
+centímetros y pulgadas (tamaño real, según el tamaño que indica el monitor). Una línea roja sigue al ratón y muestra la
+distancia. Esc la cierra.
 
 ## Perfiles
 
 Agrupa las vallas en perfiles como «Trabajo» y «Juegos» y cambia entre ellos en la bandeja (**Perfil ▸**) o en
 **Configuración → Escritorio**. Clic derecho en una valla → **Mostrar en el perfil** para asignarla; una valla sin perfil
-aparece en todos los perfiles. Las vallas creadas mientras hay un perfil activo pertenecen a él.
+aparece en todos los perfiles. Las vallas creadas mientras hay un perfil activo pertenecen a él. **Ctrl+Alt+F1…F9**
+cambian al perfil 1…9 y **Ctrl+Alt+F10** muestra todas las vallas. Con un perfil activo, bandeja → Perfil ▸ **Fondo de
+pantalla para «…»** le da su propio fondo; en los perfiles sin fondo propio vuelve el habitual.
 
 ## Automatización (Configuración → Automatización)
 

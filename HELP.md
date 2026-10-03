@@ -38,8 +38,9 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
 ## Search across all fences
 
 **Ctrl+Alt+F** (or tray → Search fences…) opens a search box. It finds everything in your fences – links, folder
-contents, tabs and note texts – even letters in order ("ffx" finds Firefox). **Enter** opens the result, **↑↓** choose,
-**Esc** closes. The shortcut can be changed in Settings → Desktop.
+contents, tabs and note texts – even letters in order ("ffx" finds Firefox) – and also Start menu apps and Windows
+settings pages ("bluetooth", "sound"). Type a calculation like `12*7` or `200*15%` and Enter copies the result.
+**Enter** opens the result, **↑↓** choose, **Esc** closes. The shortcut can be changed in Settings → Desktop.
 
 ## Moving, sizing, renaming
 
@@ -90,12 +91,35 @@ Tray or fence menu → **New widget**. Widgets with a list scroll with the mouse
   opens the article.
 - **Prices**: stocks, indices and crypto with the change since yesterday and a chart of the day, using Yahoo Finance
   symbols such as `AAPL`, `^GDAXI` (DAX), `^ATX`, `BTC-EUR`. Updated every five minutes; for information only.
+- **Screen time**: which programs you used how long today or in the last 7 days (click "today ⇄" to switch).
+  Recorded only while the widget exists and you're at the PC; stays on this PC.
+- **Sound**: volume of the current playback device (click the bar or use the mouse wheel), mute for speakers and
+  microphone, and one click to switch to another device (headset ↔ speakers).
+- **Service status**: whether RSI, Discord, Epic Games, GitHub and others have problems right now, from their
+  public status pages; click a line to open the page.
+
+Every widget's menu has its own settings. The focus timer's menu also has **focus mode**: it switches to a profile you
+choose (e.g. "Focus" with only work fences) while a focus round runs, and back in breaks.
+
+## Desktop assistant
+
+Tray → **Desktop assistant…** (also offered on the first start) sorts what's on your desktop into new fences – games,
+programs, documents, pictures, music & videos, archives, folders – each in a fitting style. Nothing is moved; the fences
+link to the files. To hide the originals: right-click the desktop → View → Show desktop icons.
+
+## Screen ruler
+
+Tray → **Screen ruler** puts a ruler above everything: drag to move, drag the end to change the length, double-click or
+space turns it, arrow keys nudge it (Shift: 10 px), U or the menu switches between pixels, centimetres and inches
+(real size, from the size your monitor reports). A red line follows the mouse and shows the distance. Esc closes it.
 
 ## Profiles
 
 Group fences into profiles like "Work" and "Gaming" and switch between them in the tray (**Profile ▸**) or in
 **Settings → Desktop**. Right-click a fence → **Show in profile** to assign it; a fence without a profile shows in
-every profile. Fences created while a profile is active belong to it.
+every profile. Fences created while a profile is active belong to it. **Ctrl+Alt+F1…F9** switch to profile 1…9,
+**Ctrl+Alt+F10** shows all fences. With a profile active, tray → Profile ▸ **Wallpaper for "…"** gives it its own
+wallpaper; your usual wallpaper comes back in profiles without one.
 
 ## Automation (Settings → Automation)
 

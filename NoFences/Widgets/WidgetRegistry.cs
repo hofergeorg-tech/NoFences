@@ -25,6 +25,9 @@ namespace NoFences.Widgets
             ("focus", () => Strings.WidgetFocus, new Size(230, 280)),
             ("news", () => Strings.WidgetNews, new Size(340, 360)),
             ("ticker", () => Strings.WidgetTicker, new Size(320, 260)),
+            ("screentime", () => Strings.WidgetScreenTime, new Size(300, 300)),
+            ("audio", () => Strings.WidgetAudio, new Size(280, 220)),
+            ("status", () => Strings.WidgetStatus, new Size(320, 220)),
         };
 
         public enum Group { Time, Info, System, GamesMedia }
@@ -32,9 +35,9 @@ namespace NoFences.Widgets
         /// <summary>Menu groups, in menu order, with the widget types they contain (in that order too).</summary>
         public static IReadOnlyList<(Group Group, string[] Types)> Groups { get; } = new (Group, string[])[]
         {
-            (Group.Time, new[] { "clock", "countdown", "agenda", "focus" }),
-            (Group.Info, new[] { "weather", "news", "ticker" }),
-            (Group.System, new[] { "system", "network", "drives", "battery", "recyclebin", "clipboard" }),
+            (Group.Time, new[] { "clock", "countdown", "agenda", "focus", "screentime" }),
+            (Group.Info, new[] { "weather", "news", "ticker", "status" }),
+            (Group.System, new[] { "system", "audio", "network", "drives", "battery", "recyclebin", "clipboard" }),
             (Group.GamesMedia, new[] { "games", "playtime", "media", "photos" }),
         };
 
@@ -86,9 +89,12 @@ namespace NoFences.Widgets
                 "games" => new GamesWidget(() => info.WidgetOption, Set),
                 "agenda" => new AgendaWidget(() => info.WidgetOption, Set),
                 "photos" => new PhotoWidget(() => info.WidgetOption, Set),
-                "focus" => new FocusWidget(() => info.WidgetOption, Set, host.Notify),
+                "focus" => new FocusWidget(() => info.WidgetOption, Set, host.Notify, host),
                 "news" => new NewsWidget(() => info.WidgetOption, Set),
                 "ticker" => new TickerWidget(() => info.WidgetOption, Set),
+                "audio" => new AudioWidget(),
+                "status" => new StatusWidget(() => info.WidgetOption, Set),
+                "screentime" =>new ScreenTimeWidget(() => info.WidgetOption, Set, () => host.ScreenTime),
                 _ => null
             };
         }

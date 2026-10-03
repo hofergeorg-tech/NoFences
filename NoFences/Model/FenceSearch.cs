@@ -1,7 +1,12 @@
 namespace NoFences.Model
 {
-    /// <summary>A search result: an item in a fence, or a note whose text matches.</summary>
-    public sealed record SearchItem(string Name, string? Path, string FenceName, FenceInfo Fence);
+    public enum SearchKind { FenceItem, Note, App, Setting, Calculation }
+
+    /// <summary>
+    /// A search result: an item in a fence, a note whose text matches, a Start menu app, a Windows settings
+    /// page or a calculation. <see cref="Path"/> is the file, the ms-settings: address or the result.
+    /// </summary>
+    public sealed record SearchItem(string Name, string? Path, string FenceName, FenceInfo? Fence, SearchKind Kind = SearchKind.FenceItem);
 
     /// <summary>Search across all fences: what's in them (links, folder contents, tabs) and note texts.</summary>
     public static class FenceSearch
@@ -16,7 +21,7 @@ namespace NoFences.Model
                 switch (fence.Kind)
                 {
                     case FenceKind.Note when !string.IsNullOrWhiteSpace(fence.NoteText):
-                        items.Add(new SearchItem(FirstLine(fence.NoteText!), null, fence.Name, fence));
+                        items.Add(new SearchItem(FirstLine(fence.NoteText!), null, fence.Name, fence, SearchKind.Note));
                         break;
                     case FenceKind.Links:
                         var paths = fence.Files.Concat(fence.Tabs?.SelectMany(t => t.Files) ?? Enumerable.Empty<string>());
@@ -69,19 +74,72 @@ namespace NoFences.Model
                 .ToList();
         }
 
+        /// <summary>
+        /// Lower is better. Within the same kind of match, things in your fences come before Start menu apps,
+        /// and those before settings pages; apps and settings don't take part in the loose "fuzzy" match.
+        /// </summary>
         private static int Rank(SearchItem item, string query)
+        {
+            var match = MatchRank(item, query);
+            if (match < 0 || (match == 4 && item.Kind is SearchKind.App or SearchKind.Setting))
+                return -1;
+            var kind = item.Kind switch { SearchKind.App => 1, SearchKind.Setting => 2, _ => 0 };
+            return match * 3 + kind;
+        }
+
+        private static int MatchRank(SearchItem item, string query)
         {
             var name = item.Name;
             const StringComparison ic = StringComparison.CurrentCultureIgnoreCase;
             if (name.StartsWith(query, ic))
                 return 0;
-            if (name.Split(' ', '-', '_', '.').Any(w => w.StartsWith(query, ic)))
+            if (name.Split(' ', '-', '_', '.', '(').Any(w => w.StartsWith(query, ic)))
                 return 1;
             if (name.Contains(query, ic))
                 return 2;
-            if (item.Path == null && item.Fence.NoteText?.Contains(query, ic) == true)
+            if (item.Kind == SearchKind.Note && item.Fence?.NoteText?.Contains(query, ic) == true)
                 return 3;
             return IsSubsequence(query, name) ? 4 : -1;
+        }
+
+        /// <summary>Shortcuts in the Start menu (all users and this user), without uninstallers and duplicates.</summary>
+        public static List<SearchItem> StartMenuApps()
+        {
+            var apps = new List<SearchItem>();
+            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var root in new[] { Environment.SpecialFolder.CommonPrograms, Environment.SpecialFolder.Programs })
+            {
+                var folder = Environment.GetFolderPath(root);
+                if (!Directory.Exists(folder))
+                    continue;
+                try
+                {
+                    foreach (var link in Directory.EnumerateFiles(folder, "*.*", SearchOption.AllDirectories))
+                    {
+                        var ext = System.IO.Path.GetExtension(link);
+                        if (!ext.Equals(".lnk", StringComparison.OrdinalIgnoreCase) && !ext.Equals(".url", StringComparison.OrdinalIgnoreCase))
+                            continue;
+                        var name = System.IO.Path.GetFileNameWithoutExtension(link);
+                        if (IsUninstaller(name) || !seen.Add(name))
+                            continue;
+                        apps.Add(new SearchItem(name, link, "", null, SearchKind.App));
+                    }
+                }
+                catch (Exception) { }
+            }
+            return apps;
+        }
+
+        public static bool IsUninstaller(string name) =>
+            new[] { "uninstall", "deinstall", "désinstaller", "disinstalla", "desinstalar" }.Any(w => name.Contains(w, StringComparison.OrdinalIgnoreCase));
+
+        /// <summary>A result line for a calculation ("12*7" → "= 84"), or null if the query isn't one.</summary>
+        public static SearchItem? Calculation(string query)
+        {
+            if (!Calculator.TryEvaluate(query, out var value))
+                return null;
+            var text = Calculator.Format(value);
+            return new SearchItem($"= {text}", text, query.Trim(), null, SearchKind.Calculation);
         }
 
         private static bool IsSubsequence(string query, string text)

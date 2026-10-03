@@ -6,6 +6,16 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 
 ## [2.4.1] - 2026-10-03
 
+### Nouveautés
+- La **recherche** trouve aussi les applications du menu Démarrer et les pages des paramètres Windows, et calcule
+  (`12*7`, `200*15%` ; Entrée copie).
+- Widgets **temps d'écran** (programmes utilisés aujourd'hui / 7 jours, reste sur ce PC), **son** (volume, muet, micro,
+  changer de périphérique) et **état des services** (RSI, Discord, Epic Games, GitHub… d'après leurs pages d'état).
+- **Mode concentration** : le minuteur passe à un profil choisi pendant les tours de concentration.
+- **Raccourcis de profil** Ctrl+Alt+F1…F9 (F10 : toutes les barrières) et un **fond d'écran par profil**.
+- **Assistant de bureau** : range les icônes du bureau dans de nouvelles barrières par type (proposé au premier démarrage).
+- **Règle à l'écran** en pixels, centimètres ou pouces (zone de notification → Règle à l'écran).
+
 ### Modifications
 - **Menus groupés** : Nouveau widget ▸ Temps et planning / Infos et actualités / Système / Jeux et médias ; Style ▸ De base /
   Jeux et technique / Travail et quotidien / Loisirs / Post-it / Styles personnels.

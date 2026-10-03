@@ -126,7 +126,60 @@ namespace NoFences.Util
         public static string ProfileHowTo => T("Assign fences: right-click a fence → Show in profile", "Fences zuordnen: Rechtsklick auf ein Fence → In Profil zeigen", "Assegna recinti: clic destro su un recinto → Mostra nel profilo", "Attribuer des barrières : clic droit sur une barrière → Afficher dans le profil", "Asignar vallas: clic derecho en una valla → Mostrar en el perfil");
         public static string ProfileFenceMenu => T("Show in profile", "In Profil zeigen", "Mostra nel profilo", "Afficher dans le profil", "Mostrar en el perfil");
         public static string ProfileFenceHint => T("No check = in every profile", "Ohne Haken = in allen Profilen", "Nessuna spunta = in tutti i profili", "Aucune coche = dans tous les profils", "Sin marca = en todos los perfiles");
-        public static string ProfileLabel => T("Active profile", "Aktives Profil", "Profilo attivo", "Profil actif", "Perfil activo");
+        public static string RulerTitle => T("Ruler", "Lineal", "Righello", "Règle", "Regla");
+        public static string RulerMenu => T("Screen ruler", "Bildschirm-Lineal", "Righello sullo schermo", "Règle à l'écran", "Regla en pantalla");
+        public static string RulerTurn => T("Turn (space)", "Drehen (Leertaste)", "Ruota (spazio)", "Tourner (espace)", "Girar (espacio)");
+        public static string RulerHelp => T("Drag to move, drag the end to resize, arrows nudge, Esc closes",
+                                            "Ziehen verschiebt, Ende ziehen ändert die Länge, Pfeiltasten feinjustieren, Esc schließt",
+                                            "Trascina per spostare, trascina l'estremità per allungare, frecce per regolare, Esc chiude",
+                                            "Glisser pour déplacer, glisser l'extrémité pour allonger, flèches pour ajuster, Échap ferme",
+                                            "Arrastra para mover, arrastra el extremo para alargar, flechas para ajustar, Esc cierra");
+        public static string RulerUnitName(RulerWindow.Unit unit) => unit switch
+        {
+            RulerWindow.Unit.Centimeters => T("Centimetres", "Zentimeter", "Centimetri", "Centimètres", "Centímetros"),
+            RulerWindow.Unit.Inches => T("Inches", "Zoll", "Pollici", "Pouces", "Pulgadas"),
+            _ => T("Pixels", "Pixel", "Pixel", "Pixels", "Píxeles")
+        };
+        public static string AssistantMenu =>T("Desktop assistant…", "Desktop-Assistent…", "Assistente desktop…", "Assistant de bureau…", "Asistente de escritorio…");
+        public static string AssistantTitle => T("Desktop assistant", "Desktop-Assistent", "Assistente desktop", "Assistant de bureau", "Asistente de escritorio");
+        public static string AssistantIntro => T(
+            "NoFences found these things on your desktop. Which should get their own fence?",
+            "NoFences hat das auf deinem Desktop gefunden. Was soll einen eigenen Fence bekommen?",
+            "NoFences ha trovato queste cose sul desktop. Cosa deve avere un recinto proprio?",
+            "NoFences a trouvé ceci sur votre bureau. Qu'est-ce qui doit avoir sa propre barrière ?",
+            "NoFences encontró esto en tu escritorio. ¿Qué debe tener su propia valla?");
+        public static string AssistantNote => T(
+            "Nothing is moved: the fences link to the files. To hide the originals, right-click the desktop → View → Show desktop icons.",
+            "Es wird nichts verschoben: Die Fences verweisen auf die Dateien. Um die Originale auszublenden: Rechtsklick auf den Desktop → Ansicht → Desktopsymbole anzeigen.",
+            "Non viene spostato nulla: i recinti collegano i file. Per nascondere gli originali: clic destro sul desktop → Visualizza → Mostra icone del desktop.",
+            "Rien n'est déplacé : les barrières pointent vers les fichiers. Pour masquer les originaux : clic droit sur le bureau → Affichage → Afficher les icônes du bureau.",
+            "No se mueve nada: las vallas enlazan a los archivos. Para ocultar los originales: clic derecho en el escritorio → Ver → Mostrar iconos del escritorio.");
+        public static string AssistantCreate => T("Create fences", "Fences anlegen", "Crea recinti", "Créer les barrières", "Crear vallas");
+        public static string AssistantNothing => T("Your desktop is already tidy – everything is in fences.", "Dein Desktop ist schon aufgeräumt – alles liegt in Fences.", "Il desktop è già in ordine – tutto è nei recinti.", "Votre bureau est déjà rangé – tout est dans des barrières.", "Tu escritorio ya está ordenado: todo está en vallas.");
+        public static string AssistantDone(int n) => T($"{n} new fences created.", $"{n} neue Fences angelegt.", $"{n} nuovi recinti creati.", $"{n} nouvelles barrières créées.", $"{n} vallas nuevas creadas.");
+        public static string AssistantFirstStart => T(
+            "There are icons on your desktop. Shall NoFences sort them into fences (games, programs, documents …)?",
+            "Auf deinem Desktop liegen Symbole. Soll NoFences sie in Fences einsortieren (Spiele, Programme, Dokumente …)?",
+            "Sul desktop ci sono delle icone. NoFences deve ordinarle in recinti (giochi, programmi, documenti …)?",
+            "Il y a des icônes sur votre bureau. NoFences doit-il les ranger dans des barrières (jeux, programmes, documents…) ?",
+            "Hay iconos en tu escritorio. ¿Quieres que NoFences los ordene en vallas (juegos, programas, documentos…)?");
+        public static string CategoryName(DesktopCategory category) => category switch
+        {
+            DesktopCategory.Games => T("Games", "Spiele", "Giochi", "Jeux", "Juegos"),
+            DesktopCategory.Programs => T("Programs", "Programme", "Programmi", "Programmes", "Programas"),
+            DesktopCategory.Documents => T("Documents", "Dokumente", "Documenti", "Documents", "Documentos"),
+            DesktopCategory.Images => T("Pictures", "Bilder", "Immagini", "Images", "Imágenes"),
+            DesktopCategory.Media => T("Music & videos", "Musik & Videos", "Musica e video", "Musique et vidéos", "Música y vídeos"),
+            DesktopCategory.Archives => T("Archives", "Archive", "Archivi", "Archives", "Archivos comprimidos"),
+            DesktopCategory.Folders => T("Folders", "Ordner", "Cartelle", "Dossiers", "Carpetas"),
+            _ => T("Other", "Sonstiges", "Altro", "Divers", "Otros")
+        };
+        public static string WallpaperChoose(string profile) => T($"Wallpaper for \"{profile}\"", $"Hintergrundbild für „{profile}“", $"Sfondo per «{profile}»", $"Fond d'écran pour « {profile} »", $"Fondo de pantalla para «{profile}»");
+        public static string WallpaperRemove => T("Remove the profile's wallpaper", "Hintergrundbild des Profils entfernen", "Rimuovi lo sfondo del profilo", "Retirer le fond d'écran du profil", "Quitar el fondo del perfil");
+        public static string WallpaperFilter => T("Pictures|*.jpg;*.jpeg;*.png;*.bmp", "Bilder|*.jpg;*.jpeg;*.png;*.bmp", "Immagini|*.jpg;*.jpeg;*.png;*.bmp", "Images|*.jpg;*.jpeg;*.png;*.bmp", "Imágenes|*.jpg;*.jpeg;*.png;*.bmp");
+        public static string ProfileHotkeysLabel => T("Switch profiles with Ctrl+Alt+F1…F9 (F10: all fences)", "Profile mit Strg+Alt+F1…F9 wechseln (F10: alle Fences)", "Cambia profilo con Ctrl+Alt+F1…F9 (F10: tutti i recinti)", "Changer de profil avec Ctrl+Alt+F1…F9 (F10 : toutes les barrières)", "Cambiar de perfil con Ctrl+Alt+F1…F9 (F10: todas las vallas)");
+        public static string ProfileWallpaperHint => T("Wallpaper per profile: tray → Profile ▸ while the profile is active.", "Hintergrundbild pro Profil: Tray → Profil ▸, während das Profil aktiv ist.", "Sfondo per profilo: barra → Profilo ▸ mentre il profilo è attivo.", "Fond d'écran par profil : zone de notification → Profil ▸ pendant que le profil est actif.", "Fondo por perfil: bandeja → Perfil ▸ mientras el perfil está activo.");
+        public static string ProfileLabel =>T("Active profile", "Aktives Profil", "Profilo attivo", "Profil actif", "Perfil activo");
         public static string SectionProfiles => T("Profiles", "Profile", "Profili", "Profils", "Perfiles");
         public static string OnlyThisDesktop => T("Only on this virtual desktop", "Nur auf diesem virtuellen Desktop", "Solo su questo desktop virtuale", "Seulement sur ce bureau virtuel", "Solo en este escritorio virtual");
         public static string DropHint => T("Drop files or folders here", "Dateien oder Ordner hierher ziehen", "Trascina qui file o cartelle", "Déposez des fichiers ou dossiers ici", "Arrastra archivos o carpetas aquí");
@@ -493,7 +546,10 @@ namespace NoFences.Util
         public static string FocusPreset(int focus, int shortBreak, int longBreak) => T(
             $"{focus} min focus · {shortBreak}/{longBreak} min break", $"{focus} Min. Fokus · {shortBreak}/{longBreak} Min. Pause", $"{focus} min concentrazione · {shortBreak}/{longBreak} min pausa",
             $"{focus} min de concentration · {shortBreak}/{longBreak} min de pause", $"{focus} min de concentración · {shortBreak}/{longBreak} min de descanso");
-        public static string FocusSkip => T("Skip to next phase", "Zur nächsten Phase springen", "Passa alla fase successiva", "Passer à la phase suivante", "Saltar a la siguiente fase");
+        public static string FocusProfileMenu => T("Focus mode: switch to profile", "Fokus-Modus: zu Profil wechseln", "Modalità concentrazione: passa al profilo", "Mode concentration : passer au profil", "Modo concentración: cambiar al perfil");
+        public static string FocusProfileNone => T("Don't switch", "Nicht wechseln", "Non cambiare", "Ne pas changer", "No cambiar");
+        public static string FocusProfileHint => T("Create a profile first (tray → Profile)", "Zuerst ein Profil anlegen (Tray → Profil)", "Crea prima un profilo (barra → Profilo)", "Créez d'abord un profil (zone de notification → Profil)", "Crea primero un perfil (bandeja → Perfil)");
+        public static string FocusSkip =>T("Skip to next phase", "Zur nächsten Phase springen", "Passa alla fase successiva", "Passer à la phase suivante", "Saltar a la siguiente fase");
 
         public static string WidgetNews => T("News (RSS)", "News (RSS)", "Notizie (RSS)", "Actualités (RSS)", "Noticias (RSS)");
         public static string NewsHint => T("Double-click to choose news feeds.", "Doppelklick, um News-Feeds auszuwählen.", "Doppio clic per scegliere i feed di notizie.", "Double-cliquez pour choisir des flux d'actualités.", "Haz doble clic para elegir fuentes de noticias.");
@@ -517,7 +573,38 @@ namespace NoFences.Util
         public static string NewsUnreachable(string host) => T($"{host} can't be reached.", $"{host} ist nicht erreichbar.", $"{host} non è raggiungibile.", $"{host} est injoignable.", $"{host} no está disponible.");
         public static string NewsSet => T("News feeds…", "News-Feeds…", "Feed di notizie…", "Flux d'actualités…", "Fuentes de noticias…");
 
-        public static string WidgetTicker => T("Prices (stocks, crypto)", "Kurse (Aktien, Krypto)", "Quotazioni (azioni, cripto)", "Cours (actions, crypto)", "Cotizaciones (acciones, cripto)");
+        public static string WidgetStatus => T("Service status (RSI, Discord …)", "Dienst-Status (RSI, Discord …)", "Stato dei servizi (RSI, Discord …)", "État des services (RSI, Discord…)", "Estado de servicios (RSI, Discord…)");
+        public static string StatusSet => T("Services…", "Dienste…", "Servizi…", "Services…", "Servicios…");
+        public static string StatusPrompt => T(
+            "Status pages, one per line – add one of these or paste the address of another status page:",
+            "Statusseiten, eine pro Zeile – eine davon hinzufügen oder die Adresse einer anderen Statusseite einfügen:",
+            "Pagine di stato, una per riga – aggiungine una di queste o incolla l'indirizzo di un'altra pagina di stato:",
+            "Pages d'état, une par ligne – ajoutez-en une ou collez l'adresse d'une autre page d'état :",
+            "Páginas de estado, una por línea: añade una de estas o pega la dirección de otra página de estado:");
+        public static string StatusUnknown => T("unknown", "unbekannt", "sconosciuto", "inconnu", "desconocido");
+        public static string StatusLevelName(Widgets.ServiceLevel level) => level switch
+        {
+            Widgets.ServiceLevel.Ok => T("all good", "alles ok", "tutto ok", "tout va bien", "todo bien"),
+            Widgets.ServiceLevel.Notice => T("maintenance", "Wartung", "manutenzione", "maintenance", "mantenimiento"),
+            Widgets.ServiceLevel.Degraded => T("problems", "Störungen", "problemi", "perturbations", "problemas"),
+            Widgets.ServiceLevel.Down => T("outage", "Ausfall", "interruzione", "panne", "caída"),
+            _ => StatusUnknown
+        };
+        public static string WidgetAudio =>T("Sound (volume, devices)", "Sound (Lautstärke, Geräte)", "Audio (volume, dispositivi)", "Son (volume, périphériques)", "Sonido (volumen, dispositivos)");
+        public static string AudioNone => T("No playback device found.", "Kein Wiedergabegerät gefunden.", "Nessun dispositivo di riproduzione trovato.", "Aucun périphérique de lecture trouvé.", "No se encontró ningún dispositivo de reproducción.");
+        public static string AudioMuted => T("Muted", "Stumm", "Muto", "Muet", "Silenciado");
+        public static string AudioMuteTip => T("Mute / unmute", "Stumm / Ton an", "Muto / audio attivo", "Couper / rétablir le son", "Silenciar / activar sonido");
+        public static string AudioMicTip => T("Microphone on / off", "Mikrofon an / aus", "Microfono on / off", "Micro activé / désactivé", "Micrófono sí / no");
+        public static string AudioSettings => T("Sound settings…", "Sound-Einstellungen…", "Impostazioni audio…", "Paramètres de son…", "Configuración de sonido…");
+        public static string WidgetScreenTime =>T("Screen time", "Bildschirmzeit", "Tempo di utilizzo", "Temps d'écran", "Tiempo de pantalla");
+        public static string ScreenTimeWeek => T("7 days", "7 Tage", "7 giorni", "7 jours", "7 días");
+        public static string ScreenTimeHint => T(
+            "From now on NoFences notes which program is in front while you use the PC (not while you're away). Stays on this PC.",
+            "Ab jetzt merkt sich NoFences, welches Programm im Vordergrund ist, während du den PC benutzt (nicht, wenn du weg bist). Bleibt auf diesem PC.",
+            "Da ora NoFences annota quale programma è in primo piano mentre usi il PC (non quando sei via). Resta su questo PC.",
+            "Désormais, NoFences note quel programme est au premier plan pendant que vous utilisez le PC (pas en votre absence). Reste sur ce PC.",
+            "A partir de ahora NoFences anota qué programa está en primer plano mientras usas el PC (no cuando no estás). Se queda en este PC.");
+        public static string WidgetTicker =>T("Prices (stocks, crypto)", "Kurse (Aktien, Krypto)", "Quotazioni (azioni, cripto)", "Cours (actions, crypto)", "Cotizaciones (acciones, cripto)");
         public static string TickerFailed => T("Prices could not be loaded. NoFences tries again every 30 seconds.",
                                               "Die Kurse konnten nicht geladen werden. NoFences versucht es alle 30 Sekunden erneut.",
                                               "Impossibile caricare le quotazioni. NoFences riprova ogni 30 secondi.",
@@ -628,6 +715,40 @@ namespace NoFences.Util
         public static string SearchFooter(int n) => T($"{n} items in your fences", $"{n} Einträge in deinen Fences", $"{n} elementi nei tuoi recinti", $"{n} éléments dans vos barrières", $"{n} elementos en tus vallas");
         public static string SearchNothing => T("Nothing found", "Nichts gefunden", "Nessun risultato", "Aucun résultat", "No se encontró nada");
         public static string SearchKeys => T("Enter opens · ↑↓ choose · Esc closes", "Enter öffnet · ↑↓ auswählen · Esc schließt", "Invio apre · ↑↓ scegli · Esc chiude", "Entrée ouvre · ↑↓ choisir · Échap ferme", "Intro abre · ↑↓ elegir · Esc cierra");
+        public static string SearchWindowsSettings => T("Windows settings", "Windows-Einstellungen", "Impostazioni di Windows", "Paramètres Windows", "Configuración de Windows");
+        public static string SearchApp => T("App", "App", "App", "Application", "Aplicación");
+        public static string SearchCopyResult => T("Enter copies the result", "Enter kopiert das Ergebnis", "Invio copia il risultato", "Entrée copie le résultat", "Intro copia el resultado");
+
+        /// <summary>Searchable Windows settings pages: name (with a few extra words to find it by) and address.</summary>
+        public static IEnumerable<(string Name, string Uri)> SettingsPageNames() => new[]
+        {
+            (T("Display (resolution, scaling)", "Bildschirm (Auflösung, Skalierung)", "Schermo (risoluzione, ridimensionamento)", "Écran (résolution, mise à l'échelle)", "Pantalla (resolución, escala)"), "ms-settings:display"),
+            (T("Sound (volume, devices)", "Sound (Lautstärke, Geräte)", "Audio (volume, dispositivi)", "Son (volume, périphériques)", "Sonido (volumen, dispositivos)"), "ms-settings:sound"),
+            (T("Bluetooth & devices", "Bluetooth & Geräte", "Bluetooth e dispositivi", "Bluetooth et appareils", "Bluetooth y dispositivos"), "ms-settings:bluetooth"),
+            (T("Wi-Fi", "WLAN", "Wi-Fi", "Wi-Fi", "Wi-Fi"), "ms-settings:network-wifi"),
+            (T("Network & internet", "Netzwerk & Internet", "Rete e Internet", "Réseau et Internet", "Red e Internet"), "ms-settings:network"),
+            (T("Windows Update", "Windows Update", "Windows Update", "Windows Update", "Windows Update"), "ms-settings:windowsupdate"),
+            (T("Installed apps (uninstall)", "Installierte Apps (deinstallieren)", "App installate (disinstalla)", "Applications installées (désinstaller)", "Aplicaciones instaladas (desinstalar)"), "ms-settings:appsfeatures"),
+            (T("Startup apps (autostart)", "Autostart-Apps", "App di avvio", "Applications de démarrage", "Aplicaciones de inicio"), "ms-settings:startupapps"),
+            (T("Default apps", "Standard-Apps", "App predefinite", "Applications par défaut", "Aplicaciones predeterminadas"), "ms-settings:defaultapps"),
+            (T("Background (wallpaper)", "Hintergrund (Hintergrundbild)", "Sfondo", "Arrière-plan (fond d'écran)", "Fondo (fondo de pantalla)"), "ms-settings:personalization-background"),
+            (T("Colors (dark mode, accent color)", "Farben (dunkler Modus, Akzentfarbe)", "Colori (modalità scura, colore d'accento)", "Couleurs (mode sombre, couleur d'accentuation)", "Colores (modo oscuro, color de énfasis)"), "ms-settings:colors"),
+            (T("Taskbar", "Taskleiste", "Barra delle applicazioni", "Barre des tâches", "Barra de tareas"), "ms-settings:taskbar"),
+            (T("Notifications", "Benachrichtigungen", "Notifiche", "Notifications", "Notificaciones"), "ms-settings:notifications"),
+            (T("Power & battery (sleep)", "Energie & Akku (Energiesparen)", "Alimentazione e batteria (sospensione)", "Alimentation et batterie (veille)", "Energía y batería (suspensión)"), "ms-settings:powersleep"),
+            (T("Storage (free up space)", "Speicher (Speicherplatz freigeben)", "Archiviazione (libera spazio)", "Stockage (libérer de l'espace)", "Almacenamiento (liberar espacio)"), "ms-settings:storagesense"),
+            (T("Mouse", "Maus", "Mouse", "Souris", "Ratón"), "ms-settings:mousetouchpad"),
+            (T("Keyboard & language", "Tastatur & Sprache", "Tastiera e lingua", "Clavier et langue", "Teclado e idioma"), "ms-settings:regionlanguage"),
+            (T("Date & time", "Datum & Uhrzeit", "Data e ora", "Date et heure", "Fecha y hora"), "ms-settings:dateandtime"),
+            (T("Gaming (Game Mode)", "Spielen (Spielmodus)", "Giochi (modalità gioco)", "Jeux (mode Jeu)", "Juegos (modo de juego)"), "ms-settings:gaming-gamemode"),
+            (T("Graphics (GPU per app)", "Grafik (GPU pro App)", "Grafica (GPU per app)", "Graphiques (GPU par application)", "Gráficos (GPU por aplicación)"), "ms-settings:display-advancedgraphics"),
+            (T("Privacy & security", "Datenschutz & Sicherheit", "Privacy e sicurezza", "Confidentialité et sécurité", "Privacidad y seguridad"), "ms-settings:privacy"),
+            (T("Windows Security (virus protection)", "Windows-Sicherheit (Virenschutz)", "Sicurezza di Windows (antivirus)", "Sécurité Windows (antivirus)", "Seguridad de Windows (antivirus)"), "windowsdefender:"),
+            (T("Printers & scanners", "Drucker & Scanner", "Stampanti e scanner", "Imprimantes et scanners", "Impresoras y escáneres"), "ms-settings:printers"),
+            (T("Accounts", "Konten", "Account", "Comptes", "Cuentas"), "ms-settings:yourinfo"),
+            (T("About this PC (system info)", "Info (Systeminformationen)", "Informazioni sul PC", "À propos de ce PC", "Acerca de este PC"), "ms-settings:about"),
+        };
+
         public static string SearchInFence(string fence) => T($"in {fence}", $"in {fence}", $"in {fence}", $"dans {fence}", $"en {fence}");
         public static string SearchInNote(string fence) => T($"Note: {fence}", $"Notiz: {fence}", $"Nota: {fence}", $"Note : {fence}", $"Nota: {fence}");
 

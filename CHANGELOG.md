@@ -7,6 +7,15 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 
 ## [2.4.1] - 2026-10-03
 
+### Added
+- **Search** also finds Start menu apps and Windows settings pages, and calculates (`12*7`, `200*15%`; Enter copies).
+- Widgets **screen time** (programs used today / 7 days, stays on this PC), **sound** (volume, mute, microphone,
+  switch playback device) and **service status** (RSI, Discord, Epic Games, GitHub … from their status pages).
+- **Focus mode**: the focus timer switches to a chosen profile during focus rounds.
+- **Profile shortcuts** Ctrl+Alt+F1…F9 (F10: all fences) and a **wallpaper per profile**.
+- **Desktop assistant**: sorts desktop icons into new fences by kind (offered on the first start).
+- **Screen ruler** in pixels, centimetres or inches (tray → Screen ruler).
+
 ### Changed
 - **Grouped menus**: New widget ▸ Time & planning / Info & news / System / Games & media; Style ▸ Basic / Gaming & tech /
   Work & everyday / Leisure / Post-it / Own styles.

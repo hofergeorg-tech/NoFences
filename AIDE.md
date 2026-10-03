@@ -42,8 +42,9 @@ Astuce : pour un bureau rangé, créez un dossier comme `Documents\Barrières\Tr
 
 **Ctrl+Alt+F** (ou zone de notification → Rechercher dans les barrières…) ouvre une zone de recherche. Elle trouve tout
 dans vos barrières – raccourcis, contenu des dossiers, onglets et textes des notes – même des lettres dans l'ordre
-(« ffx » trouve Firefox). **Entrée** ouvre le résultat, **↑↓** pour choisir, **Échap** ferme. Le raccourci se change dans
-Paramètres → Bureau.
+(« ffx » trouve Firefox) – ainsi que les applications du menu Démarrer et les pages des paramètres Windows
+(« bluetooth », « son »). Tapez un calcul comme `12*7` ou `200*15%` : Entrée copie le résultat. **Entrée** ouvre le
+résultat, **↑↓** pour choisir, **Échap** ferme. Le raccourci se change dans Paramètres → Bureau.
 
 ## Déplacer, redimensionner, renommer
 
@@ -96,13 +97,40 @@ Menu de la zone de notification ou d'une barrière → **Nouveau widget**. Les w
 - **Cours** : actions, indices et cryptos avec la variation depuis la veille et un graphique de la journée, avec les
   symboles de Yahoo Finance comme `AAPL`, `^FCHI` (CAC 40), `^GDAXI`, `BTC-EUR`. Mis à jour toutes les cinq minutes ;
   à titre indicatif seulement.
+- **Temps d'écran** : quels programmes vous avez utilisés et combien de temps aujourd'hui ou sur les 7 derniers jours
+  (cliquez sur « aujourd'hui ⇄ » pour changer). Enregistré seulement tant que le widget existe et que vous êtes au PC ;
+  reste sur ce PC.
+- **Son** : volume du périphérique de lecture actuel (cliquez sur la barre ou utilisez la molette), couper le son des
+  haut-parleurs et du micro, et passer d'un clic à un autre périphérique (casque ↔ haut-parleurs).
+- **État des services** : si RSI, Discord, Epic Games, GitHub et d'autres ont des problèmes en ce moment, d'après leurs
+  pages d'état publiques ; un clic sur une ligne ouvre la page.
+
+Chaque widget a ses propres réglages dans son menu. Le menu du minuteur de concentration propose aussi le **mode
+concentration** : pendant un tour, il passe à un profil de votre choix (par ex. « Concentration » avec seulement les
+barrières de travail) et revient pendant les pauses.
+
+## Assistant de bureau
+
+Zone de notification → **Assistant de bureau…** (proposé aussi au premier démarrage) range ce qui se trouve sur votre
+bureau dans de nouvelles barrières – jeux, programmes, documents, images, musique et vidéos, archives, dossiers –,
+chacune dans un style adapté. Rien n'est déplacé : les barrières pointent vers les fichiers. Pour masquer les
+originaux : clic droit sur le bureau → Affichage → Afficher les icônes du bureau.
+
+## Règle à l'écran
+
+Zone de notification → **Règle à l'écran** place une règle au-dessus de tout : glisser pour la déplacer, glisser
+l'extrémité pour l'allonger, double-clic ou espace pour la tourner, flèches pour l'ajuster au pixel (Maj : 10 px), U ou
+le menu passe entre pixels, centimètres et pouces (taille réelle, d'après la taille indiquée par l'écran). Une ligne
+rouge suit la souris et affiche la distance. Échap la ferme.
 
 ## Profils
 
 Regroupez les barrières en profils comme « Travail » et « Jeux » et passez de l'un à l'autre depuis la zone de
 notification (**Profil ▸**) ou dans **Paramètres → Bureau**. Clic droit sur une barrière → **Afficher dans le profil**
 pour l'attribuer ; une barrière sans profil apparaît dans tous les profils. Les barrières créées pendant qu'un profil
-est actif lui appartiennent.
+est actif lui appartiennent. **Ctrl+Alt+F1…F9** passent au profil 1…9, **Ctrl+Alt+F10** affiche toutes les barrières.
+Avec un profil actif, zone de notification → Profil ▸ **Fond d'écran pour « … »** lui donne son propre fond d'écran ;
+votre fond habituel revient dans les profils qui n'en ont pas.
 
 ## Automatisation (Paramètres → Automatisation)
 

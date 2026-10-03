@@ -19,6 +19,7 @@ namespace NoFences
             public bool Animations => false;
             public bool FpsEnabled => true;
             public PlaytimeLog Playtime { get; } = DemoPlaytime();
+            public UsageLog ScreenTime { get; } = DemoUsage();
             public void ToggleFps() { }
             public FenceTheme ThemeFor(FenceInfo info) => ThemeRegistry.Get(info.Theme);
             public void RequestSave() { }
@@ -29,11 +30,24 @@ namespace NoFences
             public Guid? CurrentVirtualDesktop => null;
             public void TogglePinToDesktop(FenceInfo info) { }
             public void AddAppSettingsItems(ToolStripItemCollection items) { }
+            public IReadOnlyList<string> Profiles => Array.Empty<string>();
+            public string? ActiveProfile => null;
+            public void SwitchProfile(string? profile, bool automatic = false) { }
             public void AddFenceProfileItems(ToolStripItemCollection items, FenceInfo info, IWin32Window owner) { }
             public IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except) => Array.Empty<Rectangle>();
         }
 
         internal const string DemoGame = @"C:\Games\Space Game.exe";
+
+        /// <summary>Made-up screen time (programs that don't exist here, so no real icons or data show).</summary>
+        private static UsageLog DemoUsage()
+        {
+            var log = new UsageLog();
+            foreach (var (exe, name, minutes) in new[] { (@"C:\Demo\browser.exe", "Web Browser", 142), (@"C:\Demo\code.exe", "Code Editor", 96),
+                         (@"C:\Demo\game.exe", "Space Game", 75), (@"C:\Demo\mail.exe", "Mail", 31), (@"C:\Demo\music.exe", "Music Player", 18) })
+                log.Add(DateTime.Now, exe, name, minutes * 60);
+            return log;
+        }
 
         /// <summary>Some made-up sessions for "Space Game.exe" so the playtime widget has something to show.</summary>
         private static PlaytimeLog DemoPlaytime()
@@ -112,6 +126,7 @@ namespace NoFences
 
             RenderNotes(outDir, host);
             RenderDialog(AboutDialog.CreateForPreview(), Path.Combine(outDir, "about.png"));
+            RenderDialog(RulerWindow.CreateForPreview(), Path.Combine(outDir, "ruler.png"));
             RenderDialog(new FenceSettingsDialog(new FenceInfo { Name = "Spiele", Theme = "gaming", Files = samples, Width = 340, Height = 260, AutoSortPatterns = "*.lnk" }),
                 Path.Combine(outDir, "settings.png"));
             RenderWidgets(outDir, host);
@@ -198,6 +213,12 @@ namespace NoFences
                 ("news", "documents", new Size(330, 330)),
                 ("ticker", "finance", new Size(320, 270)),
                 ("photos", "photos", new Size(330, 250)),
+            });
+            RenderWidgetSheet(outDir, host, "widgets-tools-docs.png", new (string, string, Size)[]
+            {
+                ("screentime", "default", new Size(300, 300)),
+                ("audio", "gaming", new Size(300, 230)),
+                ("status", "windows", new Size(330, 230)),
             });
             // Checking: news in a wide dark style, as people actually use it
             RenderWidgetSheet(outDir, host, "check-news.png", new (string, string, Size)[]
@@ -326,6 +347,22 @@ namespace NoFences
                         g.FillPolygon(hills, new[] { new Point(0, 600), new Point(0, 380), new Point(180, 300), new Point(360, 400), new Point(560, 330), new Point(800, 420), new Point(800, 600) });
                     }
                     photo.SetPreview(picture);
+                    break;
+                case Widgets.AudioWidget audio:
+                    audio.SetPreview(new List<Win32.AudioDevice>
+                    {
+                        new("1", "Speakers (USB Soundbar)", true),
+                        new("2", "Headphones (Wireless Headset)", false),
+                        new("3", "Monitor (HDMI Audio)", false),
+                    }, 0.42f, false);
+                    break;
+                case Widgets.StatusWidget status:
+                    status.SetPreview(new[]
+                    {
+                        new Widgets.ServiceStatus("Game Network", Widgets.ServiceLevel.Ok, "", Array.Empty<string>(), "https://example.com"),
+                        new Widgets.ServiceStatus("Chat Service", Widgets.ServiceLevel.Degraded, "Partially Degraded Service", new[] { "Voice", "Media Proxy" }, "https://example.com"),
+                        new Widgets.ServiceStatus("Store", Widgets.ServiceLevel.Notice, "Maintenance", new[] { "Payments" }, "https://example.com"),
+                    });
                     break;
                 case Widgets.ClipboardWidget clipboard:
                     foreach (var text in new[] { "https://github.com/hofergeorg-tech/NoFences", "Meeting moved to 3 pm", "C:\\Projects\\report-2026.docx", "Thanks for the update!\nSee you tomorrow" }.Reverse())

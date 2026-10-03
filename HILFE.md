@@ -40,8 +40,10 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 ## In allen Fences suchen
 
 **Strg+Alt+F** (oder Tray → Fences durchsuchen…) öffnet ein Suchfeld. Es findet alles in deinen Fences – Verknüpfungen,
-Ordnerinhalte, Reiter und Notiztexte – sogar Buchstaben in Reihenfolge („ffx“ findet Firefox). **Enter** öffnet den
-Treffer, **↑↓** wählen, **Esc** schließt. Das Tastenkürzel änderst du unter Einstellungen → Desktop.
+Ordnerinhalte, Reiter und Notiztexte – sogar Buchstaben in Reihenfolge („ffx“ findet Firefox) – und außerdem
+Startmenü-Apps und Windows-Einstellungsseiten („bluetooth“, „sound“). Tipp eine Rechnung wie `12*7` oder `200*15%`,
+Enter kopiert das Ergebnis. **Enter** öffnet den Treffer, **↑↓** wählen, **Esc** schließt. Das Tastenkürzel änderst
+du unter Einstellungen → Desktop.
 
 ## Verschieben, Größe, Umbenennen
 
@@ -92,12 +94,38 @@ Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem
   öffnet den Artikel.
 - **Kurse**: Aktien, Indizes und Krypto mit der Veränderung seit gestern und einem Tagesverlauf, mit Symbolen wie bei
   Yahoo Finance: `AAPL`, `^GDAXI` (DAX), `^ATX`, `BTC-EUR`. Alle fünf Minuten aktualisiert; nur zur Information.
+- **Bildschirmzeit**: welche Programme du heute oder in den letzten 7 Tagen wie lange benutzt hast (Klick auf
+  „heute ⇄“ wechselt). Aufgezeichnet nur, solange das Widget existiert und du am PC bist; bleibt auf diesem PC.
+- **Sound**: Lautstärke des aktuellen Wiedergabegeräts (Balken anklicken oder Mausrad), Stummschalten für Lautsprecher
+  und Mikrofon, und mit einem Klick zu einem anderen Gerät wechseln (Headset ↔ Lautsprecher).
+- **Dienst-Status**: ob RSI, Discord, Epic Games, GitHub und andere gerade Störungen haben, aus ihren öffentlichen
+  Statusseiten; Klick auf eine Zeile öffnet die Seite.
+
+Jedes Widget hat im Menü eigene Einstellungen. Im Menü des Fokus-Timers gibt es außerdem den **Fokus-Modus**: Er
+wechselt während einer Fokus-Runde zu einem Profil deiner Wahl (z. B. „Fokus“ nur mit Arbeits-Fences) und in den
+Pausen zurück.
+
+## Desktop-Assistent
+
+Tray → **Desktop-Assistent…** (wird auch beim ersten Start angeboten) sortiert, was auf deinem Desktop liegt, in neue
+Fences – Spiele, Programme, Dokumente, Bilder, Musik & Videos, Archive, Ordner –, jeweils mit passendem Style. Es wird
+nichts verschoben, die Fences verweisen auf die Dateien. Um die Originale auszublenden: Rechtsklick auf den Desktop →
+Ansicht → Desktopsymbole anzeigen.
+
+## Bildschirm-Lineal
+
+Tray → **Bildschirm-Lineal** legt ein Lineal über alles: ziehen verschiebt, das Ende ziehen ändert die Länge,
+Doppelklick oder Leertaste dreht es, Pfeiltasten verschieben pixelgenau (Shift: 10 px), U oder das Menü wechselt
+zwischen Pixel, Zentimeter und Zoll (echte Größe, aus der Größe, die dein Monitor meldet). Eine rote Linie folgt der
+Maus und zeigt den Abstand. Esc schließt es.
 
 ## Profile
 
 Fences in Profile wie „Arbeit“ und „Gaming“ gruppieren und im Tray (**Profil ▸**) oder unter **Einstellungen → Desktop**
 umschalten. Rechtsklick auf ein Fence → **In Profil zeigen** ordnet es zu; ein Fence ohne Profil erscheint in allen
-Profilen. Neue Fences gehören zum gerade aktiven Profil.
+Profilen. Neue Fences gehören zum gerade aktiven Profil. **Strg+Alt+F1…F9** wechseln zu Profil 1…9, **Strg+Alt+F10**
+zeigt alle Fences. Ist ein Profil aktiv, gibt Tray → Profil ▸ **Hintergrundbild für „…“** ihm ein eigenes
+Hintergrundbild; in Profilen ohne eigenes kommt dein gewohntes zurück.
 
 ## Automatik (Einstellungen → Automatik)
 

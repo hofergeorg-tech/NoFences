@@ -59,11 +59,20 @@ namespace NoFences
             InitAutomation();
             InitSearch();
             InitSync();
+            InitScreenTime();
+            UpdateProfileHotkeys();
             if (themeErrors.Count > 0)
                 ShowBalloon(Strings.ThemeErrors(string.Join("\n", themeErrors)), timeout: 10_000);
 
             if (firstStart)
-                ShowBalloon(Strings.FirstStartHint, timeout: 8000);
+            {
+                // Icons on the desktop: offer the assistant (a click on the notification starts it)
+                var items = ScanDesktop().Sum(c => c.Value.Count);
+                if (items >= 5)
+                    ShowBalloon(Strings.AssistantFirstStart, RunDesktopAssistant, timeout: 15_000);
+                else
+                    ShowBalloon(Strings.FirstStartHint, timeout: 8000);
+            }
             ShowChangelogAfterUpdate(firstStart);
         }
 
@@ -273,6 +282,8 @@ namespace NoFences
             AddPeekItems(menu.Items);
             AddSearchItem(menu.Items);
             menu.Items.Add(Strings.SortNow, null, (_, _) => SortDesktopNow());
+            menu.Items.Add(Strings.AssistantMenu, null, (_, _) => RunDesktopAssistant());
+            menu.Items.Add(Strings.RulerMenu, null, (_, _) => RulerWindow.Toggle());
             menu.Items.Add(new ToolStripSeparator());
             // Everything else lives in the settings window
             AddAppSettingsItems(menu.Items);
@@ -296,6 +307,8 @@ namespace NoFences
             DisposeAutomation();
             DisposeSearch();
             DisposeSync();
+            DisposeScreenTime();
+            DisposeProfileHotkeys();
             sorter.Dispose();
             tray.Visible = false;
             tray.Dispose();

@@ -292,6 +292,13 @@ namespace NoFences
                     }
                 }));
             Hint(profiles, Strings.ProfileHowTo, ContentWidth);
+            Wide(profiles, Check(Strings.ProfileHotkeysLabel, Config.ProfileHotkeys, v =>
+            {
+                Config.ProfileHotkeys = v;
+                app.Store.RequestSave();
+                app.UpdateProfileHotkeys();
+            }));
+            Hint(profiles, Strings.ProfileWallpaperHint, ContentWidth);
 
             var search = Section(page, Strings.SectionSearch, ContentWidth);
             Row(search, Strings.SearchHotkeyLabel, Choice(AppConfig.SearchHotkeys.Select(Strings.HotkeyName), IndexOf(AppConfig.SearchHotkeys, Config.SearchHotkey), i =>
@@ -309,6 +316,7 @@ namespace NoFences
                 app.Store.RequestSave();
             }));
             Hint(sort, Strings.AutoSortHint, ContentWidth);
+            Wide(sort, Action(Strings.AssistantMenu, app.RunDesktopAssistant));
             Wide(sort, Action(Strings.SortNow, app.SortDesktopNow));
         }
 

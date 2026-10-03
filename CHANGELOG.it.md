@@ -6,6 +6,16 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 
 ## [2.4.1] - 2026-10-03
 
+### Novità
+- La **ricerca** trova anche le app del menu Start e le pagine delle impostazioni di Windows, e calcola (`12*7`,
+  `200*15%`; Invio copia).
+- Widget **tempo di utilizzo** (programmi usati oggi / 7 giorni, resta su questo PC), **audio** (volume, muto, microfono,
+  cambio dispositivo) e **stato dei servizi** (RSI, Discord, Epic Games, GitHub … dalle loro pagine di stato).
+- **Modalità concentrazione**: il timer passa a un profilo scelto durante i giri di concentrazione.
+- **Scorciatoie dei profili** Ctrl+Alt+F1…F9 (F10: tutti i recinti) e uno **sfondo per profilo**.
+- **Assistente desktop**: ordina le icone del desktop in nuovi recinti per tipo (proposto al primo avvio).
+- **Righello sullo schermo** in pixel, centimetri o pollici (barra → Righello sullo schermo).
+
 ### Modifiche
 - **Menu raggruppati**: Nuovo widget ▸ Tempo e pianificazione / Info e notizie / Sistema / Giochi e media; Stile ▸ Base /
   Gaming e tecnologia / Lavoro e quotidiano / Tempo libero / Post-it / Stili personali.

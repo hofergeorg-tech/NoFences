@@ -42,6 +42,15 @@ namespace NoFences.Model
         /// <summary>The active profile; null = show all fences.</summary>
         public string? ActiveProfile { get; set; }
 
+        /// <summary>Ctrl+Alt+F1…F9 switch profiles, Ctrl+Alt+F10 shows all fences.</summary>
+        public bool ProfileHotkeys { get; set; } = true;
+
+        /// <summary>Wallpaper per profile (image path); profiles without one keep the current wallpaper.</summary>
+        public Dictionary<string, string> ProfileWallpapers { get; set; } = new();
+
+        /// <summary>The wallpaper from before NoFences changed it, restored for profiles without their own.</summary>
+        public string? OriginalWallpaper { get; set; }
+
         /// <summary>Automatic profile switching (program running, time of day).</summary>
         public List<ProfileRule> ProfileRules { get; set; } = new();
 

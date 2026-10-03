@@ -39,8 +39,10 @@ Suggerimento: per un desktop ordinato, crea una cartella come `Documenti\Recinti
 ## Cercare in tutti i recinti
 
 **Ctrl+Alt+F** (o barra → Cerca nei recinti…) apre una casella di ricerca. Trova tutto nei tuoi recinti – collegamenti,
-contenuto delle cartelle, schede e testi delle note – anche lettere in ordine ("ffx" trova Firefox). **Invio** apre il
-risultato, **↑↓** scegli, **Esc** chiude. La scorciatoia si cambia in Impostazioni → Desktop.
+contenuto delle cartelle, schede e testi delle note – anche lettere in ordine ("ffx" trova Firefox) – e anche le app
+del menu Start e le pagine delle impostazioni di Windows ("bluetooth", "audio"). Scrivi un calcolo come `12*7` o
+`200*15%` e Invio copia il risultato. **Invio** apre il risultato, **↑↓** scegli, **Esc** chiude. La scorciatoia si
+cambia in Impostazioni → Desktop.
 
 ## Spostare, ridimensionare, rinominare
 
@@ -90,12 +92,38 @@ Menu della barra o del recinto → **Nuovo widget**. I widget con un elenco scor
 - **Notizie**: titoli da feed RSS o Atom (pulsanti pronti per ANSA, Tagesschau, BBC e altri); un clic apre l'articolo.
 - **Quotazioni**: azioni, indici e cripto con la variazione da ieri e il grafico della giornata, con i simboli di Yahoo
   Finance come `AAPL`, `FTSEMIB.MI`, `^GDAXI`, `BTC-EUR`. Aggiornate ogni cinque minuti; solo a scopo informativo.
+- **Tempo di utilizzo**: quali programmi hai usato e per quanto oggi o negli ultimi 7 giorni (clic su "oggi ⇄" per
+  cambiare). Registrato solo finché il widget esiste e sei al PC; resta su questo PC.
+- **Audio**: volume del dispositivo di riproduzione attuale (clic sulla barra o rotellina), muto per altoparlanti e
+  microfono, e con un clic passi a un altro dispositivo (cuffie ↔ altoparlanti).
+- **Stato dei servizi**: se RSI, Discord, Epic Games, GitHub e altri hanno problemi in questo momento, dalle loro pagine
+  di stato pubbliche; un clic su una riga apre la pagina.
+
+Ogni widget ha le sue impostazioni nel menu. Nel menu del timer di concentrazione c'è anche la **modalità
+concentrazione**: durante un giro passa a un profilo a tua scelta (ad es. "Concentrazione" con soli recinti di lavoro)
+e torna indietro nelle pause.
+
+## Assistente desktop
+
+Barra → **Assistente desktop…** (proposto anche al primo avvio) ordina ciò che c'è sul desktop in nuovi recinti –
+giochi, programmi, documenti, immagini, musica e video, archivi, cartelle – ognuno con uno stile adatto. Non viene
+spostato nulla, i recinti collegano i file. Per nascondere gli originali: clic destro sul desktop → Visualizza →
+Mostra icone del desktop.
+
+## Righello sullo schermo
+
+Barra → **Righello sullo schermo** mette un righello sopra tutto: trascina per spostarlo, trascina l'estremità per
+allungarlo, doppio clic o spazio lo ruota, le frecce lo spostano al pixel (Maiusc: 10 px), U o il menu cambia tra
+pixel, centimetri e pollici (dimensione reale, da quella comunicata dal monitor). Una linea rossa segue il mouse e
+mostra la distanza. Esc lo chiude.
 
 ## Profili
 
 Raggruppa i recinti in profili come "Lavoro" e "Gaming" e passa dall'uno all'altro nella barra (**Profilo ▸**) o in
 **Impostazioni → Desktop**. Clic destro su un recinto → **Mostra nel profilo** per assegnarlo; un recinto senza profilo
-appare in tutti i profili. I nuovi recinti appartengono al profilo attivo.
+appare in tutti i profili. I nuovi recinti appartengono al profilo attivo. **Ctrl+Alt+F1…F9** passano al profilo 1…9,
+**Ctrl+Alt+F10** mostra tutti i recinti. Con un profilo attivo, barra → Profilo ▸ **Sfondo per «…»** gli dà uno
+sfondo proprio; nei profili senza torna quello abituale.
 
 ## Automazione (Impostazioni → Automazione)
 

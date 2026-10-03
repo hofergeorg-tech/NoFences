@@ -107,6 +107,9 @@ namespace NoFences.Widgets
         /// <summary>The address is a web page, not a feed (and the page names no working feed either).</summary>
         public sealed class NotAFeedException : Exception
         {
+            public NotAFeedException() : base("The address is a web page, not an RSS/Atom feed (and it names no working feed).")
+            {
+            }
         }
 
         /// <summary>
