@@ -261,6 +261,13 @@ namespace NoFences.Util
         public static string WidgetSystem => T("System monitor (CPU, RAM, GPU, FPS)", "System-Monitor (CPU, RAM, GPU, FPS)", "Monitor di sistema (CPU, RAM, GPU, FPS)");
         public static string WidgetDrives => T("Drives", "Laufwerke", "Unità");
         public static string WidgetRecycleBin => T("Recycle bin", "Papierkorb", "Cestino");
+        public static string WidgetCountdown => T("Countdown", "Countdown", "Conto alla rovescia");
+        public static string CountdownSet => T("Set countdown…", "Countdown festlegen…", "Imposta conto alla rovescia…");
+        public static string CountdownHint => T("Double-click or right-click → Set countdown", "Doppelklick oder Rechtsklick → Countdown festlegen", "Doppio clic o clic destro → Imposta conto alla rovescia");
+        public static string CountdownDays(int n) => n == 1 ? T("1 day", "1 Tag", "1 giorno") : T($"{n} days", $"{n} Tage", $"{n} giorni");
+        public static string CountdownReached => T("It's time!", "Es ist so weit!", "Ci siamo!");
+        public static string CountdownTitleLabel => T("Title", "Titel", "Titolo");
+        public static string CountdownDateLabel => T("Date and time", "Datum und Uhrzeit", "Data e ora");
         public static string WidgetPlaytime => T("Playtime (SC Playtime)", "Spielzeit (SC Playtime)", "Tempo di gioco (SC Playtime)");
         public static string PlaytimeGame => T("Game", "Spiel", "Gioco");
         public static string PlaytimeLastPlayed => T("Most recently played", "Zuletzt gespieltes Spiel", "Giocato più di recente");

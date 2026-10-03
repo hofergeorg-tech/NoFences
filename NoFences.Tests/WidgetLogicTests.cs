@@ -59,6 +59,39 @@ namespace NoFences.Tests
         }
     }
 
+    public class CountdownTests
+    {
+        [Fact]
+        public void Option_RoundTrips()
+        {
+            var option = CountdownWidget.Format(new DateTime(2026, 12, 24, 18, 0, 0), "Weihnachten");
+            var parsed = CountdownWidget.Parse(option);
+            Assert.Equal((new DateTime(2026, 12, 24, 18, 0, 0), "Weihnachten"), parsed);
+            Assert.Null(CountdownWidget.Parse(null));
+            Assert.Null(CountdownWidget.Parse("nonsense"));
+        }
+
+        [Theory]
+        [InlineData(12 * 24 * 60 + 30, "12 days")]
+        [InlineData(28 * 60, "1 day 4 h")]
+        [InlineData(4 * 60 + 12, "4 h 12 min")]
+        [InlineData(12, "12 min 0 s")]
+        [InlineData(0, "")]
+        public void Remaining_UsesTheCoarsestUsefulUnits(int minutes, string expected)
+        {
+            var language = NoFences.Util.Strings.Language;
+            NoFences.Util.Strings.Language = "en";
+            try
+            {
+                Assert.Equal(expected, CountdownWidget.Remaining(TimeSpan.FromMinutes(minutes)));
+            }
+            finally
+            {
+                NoFences.Util.Strings.Language = language;
+            }
+        }
+    }
+
     public class SizeFormatTests
     {
         [Theory]

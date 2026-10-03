@@ -146,6 +146,7 @@ namespace NoFences
                 ("drives", "hardware", new Size(300, 240)),
                 ("recyclebin", "nerd", new Size(220, 210)),
                 ("playtime", "starcitizen", new Size(270, 260)),
+                ("countdown", "family", new Size(280, 200)),
             };
             const int gap = 24;
             using var sheet = new Bitmap(items.Sum(i => i.Size.Width + gap) + gap, items.Max(i => i.Size.Height) + 2 * gap, PixelFormat.Format32bppArgb);
@@ -155,7 +156,8 @@ namespace NoFences
             foreach (var (type, theme, size) in items)
             {
                 var name = Widgets.WidgetRegistry.Types.First(t => t.Type == type).Name();
-                var info = new FenceInfo { Name = name, Kind = FenceKind.Widget, WidgetType = type, Theme = theme, BackgroundAlpha = 140 };
+                var info = new FenceInfo { Name = name, Kind = FenceKind.Widget, WidgetType = type, Theme = theme, BackgroundAlpha = 140,
+                    WidgetOption = type == "countdown" ? Widgets.CountdownWidget.Format(new DateTime(DateTime.Now.Year, 12, 24, 18, 0, 0), "Weihnachten") : null };
                 using var window = new FenceWindow(host, info) { Size = size };
                 window.ApplySettings();
                 window.RefreshWidgetForPreview();

@@ -13,6 +13,7 @@ namespace NoFences.Widgets
             ("drives", () => Strings.WidgetDrives, new Size(280, 220)),
             ("recyclebin", () => Strings.WidgetRecycleBin, new Size(200, 190)),
             ("playtime", () => Strings.WidgetPlaytime, new Size(270, 260)),
+            ("countdown", () => Strings.WidgetCountdown, new Size(280, 200)),
         };
 
         public static FenceWidget? Create(FenceInfo info, IFenceHost host)
@@ -34,6 +35,11 @@ namespace NoFences.Widgets
                 "playtime" => new PlaytimeWidget(() => info.WidgetOption, game =>
                 {
                     info.WidgetOption = game;
+                    host.RequestSave();
+                }),
+                "countdown" => new CountdownWidget(() => info.WidgetOption, option =>
+                {
+                    info.WidgetOption = option;
                     host.RequestSave();
                 }),
                 _ => null
