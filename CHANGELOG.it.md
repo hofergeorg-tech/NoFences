@@ -10,6 +10,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Pulisci cartelle** (prima: Pulisci Download): aggiungi altre cartelle oltre a Download; vengono cercate tutte
   insieme, una colonna mostra dove si trova ogni elemento. L'elenco delle cartelle viene salvato.
 
+### Correzioni
+- Gli elenchi scorrevoli (offerte Steam, notizie, appuntamenti, attività) restavano spostati e bloccati dopo aver ingrandito il recinto.
+
 ## [2.4.1] - 2026-10-03
 
 ### Novità

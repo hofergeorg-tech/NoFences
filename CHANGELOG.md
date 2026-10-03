@@ -11,6 +11,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Clean up folders** (was: Clean up Downloads): add more folders than Downloads; all are searched together, with a
   column showing where each item lies. The folder list is kept.
 
+### Fixed
+- Scrolling lists (Steam sales, news, appointments, to-dos) stayed scrolled and stuck after making the fence bigger.
+
 ## [2.4.1] - 2026-10-03
 
 ### Added

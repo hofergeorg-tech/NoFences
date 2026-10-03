@@ -276,6 +276,12 @@ namespace NoFences.Widgets
             }
             c.G.Restore(state);
             maxScroll = Math.Max(0, y + scroll - c.Area.Bottom);
+            // Grown fence: everything fits now, so don't stay scrolled down (the top would stay hidden)
+            if (scroll > maxScroll)
+            {
+                scroll = maxScroll;
+                RequestRedraw();
+            }
         }
 
         public override bool IsClickable(Point p) => rows.Any(r => r.Rect.Contains(p));
@@ -296,7 +302,7 @@ namespace NoFences.Widgets
 
         public override bool Wheel(int delta)
         {
-            if (maxScroll <= 0)
+            if (maxScroll <= 0 && scroll <= 0)
                 return false;
             scroll = Math.Clamp(scroll - Math.Sign(delta) * 60, 0, maxScroll);
             return true;

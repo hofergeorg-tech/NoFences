@@ -223,7 +223,7 @@ namespace NoFences.Widgets
 
         public override bool Wheel(int delta)
         {
-            if (maxScroll <= 0)
+            if (maxScroll <= 0 && scroll <= 0)
                 return false;
             scroll = Math.Clamp(scroll - Math.Sign(delta) * 80, 0, maxScroll);
             return true;

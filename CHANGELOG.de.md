@@ -10,6 +10,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Ordner aufräumen** (vorher: Downloads aufräumen): weitere Ordner neben Downloads hinzufügen; alle werden zusammen
   durchsucht, eine Spalte zeigt, wo ein Eintrag liegt. Die Ordnerliste bleibt gespeichert.
 
+### Behoben
+- Scrollbare Listen (Steam-Angebote, News, Termine, To-dos) blieben nach dem Vergrößern des Fences verschoben und ließen sich nicht mehr scrollen.
+
 ## [2.4.1] - 2026-10-03
 
 ### Neu

@@ -10,6 +10,9 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 - **Limpiar carpetas** (antes: Limpiar Descargas): añade más carpetas además de Descargas; se revisan todas juntas y una
   columna muestra dónde está cada elemento. La lista de carpetas se guarda.
 
+### Correcciones
+- Las listas desplazables (ofertas de Steam, noticias, citas, tareas) se quedaban desplazadas y bloqueadas tras agrandar la valla.
+
 ## [2.4.1] - 2026-10-03
 
 ### Novedades

@@ -10,6 +10,9 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 - **Nettoyer des dossiers** (avant : Nettoyer les téléchargements) : ajoutez d'autres dossiers que Téléchargements ; tous
   sont parcourus ensemble, une colonne indique où se trouve chaque élément. La liste des dossiers est gardée.
 
+### Corrections
+- Les listes défilantes (promos Steam, actualités, rendez-vous, tâches) restaient décalées et bloquées après avoir agrandi la barrière.
+
 ## [2.4.1] - 2026-10-03
 
 ### Nouveautés
