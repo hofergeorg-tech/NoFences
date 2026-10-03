@@ -88,6 +88,48 @@ namespace NoFences
             RenderNotes(outDir, host);
             RenderDialog(AboutDialog.CreateForPreview(), Path.Combine(outDir, "about.png"));
             RenderWidgets(outDir, host);
+            RenderExtras(outDir, host, samples);
+        }
+
+        /// <summary>A fence with tabs and a compact quick-launch bar.</summary>
+        private static void RenderExtras(string outDir, IFenceHost host, List<string> samples)
+        {
+            using var sheet = new Bitmap(820, 340, PixelFormat.Format32bppArgb);
+            using var g = Graphics.FromImage(sheet);
+            DrawBackdrop(g, new Rectangle(Point.Empty, sheet.Size));
+
+            var tabs = new FenceInfo
+            {
+                Name = "Arbeit", Theme = "default", BackgroundAlpha = 140, Files = samples.Take(4).ToList(),
+                Tabs = { new FenceTab { Name = "Arbeit" }, new FenceTab { Name = "Spiele" }, new FenceTab { Name = "Tools" } }
+            };
+            using (var window = new FenceWindow(host, tabs) { Size = new Size(380, 290) })
+            {
+                window.ApplySettings();
+                window.ReloadEntries();
+                var state = g.Save();
+                g.TranslateTransform(24, 24);
+                window.PaintFence(g); // first pass requests icons
+                g.Restore(state);
+            }
+
+            var quick = new FenceInfo { Name = "Schnellstart", Theme = "gaming", Compact = true, IconSize = 48, Files = samples };
+            using (var window = new FenceWindow(host, quick) { Size = new Size(380, 120) })
+            {
+                window.ApplySettings();
+                window.ReloadEntries();
+                // Paint once to request the 48 px icons, then let them load.
+                using (var scratch = new Bitmap(380, 120))
+                using (var sg = Graphics.FromImage(scratch))
+                    window.PaintFence(sg);
+                var until = DateTime.Now.AddSeconds(2);
+                while (DateTime.Now < until) { Application.DoEvents(); Thread.Sleep(20); }
+                var state = g.Save();
+                g.TranslateTransform(424, 24);
+                window.PaintFence(g);
+                g.Restore(state);
+            }
+            sheet.Save(Path.Combine(outDir, "extras.png"), ImageFormat.Png);
         }
 
         /// <summary>All widgets once, in fitting styles (with this PC's real data).</summary>

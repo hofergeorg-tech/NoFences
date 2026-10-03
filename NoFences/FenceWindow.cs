@@ -315,7 +315,9 @@ namespace NoFences
             var bounds = ClientRectangle;
             g.SetClip(bounds);
             theme.DrawFrame(g, bounds, titleHeight, Info, scale);
-            if (titleFont != null)
+            if (HasTabs)
+                DrawTabs(g);
+            else if (titleFont != null)
                 theme.DrawTitle(g, new Rectangle(0, 0, bounds.Width, titleHeight), theme.FormatTitle(Text), titleFont, scale);
             if (IsNote)
                 DrawReminderBadge(g);
@@ -555,6 +557,8 @@ namespace NoFences
             }
             if (left) return Native.HTLEFT;
             if (right) return Native.HTRIGHT;
+            // Tab chips sit in the title bar but must get normal clicks.
+            if (HasTabs && !collapsed && TabAt(pt) != -2) return Native.HTCLIENT;
             if (pt.Y < titleHeight || collapsed) return Native.HTCAPTION;
             return Native.HTCLIENT;
         }
@@ -733,6 +737,12 @@ namespace NoFences
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
+            if (HasTabs && TabMouseUp(e))
+            {
+                mouseDownAt = null;
+                mouseDownPath = null;
+                return;
+            }
             if (!IsNote && !IsWidget)
                 SelectionMouseUp(e);
             mouseDownAt = null;
@@ -758,6 +768,11 @@ namespace NoFences
             base.OnMouseDoubleClick(e);
             if (e.Button != MouseButtons.Left)
                 return;
+            if (HasTabs && TabAt(e.Location) >= 0)
+            {
+                RenameTab(TabAt(e.Location));
+                return;
+            }
             if (IsWidget)
             {
                 widget?.DoubleClick(e.Location);
@@ -838,6 +853,8 @@ namespace NoFences
                 menu.Items.Add(new ToolStripSeparator());
 
             menu.Items.Add(Strings.Rename, null, (_, _) => StartEditTitle());
+            if (Info.Kind == FenceKind.Links && !Info.ReadOnly)
+                menu.Items.Add(Strings.AddTab, null, (_, _) => AddTab());
             menu.Items.Add(Strings.Settings, null, (_, _) => OpenSettings());
             menu.Items.Add(new ToolStripMenuItem(Strings.Locked, null, (_, _) => { Info.Locked = !Info.Locked; app.RequestSave(); }) { Checked = Info.Locked });
             menu.Items.Add(new ToolStripMenuItem(Strings.AutoCollapse, null, (_, _) => ToggleCollapse()) { Checked = Info.CanMinify });
@@ -1022,6 +1039,24 @@ namespace NoFences
 
         private void UpdateDrag(DragEventArgs e)
         {
+            // Dragging onto another tab's chip moves the links there.
+            var tabUnder = HasTabs ? TabAt(PointToClient(new Point(e.X, e.Y))) : -2;
+            if (tabUnder >= 0 && tabUnder != Info.ActiveTab && !Info.Locked && e.Data?.GetDataPresent(DataFormats.FileDrop) == true)
+            {
+                e.Effect = GetInternal(e.Data)?.fence == Info.Id ? DragDropEffects.Move : (e.AllowedEffect & (DragDropEffects.Link | DragDropEffects.Copy | DragDropEffects.Move));
+                if (dropTab != tabUnder || insertIndex != -1)
+                {
+                    dropTab = tabUnder;
+                    insertIndex = -1;
+                    Invalidate();
+                }
+                return;
+            }
+            if (dropTab != -1)
+            {
+                dropTab = -1;
+                Invalidate();
+            }
             e.Effect = ComputeEffect(e);
             // With automatic sorting the drop position doesn't matter, so don't show a marker.
             var newIndex = e.Effect == DragDropEffects.None || Info.SortMode != FenceSortMode.Manual
@@ -1038,12 +1073,24 @@ namespace NoFences
         {
             base.OnDragLeave(e);
             insertIndex = -1;
+            dropTab = -1;
             Invalidate();
         }
 
         protected override void OnDragDrop(DragEventArgs e)
         {
             base.OnDragDrop(e);
+            if (HasTabs && dropTab >= 0)
+            {
+                var tab = dropTab;
+                dropTab = -1;
+                var dropped = e.Data?.GetData(DataFormats.FileDrop) as string[] ?? Array.Empty<string>();
+                var fromHere = GetInternal(e.Data)?.fence == Info.Id;
+                MoveToTab(dropped, tab, removeFromCurrent: fromHere);
+                // From another links fence with Move: that fence removes them
+                lastDropWasFenceMove = !fromHere && GetInternal(e.Data) != null && e.Effect == DragDropEffects.Move;
+                return;
+            }
             var effect = ComputeEffect(e);
             var index = InsertIndexAt(PointToClient(new Point(e.X, e.Y)));
             insertIndex = -1;

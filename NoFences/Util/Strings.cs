@@ -10,6 +10,10 @@ namespace NoFences.Util
         public static string HelpDocument => De ? "HILFE.md" : "HELP.md";
         public static string ChangelogDocument => De ? "CHANGELOG.de.md" : "CHANGELOG.md";
         public static string Help => T("Help", "Hilfe");
+        public static string AddTab => T("Add tab", "Reiter hinzufügen");
+        public static string RenameTab => T("Rename tab", "Reiter umbenennen");
+        public static string RemoveTab => T("Remove tab (keeps its links)", "Reiter entfernen (Verknüpfungen bleiben)");
+        public static string TabDefaultName(int n) => T($"Tab {n}", $"Reiter {n}");
         public static string NewWidget => T("New widget", "Neues Widget");
         public static string NewRecent => T("New \"Recent files\" fence", "Neuer Fence „Zuletzt verwendet“");
         public static string RecentName => T("Recent files", "Zuletzt verwendet");

@@ -100,6 +100,17 @@ namespace NoFences.Model
         /// <summary>Show at most this many entries (0 = all), e.g. the 20 most recent files.</summary>
         public int MaxItems { get; set; }
 
+        /// <summary>
+        /// Links fences with tabs. The active tab's links always live in <see cref="Files"/>; the copy in
+        /// <c>Tabs[ActiveTab]</c> is only brought up to date when switching tabs.
+        /// </summary>
+        public List<FenceTab> Tabs { get; set; } = new();
+
+        public int ActiveTab { get; set; }
+
+        /// <summary>Only on this virtual desktop (null = on all desktops).</summary>
+        public Guid? VirtualDesktop { get; set; }
+
         /// <summary>Only used for <see cref="FenceKind.Note"/>; lines separated by '\n'.</summary>
         public string NoteText { get; set; } = "";
 
@@ -110,6 +121,13 @@ namespace NoFences.Model
         /// Links fence: the entries. Folder fence: the user's preferred order of the folder's
         /// contents; entries missing from this list are appended alphabetically.
         /// </summary>
+        public List<string> Files { get; set; } = new();
+    }
+
+    public class FenceTab
+    {
+        public string Name { get; set; } = "";
+
         public List<string> Files { get; set; } = new();
     }
 }
