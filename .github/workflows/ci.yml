@@ -85,11 +85,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: pwsh
         run: |
-          # Release notes = this version's section of CHANGELOG.md
+          # Release notes = this version's changelog section: English, then German and Italian folded
           $version = $env:GITHUB_REF_NAME.TrimStart('v')
-          $changelog = Get-Content CHANGELOG.md -Raw
-          $match = [regex]::Match($changelog, "(?ms)^## \[$([regex]::Escape($version))\][^\n]*\n(.*?)(?=^## \[|\z)")
-          if (-not $match.Success) { throw "No section for $version in CHANGELOG.md" }
-          $match.Groups[1].Value.Trim() | Set-Content notes.md -Encoding utf8
+          function Section($file) {
+            $text = Get-Content $file -Raw -Encoding utf8
+            $m = [regex]::Match($text, "(?ms)^## \[$([regex]::Escape($version))\][^\n]*\n(.*?)(?=^## \[|\z)")
+            if ($m.Success) { $m.Groups[1].Value.Trim() } else { $null }
+          }
+          $en = Section CHANGELOG.md
+          if (-not $en) { throw "No section for $version in CHANGELOG.md" }
+          $notes = $en
+          foreach ($lang in @(@("CHANGELOG.de.md", "Deutsch"), @("CHANGELOG.it.md", "Italiano"))) {
+            $section = Section $lang[0]
+            if ($section) { $notes += "`n`n<details><summary>$($lang[1])</summary>`n`n$section`n`n</details>" }
+          }
+          $notes | Set-Content notes.md -Encoding utf8
           gh release create "$env:GITHUB_REF_NAME" out/NoFences.exe `
             --title "NoFences $version" --notes-file notes.md

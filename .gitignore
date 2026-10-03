@@ -361,3 +361,6 @@ MigrationBackup/
 FodyWeavers.xsd
 # Release output of publish.ps1
 dist/
+
+# winget manifests filled in by packaging/winget/prepare.ps1
+packaging/winget/out/

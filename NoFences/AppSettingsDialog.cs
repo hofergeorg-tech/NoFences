@@ -190,6 +190,11 @@ namespace NoFences
             }));
             Wide(grid, Action(Strings.CheckForUpdatesNow, async () => await app.CheckForUpdatesAsync(manual: true)));
             Wide(grid, Action(Strings.WhatsNew, () => DocumentViewer.ShowDocument(Strings.ChangelogDocument, Strings.WhatsNew)));
+            if (AboutDialog.CanDonate)
+            {
+                Hint(grid, Strings.DonateHint, ContentWidth);
+                Wide(grid, Action("♥ " + Strings.Donate, AboutDialog.OpenDonate));
+            }
         }
 
         private void BuildFps(FlowLayoutPanel page)

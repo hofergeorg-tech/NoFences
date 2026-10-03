@@ -155,10 +155,13 @@ namespace NoFences
             sheet.Save(Path.Combine(outDir, "extras.png"), ImageFormat.Png);
         }
 
-        /// <summary>All widgets once, in fitting styles (with this PC's real data).</summary>
+        /// <summary>
+        /// All widgets (widgets.png, with this PC's real drives and recycle bin – for checking only) and a set
+        /// without personal data for the README (widgets-docs.png).
+        /// </summary>
         private static void RenderWidgets(string outDir, IFenceHost host)
         {
-            var items = new (string Type, string Theme, Size Size)[]
+            RenderWidgetSheet(outDir, host, "widgets.png", new (string, string, Size)[]
             {
                 ("clock", "default", new Size(280, 320)),
                 ("system", "gaming", new Size(260, 300)),
@@ -166,7 +169,18 @@ namespace NoFences
                 ("recyclebin", "nerd", new Size(220, 210)),
                 ("playtime", "gaming", new Size(270, 260)),
                 ("countdown", "family", new Size(280, 200)),
-            };
+            });
+            RenderWidgetSheet(outDir, host, "widgets-docs.png", new (string, string, Size)[]
+            {
+                ("clock", "default", new Size(280, 320)),
+                ("playtime", "nerd", new Size(270, 260)),
+                ("countdown", "postit", new Size(280, 220)),
+                ("system", "gaming", new Size(260, 230)),
+            });
+        }
+
+        private static void RenderWidgetSheet(string outDir, IFenceHost host, string file, (string Type, string Theme, Size Size)[] items)
+        {
             const int gap = 24;
             using var sheet = new Bitmap(items.Sum(i => i.Size.Width + gap) + gap, items.Max(i => i.Size.Height) + 2 * gap, PixelFormat.Format32bppArgb);
             using var g = Graphics.FromImage(sheet);
@@ -192,7 +206,7 @@ namespace NoFences
                 g.Restore(state);
                 x += size.Width + gap;
             }
-            sheet.Save(Path.Combine(outDir, "widgets.png"), ImageFormat.Png);
+            sheet.Save(Path.Combine(outDir, file), ImageFormat.Png);
         }
 
         /// <summary>Draws a dialog offscreen (it is never shown).</summary>

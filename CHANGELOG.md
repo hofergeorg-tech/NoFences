@@ -3,6 +3,32 @@
 All notable changes to this fork. Format based on [Keep a Changelog](https://keepachangelog.com/),
 versions follow [Semantic Versioning](https://semver.org/). German version: [CHANGELOG.de.md](CHANGELOG.de.md).
 
+## [2.4.0] - 2026-10-03
+
+### Added
+- **Widgets**: clock & calendar, system monitor (CPU, RAM, GPU load and temperature, FPS), drives, recycle bin,
+  playtime and countdown. Tray or fence menu → New widget.
+- **Playtime** for any game: pick its exe, NoFences records how long it runs (today, week, month, total, running now).
+- **Countdown** to a date with a title.
+- **FPS measurement** (optional, off by default): a small helper with administrator rights counts the frames of the
+  program in front; Windows asks once, the settings explain why.
+- **Recent files** fence and **quick-launch bar** (icons only, names as tooltips).
+- **Tabs** in link fences.
+- **Only on this virtual desktop** per fence.
+- **Export/import** of fences and own styles, e.g. for another PC.
+- **Settings window** (tray → Settings) with everything app-wide; the tray menu is much shorter.
+- **Fence settings** redesigned with sections and a live preview.
+- **Languages**: English, German and **Italian**; automatic (Windows language, English otherwise) or chosen in the settings.
+- **About window** with version, credits and links.
+- **8 new styles**: Documents, Multimedia, Music, Sport, Photos, Travel, Cooking, Nature – 24 styles in total; every
+  style has an accent color for widgets.
+
+### Fixed
+- OK in the settings of a link fence removed all of its links.
+- Opening the settings of a widget crashed.
+- Post-it items spilled over the paper's shadow at the bottom.
+- The peek shortcut was stuck to the menu text without a space.
+
 ## [2.3.0] - 2026-10-02
 
 ### Added
@@ -110,6 +136,7 @@ First release of this fork. Rewritten on .NET 10; based on
 
 Original NoFences by Twometer, see [Twometer/NoFences](https://github.com/Twometer/NoFences).
 
+[2.4.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.0
 [2.3.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.3.0
 [2.2.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.2.0
 [2.1.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.1.0

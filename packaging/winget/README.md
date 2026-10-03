@@ -7,19 +7,16 @@ winget install hofergeorg-tech.NoFences
 ```
 
 They are submitted as a pull request to [microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs).
-Do that **after** the exe is code-signed (SignPath): unsigned exes regularly fail Microsoft's validation
-or trigger SmartScreen for every user.
+winget accepts unsigned apps (Microsoft scans them when the PR is opened); signing can come later.
 
 ## For each release
 
-1. Copy the three files into `manifests/h/hofergeorg-tech/NoFences/<version>/` in a fork of winget-pkgs.
-2. Replace `{VERSION}` and `{SHA256}`:
+`.\prepare.ps1 <version>` downloads the release exe, fills in version and SHA256 and validates the
+manifests into `out\<version>\`. Then:
+
+1. Copy the three files from `out\<version>\` into `manifests/h/hofergeorg-tech/NoFences/<version>/` in a fork of winget-pkgs.
+2. Test the install locally:
    ```powershell
-   (Get-FileHash NoFences.exe -Algorithm SHA256).Hash
-   ```
-3. Validate and test locally:
-   ```powershell
-   winget validate --manifest <folder>
    winget install --manifest <folder>
    ```
-4. Open the pull request. Later versions can use `wingetcreate update hofergeorg-tech.NoFences --version <v> --urls <url> --submit`.
+3. Open the pull request. Later versions can use `wingetcreate update hofergeorg-tech.NoFences --version <v> --urls <url> --submit`.

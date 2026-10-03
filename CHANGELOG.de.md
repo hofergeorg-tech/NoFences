@@ -2,6 +2,32 @@
 
 Alle wichtigen Änderungen an diesem Fork. English version: [CHANGELOG.md](CHANGELOG.md).
 
+## [2.4.0] - 2026-10-03
+
+### Neu
+- **Widgets**: Uhr & Kalender, System-Monitor (CPU, RAM, GPU-Last und -Temperatur, FPS), Laufwerke, Papierkorb,
+  Spielzeit und Countdown. Tray- oder Fence-Menü → Neues Widget.
+- **Spielzeit** für beliebige Spiele: EXE auswählen, NoFences zeichnet auf, wie lange es läuft (heute, Woche, Monat, gesamt, läuft gerade).
+- **Countdown** bis zu einem Datum mit Titel.
+- **FPS-Messung** (optional, standardmäßig aus): Ein kleiner Helfer mit Administratorrechten zählt die Bilder des Programms
+  im Vordergrund; Windows fragt einmal, die Einstellungen erklären, warum.
+- Fence **„Zuletzt verwendet“** und **Schnellstart-Leiste** (nur Icons, Namen als Tooltip).
+- **Reiter** in Verknüpfungs-Fences.
+- **Nur auf diesem virtuellen Desktop** pro Fence.
+- **Export/Import** von Fences und eigenen Styles, z. B. für einen zweiten PC.
+- **Einstellungsfenster** (Tray → Einstellungen) mit allem, was die ganze App betrifft; das Tray-Menü ist viel kürzer.
+- **Fence-Einstellungen** neu gestaltet, mit Bereichen und Live-Vorschau.
+- **Sprachen**: Englisch, Deutsch und **Italienisch**; automatisch (Windows-Sprache, sonst Englisch) oder in den Einstellungen gewählt.
+- **Info-Fenster** mit Version, Credits und Links.
+- **8 neue Styles**: Dokumente, Multimedia, Musik, Sport, Fotos, Reisen, Kochen, Natur – insgesamt 24 Styles; jeder Style hat
+  eine Akzentfarbe für Widgets.
+
+### Behoben
+- OK in den Einstellungen eines Verknüpfungs-Fences hat alle Verknüpfungen entfernt.
+- Die Einstellungen eines Widgets zu öffnen führte zum Absturz.
+- Beim Post-it ragten Einträge unten über den Schatten des Papiers hinaus.
+- Das Tastenkürzel „Fences nach vorne holen“ klebte ohne Abstand am Menütext.
+
 ## [2.3.0] - 2026-10-02
 
 ### Neu
@@ -110,6 +136,7 @@ Erste Version dieses Forks. Neu aufgebaut auf .NET 10, basierend auf
 
 Original-NoFences von Twometer, siehe [Twometer/NoFences](https://github.com/Twometer/NoFences).
 
+[2.4.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.4.0
 [2.3.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.3.0
 [2.2.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.2.0
 [2.1.0]: https://github.com/hofergeorg-tech/NoFences/releases/tag/v2.1.0

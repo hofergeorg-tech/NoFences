@@ -331,6 +331,10 @@ namespace NoFences.Util
         public static string AboutCredits => T("Based on NoFences by Twometer and contributors — thank you!",
                                                "Basiert auf NoFences von Twometer und Mitwirkenden – danke!",
                                                "Basato su NoFences di Twometer e collaboratori – grazie!");
+        public static string Donate => T("Donate (PayPal)", "Spenden (PayPal)", "Dona (PayPal)");
+        public static string DonateHint => T("NoFences is free. If you like it, a small donation helps keep it going – thank you!",
+                                             "NoFences ist kostenlos. Wenn es dir gefällt, hilft eine kleine Spende beim Weitermachen – danke!",
+                                             "NoFences è gratuito. Se ti piace, una piccola donazione aiuta a portarlo avanti – grazie!");
         public static string AboutLicense => T("Open source under the MIT license.", "Open Source unter der MIT-Lizenz.", "Open source con licenza MIT.");
 
         #endregion

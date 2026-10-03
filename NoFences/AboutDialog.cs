@@ -10,6 +10,18 @@ namespace NoFences
         public const string Repository = "https://github.com/" + UpdateChecker.Repository;
         public const string Original = "https://github.com/Twometer/NoFences";
 
+        /// <summary>PayPal donation link; empty = no donate button anywhere.</summary>
+        public const string DonateUrl = "";
+
+        public static bool CanDonate => DonateUrl.Length > 0;
+
+        public static void OpenDonate()
+        {
+            if (!CanDonate)
+                return;
+            try { Process.Start(new ProcessStartInfo(DonateUrl) { UseShellExecute = true }); } catch { }
+        }
+
         private static AboutDialog? open;
 
         public static void ShowSingle()
@@ -74,6 +86,13 @@ namespace NoFences
             whatsNew.Click += (_, _) => DocumentViewer.ShowDocument(Strings.ChangelogDocument, Strings.WhatsNew);
             var buttons = new FlowLayoutPanel { FlowDirection = FlowDirection.RightToLeft, AutoSize = true, Dock = DockStyle.Bottom, Padding = new Padding(0, 16, 0, 0) };
             buttons.Controls.AddRange(new Control[] { ok, whatsNew });
+            if (CanDonate)
+            {
+                var donate = new Button { Text = "♥ " + Strings.Donate, AutoSize = true, ForeColor = Color.FromArgb(0, 112, 186) };
+                donate.Click += (_, _) => OpenDonate();
+                buttons.Controls.Add(donate);
+                text.Controls.Add(new Label { Text = Strings.DonateHint, AutoSize = true, MaximumSize = new Size(380, 0), Margin = new Padding(3, 12, 3, 0) });
+            }
             AcceptButton = ok;
             CancelButton = ok;
 
