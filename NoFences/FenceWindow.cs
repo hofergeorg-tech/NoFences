@@ -859,6 +859,8 @@ namespace NoFences
             menu.Items.Add(new ToolStripMenuItem(Strings.Locked, null, (_, _) => { Info.Locked = !Info.Locked; app.RequestSave(); }) { Checked = Info.Locked });
             menu.Items.Add(new ToolStripMenuItem(Strings.AutoCollapse, null, (_, _) => ToggleCollapse()) { Checked = Info.CanMinify });
             menu.Items.Add(new ToolStripMenuItem(Strings.AlwaysOnTop, null, (_, _) => ToggleAlwaysOnTop()) { Checked = Info.AlwaysOnTop });
+            if (app.CurrentVirtualDesktop != null)
+                menu.Items.Add(new ToolStripMenuItem(Strings.OnlyThisDesktop, null, (_, _) => app.TogglePinToDesktop(Info)) { Checked = Info.VirtualDesktop != null });
 
             var style = new ToolStripMenuItem(Strings.Theme);
             style.DropDownItems.Add(new ToolStripMenuItem(Strings.ThemeInherit, null, (_, _) => SetTheme(null)) { Checked = Info.Theme == null });

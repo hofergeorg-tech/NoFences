@@ -10,6 +10,13 @@ namespace NoFences.Util
         public static string HelpDocument => De ? "HILFE.md" : "HELP.md";
         public static string ChangelogDocument => De ? "CHANGELOG.de.md" : "CHANGELOG.md";
         public static string Help => T("Help", "Hilfe");
+        public static string OnlyThisDesktop => T("Only on this virtual desktop", "Nur auf diesem virtuellen Desktop");
+        public static string ExportFences => T("Export fences…", "Fences exportieren…");
+        public static string ImportFences => T("Import fences…", "Fences importieren…");
+        public static string ExportFilter => T("NoFences export (*.nofences.json)|*.nofences.json|JSON (*.json)|*.json", "NoFences-Export (*.nofences.json)|*.nofences.json|JSON (*.json)|*.json");
+        public static string ExportDone(int n) => T($"{n} fences exported.", $"{n} Fences exportiert.");
+        public static string ImportDone(int n) => T($"{n} fences imported.", $"{n} Fences importiert.");
+        public static string ImportFailed(string reason) => T($"Import failed: {reason}", $"Import fehlgeschlagen: {reason}");
         public static string AddTab => T("Add tab", "Reiter hinzufügen");
         public static string RenameTab => T("Rename tab", "Reiter umbenennen");
         public static string RemoveTab => T("Remove tab (keeps its links)", "Reiter entfernen (Verknüpfungen bleiben)");

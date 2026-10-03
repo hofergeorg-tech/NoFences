@@ -51,6 +51,7 @@ namespace NoFences
             InitReminders();
             InitBackupsAndScreens();
             InitFps();
+            InitVirtualDesktops();
             if (themeErrors.Count > 0)
                 ShowBalloon(Strings.ThemeErrors(string.Join("\n", themeErrors)), timeout: 10_000);
 
@@ -199,7 +200,7 @@ namespace NoFences
         {
             var window = new FenceWindow(this, info);
             windows.Add(window);
-            if (fencesVisible)
+            if (ShouldBeVisible(info))
                 window.Show();
         }
 
@@ -216,8 +217,7 @@ namespace NoFences
         private void ToggleVisible()
         {
             fencesVisible = !fencesVisible;
-            foreach (var w in windows)
-                w.Visible = fencesVisible;
+            ApplyVisibility();
         }
 
         private void BuildTrayMenu(ContextMenuStrip menu)
@@ -283,6 +283,7 @@ namespace NoFences
             menu.Items.Add(new ToolStripSeparator());
             AddUpdateItems(menu.Items);
             AddBackupItems(menu.Items);
+            AddTransferItems(menu.Items);
             AddDocumentItems(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(Strings.Exit, null, (_, _) => ExitThread());
@@ -298,6 +299,7 @@ namespace NoFences
             DisposeReminders();
             DisposeBackupsAndScreens();
             DisposeFps();
+            virtualDesktopTimer.Dispose();
             sorter.Dispose();
             tray.Visible = false;
             tray.Dispose();

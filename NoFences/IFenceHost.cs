@@ -24,6 +24,11 @@ namespace NoFences
 
         void RemoveFence(FenceWindow window);
 
+        /// <summary>Id of the current virtual desktop, null if unknown.</summary>
+        Guid? CurrentVirtualDesktop { get; }
+
+        void TogglePinToDesktop(FenceInfo info);
+
         /// <summary>Adds "New widget ▸", "Recent files" and "Quick-launch bar" to a menu.</summary>
         void AddCreateExtrasItems(ToolStripItemCollection items);
 

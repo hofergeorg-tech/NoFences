@@ -24,6 +24,8 @@ namespace NoFences
             public void CreateFence(FenceKind kind, string? name = null) { }
             public void RemoveFence(FenceWindow window) { }
             public void AddCreateExtrasItems(ToolStripItemCollection items) { }
+            public Guid? CurrentVirtualDesktop => null;
+            public void TogglePinToDesktop(FenceInfo info) { }
             public IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except) => Array.Empty<Rectangle>();
         }
 

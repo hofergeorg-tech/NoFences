@@ -15,7 +15,7 @@ namespace NoFences.Model
         private const string PortableMarker = "portable.txt";
         private const string LegacyMetaFileName = "__fence_metadata.xml";
 
-        private static readonly JsonSerializerOptions JsonOptions = new()
+        internal static readonly JsonSerializerOptions JsonOptions = new()
         {
             WriteIndented = true,
             Converters = { new JsonStringEnumConverter() }
