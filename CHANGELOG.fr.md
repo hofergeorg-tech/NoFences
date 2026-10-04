@@ -28,6 +28,7 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 - **Créateur de styles** : créez votre propre style en quelques clics (couleurs, polices, bordure, coins) avec aperçu en direct ; nouveau style **Contraste élevé** avec grand texte.
 - Nouveau widget **Page web** : une petite page (tableau de bord, page d'état …) directement dans la barrière, actualisée régulièrement.
 - **Promos Steam** : une liste de souhaits non publique fonctionne via son **lien de partage**.
+- Les **promos Steam** affichent toutes les promotions en cours (pas seulement celles mises en avant ; d'autres se chargent en défilant) et chaque jeu en promo de votre liste de souhaits.
 
 ## [2.4.2] - 2026-10-03
 

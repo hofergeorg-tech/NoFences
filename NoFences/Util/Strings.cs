@@ -165,7 +165,7 @@ namespace NoFences.Util
         public static string SteamWishlistFirst => T("Wishlist games on sale first", "Wunschliste-Spiele im Angebot zuerst", "Prima i giochi in offerta della lista dei desideri", "D'abord les jeux en promo de la liste de souhaits", "Primero los juegos en oferta de la lista de deseos");
         public static string SteamMinDiscount => T("Minimum discount (%)", "Mindestrabatt (%)", "Sconto minimo (%)", "Remise minimale (%)", "Descuento mínimo (%)");
         public static string SteamMaxPrice => T("Highest price (0 = any)", "Höchstpreis (0 = egal)", "Prezzo massimo (0 = qualsiasi)", "Prix maximal (0 = tous)", "Precio máximo (0 = cualquiera)");
-        public static string SteamCount => T("Number of games", "Anzahl Spiele", "Numero di giochi", "Nombre de jeux", "Número de juegos");
+        public static string SteamCount => T("Games per page (more load when scrolling)", "Spiele pro Seite (mehr beim Scrollen)", "Giochi per pagina (altri scorrendo)", "Jeux par page (plus en défilant)", "Juegos por página (más al desplazar)");
         public static string SteamAccount => T("Steam account", "Steam-Konto", "Account Steam", "Compte Steam", "Cuenta de Steam");
         public static string SteamIdAuto => T("the one signed in on this PC", "das auf diesem PC angemeldete", "quello collegato su questo PC", "celui connecté sur ce PC", "la iniciada en este PC");
         public static string SteamFree => T("Free", "Kostenlos", "Gratis", "Gratuit", "Gratis");

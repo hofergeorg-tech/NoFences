@@ -28,6 +28,7 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Style-Designer**: eigenen Style per Klick gestalten (Farben, Schrift, Rahmen, Ecken) mit Live-Vorschau; neuer Style **Hochkontrast** mit großer Schrift.
 - Neues Widget **Webseite**: eine kleine Seite (Dashboard, Statusseite …) direkt im Fence, regelmäßig aktualisiert.
 - **Steam-Angebote**: eine nicht öffentliche Wunschliste funktioniert über ihren **Freigabelink**.
+- **Steam-Angebote** zeigen alle aktuellen Angebote (nicht nur die hervorgehobenen; beim Scrollen werden weitere geladen) und jedes reduzierte Spiel deiner Wunschliste.
 
 ## [2.4.2] - 2026-10-03
 

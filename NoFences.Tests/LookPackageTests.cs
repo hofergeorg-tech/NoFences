@@ -67,5 +67,24 @@ namespace NoFences.Tests
             const string html = "x{\\\"items\\\":[{\\\"appid\\\":1297900,\\\"priority\\\":1},{\\\"appid\\\":1511480,\\\"priority\\\":2}]} {\"appid\":42,\"name\":\"not on the list\"}";
             Assert.Equal(new[] { 1297900, 1511480 }, SteamDealsWidget.ParseSharedWishlist(html));
         }
+
+        [Fact]
+        public void Steam_StoreSearchRows()
+        {
+            const string html = """
+                <a href="https://store.steampowered.com/app/1091500/x/" data-ds-appid="1091500" class="search_result_row">
+                  <div class="search_capsule"><img src="https://cdn/capsule.jpg" ></div><span class="title">Cyberpunk&amp;2077</span>
+                  <div class="search_price_discount_combined" data-price-final="1799"><div class="discount_block" data-price-final="1799" data-discount="70"></div></div></a>
+                <a href="https://store.steampowered.com/app/5/y/" data-ds-appid="5"><span class="title">Full price</span><div data-price-final="999"></div></a>
+                """;
+            var all = SteamDealsWidget.ParseSearchResults(html, "EUR", discountedOnly: false);
+            Assert.Equal(2, all.Count);
+            var deal = all[0];
+            Assert.Equal(("Cyberpunk&2077", 70, 1799, 5997, "https://cdn/capsule.jpg"), (deal.Name, deal.DiscountPercent, deal.FinalCents, deal.OriginalCents, deal.ImageUrl));
+            Assert.Equal(999, all[1].OriginalCents);
+            Assert.Single(SteamDealsWidget.ParseSearchResults(html, "EUR", discountedOnly: true));
+            Assert.False(SteamDealsWidget.Matches(deal, new SteamDealsWidget.Options { MinDiscount = 75 }));
+            Assert.True(SteamDealsWidget.Matches(deal, new SteamDealsWidget.Options { MaxPrice = 18 }));
+        }
     }
 }

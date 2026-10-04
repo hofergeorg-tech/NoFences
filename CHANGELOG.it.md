@@ -28,6 +28,7 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Designer di stili**: crea il tuo stile con pochi clic (colori, caratteri, bordo, angoli) con anteprima dal vivo; nuovo stile **Alto contrasto** con testo grande.
 - Nuovo widget **Pagina web**: una piccola pagina (dashboard, pagina di stato …) direttamente nel recinto, aggiornata regolarmente.
 - **Offerte Steam**: una lista dei desideri non pubblica funziona tramite il suo **link di condivisione**.
+- Le **offerte Steam** mostrano tutte le offerte attuali (non solo quelle in evidenza; scorrendo se ne caricano altre) e ogni gioco scontato della tua lista dei desideri.
 
 ## [2.4.2] - 2026-10-03
 

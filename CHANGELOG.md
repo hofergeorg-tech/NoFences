@@ -29,6 +29,7 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Style designer**: make your own style by clicking (colors, fonts, border, corners) with a live preview; new **high contrast** style with large text.
 - New widget **Web page**: a small page (dashboard, status page …) right in a fence, refreshed regularly.
 - **Steam sales**: a wishlist that isn't public works via its **share link**.
+- **Steam sales** show all current sales (not only the featured ones; more load when scrolling) and every discounted game of your wishlist.
 
 ## [2.4.2] - 2026-10-03
 

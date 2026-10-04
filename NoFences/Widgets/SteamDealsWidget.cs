@@ -25,6 +25,11 @@ namespace NoFences.Widgets
         private DateTime nextFetch;
         private bool fetching, failed;
         private float scroll, maxScroll;
+        private List<SteamDeal> wishlistDeals = new();
+        private readonly List<SteamDeal> storeDeals = new();
+        private int searchStart, searchTotal;
+        private bool loadingMore;
+        private static readonly Dictionary<int, string> Names = new();
 
         public SteamDealsWidget(Func<string?> getOption, Action<string?> setOption)
         {
@@ -64,26 +69,27 @@ namespace NoFences.Widgets
             try
             {
                 var o = Settings;
-                var list = new List<SteamDeal>();
+                var wishlist = new List<SteamDeal>();
                 var steamId = o.SteamId is { Length: > 0 } manual ? manual : LocalSteamId();
                 if (steamId != null && (o.WishlistFirst || o.Source == DealSource.Wishlist))
                 {
                     try
                     {
-                        list.AddRange(await WishlistDealsAsync(steamId, o.SteamId == steamId ? o.ShareToken : null));
+                        wishlist = await WishlistDealsAsync(steamId, o.SteamId == steamId ? o.ShareToken : null);
                     }
                     catch (Exception e)
                     {
                         Log.Write("Steam", "Wishlist: " + Log.Describe(e));
                     }
                 }
+                // The whole wishlist (only discount and price limits apply), then the store's list page by page
+                wishlistDeals = wishlist.Where(d => Matches(d, o)).ToList();
+                storeDeals.Clear();
+                searchStart = 0;
+                searchTotal = o.Source == DealSource.Wishlist ? 0 : int.MaxValue;
+                deals = wishlistDeals.ToList();
                 if (o.Source != DealSource.Wishlist)
-                {
-                    var category = o.Source switch { DealSource.TopSellers => "top_sellers", DealSource.NewReleases => "new_releases", _ => "specials" };
-                    var store = ParseCategory(await Web.Http.GetStringAsync($"https://store.steampowered.com/api/featuredcategories?cc={Country}&l={SteamLanguage}"), category);
-                    list.AddRange(store.Where(s => list.All(w => w.AppId != s.AppId)));
-                }
-                deals = Filter(list, o);
+                    await LoadStorePageAsync(o);
                 failed = false;
                 nextFetch = DateTime.UtcNow + UpdateEvery;
                 RequestRedraw();
@@ -139,6 +145,95 @@ namespace NoFences.Widgets
                 .Take(Math.Clamp(o.Count, 1, 50))
                 .ToList();
 
+        public static bool Matches(SteamDeal d, Options o) =>
+            d.DiscountPercent >= o.MinDiscount && (o.MaxPrice <= 0 || d.FinalCents <= o.MaxPrice * 100);
+
+        /// <summary>Steam's store search for the chosen list: all sales (not only the featured ones), page by page.</summary>
+        private static string SearchUrl(DealSource source, int start, int count)
+        {
+            var filter = source switch { DealSource.TopSellers => "filter=topsellers", DealSource.NewReleases => "filter=popularnew", _ => "specials=1" };
+            return $"https://store.steampowered.com/search/results/?{filter}&infinite=1&start={start}&count={count}&cc={Country}&l={SteamLanguage}";
+        }
+
+        private async Task LoadStorePageAsync(Options o)
+        {
+            // Pages until enough pass the discount/price limits (or the list ends)
+            var page = Math.Clamp(o.Count, 5, 50);
+            var added = 0;
+            for (var tries = 0; tries < 5 && added < page && searchStart < searchTotal; tries++)
+            {
+                using var doc = JsonDocument.Parse(await Web.Http.GetStringAsync(SearchUrl(o.Source, searchStart, 50)));
+                searchTotal = doc.RootElement.TryGetProperty("total_count", out var total) && total.ValueKind == JsonValueKind.Number ? total.GetInt32() : 0;
+                var html = doc.RootElement.TryGetProperty("results_html", out var h) ? h.GetString() ?? "" : "";
+                var found = ParseSearchResults(html, RegionCurrency, o.Source == DealSource.Specials);
+                searchStart += 50;
+                if (found.Count == 0)
+                    break;
+                foreach (var d in found.Where(d => Matches(d, o) && wishlistDeals.All(w => w.AppId != d.AppId) && storeDeals.All(s => s.AppId != d.AppId)))
+                {
+                    storeDeals.Add(d);
+                    added++;
+                }
+            }
+            deals = wishlistDeals.Concat(storeDeals).ToList();
+        }
+
+        /// <summary>More of the store's list when scrolled to the end.</summary>
+        private async void LoadMore()
+        {
+            if (loadingMore || fetching || searchStart >= searchTotal || PreviewMode)
+                return;
+            loadingMore = true;
+            try
+            {
+                await LoadStorePageAsync(Settings);
+                RequestRedraw();
+                await LoadImagesAsync();
+            }
+            catch (Exception e)
+            {
+                Log.Write("Steam", Log.Describe(e));
+                searchTotal = searchStart; // stop trying until the next refresh
+            }
+            finally
+            {
+                loadingMore = false;
+            }
+        }
+
+        private static string RegionCurrency
+        {
+            get
+            {
+                try { return RegionInfo.CurrentRegion.ISOCurrencySymbol; }
+                catch (ArgumentException) { return "EUR"; }
+            }
+        }
+
+        /// <summary>Rows of the store search (HTML): app, name, picture, discount and prices.</summary>
+        public static List<SteamDeal> ParseSearchResults(string html, string currency, bool discountedOnly)
+        {
+            var list = new List<SteamDeal>();
+            foreach (var row in html.Split("<a href=", StringSplitOptions.RemoveEmptyEntries))
+            {
+                var app = Regex.Match(row, "data-ds-appid=\"(\\d+)\"");
+                var title = Regex.Match(row, "<span class=\"title\">(.*?)</span>", RegexOptions.Singleline);
+                var final = Regex.Match(row, "data-price-final=\"(\\d+)\"");
+                if (!app.Success || !title.Success || !final.Success)
+                    continue;
+                var discountMatch = Regex.Match(row, "data-discount=\"(\\d+)\"");
+                var discount = discountMatch.Success ? int.Parse(discountMatch.Groups[1].Value) : 0;
+                if (discountedOnly && discount <= 0)
+                    continue;
+                var finalCents = int.Parse(final.Groups[1].Value);
+                var original = discount is > 0 and < 100 ? (int)Math.Round(finalCents * 100.0 / (100 - discount)) : finalCents;
+                var image = Regex.Match(row, "<img src=\"([^\"]+)\"");
+                list.Add(new SteamDeal(int.Parse(app.Groups[1].Value), System.Net.WebUtility.HtmlDecode(title.Groups[1].Value.Trim()), discount,
+                    finalCents, original, currency, image.Success ? image.Groups[1].Value : null, false));
+            }
+            return list;
+        }
+
         public static List<SteamDeal> ParseSpecials(string json) => ParseCategory(json, "specials");
 
         /// <summary>One list of the store's featured categories (specials, top_sellers, new_releases).</summary>
@@ -186,25 +281,23 @@ namespace NoFences.Widgets
             using (var doc = JsonDocument.Parse(json))
             {
                 ids = doc.RootElement.GetProperty("response").TryGetProperty("items", out var items)
-                    ? items.EnumerateArray().Select(i => i.GetProperty("appid").GetInt32()).Take(100).ToList()
+                    ? items.EnumerateArray().Select(i => i.GetProperty("appid").GetInt32()).Take(300).ToList()
                     : new();
             }
             // Not public: the share link's page still lists the games
             if (ids.Count == 0 && shareToken != null)
-                ids = ParseSharedWishlist(await Web.Http.GetStringAsync($"https://store.steampowered.com/wishlist/profiles/{steamId}/?st={shareToken}")).Take(100).ToList();
+                ids = ParseSharedWishlist(await Web.Http.GetStringAsync($"https://store.steampowered.com/wishlist/profiles/{steamId}/?st={shareToken}")).Take(300).ToList();
             var result = new List<SteamDeal>();
             // Prices in batches (only "price_overview" works for several apps at once)
             foreach (var batch in ids.Chunk(25))
             {
                 var prices = await Web.Http.GetStringAsync($"https://store.steampowered.com/api/appdetails?appids={string.Join(",", batch)}&filters=price_overview&cc={Country}");
-                foreach (var (id, price) in ParsePrices(prices).Where(p => p.Price.Discount > 0).Take(10 - result.Count))
+                foreach (var (id, price) in ParsePrices(prices).Where(p => p.Price.Discount > 0))
                 {
                     var name = await AppNameAsync(id);
                     result.Add(new SteamDeal(id, name, price.Discount, price.Final, price.Initial, price.Currency,
                         $"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/{id}/capsule_184x69.jpg", true));
                 }
-                if (result.Count >= 10)
-                    break;
             }
             return result.OrderByDescending(d => d.DiscountPercent).ToList();
         }
@@ -226,11 +319,13 @@ namespace NoFences.Widgets
 
         private async Task<string> AppNameAsync(int id)
         {
+            if (Names.TryGetValue(id, out var known))
+                return known;
             try
             {
                 var json = await Web.Http.GetStringAsync($"https://store.steampowered.com/api/appdetails?appids={id}&filters=basic&l={SteamLanguage}");
                 using var doc = JsonDocument.Parse(json);
-                return doc.RootElement.GetProperty(id.ToString()).GetProperty("data").GetProperty("name").GetString() ?? id.ToString();
+                return Names[id] = doc.RootElement.GetProperty(id.ToString()).GetProperty("data").GetProperty("name").GetString() ?? id.ToString();
             }
             catch (Exception)
             {
@@ -352,6 +447,9 @@ namespace NoFences.Widgets
             }
             c.G.Restore(state);
             maxScroll = Math.Max(0, y + scroll - c.Area.Bottom);
+            // Near the end: fetch the next page of the store's list
+            if (scroll >= maxScroll - (imageHeight + c.Px(8)) * 2 && searchStart < searchTotal)
+                LoadMore();
             // Grown fence: everything fits now, so don't stay scrolled down (the top would stay hidden)
             if (scroll > maxScroll)
             {
