@@ -211,6 +211,23 @@ namespace NoFences
             Wide(rules, buttons);
 
             // Full screen
+            // Break reminder: interval and an optional own text
+            var pause = Section(page, Strings.SectionBreaks, ContentWidth);
+            var choices = AppConfig.BreakReminderChoices;
+            Row(pause, Strings.BreakEvery, Choice(choices.Select(m => m == 0 ? Strings.HotkeyName("Off") : $"{m} min"), Array.IndexOf(choices, Config.BreakReminderMinutes), i =>
+            {
+                Config.BreakReminderMinutes = choices[i];
+                app.Store.RequestSave();
+            }, 180));
+            var text = new TextBox { Width = 260, Text = Config.BreakReminderText ?? "", PlaceholderText = Strings.BreakDefaultText };
+            text.TextChanged += (_, _) =>
+            {
+                Config.BreakReminderText = text.Text.Trim().Length > 0 ? text.Text.Trim() : null;
+                app.Store.RequestSave();
+            };
+            Row(pause, Strings.BreakTextLabel, text);
+            Hint(pause, Strings.BreakHint, ContentWidth);
+
             var fullscreen = Section(page, Strings.SectionFullscreen, ContentWidth);
             Wide(fullscreen, Check(Strings.HideOnFullscreen, Config.HideOnFullscreen, v =>
             {

@@ -33,6 +33,9 @@ namespace NoFences.Widgets
             ("power", () => Strings.WidgetPower, new Size(280, 170)),
             ("steamdeals", () => Strings.WidgetSteamDeals, new Size(340, 360)),
             ("gamenews", () => Strings.WidgetGameNews, new Size(340, 360)),
+            ("timer", () => Strings.WidgetTimer, new Size(280, 260)),
+            ("habits", () => Strings.WidgetHabits, new Size(330, 230)),
+            ("progress", () => Strings.WidgetProgress, new Size(260, 230)),
             ("twitch", () => Strings.WidgetTwitch, new Size(300, 260)),
         };
 
@@ -41,7 +44,7 @@ namespace NoFences.Widgets
         /// <summary>Menu groups, in menu order, with the widget types they contain (in that order too).</summary>
         public static IReadOnlyList<(Group Group, string[] Types)> Groups { get; } = new (Group, string[])[]
         {
-            (Group.Time, new[] { "clock", "worldclock", "todo", "countdown", "agenda", "focus", "screentime" }),
+            (Group.Time, new[] { "clock", "worldclock", "timer", "todo", "habits", "countdown", "agenda", "focus", "progress", "screentime" }),
             (Group.Info, new[] { "weather", "news", "ticker", "status" }),
             (Group.System, new[] { "system", "audio", "power", "network", "drives", "battery", "recyclebin", "clipboard" }),
             (Group.GamesMedia, new[] { "games", "steamdeals", "gamenews", "twitch", "playtime", "media", "photos" }),
@@ -104,7 +107,10 @@ namespace NoFences.Widgets
                 "worldclock" => new WorldClockWidget(() => info.WidgetOption, Set),
                 "power" => new PowerWidget(),
                 "steamdeals" => new SteamDealsWidget(() => info.WidgetOption, Set),
-                "gamenews" => new NewsWidget(() => info.WidgetOption, Set, gameNews: true),
+                "timer" => new TimerWidget(() => info.WidgetOption, Set, host.StopAlarmSound),
+                "habits" => new HabitsWidget(() => info.WidgetOption, Set),
+                "progress" => new ProgressWidget(),
+                "gamenews" =>new NewsWidget(() => info.WidgetOption, Set, gameNews: true),
                 "twitch" => new TwitchWidget(() => info.WidgetOption, Set, host.Notify),
                 "screentime" =>new ScreenTimeWidget(() => info.WidgetOption, Set, () => host.ScreenTime),
                 _ => null

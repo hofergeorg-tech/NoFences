@@ -32,9 +32,29 @@ namespace NoFences.Widgets
         public static IReadOnlyList<string> Urls(string? option) =>
             (option ?? "").Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
+        /// <summary>Events of every appointments widget, so the clock's calendar can mark those days.</summary>
+        private static readonly Dictionary<AgendaWidget, List<CalendarEvent>> Shared = new();
+
+        /// <summary>Days that have at least one appointment (in any appointments widget).</summary>
+        public static HashSet<DateTime> EventDays()
+        {
+            var days = new HashSet<DateTime>();
+            foreach (var e in Shared.Values.SelectMany(list => list))
+            {
+                // Multi-day events mark every day they cover
+                for (var d = e.Start.Date; d < e.End && d <= e.Start.Date.AddDays(31); d = d.AddDays(1))
+                    days.Add(d);
+                days.Add(e.Start.Date);
+            }
+            return days;
+        }
+
+        public override void Dispose() => Shared.Remove(this);
+
         internal void SetPreview(IEnumerable<CalendarEvent> demo)
         {
             events = demo.ToList();
+            Shared[this] = events;
             loadedFor = getOption();
             nextFetch = DateTime.MaxValue;
         }
@@ -56,8 +76,9 @@ namespace NoFences.Widgets
             fetching = true;
             try
             {
-                var from = DateTime.Today;
-                var to = from.AddDays(15);
+                // From the start of the month (for the clock's calendar marks); the list shows two weeks ahead
+                var from = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                var to = DateTime.Today.AddDays(45);
                 var all = new List<CalendarEvent>();
                 var anyFailed = false;
                 foreach (var url in Urls(option))
@@ -77,6 +98,7 @@ namespace NoFences.Widgets
                 // A failed update keeps the appointments that are already there
                 if (!(anyFailed && all.Count == 0) || option != loadedFor)
                     events = all.OrderBy(e => e.Start).ToList();
+                Shared[this] = events;
                 failed = anyFailed && all.Count == 0;
                 loadedFor = option;
                 nextFetch = DateTime.UtcNow + (failed ? TimeSpan.FromSeconds(30) : UpdateEvery);
@@ -97,7 +119,7 @@ namespace NoFences.Widgets
                 return;
             }
             var now = DateTime.Now;
-            var upcoming = events.Where(e => e.End > now).ToList();
+            var upcoming = events.Where(e => e.End > now && e.Start < now.Date.AddDays(15)).ToList();
             if (upcoming.Count == 0)
             {
                 var text = fetching && loadedFor == null ? Strings.WeatherLoading : failed ? Strings.AgendaFailed : Strings.AgendaEmpty;

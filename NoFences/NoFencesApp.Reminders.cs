@@ -7,7 +7,8 @@ namespace NoFences
     /// <summary>Fires note reminders as tray notifications.</summary>
     public sealed partial class NoFencesApp
     {
-        private readonly System.Windows.Forms.Timer reminderTimer = new() { Interval = 15_000 };
+        // Every 5 s: timers should ring on time
+        private readonly System.Windows.Forms.Timer reminderTimer = new() { Interval = 5_000 };
 
         private void InitReminders()
         {
@@ -20,6 +21,8 @@ namespace NoFences
         {
             var now = DateTime.Now;
             CheckTodos(now);
+            CheckTimers(now);
+            CheckBreakReminder(now);
             foreach (var fence in Store.Config.Fences.Where(f => f.ReminderAt is DateTime at && at <= now).ToList())
             {
                 // Repeating reminders move on to their next time
@@ -54,6 +57,78 @@ namespace NoFences
             }
         }
 
-        private void DisposeReminders() => reminderTimer.Dispose();
+        private readonly BreakTracker breaks = new();
+
+        private void CheckBreakReminder(DateTime now)
+        {
+            if (!breaks.Update(now, IdleTime(), TimeSpan.FromMinutes(Store.Config.BreakReminderMinutes)))
+                return;
+            SystemSounds.Asterisk.Play();
+            var text = string.IsNullOrWhiteSpace(Store.Config.BreakReminderText) ? Strings.BreakDefaultText : Store.Config.BreakReminderText!;
+            ShowBalloon(Strings.BreakReminder(Store.Config.BreakReminderMinutes, text), timeout: 15_000);
+        }
+
+        private System.Media.SoundPlayer? alarmSound;
+        private System.Windows.Forms.Timer? alarmStop;
+
+        /// <summary>Timers and alarms of all timer widgets (also hidden ones): ring and notify.</summary>
+        private void CheckTimers(DateTime now)
+        {
+            foreach (var fence in Store.Config.Fences.Where(f => f.Kind == FenceKind.Widget && f.WidgetType == "timer"))
+            {
+                var set = TimerSet.Parse(fence.WidgetOption);
+                var before = set.Format();
+                var due = set.Due(now);
+                if (set.Format() != before)
+                {
+                    fence.WidgetOption = set.Format();
+                    Store.RequestSave();
+                    windows.FirstOrDefault(w => w.Info == fence)?.Invalidate();
+                }
+                if (due.Count == 0)
+                    continue;
+                StartAlarmSound();
+                ShowBalloon(Strings.TimerRinging(string.Join(", ", due.Where(d => d.Length > 0).DefaultIfEmpty(Strings.WidgetTimer))), StopAlarmSound, timeout: 30_000);
+            }
+        }
+
+        /// <summary>The Windows alarm sound, looping for at most 30 seconds (clicking the notification stops it).</summary>
+        private void StartAlarmSound()
+        {
+            StopAlarmSound();
+            var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "Media", "Alarm01.wav");
+            if (!File.Exists(file))
+            {
+                SystemSounds.Exclamation.Play();
+                return;
+            }
+            try
+            {
+                alarmSound = new System.Media.SoundPlayer(file);
+                alarmSound.PlayLooping();
+                alarmStop = new System.Windows.Forms.Timer { Interval = 30_000 };
+                alarmStop.Tick += (_, _) => StopAlarmSound();
+                alarmStop.Start();
+            }
+            catch (Exception)
+            {
+                SystemSounds.Exclamation.Play();
+            }
+        }
+
+        public void StopAlarmSound()
+        {
+            alarmStop?.Dispose();
+            alarmStop = null;
+            alarmSound?.Stop();
+            alarmSound?.Dispose();
+            alarmSound = null;
+        }
+
+        private void DisposeReminders()
+        {
+            reminderTimer.Dispose();
+            StopAlarmSound();
+        }
     }
 }

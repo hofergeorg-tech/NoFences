@@ -11,6 +11,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Games**: playtime of every detected game, counted automatically and shown under its cover; sort by most played.
 - Widgets **game news** (announcements and patch notes of your Steam games) and **Twitch live** (who's live, with a notification).
 - **Steam sales** can be set up: sales, top sellers, new releases or only your wishlist; minimum discount, highest price, count.
+- Widgets **timer & alarm** (quick timers, alarms on chosen days, rings even when hidden), **habits** (tick the last 7 days, streaks) and **time progress** (day, week, month, year).
+- **Break reminder** after 30–120 minutes of active PC use (Settings → Automation).
+- The **clock's calendar** marks days with appointments.
 
 ## [2.4.2] - 2026-10-03
 

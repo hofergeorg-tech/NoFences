@@ -10,6 +10,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Giochi**: tempo di gioco di ogni gioco trovato, contato automaticamente e mostrato sotto la copertina; ordinamento per i più giocati.
 - Widget **notizie sui giochi** (annunci e note di patch dei tuoi giochi Steam) e **Twitch in diretta** (chi è in diretta, con avviso).
 - **Offerte Steam** configurabili: offerte, più venduti, nuove uscite o solo la lista dei desideri; sconto minimo, prezzo massimo, numero.
+- Widget **timer e sveglia** (timer rapidi, sveglie nei giorni scelti, suona anche se nascosto), **abitudini** (spunta gli ultimi 7 giorni, serie) e **avanzamento del tempo** (giorno, settimana, mese, anno).
+- **Promemoria pausa** dopo 30–120 minuti di uso attivo del PC (Impostazioni → Automazione).
+- Il **calendario dell'orologio** segna i giorni con appuntamenti.
 
 ## [2.4.2] - 2026-10-03
 

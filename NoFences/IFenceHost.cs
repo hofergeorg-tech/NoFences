@@ -23,6 +23,9 @@ namespace NoFences
         /// <summary>Tray notification (e.g. "Break time!" from the focus timer).</summary>
         void Notify(string text);
 
+        /// <summary>Stops a ringing timer or alarm.</summary>
+        void StopAlarmSound();
+
         /// <summary>Playtime recorded by NoFences for the playtime widgets.</summary>
         PlaytimeLog Playtime { get; }
 

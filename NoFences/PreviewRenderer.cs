@@ -24,6 +24,7 @@ namespace NoFences
             public FenceTheme ThemeFor(FenceInfo info) => ThemeRegistry.Get(info.Theme);
             public void RequestSave() { }
             public void Notify(string text) { }
+            public void StopAlarmSound() { }
             public void CreateFence(FenceKind kind, string? name = null) { }
             public void RemoveFence(FenceWindow window) { }
             public void AddCreateExtrasItems(ToolStripItemCollection items) { }
@@ -228,6 +229,13 @@ namespace NoFences
                 ("power", "hardware", new Size(280, 170)),
                 ("steamdeals", "gaming", new Size(360, 330)),
             });
+            RenderWidgetSheet(outDir, host, "widgets-time-docs.png", new (string, string, Size)[]
+            {
+                ("timer", "default", new Size(280, 280)),
+                ("habits", "nature", new Size(330, 230)),
+                ("progress", "windows", new Size(260, 240)),
+                ("twitch", "gaming", new Size(300, 260)),
+            });
             // Checking: news in a wide dark style, as people actually use it
             RenderWidgetSheet(outDir, host, "check-news.png", new (string, string, Size)[]
             {
@@ -356,6 +364,14 @@ namespace NoFences
                     }
                     photo.SetPreview(picture);
                     break;
+                case Widgets.TwitchWidget twitch:
+                    twitch.SetPreview(new[]
+                    {
+                        new Widgets.TwitchChannel("streamer_one", true, "2 h 14 min", "Space Game", "Exploring the new star system – chill stream"),
+                        new Widgets.TwitchChannel("streamer_two", true, "35 min", "Kart Rush", "Ranked races until midnight"),
+                        new Widgets.TwitchChannel("streamer_three", false, "", "", ""),
+                    });
+                    break;
                 case Widgets.PowerWidget power:
                     power.SetPreview(new List<Win32.PowerPlan>
                     {
@@ -419,7 +435,20 @@ namespace NoFences
                             new() { Text = "Book train tickets" },
                             new() { Text = "Call the dentist", Done = true },
                         }),
-                        "worldclock" => "Pacific Standard Time|Los Angeles\nEastern Standard Time|New York\nTokyo Standard Time|Tokyo",
+                        "timer" => new TimerSet
+                        {
+                            Timers = { new CountdownTimer { Label = "Pizza", Start = DateTime.Now.AddMinutes(-8), End = DateTime.Now.AddMinutes(7).AddSeconds(23) } },
+                            Alarms = { new Alarm { Time = "06:45", Label = "Work", Days = { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday } },
+                                       new Alarm { Time = "09:30", Label = "Weekend", Days = { DayOfWeek.Saturday, DayOfWeek.Sunday }, Enabled = false } }
+                        }.Format(),
+                        "habits" => System.Text.Json.JsonSerializer.Serialize(new List<Widgets.Habit>
+                        {
+                            new() { Name = "Sport", Done = Enumerable.Range(0, 5).Select(i => Widgets.Habit.Key(DateTime.Today.AddDays(-i))).ToList() },
+                            new() { Name = "Drink water", Done = new[] { 1, 2, 4, 6 }.Select(i => Widgets.Habit.Key(DateTime.Today.AddDays(-i))).ToList() },
+                            new() { Name = "Read 20 pages", Done = new[] { 0, 1 }.Select(i => Widgets.Habit.Key(DateTime.Today.AddDays(-i))).ToList() },
+                        }, FenceStore.JsonOptions),
+                        "twitch" => "streamer_one\nstreamer_two\nstreamer_three",
+                        "worldclock" =>"Pacific Standard Time|Los Angeles\nEastern Standard Time|New York\nTokyo Standard Time|Tokyo",
                         _ => null
                     }
                 };

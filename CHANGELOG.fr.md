@@ -10,6 +10,9 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 - **Jeux** : temps de jeu de chaque jeu détecté, compté automatiquement et affiché sous sa jaquette ; tri par les plus joués.
 - Widgets **actus des jeux** (annonces et notes de mise à jour de vos jeux Steam) et **Twitch en direct** (qui est en direct, avec notification).
 - **Promos Steam** réglables : promos, meilleures ventes, nouveautés ou seulement votre liste de souhaits ; remise minimale, prix maximal, nombre.
+- Widgets **minuteur et réveil** (minuteurs rapides, réveils les jours choisis, sonne même masqué), **habitudes** (cocher les 7 derniers jours, séries) et **progression du temps** (jour, semaine, mois, année).
+- **Rappel de pause** après 30 à 120 minutes d'utilisation active (Paramètres → Automatisation).
+- Le **calendrier de l'horloge** marque les jours avec des rendez-vous.
 
 ## [2.4.2] - 2026-10-03
 

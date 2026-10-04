@@ -10,6 +10,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Spiele**: Spielzeit jedes erkannten Spiels, automatisch gezählt und unter dem Cover angezeigt; Sortierung nach meistgespielt.
 - Widgets **Spiele-News** (Ankündigungen und Patchnotes deiner Steam-Spiele) und **Twitch live** (wer live ist, mit Benachrichtigung).
 - **Steam-Angebote** einstellbar: Angebote, Topseller, Neuerscheinungen oder nur deine Wunschliste; Mindestrabatt, Höchstpreis, Anzahl.
+- Widgets **Timer & Wecker** (Schnell-Timer, Wecker an gewählten Tagen, klingelt auch ausgeblendet), **Gewohnheiten** (letzte 7 Tage abhaken, Serien) und **Zeit-Fortschritt** (Tag, Woche, Monat, Jahr).
+- **Pausen-Erinnerung** nach 30–120 Minuten aktiver PC-Nutzung (Einstellungen → Automatik).
+- Der **Kalender im Uhr-Widget** markiert Tage mit Terminen.
 
 ## [2.4.2] - 2026-10-03
 

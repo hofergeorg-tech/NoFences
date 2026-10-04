@@ -68,6 +68,14 @@ namespace NoFences.Model
 
         public string DarkTo { get; set; } = "07:00";
 
+        /// <summary>Break reminder after this many minutes of active use; 0 = off.</summary>
+        public int BreakReminderMinutes { get; set; }
+
+        public static readonly int[] BreakReminderChoices = { 0, 30, 45, 60, 90, 120 };
+
+        /// <summary>Own text for the break reminder ("Drink some water"); empty = the standard one.</summary>
+        public string? BreakReminderText { get; set; }
+
         /// <summary>Folders the clean-up tool looks in; empty = the Downloads folder.</summary>
         public List<string> CleanupFolders { get; set; } = new();
 

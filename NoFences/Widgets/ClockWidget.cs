@@ -45,6 +45,8 @@ namespace NoFences.Widgets
             var first = new DateTime(today.Year, today.Month, 1);
             var offset = ((int)first.DayOfWeek + 6) % 7;
             var days = DateTime.DaysInMonth(today.Year, today.Month);
+            // Days with appointments (from the appointments widgets) get a small dot
+            var eventDays = AgendaWidget.EventDays();
             for (var d = 1; d <= days; d++)
             {
                 var index = offset + d - 1;
@@ -56,6 +58,12 @@ namespace NoFences.Widgets
                     c.G.FillEllipse(brush, cell.X + (cell.Width - size) / 2, cell.Y, size, size);
                 }
                 c.Text(d.ToString(culture), cell, align: StringAlignment.Center);
+                if (eventDays.Contains(first.AddDays(d - 1)))
+                {
+                    var dot = Math.Max(3, cellHeight * 0.16f);
+                    using var mark = new SolidBrush(d == today.Day ? Color.White : c.Theme.Accent);
+                    c.G.FillEllipse(mark, cell.X + cell.Width / 2 - dot / 2, cell.Bottom - dot - 1, dot, dot);
+                }
             }
         }
     }
