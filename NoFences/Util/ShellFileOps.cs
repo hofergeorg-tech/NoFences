@@ -35,17 +35,22 @@ namespace NoFences.Util
         public static bool Recycle(IWin32Window owner, IEnumerable<string> paths) => Run(owner, FO_DELETE, paths, null);
 
         private const uint FO_DELETE = 0x0003;
+        private const ushort FOF_SILENT = 0x0004, FOF_NOCONFIRMATION = 0x0010, FOF_NOERRORUI = 0x0400;
 
-        private static bool Run(IWin32Window owner, uint func, IEnumerable<string> sources, string? targetDir)
+        /// <summary>Recycle bin without any questions or progress (the shelf's clean-up).</summary>
+        public static bool RecycleSilently(IEnumerable<string> paths) =>
+            Run(null, FO_DELETE, paths, null, FOF_ALLOWUNDO | FOF_SILENT | FOF_NOCONFIRMATION | FOF_NOERRORUI);
+
+        private static bool Run(IWin32Window? owner, uint func, IEnumerable<string> sources, string? targetDir, ushort flags = FOF_ALLOWUNDO)
         {
             var from = string.Join("\0", sources) + "\0\0";
             var op = new SHFILEOPSTRUCT
             {
-                hwnd = owner.Handle,
+                hwnd = owner?.Handle ?? IntPtr.Zero,
                 wFunc = func,
                 pFrom = from,
                 pTo = targetDir == null ? null : targetDir + "\0\0",
-                fFlags = FOF_ALLOWUNDO
+                fFlags = flags
             };
             return SHFileOperation(ref op) == 0 && !op.fAnyOperationsAborted;
         }

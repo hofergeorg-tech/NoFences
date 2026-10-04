@@ -40,12 +40,18 @@ namespace NoFences.Model
         }
 
         /// <summary>Folders first, then by the chosen key. Manual keeps the given order.</summary>
-        public static List<FenceEntry> Sort(List<FenceEntry> entries, FenceSortMode mode)
+        public static List<FenceEntry> Sort(List<FenceEntry> entries, FenceSortMode mode, IReadOnlyDictionary<string, int>? openCounts = null)
         {
             if (mode == FenceSortMode.Manual)
                 return entries;
 
             var byName = StringComparer.CurrentCultureIgnoreCase;
+            if (mode == FenceSortMode.MostUsed)
+            {
+                // Most opened first (folders and files mixed: what you use is what counts)
+                return entries.OrderByDescending(e => openCounts?.GetValueOrDefault(e.Path) ?? 0)
+                    .ThenBy(e => System.IO.Path.GetFileName(e.Path.TrimEnd('\\')), byName).ToList();
+            }
             IOrderedEnumerable<FenceEntry> ordered = entries.OrderBy(e => !e.IsFolder);
             ordered = mode switch
             {

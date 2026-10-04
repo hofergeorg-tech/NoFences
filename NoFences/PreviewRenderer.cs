@@ -37,6 +37,8 @@ namespace NoFences
             public void SwitchProfile(string? profile, bool automatic = false) { }
             public void AddFenceProfileItems(ToolStripItemCollection items, FenceInfo info, IWin32Window owner) { }
             public IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except) => Array.Empty<Rectangle>();
+            public void FenceSettingsChanged(FenceInfo info) { }
+            public bool HoverPreview => false;
         }
 
         internal const string DemoGame = @"C:\Games\Space Game.exe";
@@ -146,7 +148,8 @@ namespace NoFences
             var tabs = new FenceInfo
             {
                 Name = "Arbeit", Theme = "default", BackgroundAlpha = 140, Files = samples.Take(4).ToList(),
-                Tabs = { new FenceTab { Name = "Arbeit" }, new FenceTab { Name = "Spiele" }, new FenceTab { Name = "Tools" } }
+                Tabs = { new FenceTab { Name = "Arbeit" }, new FenceTab { Name = "Spiele" }, new FenceTab { Name = "Tools" } },
+                Marks = new(StringComparer.OrdinalIgnoreCase) { [samples[0]] = MarkColor.Red, [samples[2]] = MarkColor.Green }
             };
             using (var window = new FenceWindow(host, tabs) { Size = new Size(380, 290) })
             {
@@ -175,6 +178,21 @@ namespace NoFences
                 g.Restore(state);
             }
             sheet.Save(Path.Combine(outDir, "extras.png"), ImageFormat.Png);
+
+            // Hover preview of a folder
+            if (samples.FirstOrDefault(Directory.Exists) is { } folder && FenceEntry.FromPath(folder) is { } entry)
+            {
+                using var popup = new HoverPopup(entry, 1);
+                using (var scratch = new Bitmap(400, 400))
+                using (var sg = Graphics.FromImage(scratch))
+                    popup.RenderTo(sg); // requests the icons
+                var until = DateTime.Now.AddSeconds(1);
+                while (DateTime.Now < until) { Application.DoEvents(); Thread.Sleep(20); }
+                using var bmp = new Bitmap(popup.Width, popup.Height);
+                using (var pg = Graphics.FromImage(bmp))
+                    popup.RenderTo(pg);
+                bmp.Save(Path.Combine(outDir, "hover-preview.png"), ImageFormat.Png);
+            }
         }
 
         /// <summary>
@@ -546,6 +564,14 @@ namespace NoFences
         {
             Directory.CreateDirectory(dir);
             Directory.CreateDirectory(Path.Combine(dir, "Projekte"));
+            // Something to show in the folder's hover preview
+            Directory.CreateDirectory(Path.Combine(dir, "Projekte", "Entwürfe"));
+            foreach (var name in new[] { "Angebot.docx", "Kalkulation.xlsx", "Zeitplan.pdf", "Notizen.txt" })
+            {
+                var path = Path.Combine(dir, "Projekte", name);
+                if (!File.Exists(path))
+                    File.WriteAllText(path, "NoFences preview");
+            }
             var names = new[] { "Notizen.txt", "Rechnung.pdf", "Tabelle.xlsx", "Präsentation.pptx", "Urlaub.png" };
             foreach (var name in names)
             {

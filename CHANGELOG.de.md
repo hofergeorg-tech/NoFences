@@ -13,6 +13,11 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - Widgets **Timer & Wecker** (Schnell-Timer, Wecker an gewählten Tagen, klingelt auch ausgeblendet), **Gewohnheiten** (letzte 7 Tage abhaken, Serien) und **Zeit-Fortschritt** (Tag, Woche, Monat, Jahr).
 - **Pausen-Erinnerung** nach 30–120 Minuten aktiver PC-Nutzung (Einstellungen → Automatik).
 - Der **Kalender im Uhr-Widget** markiert Tage mit Terminen.
+- **Fences**: Farbmarkierungen für Einträge (Shift+Rechtsklick → Markieren, oder Strg+1…6), Sortierung **meistgenutzt zuerst**, **Vorschau beim Darüberfahren** (Ordnerinhalt, große Bild-/PDF-Vorschau).
+- **Weitere Fences**: **Vorlagen** (Gaming-Setup, Büro, Minimal), eine **Ablage**, die sich selbst leert, **Browser-Lesezeichen** (Chrome, Edge, Brave, Vivaldi, Opera) und **zuletzt geöffnete Ordner**.
+- Eigenes **Tastenkürzel pro Fence** (Strg+Shift+F1…F12) holt ihn nach vorne, auch aus einem anderen Profil.
+- Fences können sich **ausblenden**, wenn die Maus weit weg ist (Einstellungen → Desktop); einzelne Fences lassen sich ausnehmen.
+- Werkzeuge: **Desktop-Symbole ein/aus** und **alle Fences auf einen anderen Monitor**.
 
 ## [2.4.2] - 2026-10-03
 

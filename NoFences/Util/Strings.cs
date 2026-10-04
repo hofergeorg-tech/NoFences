@@ -249,10 +249,67 @@ namespace NoFences.Util
                                                  "Faites glisser des fichiers sur la barrière. Clic droit sur une barrière pour les options ; l'icône de la zone de notification contient les paramètres et l'aide.",
                                                  "Arrastra archivos a la valla. Clic derecho en una valla para ver las opciones; el icono de la bandeja tiene la configuración y la ayuda.");
 
-        public static string SortBy => T("Sort by", "Sortieren nach", "Ordina per", "Trier par", "Ordenar por");
+        // Fading, shortcuts, shelf, bookmarks, recent folders, templates, desktop icons, monitors, hover preview
+        public static string FadeFences => T("Fade fences when the mouse is far away", "Fences ausblenden, wenn die Maus weit weg ist", "Sfuma i recinti quando il mouse è lontano", "Estomper les barrières quand la souris est loin", "Atenuar las vallas cuando el ratón está lejos");
+        public static string FadeFencesHint => T("The closer the mouse, the more visible. Single fences can be excluded in their settings.",
+            "Je näher die Maus, desto sichtbarer. Einzelne Fences lassen sich in ihren Einstellungen ausnehmen.",
+            "Più il mouse è vicino, più sono visibili. Si possono escludere singoli recinti nelle loro impostazioni.",
+            "Plus la souris est proche, plus elles sont visibles. Chaque barrière peut être exclue dans ses paramètres.",
+            "Cuanto más cerca el ratón, más visibles. Se pueden excluir vallas en su configuración.");
+        public static string NoFade => T("Never fade this fence", "Diesen Fence nie ausblenden", "Non sfumare mai questo recinto", "Ne jamais estomper cette barrière", "No atenuar nunca esta valla");
+        public static string HoverPreviewSetting => T("Preview on hover (folder contents, images, PDFs)", "Vorschau beim Darüberfahren (Ordnerinhalt, Bilder, PDFs)", "Anteprima al passaggio del mouse (cartelle, immagini, PDF)", "Aperçu au survol (contenu des dossiers, images, PDF)", "Vista previa al pasar el ratón (carpetas, imágenes, PDF)");
+        public static string FolderEmpty => T("Empty folder", "Leerer Ordner", "Cartella vuota", "Dossier vide", "Carpeta vacía");
+        public static string FolderMore(int n) => T($"+ {n} more", $"+ {n} weitere", $"+ altri {n}", $"+ {n} de plus", $"+ {n} más");
+        public static string FenceHotkey => T("Shortcut:", "Tastenkürzel:", "Scorciatoia:", "Raccourci :", "Atajo:");
+        public static string FenceHotkeyHint => T("Brings this fence to the front from anywhere – even from another profile.",
+            "Holt diesen Fence von überall nach vorne – auch aus einem anderen Profil.",
+            "Porta questo recinto in primo piano da qualsiasi punto, anche da un altro profilo.",
+            "Affiche cette barrière au premier plan de n'importe où, même depuis un autre profil.",
+            "Trae esta valla al frente desde cualquier lugar, incluso desde otro perfil.");
+        public static string ShelfCleanup => T("Old items to the recycle bin:", "Alte Dateien in den Papierkorb:", "File vecchi nel cestino:", "Anciens éléments à la corbeille :", "Elementos antiguos a la papelera:");
+        public static string ShelfDays(int days) => days switch
+        {
+            0 => T("Never", "Nie", "Mai", "Jamais", "Nunca"),
+            1 => T("After 1 day", "Nach 1 Tag", "Dopo 1 giorno", "Après 1 jour", "Tras 1 día"),
+            _ => T($"After {days} days", $"Nach {days} Tagen", $"Dopo {days} giorni", $"Après {days} jours", $"Tras {days} días")
+        };
+        public static string ShelfName => T("Shelf", "Ablage", "Ripiano", "Étagère", "Bandeja");
+        public static string MoreFencesMenu => T("More fences", "Weitere Fences", "Altri recinti", "Autres barrières", "Más vallas");
+        public static string NewShelf => T("Shelf (empties itself after a week)", "Ablage (leert sich nach einer Woche)", "Ripiano (si svuota dopo una settimana)", "Étagère (se vide après une semaine)", "Bandeja (se vacía tras una semana)");
+        public static string NewRecentFolders => T("Recently opened folders", "Zuletzt geöffnete Ordner", "Cartelle aperte di recente", "Dossiers ouverts récemment", "Carpetas abiertas recientemente");
+        public static string RecentFoldersName => T("Recent folders", "Letzte Ordner", "Cartelle recenti", "Dossiers récents", "Carpetas recientes");
+        public static string NewBookmarks => T("Browser bookmarks", "Browser-Lesezeichen", "Segnalibri del browser", "Favoris du navigateur", "Marcadores del navegador");
+        public static string NoBrowserFound => T("No Chrome, Edge, Brave, Vivaldi or Opera found", "Kein Chrome, Edge, Brave, Vivaldi oder Opera gefunden", "Nessun Chrome, Edge, Brave, Vivaldi o Opera trovato", "Aucun Chrome, Edge, Brave, Vivaldi ou Opera trouvé", "No se encontró Chrome, Edge, Brave, Vivaldi ni Opera");
+        public static string TemplatesMenu => T("Templates", "Vorlagen", "Modelli", "Modèles", "Plantillas");
+        public static string TemplateName(string id) => id switch
+        {
+            "gaming" => T("Gaming setup", "Gaming-Setup", "Postazione gaming", "Configuration gaming", "Configuración gaming"),
+            "office" => T("Office", "Büro", "Ufficio", "Bureau", "Oficina"),
+            _ => T("Minimal", "Minimal", "Minimale", "Minimal", "Mínima")
+        };
+        public static string TemplateGamesFence => T("Games", "Spiele", "Giochi", "Jeux", "Juegos");
+        public static string TemplateWorkFence => T("Work", "Arbeit", "Lavoro", "Travail", "Trabajo");
+        public static string DesktopIconsMenu => T("Show desktop icons", "Desktop-Symbole anzeigen", "Mostra icone del desktop", "Afficher les icônes du bureau", "Mostrar iconos del escritorio");
+        public static string DesktopIconsFailed => T("The desktop could not be found.", "Der Desktop wurde nicht gefunden.", "Desktop non trovato.", "Le bureau est introuvable.", "No se encontró el escritorio.");
+        public static string MoveAllToMonitor => T("Move all fences to monitor", "Alle Fences auf Monitor", "Sposta tutti i recinti sul monitor", "Déplacer toutes les barrières vers l'écran", "Mover todas las vallas al monitor");
+        public static string MonitorName(int number, int width, int height, bool primary) =>
+            $"{number}: {width} × {height}" + (primary ? T(" (main)", " (Hauptmonitor)", " (principale)", " (principal)", " (principal)") : "");
+        public static string MarkMenu =>T("Mark", "Markieren", "Contrassegna", "Marquer", "Marcar");
+        public static string MarkName(MarkColor mark) => mark switch
+        {
+            MarkColor.Red => T("Red", "Rot", "Rosso", "Rouge", "Rojo"),
+            MarkColor.Orange => T("Orange", "Orange", "Arancione", "Orange", "Naranja"),
+            MarkColor.Yellow => T("Yellow", "Gelb", "Giallo", "Jaune", "Amarillo"),
+            MarkColor.Green => T("Green", "Grün", "Verde", "Vert", "Verde"),
+            MarkColor.Blue => T("Blue", "Blau", "Blu", "Bleu", "Azul"),
+            MarkColor.Purple => T("Purple", "Lila", "Viola", "Violet", "Morado"),
+            _ => T("No mark", "Keine Markierung", "Nessun contrassegno", "Aucune marque", "Sin marca")
+        };
+        public static string SortBy =>T("Sort by", "Sortieren nach", "Ordina per", "Trier par", "Ordenar por");
         public static string SortModeName(Model.FenceSortMode mode) => mode switch
         {
             Model.FenceSortMode.Name => T("Name", "Name", "Nome", "Nom", "Nombre"),
+            Model.FenceSortMode.MostUsed => T("Most used first", "Meistgenutzt zuerst", "Più usati prima", "Les plus utilisés d'abord", "Más usados primero"),
             Model.FenceSortMode.Type => T("Type", "Typ", "Tipo", "Type", "Tipo"),
             Model.FenceSortMode.Modified => T("Date modified (newest first)", "Änderungsdatum (neueste zuerst)", "Data di modifica (più recenti prima)", "Date de modification (plus récent d'abord)", "Fecha de modificación (más recientes primero)"),
             Model.FenceSortMode.Size => T("Size (largest first)", "Größe (größte zuerst)", "Dimensione (più grandi prima)", "Taille (plus grand d'abord)", "Tamaño (más grandes primero)"),

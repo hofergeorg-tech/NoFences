@@ -13,6 +13,11 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 - Widgets **minuteur et réveil** (minuteurs rapides, réveils les jours choisis, sonne même masqué), **habitudes** (cocher les 7 derniers jours, séries) et **progression du temps** (jour, semaine, mois, année).
 - **Rappel de pause** après 30 à 120 minutes d'utilisation active (Paramètres → Automatisation).
 - Le **calendrier de l'horloge** marque les jours avec des rendez-vous.
+- **Barrières** : marques de couleur pour les éléments (Maj+clic droit → Marquer, ou Ctrl+1…6), tri **les plus utilisés d'abord**, **aperçu au survol** (contenu des dossiers, grand aperçu d'images/PDF).
+- **Autres barrières** : **modèles** (configuration gaming, bureau, minimal), une **étagère** qui se vide toute seule, **favoris du navigateur** (Chrome, Edge, Brave, Vivaldi, Opera) et **dossiers ouverts récemment**.
+- **Raccourci propre à chaque barrière** (Ctrl+Maj+F1…F12) pour l'afficher au premier plan, même depuis un autre profil.
+- Les barrières peuvent **s'estomper** quand la souris est loin (Paramètres → Bureau) ; chaque barrière peut être exclue.
+- Outils : **afficher/masquer les icônes du bureau** et **déplacer toutes les barrières vers un autre écran**.
 
 ## [2.4.2] - 2026-10-03
 

@@ -14,6 +14,11 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - Widgets **timer & alarm** (quick timers, alarms on chosen days, rings even when hidden), **habits** (tick the last 7 days, streaks) and **time progress** (day, week, month, year).
 - **Break reminder** after 30–120 minutes of active PC use (Settings → Automation).
 - The **clock's calendar** marks days with appointments.
+- **Fences**: color marks for items (Shift+right-click → Mark, or Ctrl+1…6), sort by **most used**, **preview on hover** (folder contents, large image/PDF preview).
+- **More fences**: **templates** (gaming setup, office, minimal), a **shelf** that empties itself, **browser bookmarks** (Chrome, Edge, Brave, Vivaldi, Opera) and **recently opened folders**.
+- Own **shortcut per fence** (Ctrl+Shift+F1…F12) brings it to the front, even from another profile.
+- Fences can **fade** when the mouse is far away (Settings → Desktop); single fences can be excluded.
+- Tools: **show/hide desktop icons** and **move all fences to another monitor**.
 
 ## [2.4.2] - 2026-10-03
 

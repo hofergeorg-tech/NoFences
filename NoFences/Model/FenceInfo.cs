@@ -24,8 +24,13 @@ namespace NoFences.Model
         /// <summary>Newest first.</summary>
         Modified,
         /// <summary>Largest first.</summary>
-        Size
+        Size,
+        /// <summary>Opened most often first (NoFences counts openings per fence).</summary>
+        MostUsed
     }
+
+    /// <summary>Colors for marking single items.</summary>
+    public enum MarkColor { None, Red, Orange, Yellow, Green, Blue, Purple }
 
     /*
      * Property names are part of the on-disk format (JSON, and the legacy XML migration).
@@ -113,6 +118,30 @@ namespace NoFences.Model
 
         /// <summary>Only on this virtual desktop (null = on all desktops).</summary>
         public Guid? VirtualDesktop { get; set; }
+
+        /// <summary>How often each item was opened from this fence (for "most used first").</summary>
+        public Dictionary<string, int>? OpenCounts { get; set; }
+
+        /// <summary>Color marks of single items (path → color).</summary>
+        public Dictionary<string, MarkColor>? Marks { get; set; }
+
+        /// <summary>Global shortcut that brings this fence to the front ("Ctrl+Shift+F1" …), or null.</summary>
+        public string? Hotkey { get; set; }
+
+        /// <summary>Never fade this fence when the mouse is far away.</summary>
+        public bool NoFade { get; set; }
+
+        /// <summary>Folder fences: move items older than this many days to the recycle bin (0 = never). Used by the shelf.</summary>
+        public int AutoCleanDays { get; set; }
+
+        /// <summary>Link fences filled by NoFences: "recentfolders" or "bookmarks:&lt;browser&gt;".</summary>
+        public string? AutoSource { get; set; }
+
+        public void CountOpen(string path)
+        {
+            OpenCounts ??= new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            OpenCounts[path] = OpenCounts.GetValueOrDefault(path) + 1;
+        }
 
         /// <summary>How the note's reminder repeats after it fired.</summary>
         public Repeat ReminderRepeat { get; set; }

@@ -71,6 +71,7 @@ namespace NoFences
             linkPollTimer.Tick += (_, _) => { if (Info.Kind == FenceKind.Links) ReloadEntries(); };
             IconCache.Shared.ImageLoaded += IconCache_ImageLoaded;
             InitAnimations();
+            InitHoverPreview();
         }
 
         protected override bool ShowWithoutActivation => true;
@@ -146,7 +147,7 @@ namespace NoFences
                 LoadFolderEntries();
             else
                 entries = Info.Files.Select(FenceEntry.FromPath).OfType<FenceEntry>().ToList();
-            entries = ApplySearch(FenceEntry.Sort(entries, Info.SortMode));
+            entries = ApplySearch(FenceEntry.Sort(entries, Info.SortMode, Info.OpenCounts));
             if (Info.MaxItems > 0 && entries.Count > Info.MaxItems)
                 entries = entries.Take(Info.MaxItems).ToList();
             selection.RemoveWhere(p => !entries.Any(e => e.Path.Equals(p, StringComparison.OrdinalIgnoreCase)));
@@ -273,6 +274,58 @@ namespace NoFences
 
         private Rectangle ToClient(Rectangle contentRect) => new(contentRect.X, contentRect.Y + titleHeight - scrollOffset, contentRect.Width, contentRect.Height);
 
+        public static Color MarkToColor(MarkColor mark) => mark switch
+        {
+            MarkColor.Red => Color.FromArgb(232, 64, 64),
+            MarkColor.Orange => Color.FromArgb(245, 150, 40),
+            MarkColor.Yellow => Color.FromArgb(240, 210, 40),
+            MarkColor.Green => Color.FromArgb(70, 190, 90),
+            MarkColor.Blue => Color.FromArgb(60, 140, 240),
+            MarkColor.Purple => Color.FromArgb(160, 90, 220),
+            _ => Color.Transparent
+        };
+
+        private void MarkSelection(MarkColor mark) => MarkItems(selection.ToList(), mark);
+
+        /// <summary>A small colored circle for the menu.</summary>
+        private static Bitmap? MarkSwatch(MarkColor mark)
+        {
+            if (mark == MarkColor.None)
+                return null;
+            var bitmap = new Bitmap(14, 14);
+            using var g = Graphics.FromImage(bitmap);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            using var brush = new SolidBrush(MarkToColor(mark));
+            g.FillEllipse(brush, 1, 1, 12, 12);
+            return bitmap;
+        }
+
+        private void MarkItems(IEnumerable<string> paths, MarkColor mark)
+        {
+            Info.Marks ??= new Dictionary<string, MarkColor>(StringComparer.OrdinalIgnoreCase);
+            foreach (var path in paths)
+            {
+                if (mark == MarkColor.None)
+                    Info.Marks.Remove(path);
+                else
+                    Info.Marks[path] = mark;
+            }
+            if (Info.Marks.Count == 0)
+                Info.Marks = null;
+            app.RequestSave();
+            Invalidate();
+        }
+
+        /// <summary>Opens an item and counts it (for "most used first").</summary>
+        private void OpenEntry(string path)
+        {
+            FenceEntry.FromPath(path)?.Open();
+            Info.CountOpen(path);
+            app.RequestSave();
+            if (Info.SortMode == FenceSortMode.MostUsed)
+                ReloadEntries();
+        }
+
         private int HitTestItem(Point client)
         {
             if (collapsed || client.Y < titleHeight)
@@ -352,6 +405,16 @@ namespace NoFences
                     var ix = r.X + (r.Width - icon.Width) / 2;
                     var iy = Info.Compact ? r.Y + (r.Height - icon.Height) / 2 : r.Y + Px(4) + (iconPx - icon.Height) / 2;
                     g.DrawImage(icon, ix, iy, icon.Width, icon.Height);
+                }
+
+                // Color mark: a dot in the top right corner of the item
+                if (Info.Marks != null && Info.Marks.TryGetValue(entry.Path, out var mark) && mark != MarkColor.None)
+                {
+                    var d = Px(11);
+                    using var markBrush = new SolidBrush(MarkToColor(mark));
+                    using var ring = new Pen(Color.FromArgb(220, 255, 255, 255), Math.Max(1, scale * 1.2f));
+                    g.FillEllipse(markBrush, r.Right - d - Px(3), r.Y + Px(3), d, d);
+                    g.DrawEllipse(ring, r.Right - d - Px(3), r.Y + Px(3), d, d);
                 }
 
                 if (Info.Compact)
@@ -574,6 +637,7 @@ namespace NoFences
                 return;
             collapsed = true;
             hoverPath = null;
+            HideHoverPreview();
             collapseTimer.Stop();
             AnimateHeight(CollapsedHeight);
             Invalidate();
@@ -685,6 +749,7 @@ namespace NoFences
             if (path != hoverPath)
             {
                 hoverPath = path;
+                RestartHoverPreview();
                 UpdateCompactTooltip(path);
                 Invalidate();
             }
@@ -711,6 +776,7 @@ namespace NoFences
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
+            HideHoverPreview();
             if (hoverPath != null)
             {
                 hoverPath = null;
@@ -721,6 +787,7 @@ namespace NoFences
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
+            HideHoverPreview();
             if (e.Button != MouseButtons.Left)
                 return;
             if (IsNote)
@@ -792,12 +859,13 @@ namespace NoFences
             }
             var index = HitTestItem(e.Location);
             if (index >= 0)
-                entries[index].Open();
+                OpenEntry(entries[index].Path);
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             base.OnMouseWheel(e);
+            HideHoverPreview();
             if (IsWidget)
             {
                 if (widget?.Wheel(e.Delta) == true)
@@ -857,6 +925,21 @@ namespace NoFences
                 menu.Items.Add(new ToolStripMenuItem(Strings.CompactMode, null, (_, _) => { Info.Compact = !Info.Compact; app.RequestSave(); ReloadEntries(); }) { Checked = Info.Compact });
             if (entry != null && Info.Kind == FenceKind.Links && !Info.ReadOnly)
                 menu.Items.Add(Strings.RemoveItem, null, (_, _) => RemoveLink(entry.Path));
+            if (entry != null)
+            {
+                // Mark the item (or all selected ones) in a color
+                var targets = IsSelected(entry.Path) ? selection.ToList() : new List<string> { entry.Path };
+                var current = Info.Marks != null && Info.Marks.TryGetValue(entry.Path, out var m) ? m : MarkColor.None;
+                var markMenu = new ToolStripMenuItem(Strings.MarkMenu);
+                foreach (var color in Enum.GetValues<MarkColor>())
+                {
+                    var item = new ToolStripMenuItem(Strings.MarkName(color), MarkSwatch(color), (_, _) => MarkItems(targets, color)) { Checked = current == color };
+                    if (color != MarkColor.None)
+                        item.ShortcutKeyDisplayString = $"{Strings.HotkeyName("Ctrl")}+{(int)color}";
+                    markMenu.DropDownItems.Add(item);
+                }
+                menu.Items.Add(markMenu);
+            }
             if (Info.Kind == FenceKind.Folder && Directory.Exists(Info.FolderPath))
                 menu.Items.Add(Strings.OpenFolder, null, (_, _) => FenceEntry.FromPath(Info.FolderPath!)?.Open());
             if (menu.Items.Count > 0)
@@ -967,6 +1050,7 @@ namespace NoFences
             ApplySettings();
             ApplyZOrder(); // "Always on top" may have changed
             ReloadEntries();
+            app.FenceSettingsChanged(Info);
         }
 
         private void ConfirmDelete()
@@ -1201,6 +1285,8 @@ namespace NoFences
                 IconCache.Shared.ImageLoaded -= IconCache_ImageLoaded;
                 watcher?.Dispose();
                 collapseTimer.Dispose();
+                HideHoverPreview();
+                hoverPreviewTimer.Dispose();
                 refreshTimer.Dispose();
                 linkPollTimer.Dispose();
                 titleFont?.Dispose();

@@ -13,6 +13,11 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - Widget **timer e sveglia** (timer rapidi, sveglie nei giorni scelti, suona anche se nascosto), **abitudini** (spunta gli ultimi 7 giorni, serie) e **avanzamento del tempo** (giorno, settimana, mese, anno).
 - **Promemoria pausa** dopo 30–120 minuti di uso attivo del PC (Impostazioni → Automazione).
 - Il **calendario dell'orologio** segna i giorni con appuntamenti.
+- **Recinti**: contrassegni colorati per gli elementi (Maiusc+clic destro → Contrassegna, o Ctrl+1…6), ordinamento **più usati prima**, **anteprima al passaggio del mouse** (contenuto delle cartelle, anteprima grande di immagini/PDF).
+- **Altri recinti**: **modelli** (postazione gaming, ufficio, minimale), un **ripiano** che si svuota da solo, **segnalibri del browser** (Chrome, Edge, Brave, Vivaldi, Opera) e **cartelle aperte di recente**.
+- **Scorciatoia per ogni recinto** (Ctrl+Maiusc+F1…F12) lo porta in primo piano, anche da un altro profilo.
+- I recinti possono **sfumare** quando il mouse è lontano (Impostazioni → Desktop); si possono escludere singoli recinti.
+- Strumenti: **mostra/nascondi icone del desktop** e **sposta tutti i recinti su un altro monitor**.
 
 ## [2.4.2] - 2026-10-03
 

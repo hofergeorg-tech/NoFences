@@ -218,5 +218,51 @@ namespace NoFences.Win32
         {
             SetWindowPos(hwnd, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE);
         }
+
+        #region Desktop icons
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern IntPtr FindWindowEx(IntPtr parent, IntPtr childAfter, string? className, string? windowName);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        private static extern bool IsWindowVisible(IntPtr hWnd);
+
+        private const int WM_COMMAND = 0x0111;
+        // Explorer's own "View > Show desktop icons" command
+        private const int ToggleDesktopIconsCommand = 0x7402;
+
+        /// <summary>The desktop's view window: below Progman, or below a WorkerW after a wallpaper slideshow.</summary>
+        private static IntPtr DesktopView()
+        {
+            var view = FindWindowEx(FindWindow("Progman", null), IntPtr.Zero, "SHELLDLL_DefView", null);
+            var worker = IntPtr.Zero;
+            while (view == IntPtr.Zero && (worker = FindWindowEx(IntPtr.Zero, worker, "WorkerW", null)) != IntPtr.Zero)
+                view = FindWindowEx(worker, IntPtr.Zero, "SHELLDLL_DefView", null);
+            return view;
+        }
+
+        /// <summary>Whether Explorer shows the desktop icons right now (null if the desktop wasn't found).</summary>
+        public static bool? DesktopIconsVisible()
+        {
+            var view = DesktopView();
+            if (view == IntPtr.Zero)
+                return null;
+            var list = FindWindowEx(view, IntPtr.Zero, "SysListView32", null);
+            return list != IntPtr.Zero && IsWindowVisible(list);
+        }
+
+        public static bool ToggleDesktopIcons()
+        {
+            var view = DesktopView();
+            if (view == IntPtr.Zero)
+                return false;
+            SendMessage(view, WM_COMMAND, new IntPtr(ToggleDesktopIconsCommand), IntPtr.Zero);
+            return true;
+        }
+
+        #endregion
     }
 }

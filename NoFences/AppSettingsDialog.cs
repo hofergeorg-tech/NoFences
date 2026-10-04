@@ -295,6 +295,13 @@ namespace NoFences
                 app.Store.RequestSave();
                 app.UpdateHotkey(notifyIfTaken: true);
             }, 180));
+            Wide(grid, Check(Strings.FadeFences, Config.FadeFences, app.SetFadeFences));
+            Hint(grid, Strings.FadeFencesHint, ContentWidth);
+            Wide(grid, Check(Strings.HoverPreviewSetting, Config.HoverPreview, v =>
+            {
+                Config.HoverPreview = v;
+                app.Store.RequestSave();
+            }));
 
             var profiles = Section(page, Strings.SectionProfiles, ContentWidth);
             var names = new List<string?> { null };

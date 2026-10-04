@@ -34,7 +34,7 @@ namespace NoFences
                 var summary = NoteText.Summary(fence.NoteText);
                 var text = summary.Length > 0 ? $"{Strings.ReminderDue(fence.Name)}\n{summary}" : Strings.ReminderDue(fence.Name);
                 // Clicking the notification brings the fences (and so the note) to the front.
-                ShowBalloon(text, StartPeek, timeout: 15_000);
+                ShowBalloon(text, () => StartPeek(), timeout: 15_000);
             }
         }
 
@@ -53,7 +53,7 @@ namespace NoFences
                 Store.RequestSave();
                 windows.FirstOrDefault(w => w.Info == fence)?.Invalidate();
                 SystemSounds.Asterisk.Play();
-                ShowBalloon(Strings.TodoDue(fence.Name, string.Join("\n", due.Select(i => "• " + i.Text))), StartPeek, timeout: 15_000);
+                ShowBalloon(Strings.TodoDue(fence.Name, string.Join("\n", due.Select(i => "• " + i.Text))), () => StartPeek(), timeout: 15_000);
             }
         }
 

@@ -131,7 +131,7 @@ namespace NoFences
             {
                 case Keys.Enter:
                     foreach (var path in SelectedInOrder().Take(15))
-                        FenceEntry.FromPath(path)?.Open();
+                        OpenEntry(path);
                     return true;
                 case Keys.Delete:
                     DeleteSelection();
@@ -153,6 +153,10 @@ namespace NoFences
                     return true;
                 case Keys.C when ctrl:
                     CopySelection();
+                    return true;
+                // Ctrl+1…6 mark the selected items in a color, Ctrl+0 removes the mark
+                case >= Keys.D0 and <= Keys.D6 when ctrl && selection.Count > 0:
+                    MarkSelection((MarkColor)(key - Keys.D0));
                     return true;
                 case Keys.Left or Keys.Right or Keys.Up or Keys.Down:
                     MoveFocus(key, shift);

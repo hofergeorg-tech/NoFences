@@ -64,20 +64,34 @@ namespace NoFences
                 StartPeek();
         }
 
-        internal void StartPeek()
+        /// <param name="only">Lift just this fence (its own shortcut) instead of all.</param>
+        internal void StartPeek(FenceWindow? only = null)
         {
+            if (peeking)
+                EndPeek();
             if (!fencesVisible)
                 ToggleVisible();
             peeking = true;
             ApplyVisibility(); // fences hidden by a full-screen program come back for the peek
             foreach (var w in windows)
-                w.SetPeek(true);
+            {
+                if (only == null || w == only)
+                    w.SetPeek(true);
+            }
+            if (only != null)
+            {
+                // It may belong to another profile or desktop: show it anyway while lifted
+                only.Visible = true;
+                only.Opacity = 1;
+            }
             peekForeground = Native.GetForegroundWindow();
             peekTimer.Start();
         }
 
         private void EndPeek()
         {
+            if (!peeking)
+                return;
             peekTimer.Stop();
             peeking = false;
             foreach (var w in windows)

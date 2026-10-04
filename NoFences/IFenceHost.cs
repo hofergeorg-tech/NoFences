@@ -60,6 +60,12 @@ namespace NoFences
         /// <summary>Adds "New widget ▸", "Recent files" and "Quick-launch bar" to a menu.</summary>
         void AddCreateExtrasItems(ToolStripItemCollection items);
 
+        /// <summary>The fence's settings dialog was confirmed (shortcut, shelf, … may have changed).</summary>
+        void FenceSettingsChanged(FenceInfo info);
+
+        /// <summary>Hovering items shows a folder's contents or a large image preview.</summary>
+        bool HoverPreview { get; }
+
         /// <summary>Visible surfaces (screen coordinates) of all other fences, for snapping.</summary>
         IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except);
     }

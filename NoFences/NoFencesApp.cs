@@ -22,6 +22,8 @@ namespace NoFences
 
         public bool Animations => Store.Config.Animations;
 
+        public bool HoverPreview => Store.Config.HoverPreview;
+
         public NoFencesApp()
         {
             Store.Load();
@@ -60,6 +62,7 @@ namespace NoFences
             InitSearch();
             InitSync();
             InitScreenTime();
+            InitFenceTools();
             UpdateProfileHotkeys();
             UpdateQuickNoteHotkey();
             if (themeErrors.Count > 0)
@@ -234,6 +237,8 @@ namespace NoFences
             Store.Config.Fences.Remove(window.Info);
             Store.SaveNow();
             windows.Remove(window);
+            if (window.Info.Hotkey != null)
+                UpdateFenceHotkeys();
             window.Close();
             window.Dispose();
         }
@@ -309,6 +314,7 @@ namespace NoFences
             DisposeSearch();
             DisposeSync();
             DisposeScreenTime();
+            DisposeFenceTools();
             DisposeProfileHotkeys();
             DisposeQuickNote();
             sorter.Dispose();

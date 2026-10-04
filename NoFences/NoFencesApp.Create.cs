@@ -25,6 +25,7 @@ namespace NoFences
             items.Add(widgets);
             items.Add(Strings.NewRecent, null, (_, _) => CreateRecentFence());
             items.Add(Strings.NewQuickLaunch, null, (_, _) => CreateQuickLaunch());
+            AddMoreFenceItems(items);
         }
 
         public void CreateWidget(string type)

@@ -95,6 +95,12 @@ namespace NoFences.Model
 
         public static readonly IReadOnlyList<string> SearchHotkeys = new[] { "Ctrl+Alt+F", "Ctrl+Shift+F", "Ctrl+Alt+S", "Off" };
 
+        /// <summary>Fences grow transparent the further away the mouse is.</summary>
+        public bool FadeFences { get; set; }
+
+        /// <summary>Hovering a folder shows its contents, hovering an image or PDF a large preview.</summary>
+        public bool HoverPreview { get; set; } = true;
+
         public List<FenceInfo> Fences { get; set; } = new();
     }
 }

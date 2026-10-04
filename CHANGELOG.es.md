@@ -13,6 +13,11 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 - Widgets de **temporizador y alarma** (temporizadores rápidos, alarmas en los días elegidos, suena aunque esté oculto), **hábitos** (marca los últimos 7 días, rachas) y **progreso del tiempo** (día, semana, mes, año).
 - **Recordatorio de descanso** tras 30–120 minutos de uso activo del PC (Configuración → Automatización).
 - El **calendario del reloj** marca los días con citas.
+- **Vallas**: marcas de color para los elementos (Mayús+clic derecho → Marcar, o Ctrl+1…6), orden **más usados primero**, **vista previa al pasar el ratón** (contenido de carpetas, vista previa grande de imágenes/PDF).
+- **Más vallas**: **plantillas** (configuración gaming, oficina, mínima), una **bandeja** que se vacía sola, **marcadores del navegador** (Chrome, Edge, Brave, Vivaldi, Opera) y **carpetas abiertas recientemente**.
+- **Atajo propio por valla** (Ctrl+Mayús+F1…F12) la trae al frente, incluso desde otro perfil.
+- Las vallas pueden **atenuarse** cuando el ratón está lejos (Configuración → Escritorio); se pueden excluir vallas.
+- Herramientas: **mostrar/ocultar iconos del escritorio** y **mover todas las vallas a otro monitor**.
 
 ## [2.4.2] - 2026-10-03
 

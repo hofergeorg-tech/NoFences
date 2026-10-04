@@ -32,6 +32,9 @@ namespace NoFences
         private readonly CheckBox lockedBox = new() { Text = Strings.Locked, AutoSize = true };
         private readonly CheckBox collapseBox = new() { Text = Strings.AutoCollapse, AutoSize = true };
         private readonly CheckBox onTopBox = new() { Text = Strings.AlwaysOnTop, AutoSize = true };
+        private readonly CheckBox noFadeBox = new() { Text = Strings.NoFade, AutoSize = true };
+        private readonly ComboBox hotkeyBox = new() { Width = 160, DropDownStyle = ComboBoxStyle.DropDownList };
+        private readonly ComboBox cleanBox = new() { Width = 160, DropDownStyle = ComboBoxStyle.DropDownList };
         private readonly TextBox autoSortBox = new() { Width = 200 };
         private readonly ComboBox presetBox = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 150 };
         private readonly PictureBox preview = new() { Size = new Size(300, 270), SizeMode = PictureBoxSizeMode.Zoom, BorderStyle = BorderStyle.FixedSingle };
@@ -98,6 +101,16 @@ namespace NoFences
             Wide(behavior, lockedBox);
             Wide(behavior, collapseBox);
             Wide(behavior, onTopBox);
+            Wide(behavior, noFadeBox);
+            hotkeyBox.Items.Add(Strings.HotkeyName("Off"));
+            foreach (var h in FenceExtras.FenceHotkeys)
+                hotkeyBox.Items.Add(Strings.HotkeyName(h));
+            Row(behavior, Strings.FenceHotkey, hotkeyBox);
+            Hint(behavior, Strings.FenceHotkeyHint, ColumnWidth);
+            foreach (var days in FenceExtras.ShelfDayChoices)
+                cleanBox.Items.Add(Strings.ShelfDays(days));
+            if (info.Kind == FenceKind.Folder)
+                Row(behavior, Strings.ShelfCleanup, cleanBox);
 
             if (hasItems)
             {
@@ -145,6 +158,10 @@ namespace NoFences
             lockedBox.Checked = info.Locked;
             collapseBox.Checked = info.CanMinify;
             onTopBox.Checked = info.AlwaysOnTop;
+            noFadeBox.Checked = info.NoFade;
+            hotkeyBox.SelectedIndex = FenceExtras.FenceHotkeys.ToList().IndexOf(info.Hotkey ?? "") + 1;
+            var cleanIndex = Array.IndexOf(FenceExtras.ShelfDayChoices, info.AutoCleanDays);
+            cleanBox.SelectedIndex = Math.Max(0, cleanIndex);
             autoSortBox.Text = info.AutoSortPatterns ?? "";
             sortBox.SelectedIndex = (int)info.SortMode;
             UpdateColorButton();
@@ -293,6 +310,9 @@ namespace NoFences
             info.Locked = lockedBox.Checked;
             info.CanMinify = collapseBox.Checked;
             info.AlwaysOnTop = onTopBox.Checked;
+            info.NoFade = noFadeBox.Checked;
+            info.Hotkey = hotkeyBox.SelectedIndex > 0 ? FenceExtras.FenceHotkeys[hotkeyBox.SelectedIndex - 1] : null;
+            info.AutoCleanDays = kind == FenceKind.Folder ? FenceExtras.ShelfDayChoices[Math.Max(0, cleanBox.SelectedIndex)] : 0;
             info.AutoSortPatterns = string.IsNullOrWhiteSpace(autoSortBox.Text) ? null : autoSortBox.Text.Trim();
             info.SortMode = (FenceSortMode)Math.Max(0, sortBox.SelectedIndex);
         }
