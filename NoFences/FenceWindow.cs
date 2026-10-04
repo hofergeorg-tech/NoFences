@@ -918,6 +918,8 @@ namespace NoFences
             {
                 menu.Items.Add(Strings.EditNote, null, (_, _) => StartEditNote());
                 menu.Items.Add(new ToolStripMenuItem(Strings.Reminder, null, (_, _) => EditReminder()) { Checked = Info.ReminderAt != null });
+                menu.Items.Add(Strings.VoiceNoteRecord, null, (_, _) => RecordVoiceNote());
+                AddNoteProtectionItems(menu.Items);
             }
             if (IsWidget)
                 widget?.AddMenuItems(menu.Items, this);

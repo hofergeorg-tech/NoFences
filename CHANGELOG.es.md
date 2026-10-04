@@ -19,6 +19,8 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 - Las vallas pueden **atenuarse** cuando el ratón está lejos (Configuración → Escritorio); se pueden excluir vallas.
 - Herramientas: **mostrar/ocultar iconos del escritorio** y **mover todas las vallas a otro monitor**.
 - **Perfiles**: iniciar programas con un perfil (y cerrarlos al salir, si se desea); **fondo según la hora del día** (Configuración → Automatización).
+- **Notas**: protección con contraseña (cifrada, se bloquea sola tras 2 minutos), pegar **imágenes** con Ctrl+V, grabar **notas de voz**.
+- El **historial del portapapeles** guarda también imágenes; **fija** entradas (clic derecho) para que queden arriba, incluso tras reiniciar.
 
 ## [2.4.2] - 2026-10-03
 

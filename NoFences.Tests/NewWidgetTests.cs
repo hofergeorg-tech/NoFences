@@ -68,7 +68,7 @@ namespace NoFences.Tests
             var h = new ClipboardHistory(3);
             foreach (var t in new[] { "a", "b", "c", "a", "  ", "d" })
                 h.Add(t);
-            Assert.Equal(new[] { "d", "a", "c" }, h.Items);
+            Assert.Equal(new[] { "d", "a", "c" }, h.Texts);
         }
 
         [Fact]

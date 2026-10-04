@@ -179,6 +179,32 @@ namespace NoFences
             }
             sheet.Save(Path.Combine(outDir, "extras.png"), ImageFormat.Png);
 
+            // Notes with a picture and a voice note, and a protected one
+            if (samples.FirstOrDefault(s => s.EndsWith(".png")) is { } picture)
+            {
+                using var notes = new Bitmap(600, 360, PixelFormat.Format32bppArgb);
+                using var ng = Graphics.FromImage(notes);
+                DrawBackdrop(ng, new Rectangle(Point.Empty, notes.Size));
+                var withMedia = new FenceInfo
+                {
+                    Name = "Urlaub", Kind = FenceKind.Note, Theme = "postit", TitleHeight = 30,
+                    NoteText = $"Fotos vom Strand:\n{NoteText.MediaMarkup("Bild", picture)}\n{NoteText.MediaMarkup("Sprachnotiz 0:12", @"C:\demo\voice.wav")}"
+                };
+                var locked = new FenceInfo { Name = "Zugangsdaten", Kind = FenceKind.Note, Theme = "postit", TitleHeight = 30, NoteCipher = NoteCrypto.Encrypt("demo", "demo") };
+                var x = 24;
+                foreach (var info in new[] { withMedia, locked })
+                {
+                    using var window = new FenceWindow(host, info) { Size = new Size(260, 310) };
+                    window.ApplySettings();
+                    var state = ng.Save();
+                    ng.TranslateTransform(x, 24);
+                    window.PaintFence(ng);
+                    ng.Restore(state);
+                    x += 290;
+                }
+                notes.Save(Path.Combine(outDir, "notes-media.png"), ImageFormat.Png);
+            }
+
             // Hover preview of a folder
             if (samples.FirstOrDefault(Directory.Exists) is { } folder && FenceEntry.FromPath(folder) is { } entry)
             {
@@ -423,6 +449,14 @@ namespace NoFences
                 case Widgets.ClipboardWidget clipboard:
                     foreach (var text in new[] { "https://github.com/hofergeorg-tech/NoFences", "Meeting moved to 3 pm", "C:\\Projects\\report-2026.docx", "Thanks for the update!\nSee you tomorrow" }.Reverse())
                         clipboard.History.Add(text);
+                    clipboard.History.AddPinned(new Widgets.ClipItem { Text = "IBAN DE00 1234 5678 9000 0000 00" });
+                    using (var demo = new Bitmap(320, 180))
+                    {
+                        using (var dg = Graphics.FromImage(demo))
+                        using (var sky = new LinearGradientBrush(new Rectangle(0, 0, 320, 180), Color.SteelBlue, Color.LightSkyBlue, LinearGradientMode.Vertical))
+                            dg.FillRectangle(sky, 0, 0, 320, 180);
+                        clipboard.History.AddImage(Widgets.ClipItem.FromImage(demo));
+                    }
                     break;
             }
         }

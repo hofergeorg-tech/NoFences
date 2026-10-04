@@ -249,6 +249,29 @@ namespace NoFences.Util
                                                  "Faites glisser des fichiers sur la barrière. Clic droit sur une barrière pour les options ; l'icône de la zone de notification contient les paramètres et l'aide.",
                                                  "Arrastra archivos a la valla. Clic derecho en una valla para ver las opciones; el icono de la bandeja tiene la configuración y la ayuda.");
 
+        // Notes: password, images, voice notes; clipboard pins
+        public static string NoteProtect => T("Protect with password…", "Mit Passwort schützen…", "Proteggi con password…", "Protéger par mot de passe…", "Proteger con contraseña…");
+        public static string NoteUnlock => T("Unlock…", "Entsperren…", "Sblocca…", "Déverrouiller…", "Desbloquear…");
+        public static string NoteLockNow => T("Lock now", "Jetzt sperren", "Blocca ora", "Verrouiller maintenant", "Bloquear ahora");
+        public static string NoteRemoveProtection => T("Remove password protection", "Passwortschutz entfernen", "Rimuovi protezione con password", "Retirer la protection par mot de passe", "Quitar protección con contraseña");
+        public static string NotePassword => T("Password:", "Passwort:", "Password:", "Mot de passe :", "Contraseña:");
+        public static string NotePasswordNew => T("New password (without it the note can't be opened – not even by NoFences):",
+            "Neues Passwort (ohne es lässt sich die Notiz nicht mehr öffnen – auch nicht von NoFences):",
+            "Nuova password (senza di essa la nota non si può aprire, nemmeno da NoFences):",
+            "Nouveau mot de passe (sans lui, la note ne peut plus être ouverte, même par NoFences) :",
+            "Nueva contraseña (sin ella la nota no se puede abrir, ni siquiera NoFences):");
+        public static string NotePasswordRepeat => T("Repeat the password:", "Passwort wiederholen:", "Ripeti la password:", "Répétez le mot de passe :", "Repite la contraseña:");
+        public static string NotePasswordMismatch => T("The passwords don't match.", "Die Passwörter stimmen nicht überein.", "Le password non coincidono.", "Les mots de passe ne correspondent pas.", "Las contraseñas no coinciden.");
+        public static string NotePasswordWrong => T("Wrong password.", "Falsches Passwort.", "Password errata.", "Mot de passe incorrect.", "Contraseña incorrecta.");
+        public static string NoteLockedHint => T("Protected – double-click to unlock", "Geschützt – Doppelklick zum Entsperren", "Protetta – doppio clic per sbloccare", "Protégée – double-clic pour déverrouiller", "Protegida – doble clic para desbloquear");
+        public static string NoteImage => T("Image", "Bild", "Immagine", "Image", "Imagen");
+        public static string VoiceNote => T("Voice note", "Sprachnotiz", "Nota vocale", "Note vocale", "Nota de voz");
+        public static string VoiceNoteRecord => T("Record voice note…", "Sprachnotiz aufnehmen…", "Registra nota vocale…", "Enregistrer une note vocale…", "Grabar nota de voz…");
+        public static string VoiceNoteStop => T("Stop and save", "Stopp und speichern", "Ferma e salva", "Arrêter et enregistrer", "Detener y guardar");
+        public static string VoiceNoteRecording(string time) => T($"Recording … {time}", $"Aufnahme läuft … {time}", $"Registrazione in corso … {time}", $"Enregistrement … {time}", $"Grabando … {time}");
+        public static string VoiceNoteNoMicrophone => T("No microphone could be opened.", "Es konnte kein Mikrofon geöffnet werden.", "Impossibile aprire un microfono.", "Aucun micro n'a pu être ouvert.", "No se pudo abrir ningún micrófono.");
+        public static string ClipboardPin => T("Pin this entry", "Diesen Eintrag anheften", "Fissa questa voce", "Épingler cette entrée", "Fijar esta entrada");
+        public static string ClipboardUnpin => T("Unpin this entry", "Eintrag lösen", "Sblocca questa voce", "Désépingler cette entrée", "Soltar esta entrada");
         // Profiles: wallpaper by time of day, programs per profile
         public static string SectionTimedWallpaper => T("Wallpaper by time of day", "Hintergrundbild nach Tageszeit", "Sfondo in base all'ora", "Fond d'écran selon l'heure", "Fondo según la hora del día");
         public static string TimedWallpaperFrom => T("From:", "Ab:", "Dalle:", "À partir de :", "Desde:");

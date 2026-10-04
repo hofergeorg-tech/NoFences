@@ -78,7 +78,12 @@ namespace NoFences
                 return;
 
             var area = NoteArea;
-            if (string.IsNullOrWhiteSpace(Info.NoteText))
+            if (NoteLockedNow)
+            {
+                DrawLockedNote(g, area);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(NoteContent))
             {
                 using var hint = new SolidBrush(theme.HintColor);
                 using var center = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
@@ -92,12 +97,17 @@ namespace NoFences
 
             var y = (float)area.Y - scrollOffset;
             (float X, float Y)? quoteBar = null;
-            var lines = Info.NoteText.Split('\n');
+            var lines = NoteContent.Split('\n');
             for (var i = 0; i < lines.Length; i++)
             {
                 var line = lines[i];
                 var x = (float)area.X;
                 var font = noteFont;
+                if (NoteText.Media(line) is { } media)
+                {
+                    y += DrawMediaLine(g, media, x, y, area.Right - x, view);
+                    continue;
+                }
                 var match = CheckboxPrefix().Match(line);
                 if (match.Success)
                 {
@@ -250,13 +260,18 @@ namespace NoFences
             {
                 if (!RectangleF.Inflate(box, Px(3), Px(3)).Contains(p))
                     continue;
-                Info.NoteText = NoteText.ToggleCheckbox(Info.NoteText, line);
+                NoteContent = NoteText.ToggleCheckbox(NoteContent, line);
                 app.RequestSave();
                 Invalidate();
                 return true;
             }
 
             var target = LinkAt(client);
+            if (target != null && target.StartsWith("audio:", StringComparison.Ordinal))
+            {
+                PlayAudio(target["audio:".Length..]);
+                return true;
+            }
             if (target != null)
             {
                 try
@@ -307,6 +322,8 @@ namespace NoFences
         {
             if (!IsNote || Editing)
                 return;
+            if (NoteLockedNow && !UnlockNote())
+                return;
             if (collapsed)
                 Expand();
 
@@ -326,7 +343,7 @@ namespace NoFences
                 BackColor = back,
                 ForeColor = fore,
                 Dock = DockStyle.Fill,
-                Text = Info.NoteText
+                Text = NoteContent
             };
             editorHost = new EditorHost { BackColor = back };
             editorHost.Controls.Add(editor);
@@ -344,7 +361,9 @@ namespace NoFences
                 {
                     // Paste as plain text in the note's own font and color.
                     e.SuppressKeyPress = true;
-                    if (Clipboard.ContainsText())
+                    if (PasteImageIntoEditor())
+                        lastNoteActivity = DateTime.Now;
+                    else if (Clipboard.ContainsText())
                         editor!.SelectedText = Clipboard.GetText().Replace("\r\n", "\n");
                     ApplyEditorColors(editor!);
                 }
@@ -408,9 +427,9 @@ namespace NoFences
             host?.Close();
             host?.Dispose();
 
-            if (text != Info.NoteText)
+            if (text != NoteContent)
             {
-                Info.NoteText = text;
+                NoteContent = text;
                 app.RequestSave();
             }
             if (!OnTop)
@@ -431,9 +450,9 @@ namespace NoFences
         private void AppendDroppedText(string text)
         {
             text = text.Replace("\r\n", "\n").Trim();
-            if (text.Length == 0)
+            if (text.Length == 0 || NoteLockedNow)
                 return;
-            Info.NoteText = string.IsNullOrEmpty(Info.NoteText) ? text : Info.NoteText.TrimEnd() + "\n" + text;
+            NoteContent = string.IsNullOrEmpty(NoteContent) ? text : NoteContent.TrimEnd() + "\n" + text;
             app.RequestSave();
             Invalidate();
         }
@@ -441,6 +460,7 @@ namespace NoFences
         private void DisposeNote()
         {
             editorHost?.Dispose();
+            DisposeNoteExtras();
             noteFont?.Dispose();
             noteFontDone?.Dispose();
             checkFont?.Dispose();

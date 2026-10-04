@@ -156,6 +156,9 @@ namespace NoFences.Model
         /// <summary>Only used for <see cref="FenceKind.Note"/>; lines separated by '\n'.</summary>
         public string NoteText { get; set; } = "";
 
+        /// <summary>Password-protected notes: the encrypted text (<see cref="NoteText"/> stays empty).</summary>
+        public string? NoteCipher { get; set; }
+
         /// <summary>Notes only: local time at which to remind the user; cleared once shown.</summary>
         public DateTime? ReminderAt { get; set; }
 

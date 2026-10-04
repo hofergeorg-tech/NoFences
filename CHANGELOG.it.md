@@ -19,6 +19,8 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - I recinti possono **sfumare** quando il mouse è lontano (Impostazioni → Desktop); si possono escludere singoli recinti.
 - Strumenti: **mostra/nascondi icone del desktop** e **sposta tutti i recinti su un altro monitor**.
 - **Profili**: avvia programmi con un profilo (e, se vuoi, chiudili quando lo lasci); **sfondo in base all'ora** (Impostazioni → Automazione).
+- **Note**: proteggi con password (cifrata, si blocca da sola dopo 2 minuti), incolla **immagini** con Ctrl+V, registra **note vocali**.
+- La **cronologia degli appunti** conserva anche le immagini; **fissa** le voci (clic destro) perché restino in alto, anche dopo un riavvio.
 
 ## [2.4.2] - 2026-10-03
 

@@ -19,6 +19,8 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 - Les barrières peuvent **s'estomper** quand la souris est loin (Paramètres → Bureau) ; chaque barrière peut être exclue.
 - Outils : **afficher/masquer les icônes du bureau** et **déplacer toutes les barrières vers un autre écran**.
 - **Profils** : démarrer des programmes avec un profil (et les fermer en le quittant, si souhaité) ; **fond d'écran selon l'heure** (Paramètres → Automatisation).
+- **Notes** : protection par mot de passe (chiffrée, se verrouille seule après 2 minutes), coller des **images** avec Ctrl+V, enregistrer des **notes vocales**.
+- L'**historique du presse-papiers** garde aussi les images ; **épinglez** des entrées (clic droit) pour qu'elles restent en haut, même après un redémarrage.
 
 ## [2.4.2] - 2026-10-03
 

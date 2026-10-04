@@ -28,6 +28,7 @@ namespace NoFences
         {
             Store.Load();
             Log.Folder = Store.LocalDirectory;
+            AppData.Folder = Store.DataDirectory;
             Strings.Language = Store.Config.Language;
             appliedTheme = DefaultThemeId;
             var themeErrors = LoadCustomThemesQuiet().Errors;

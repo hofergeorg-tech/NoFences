@@ -93,7 +93,7 @@ namespace NoFences.Widgets
                 }),
                 "media" => new MediaWidget(),
                 "network" => new NetworkWidget(),
-                "clipboard" => new ClipboardWidget(),
+                "clipboard" => new ClipboardWidget(() => info.WidgetOption, Set),
                 "battery" => new BatteryWidget(),
                 "games" => new GamesWidget(() => info.WidgetOption, Set, () => host.Playtime),
                 "agenda" => new AgendaWidget(() => info.WidgetOption, Set),

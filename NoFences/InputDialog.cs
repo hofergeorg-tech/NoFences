@@ -10,7 +10,7 @@ namespace NoFences
         public string Value => box.Text;
 
         /// <param name="selectStem">Select only the part before the extension, like Explorer does.</param>
-        public InputDialog(string title, string prompt, string value, bool selectStem = false)
+        public InputDialog(string title, string prompt, string value, bool selectStem = false, bool password = false)
         {
             Text = title;
             FormBorderStyle = FormBorderStyle.FixedDialog;

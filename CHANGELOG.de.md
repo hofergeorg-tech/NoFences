@@ -19,6 +19,8 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - Fences können sich **ausblenden**, wenn die Maus weit weg ist (Einstellungen → Desktop); einzelne Fences lassen sich ausnehmen.
 - Werkzeuge: **Desktop-Symbole ein/aus** und **alle Fences auf einen anderen Monitor**.
 - **Profile**: Programme mit dem Profil starten (und beim Verlassen auf Wunsch wieder schließen); **Hintergrundbild nach Tageszeit** (Einstellungen → Automatik).
+- **Notizen**: mit Passwort schützen (verschlüsselt, sperrt sich nach 2 Minuten selbst), **Bilder** mit Strg+V einfügen, **Sprachnotizen** aufnehmen.
+- Der **Zwischenablage-Verlauf** merkt sich auch Bilder; Einträge **anheften** (Rechtsklick), damit sie oben bleiben – auch nach einem Neustart.
 
 ## [2.4.2] - 2026-10-03
 

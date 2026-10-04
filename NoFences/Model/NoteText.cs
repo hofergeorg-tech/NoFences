@@ -47,6 +47,29 @@ namespace NoFences.Model
 
         public enum LineKind { Text, Heading1, Heading2, Heading3, Bullet, Quote, Rule }
 
+        [GeneratedRegex(@"^\s*!\[([^\]]*)\]\(([^)]+)\)\s*$")]
+        private static partial Regex MediaPattern();
+
+        private static readonly string[] AudioExtensions = { ".wav", ".mp3", ".m4a", ".ogg" };
+
+        public readonly record struct MediaLine(string Alt, string Path, bool IsAudio);
+
+        /// <summary>A line that is only "![alt](path)": an image, or a voice note for audio files.</summary>
+        public static MediaLine? Media(string line)
+        {
+            var m = MediaPattern().Match(line);
+            if (!m.Success)
+                return null;
+            var path = m.Groups[2].Value.Trim();
+            var isAudio = AudioExtensions.Contains(System.IO.Path.GetExtension(path), StringComparer.OrdinalIgnoreCase);
+            return new MediaLine(m.Groups[1].Value, path, isAudio);
+        }
+
+        public static string MediaMarkup(string alt, string path) => $"![{alt.Replace("]", ")")}]({path})";
+
+        /// <summary>"0:42", "12:05"</summary>
+        public static string Duration(TimeSpan t) => $"{(int)t.TotalMinutes}:{t.Seconds:00}";
+
         /// <summary>Markdown-style line types: "# " headings, "- " / "* " bullets, "> " quotes, "---" rules.</summary>
         public static (LineKind Kind, string Content) ParseLine(string line)
         {
@@ -97,6 +120,7 @@ namespace NoFences.Model
         public static string Summary(string text, int maxLength = 80)
         {
             var first = Lines(text)
+                .Where(l => Media(l) == null)
                 .Select(l => string.Concat(Runs(ParseLine(CheckboxPrefix().Replace(l, "")).Content).Select(r => r.Text)).Trim())
                 .FirstOrDefault(l => l.Length > 0) ?? "";
             return first.Length <= maxLength ? first : first[..(maxLength - 1)] + "…";
