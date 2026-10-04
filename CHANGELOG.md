@@ -25,6 +25,7 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **System monitor** with a two-minute graph and a **warning when the graphics card gets too hot**; **speed test** in the network widget.
 - **Battery widget** also shows **controllers and Bluetooth devices**; new widget **Autostart** (switch Windows startup programs on/off).
 - Tools: **QR code** (text or link from the clipboard), **magnifier**; "Clean up folders" finds **duplicate files**.
+- **Weather**: rain hint for the next two hours ("Rain in about 20 min"), sunrise and sunset, moon phase.
 
 ## [2.4.2] - 2026-10-03
 

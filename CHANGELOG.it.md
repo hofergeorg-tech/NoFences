@@ -24,6 +24,7 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Monitor di sistema** con grafico di due minuti e **avviso se la scheda grafica è troppo calda**; **speed test** nel widget di rete.
 - Il **widget batteria** mostra anche **controller e dispositivi Bluetooth**; nuovo widget **Avvio automatico** (attiva/disattiva i programmi all'avvio di Windows).
 - Strumenti: **codice QR** (testo o link dagli appunti), **lente d'ingrandimento**; "Riordina cartelle" trova i **file duplicati**.
+- **Meteo**: avviso di pioggia per le prossime due ore («Pioggia tra circa 20 min»), alba e tramonto, fase lunare.
 
 ## [2.4.2] - 2026-10-03
 

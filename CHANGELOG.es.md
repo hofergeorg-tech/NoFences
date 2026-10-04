@@ -24,6 +24,7 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 - **Monitor del sistema** con gráfico de dos minutos y **aviso si la tarjeta gráfica se calienta demasiado**; **test de velocidad** en el widget de red.
 - El **widget de batería** muestra también **mandos y dispositivos Bluetooth**; nuevo widget **Inicio automático** (activar/desactivar programas de inicio de Windows).
 - Herramientas: **código QR** (texto o enlace del portapapeles), **lupa**; "Ordenar carpetas" encuentra **archivos duplicados**.
+- **Tiempo**: aviso de lluvia para las próximas dos horas («Lluvia en unos 20 min»), salida y puesta del sol, fase lunar.
 
 ## [2.4.2] - 2026-10-03
 

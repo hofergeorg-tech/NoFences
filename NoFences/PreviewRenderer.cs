@@ -338,7 +338,10 @@ namespace NoFences
                         new Widgets.WeatherDay(today.AddDays(1), Widgets.WeatherKind.Rain, 14, 8),
                         new Widgets.WeatherDay(today.AddDays(2), Widgets.WeatherKind.Thunder, 16, 10),
                         new Widgets.WeatherDay(today.AddDays(3), Widgets.WeatherKind.Clear, 21, 11),
-                    }));
+                    },
+                    // Rain starting in about 20 minutes, and today's sun times
+                    Enumerable.Range(0, 9).Select(i => (DateTime.Now.AddMinutes(-5 + i * 15), i >= 2 ? 0.6 : 0.0)).ToList(),
+                    today.AddHours(6.95), today.AddHours(18.45)));
                     break;
                 case Widgets.MediaWidget media:
                     media.SetPreview("Midnight Drive", "The Synthwave Band", "Spotify", null, TimeSpan.FromSeconds(83), TimeSpan.FromSeconds(214));

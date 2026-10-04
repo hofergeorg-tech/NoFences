@@ -28,7 +28,61 @@ namespace NoFences.Widgets
 
     public sealed record WeatherDay(DateTime Date, WeatherKind Kind, double Max, double Min);
 
-    public sealed record WeatherReport(double Temperature, double FeelsLike, double Wind, WeatherKind Kind, bool IsDay, IReadOnlyList<WeatherDay> Days);
+    public sealed record WeatherReport(double Temperature, double FeelsLike, double Wind, WeatherKind Kind, bool IsDay, IReadOnlyList<WeatherDay> Days,
+        IReadOnlyList<(DateTime Time, double Mm)>? Precipitation = null, DateTime? Sunrise = null, DateTime? Sunset = null, TimeSpan? UtcOffset = null)
+    {
+        /// <summary>The time at the place right now (its times are local to it).</summary>
+        public DateTime PlaceNow => UtcOffset is TimeSpan offset ? DateTime.UtcNow + offset : DateTime.Now;
+    }
+
+    /// <summary>"Rain in 30 min" / "Rain stops in 45 min" from the next two hours in 15-minute steps.</summary>
+    public sealed record RainOutlook(bool Starts, int Minutes);
+
+    public static class RainForecast
+    {
+        /// <summary>Millimetres per 15 minutes that count as rain (drops on the window don't).</summary>
+        public const double Threshold = 0.1;
+
+        public static RainOutlook? Outlook(IReadOnlyList<(DateTime Time, double Mm)>? slots, DateTime now)
+        {
+            if (slots is not { Count: > 0 })
+                return null;
+            var current = slots.LastOrDefault(s => s.Time <= now);
+            if (current == default)
+                current = slots[0];
+            var rainingNow = current.Mm >= Threshold;
+            foreach (var slot in slots.Where(s => s.Time > now))
+            {
+                if (slot.Mm >= Threshold == rainingNow)
+                    continue;
+                // Rounded up to 5 minutes: "in about 15 min" rather than "in 13 min"
+                var minutes = Math.Max(5, (int)Math.Ceiling((slot.Time - now).TotalMinutes / 5) * 5);
+                return new RainOutlook(!rainingNow, minutes);
+            }
+            return null;
+        }
+    }
+
+    /// <summary>Moon phase computed from the date (mean synodic month; exact to within a few hours).</summary>
+    public static class MoonPhase
+    {
+        private const double SynodicMonth = 29.530588853;
+        private static readonly DateTime KnownNewMoon = new(2000, 1, 6, 18, 14, 0, DateTimeKind.Utc);
+
+        /// <summary>0 = new moon, 0.25 = first quarter, 0.5 = full moon, 0.75 = last quarter.</summary>
+        public static double Of(DateTime utc)
+        {
+            var days = (utc - KnownNewMoon).TotalDays;
+            var phase = days / SynodicMonth % 1;
+            return phase < 0 ? phase + 1 : phase;
+        }
+
+        /// <summary>Lit part of the disc, 0..1.</summary>
+        public static double Illumination(double phase) => (1 - Math.Cos(2 * Math.PI * phase)) / 2;
+
+        /// <summary>0 new, 1 waxing crescent, 2 first quarter, 3 waxing gibbous, 4 full, 5 waning gibbous, 6 last quarter, 7 waning crescent.</summary>
+        public static int Index(double phase) => (int)Math.Round(phase * 8) % 8;
+    }
 
     /// <summary>Open-Meteo (free, no API key): place search and the current weather with a short forecast.</summary>
     public static class WeatherService
@@ -86,7 +140,8 @@ namespace NoFences.Widgets
         {
             var url = string.Create(CultureInfo.InvariantCulture, $"https://api.open-meteo.com/v1/forecast?latitude={place.Latitude}&longitude={place.Longitude}")
                       + "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,is_day"
-                      + "&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=4";
+                      + "&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto&forecast_days=4"
+                      + "&minutely_15=precipitation&forecast_minutely_15=9";
             return ParseReport(await Http.GetStringAsync(url));
         }
 
@@ -107,14 +162,37 @@ namespace NoFences.Widgets
                 days.Add(new WeatherDay(DateTime.ParseExact(dates[i].GetString()!, "yyyy-MM-dd", CultureInfo.InvariantCulture),
                     KindOf(codes[i].GetInt32()), max[i].GetDouble(), min[i].GetDouble()));
             }
+            // Rain in the next two hours (15-minute steps) and today's sunrise/sunset – both optional
+            List<(DateTime, double)>? rain = null;
+            if (doc.RootElement.TryGetProperty("minutely_15", out var minutely)
+                && minutely.TryGetProperty("time", out var times) && minutely.TryGetProperty("precipitation", out var amounts))
+            {
+                rain = new();
+                foreach (var (time, amount) in times.EnumerateArray().Zip(amounts.EnumerateArray()))
+                {
+                    if (amount.ValueKind == JsonValueKind.Number && LocalTime(time.GetString()) is DateTime t)
+                        rain.Add((t, amount.GetDouble()));
+                }
+            }
+            DateTime? sunrise = null, sunset = null;
+            if (daily.TryGetProperty("sunrise", out var rises) && rises.GetArrayLength() > 0)
+                sunrise = LocalTime(rises[0].GetString());
+            if (daily.TryGetProperty("sunset", out var sets) && sets.GetArrayLength() > 0)
+                sunset = LocalTime(sets[0].GetString());
+
             return new WeatherReport(
                 current.GetProperty("temperature_2m").GetDouble(),
                 current.GetProperty("apparent_temperature").GetDouble(),
                 current.GetProperty("wind_speed_10m").GetDouble(),
                 KindOf(current.GetProperty("weather_code").GetInt32()),
                 !current.TryGetProperty("is_day", out var day) || day.GetInt32() == 1,
-                days);
+                days, rain, sunrise, sunset,
+                doc.RootElement.TryGetProperty("utc_offset_seconds", out var offset) && offset.ValueKind == JsonValueKind.Number ? TimeSpan.FromSeconds(offset.GetInt32()) : null);
         }
+
+        /// <summary>"2026-10-04T06:57" in the place's local time (timezone=auto).</summary>
+        private static DateTime? LocalTime(string? text) =>
+            DateTime.TryParseExact(text, "yyyy-MM-dd'T'HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out var t) ? t : null;
     }
 
     /// <summary>Simple weather icons drawn with shapes, so they take the style's colors.</summary>
@@ -200,6 +278,50 @@ namespace NoFences.Widgets
                     }
                     break;
             }
+        }
+
+        /// <summary>A rain drop (for the rain hint).</summary>
+        public static void Drop(Graphics g, RectangleF r, Color color)
+        {
+            var oldMode = g.SmoothingMode;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            using var path = new GraphicsPath();
+            path.AddLine(r.X + r.Width / 2, r.Y, r.Right, r.Y + r.Height * 0.62f);
+            path.AddArc(r.X, r.Bottom - r.Width, r.Width, r.Width, 0, 180);
+            path.CloseFigure();
+            using var brush = new SolidBrush(color);
+            g.FillPath(brush, path);
+            g.SmoothingMode = oldMode;
+        }
+
+        /// <summary>
+        /// The moon as seen now (northern hemisphere): lit on the right while waxing, on the left while
+        /// waning. <paramref name="phase"/> as in <see cref="MoonPhase.Of"/>.
+        /// </summary>
+        public static void MoonPhaseIcon(Graphics g, RectangleF r, double phase, Color color)
+        {
+            var oldMode = g.SmoothingMode;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            using (var dark = new SolidBrush(Color.FromArgb(60, color)))
+                g.FillEllipse(dark, r);
+            var waxing = phase < 0.5;
+            // The terminator is a half ellipse whose width follows the phase
+            var k = (float)Math.Cos(2 * Math.PI * phase); // 1 new, 0 quarter, -1 full
+            using var lit = new GraphicsPath(FillMode.Winding);
+            // Lit half
+            lit.AddArc(r, waxing ? 270 : 90, 180);
+            var halfWidth = Math.Abs(k) * r.Width / 2;
+            var terminator = new RectangleF(r.X + r.Width / 2 - halfWidth, r.Y, Math.Max(0.01f, halfWidth * 2), r.Height);
+            using var region = new Region(lit);
+            using var ellipse = new GraphicsPath();
+            ellipse.AddEllipse(terminator);
+            if (k > 0)
+                region.Exclude(ellipse); // crescent: the dark bulge eats into the lit half
+            else
+                region.Union(ellipse);   // gibbous: more than half is lit
+            using var brush = new SolidBrush(color);
+            g.FillRegion(brush, region);
+            g.SmoothingMode = oldMode;
         }
 
         private static void Sun(Graphics g, RectangleF r, Color color, float stroke)

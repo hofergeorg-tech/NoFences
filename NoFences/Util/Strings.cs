@@ -249,6 +249,22 @@ namespace NoFences.Util
                                                  "Faites glisser des fichiers sur la barrière. Clic droit sur une barrière pour les options ; l'icône de la zone de notification contient les paramètres et l'aide.",
                                                  "Arrastra archivos a la valla. Clic derecho en una valla para ver las opciones; el icono de la bandeja tiene la configuración y la ayuda.");
 
+        // Weather: rain hint, sun and moon
+        public static string RainStarts(int minutes) => T($"Rain in about {minutes} min", $"Regen in ca. {minutes} Min.", $"Pioggia tra circa {minutes} min", $"Pluie dans env. {minutes} min", $"Lluvia en unos {minutes} min");
+        public static string RainStops(int minutes) => T($"Rain stops in about {minutes} min", $"Regen hört in ca. {minutes} Min. auf", $"La pioggia smette tra circa {minutes} min", $"La pluie s'arrête dans env. {minutes} min", $"La lluvia para en unos {minutes} min");
+        public static string SunTimes(string rise, string set) => T($"Sun ↑ {rise}  ↓ {set}", $"Sonne ↑ {rise}  ↓ {set}", $"Sole ↑ {rise}  ↓ {set}", $"Soleil ↑ {rise}  ↓ {set}", $"Sol ↑ {rise}  ↓ {set}");
+        public static string MoonPhaseName(int index) => index switch
+        {
+            0 => T("New moon", "Neumond", "Luna nuova", "Nouvelle lune", "Luna nueva"),
+            1 => T("Waxing crescent", "Zunehmende Sichel", "Falce crescente", "Premier croissant", "Luna creciente"),
+            2 => T("First quarter", "Erstes Viertel", "Primo quarto", "Premier quartier", "Cuarto creciente"),
+            3 => T("Waxing gibbous", "Zunehmender Mond", "Gibbosa crescente", "Gibbeuse croissante", "Gibosa creciente"),
+            4 => T("Full moon", "Vollmond", "Luna piena", "Pleine lune", "Luna llena"),
+            5 => T("Waning gibbous", "Abnehmender Mond", "Gibbosa calante", "Gibbeuse décroissante", "Gibosa menguante"),
+            6 => T("Last quarter", "Letztes Viertel", "Ultimo quarto", "Dernier quartier", "Cuarto menguante"),
+            _ => T("Waning crescent", "Abnehmende Sichel", "Falce calante", "Dernier croissant", "Luna menguante")
+        };
+        public static string MoonTooltip(string phase, int percent) => T($"Moon: {phase}, {percent} % lit", $"Mond: {phase}, {percent} % beleuchtet", $"Luna: {phase}, illuminata al {percent} %", $"Lune : {phase}, éclairée à {percent} %", $"Luna: {phase}, iluminada al {percent} %");
         // System & tools: QR code, magnifier, device batteries, temperature, speed test, autostart, duplicates
         public static string QrMenu => T("QR code…", "QR-Code…", "Codice QR…", "Code QR…", "Código QR…");
         public static string QrTitle => T("QR code", "QR-Code", "Codice QR", "Code QR", "Código QR");

@@ -108,7 +108,30 @@ namespace NoFences.Widgets
             c.Text(place.Name, new RectangleF(c.Area.X, y, c.Area.Width, line));
             y += line;
             c.Text(Strings.WeatherDetails(Math.Round(r.FeelsLike), Math.Round(r.Wind)), new RectangleF(c.Area.X, y, c.Area.Width, line));
-            y += line + c.Px(8);
+            y += line;
+
+            // "Rain in about 20 min" – the most useful line when it applies, so it comes first
+            if (RainForecast.Outlook(r.Precipitation, r.PlaceNow) is { } rain)
+            {
+                var drop = line * 0.62f;
+                WeatherIcon.Drop(c.G, new RectangleF(c.Area.X + c.Px(1), y + (line - drop) / 2, drop * 0.75f, drop), c.Theme.Accent);
+                c.Text(rain.Starts ? Strings.RainStarts(rain.Minutes) : Strings.RainStops(rain.Minutes), new RectangleF(c.Area.X + drop + c.Px(4), y, c.Area.Width - drop - c.Px(4), line));
+                y += line;
+            }
+
+            // Sunrise/sunset and the moon
+            if (r.Sunrise is DateTime rise && r.Sunset is DateTime set)
+            {
+                var phase = MoonPhase.Of(DateTime.UtcNow);
+                var moon = line * 0.7f;
+                c.Text(Strings.SunTimes(rise.ToString("HH:mm"), set.ToString("HH:mm")), new RectangleF(c.Area.X, y, c.Area.Width - moon - c.Px(44), line));
+                var moonText = $"{MoonPhase.Illumination(phase) * 100:0} %";
+                var textWidth2 = c.G.MeasureString(moonText, c.Label).Width;
+                WeatherIcon.MoonPhaseIcon(c.G, new RectangleF(c.Area.Right - textWidth2 - moon - c.Px(4), y + (line - moon) / 2, moon, moon), phase, c.Ink);
+                c.Text(moonText, new RectangleF(c.Area.Right - textWidth2, y, textWidth2, line), align: StringAlignment.Far);
+                y += line;
+            }
+            y += c.Px(8);
 
             // Forecast: today and the next days, one row each
             var culture = new CultureInfo(Strings.Effective);
@@ -123,6 +146,12 @@ namespace NoFences.Widgets
                 c.Text($"{Math.Round(day.Max):0}° / {Math.Round(day.Min):0}°", new RectangleF(c.Area.X + c.Area.Width * 0.5f, y, c.Area.Width * 0.5f, line), align: StringAlignment.Far);
                 y += line + c.Px(3);
             }
+        }
+
+        public override string? TooltipAt(Point p)
+        {
+            var phase = MoonPhase.Of(DateTime.UtcNow);
+            return report?.Sunrise != null ? Strings.MoonTooltip(Strings.MoonPhaseName(MoonPhase.Index(phase)), (int)Math.Round(MoonPhase.Illumination(phase) * 100)) : null;
         }
 
         public override void DoubleClick(Point p) => ChoosePlace(null);

@@ -24,6 +24,7 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 - **Moniteur système** avec courbe de deux minutes et **alerte quand la carte graphique chauffe trop** ; **test de débit** dans le widget réseau.
 - Le **widget batterie** affiche aussi les **manettes et appareils Bluetooth** ; nouveau widget **Démarrage auto** (activer/désactiver les programmes au démarrage de Windows).
 - Outils : **code QR** (texte ou lien du presse-papiers), **loupe** ; "Ranger les dossiers" trouve les **fichiers en double**.
+- **Météo** : alerte pluie pour les deux prochaines heures (« Pluie dans env. 20 min »), lever et coucher du soleil, phase de la lune.
 
 ## [2.4.2] - 2026-10-03
 
