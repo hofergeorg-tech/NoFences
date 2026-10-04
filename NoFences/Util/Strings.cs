@@ -258,6 +258,23 @@ namespace NoFences.Util
         public static string FoldGroup => L("FoldGroup");
         public static string UnfoldGroup => L("UnfoldGroup");
         public static string GroupHint => L("GroupHint");
+        public static string SidebarGroupName => L("SidebarGroupName");
+        public static string DockMenu => L("DockMenu");
+        public static string DockHint => L("DockHint");
+        public static string DockOff => L("DockOff");
+        public static string DockLeft => L("DockLeft");
+        public static string DockRight => L("DockRight");
+        public static string DockTop => L("DockTop");
+        public static string DockBottom => L("DockBottom");
+        public static string DockEdgeName(DockEdge edge) => edge switch
+        {
+            DockEdge.Left => DockLeft,
+            DockEdge.Right => DockRight,
+            DockEdge.Top => DockTop,
+            _ => DockBottom
+        };
+        public static string DockAutoHide => L("DockAutoHide");
+        public static string DockScreen => L("DockScreen");
         public static string NewName => L("NewName");
         public static string RenameFailed(string reason) => L("RenameFailed", reason);
         public static string Search => L("Search");

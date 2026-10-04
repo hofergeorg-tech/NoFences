@@ -42,6 +42,12 @@ Consejo: para un escritorio ordenado, crea una carpeta como `Documentos\Vallas\T
   el menú de la bandeja y de la valla («Deshacer: …»). Los archivos de la papelera se recuperan desde allí.
 - **Grupos**: clic derecho → Grupo → «Nuevo grupo…» o un grupo existente. Las vallas de un grupo se mueven juntas al
   arrastrar una de ellas, y «Plegar grupo» las reduce todas a su barra de título hasta que las despliegues.
+- **Barra lateral**: clic derecho → Grupo → **Anclar al borde de la pantalla** → izquierda, derecha, arriba o abajo.
+  Las vallas del grupo se alinean en ese borde (una valla sin grupo pasa a un nuevo grupo «Barra lateral»). **Ocultar
+  automáticamente**: la barra entra cuando el ratón toca el borde y se retira después; si no, reserva su espacio como
+  la barra de tareas y las ventanas maximizadas terminan a su lado. Arrastra una valla dentro de la barra para cambiar
+  el orden y el borde interior para ensancharla. Nunca aparece sobre un juego a pantalla completa. «Sin anclar»
+  devuelve las vallas a su sitio.
 - **Escribe directamente** para buscar en esa valla; el texto aparece arriba a la derecha, Esc termina.
 - Menú de la valla → **Ordenar por**: manual, nombre, tipo, fecha de modificación, tamaño o **más usados primero**
   (NoFences cuenta cuántas veces abres algo desde la valla).

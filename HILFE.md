@@ -45,6 +45,12 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 - **Gruppen**: Rechtsklick → Gruppe → „Neue Gruppe…“ oder eine bestehende Gruppe. Fences einer Gruppe bewegen sich
   gemeinsam, wenn du einen davon ziehst, und „Gruppe einklappen“ verkleinert alle auf ihre Titelleisten, bis du sie
   wieder ausklappst.
+- **Seitenleiste**: Rechtsklick → Gruppe → **An Bildschirmrand andocken** → links, rechts, oben oder unten. Die Fences
+  der Gruppe reihen sich an diesem Rand auf (ein Fence ohne Gruppe kommt in eine neue Gruppe „Seitenleiste“).
+  **Automatisch ausblenden**: Die Leiste fährt herein, wenn die Maus den Rand berührt, und wieder weg; sonst reserviert
+  sie ihren Platz wie die Taskleiste, und maximierte Fenster enden daneben. Einen Fence innerhalb der Leiste ziehen
+  ändert die Reihenfolge, die Innenkante ziehen macht die Leiste breiter. Über einem Spiel im Vollbild erscheint sie nie.
+  „Nicht angedockt“ stellt die Fences wieder an ihren alten Platz.
 - **Lostippen** sucht in diesem Fence; das Suchwort steht oben rechts, Esc beendet die Suche.
 - Fence-Menü → **Sortieren nach**: manuell, Name, Typ, Änderungsdatum, Größe oder **meistgenutzt zuerst** (NoFences
   zählt, wie oft du etwas aus dem Fence öffnest).

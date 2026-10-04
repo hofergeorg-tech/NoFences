@@ -42,6 +42,12 @@ Suggerimento: per un desktop ordinato, crea una cartella come `Documenti\Recinti
   menu della barra e del recinto ("Annulla: …"). I file nel cestino si ripristinano da lì.
 - **Gruppi**: clic destro → Gruppo → "Nuovo gruppo…" o un gruppo esistente. I recinti di un gruppo si spostano insieme
   quando ne trascini uno, e "Comprimi gruppo" li riduce tutti alla barra del titolo finché non li espandi.
+- **Barra laterale**: clic destro → Gruppo → **Aggancia al bordo dello schermo** → sinistra, destra, in alto o in
+  basso. I recinti del gruppo si allineano lungo quel bordo (un recinto senza gruppo finisce in un nuovo gruppo "Barra
+  laterale"). **Nascondi automaticamente**: la barra entra quando il mouse tocca il bordo e poi si ritira; altrimenti
+  riserva il suo spazio come la barra delle applicazioni e le finestre massimizzate finiscono accanto. Trascina un
+  recinto nella barra per cambiare l'ordine, trascina il bordo interno per allargarla. Non appare mai sopra un gioco a
+  schermo intero. "Non agganciato" rimette i recinti dove erano.
 - **Basta digitare** per cercare in quel recinto; il testo appare in alto a destra, Esc termina.
 - Menu del recinto → **Ordina per**: manuale, nome, tipo, data di modifica, dimensione o **più usati prima** (NoFences
   conta quante volte apri qualcosa dal recinto).

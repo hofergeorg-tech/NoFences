@@ -41,6 +41,11 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
   went to the recycle bin are restored from there.
 - **Groups**: right-click → Group → "New group…" or an existing group. Fences in a group move together when you drag
   one of them, and "Fold group" shrinks them all to their title bars until you unfold them again.
+- **Sidebar**: right-click → Group → **Dock to screen edge** → left, right, top or bottom. The group's fences line up
+  along that edge (a fence without a group goes into a new group "Sidebar"). **Hide automatically**: the bar slides in
+  when the mouse touches the edge and away again; otherwise it reserves its space like the taskbar and maximized windows
+  end next to it. Drag a fence within the bar to change the order, drag its inner edge to make the bar wider. It never
+  shows over a full-screen game. "Not docked" puts the fences back where they were.
 - **Just type** to search in that fence; the search text shows top right, Esc ends it.
 - Fence menu → **Sort by**: manual, name, type, date modified, size or **most used first** (NoFences counts how often
   you open something from the fence).

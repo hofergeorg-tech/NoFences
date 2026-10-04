@@ -592,8 +592,42 @@ namespace NoFences
         /// <summary>True while the fences are shown above all windows (peek shortcut).</summary>
         public bool Peeking { get; private set; }
 
-        /// <summary>Above other windows: during peek, or permanently with "Always on top".</summary>
-        private bool OnTop => Peeking || Info.AlwaysOnTop;
+        /// <summary>Above other windows: during peek, in a bar that is out, or permanently with "Always on top".</summary>
+        private bool OnTop => Peeking || DockRaised || Info.AlwaysOnTop;
+
+        /// <summary>Part of a docked bar that is shown (or reserves its space): above other windows.</summary>
+        public bool DockRaised { get; private set; }
+
+        public void SetDockRaised(bool on)
+        {
+            if (DockRaised == on)
+                return;
+            DockRaised = on;
+            ApplyZOrder();
+        }
+
+        /// <summary>Moved or resized by the user right now.</summary>
+        public bool InSizeMove => inSizeMove;
+
+        public bool IsCollapsed => collapsed;
+
+        /// <summary>The user is working with it (menu, editor, drag): a bar must not slide away.</summary>
+        public bool Busy => appMenuOpen || Editing || Capture || inSizeMove;
+
+        /// <summary>Put in place by its docked bar.</summary>
+        public void PlaceInDock(Rectangle place)
+        {
+            suppressBoundsSave = true;
+            Bounds = place;
+            suppressBoundsSave = false;
+            Info.PosX = Left;
+            Info.PosY = Top;
+            Info.Width = Width;
+            if (!collapsed)
+                Info.Height = Height;
+            RememberLayout();
+            app.RequestSave();
+        }
 
         public void SetPeek(bool on)
         {

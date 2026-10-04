@@ -12,8 +12,9 @@ namespace NoFences
         private List<FenceWindow> WindowsInGroup(string group) =>
             windows.Where(w => string.Equals(w.Info.Group, group, StringComparison.CurrentCultureIgnoreCase)).ToList();
 
+        /// <summary>The fences that move along (none in a docked group: the bar places them).</summary>
         public IReadOnlyList<FenceWindow> GroupMembers(FenceWindow window) =>
-            window.Info.Group is { } group ? WindowsInGroup(group).Where(w => w != window).ToList() : Array.Empty<FenceWindow>();
+            window.Info.Group is { } group && !IsDocked(window.Info) ? WindowsInGroup(group).Where(w => w != window).ToList() : Array.Empty<FenceWindow>();
 
         public void AddGroupItems(ToolStripItemCollection items, FenceWindow window)
         {
@@ -41,17 +42,21 @@ namespace NoFences
                 var folded = WindowsInGroup(group).All(w => w.Info.Folded);
                 menu.DropDownItems.Add(folded ? Strings.UnfoldGroup : Strings.FoldGroup, null, (_, _) => FoldGroup(group, !folded));
             }
+            menu.DropDownItems.Add(new ToolStripSeparator());
+            AddDockItems(menu, window);
             items.Add(menu);
         }
 
         private void SetGroup(FenceWindow window, string? group)
         {
             RecordUndo(Strings.UndoGroup(window.Info.Name), new[] { window.Info.Id });
+            var oldGroup = window.Info.Group;
             window.Info.Group = group;
             if (group == null && window.Info.Folded)
                 window.SetFolded(false);
             else if (group != null)
                 window.SetFolded(WindowsInGroup(group).Where(w => w != window).Any(w => w.Info.Folded));
+            DockGroupChanged(window, oldGroup);
             Store.RequestSave();
         }
 

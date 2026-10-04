@@ -65,7 +65,7 @@ namespace NoFences
                 if (!w.Visible)
                     continue;
                 var scale = w.DeviceDpi / 96.0;
-                var target = w.Info.NoFade || w.Peeking || OwnDialogActive
+                var target = w.Info.NoFade || w.Peeking || w.DockRaised || OwnDialogActive
                     ? 1
                     : FenceExtras.FadeOpacity(FenceExtras.Distance(w.Bounds, cursor) / scale);
                 // Glide there instead of jumping

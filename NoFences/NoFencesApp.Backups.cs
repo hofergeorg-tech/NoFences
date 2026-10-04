@@ -28,6 +28,7 @@ namespace NoFences
                 await Task.Delay(1500);
                 foreach (var w in windows)
                     w.ApplyLayoutForCurrentScreens();
+                DocksAfterScreenChange();
             }, null);
 
 

@@ -90,6 +90,9 @@ namespace NoFences
         /// <summary>What Ctrl+Z would undo, or null.</summary>
         string? UndoDescription { get; }
 
+        /// <summary>A fence of a docked bar was dragged or resized (<paramref name="before"/> = its bounds before).</summary>
+        void DockMemberChanged(FenceWindow window, Rectangle before);
+
         /// <summary>The other fences in this fence's group (empty without a group).</summary>
         IReadOnlyList<FenceWindow> GroupMembers(FenceWindow window);
 

@@ -4,7 +4,12 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
-## [2.6.0] - sin publicar
+## [2.7.0] - sin publicar
+
+### Novedades
+- **Barra lateral**: ancla un grupo de vallas al borde izquierdo, derecho, superior o inferior de un monitor (clic derecho → Grupo → Anclar al borde de la pantalla). Entra cuando el ratón toca el borde o reserva su espacio como la barra de tareas; nunca sobre juegos a pantalla completa.
+
+## [2.6.0] - 2026-10-04
 
 ### Novedades
 - **Traducciones propias**: Configuración → General → «Traducciones propias…» abre la carpeta `lang` con una plantilla en inglés. Un archivo como `nl.json` añade un idioma, un `es.json` con textos sueltos cambia solo esos. Todos los textos están ahora en un archivo JSON por idioma.

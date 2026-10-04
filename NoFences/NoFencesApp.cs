@@ -66,6 +66,7 @@ namespace NoFences
             InitSync();
             InitScreenTime();
             InitFenceTools();
+            InitDocks();
             UpdateProfileHotkeys();
             UpdateQuickNoteHotkey();
             if (languageErrors.Count > 0)
@@ -325,6 +326,7 @@ namespace NoFences
             DisposeSync();
             DisposeScreenTime();
             DisposeFenceTools();
+            DisposeDocks();
             DisposeProfileHotkeys();
             DisposeQuickNote();
             sorter.Dispose();

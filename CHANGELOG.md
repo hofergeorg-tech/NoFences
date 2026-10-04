@@ -5,7 +5,12 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.6.0] - unreleased
+## [2.7.0] - unreleased
+
+### Added
+- **Sidebar**: dock a fence group to the left, right, top or bottom edge of a monitor (right-click → Group → Dock to screen edge). It slides in when the mouse touches the edge, or reserves its space like the taskbar; never over full-screen games.
+
+## [2.6.0] - 2026-10-04
 
 ### Added
 - **Own translations**: Settings → General → "Own translations…" opens the `lang` folder with an English template. A file like `nl.json` adds a language, a `de.json` with single texts changes just those. All texts now live in one JSON file per language.

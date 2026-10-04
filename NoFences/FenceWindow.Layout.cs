@@ -66,6 +66,8 @@ namespace NoFences
             }
             moveSnapshots = new List<string>();
             groupStart = new();
+            if (Bounds != dragStartBounds)
+                app.DockMemberChanged(this, dragStartBounds);
             Info.PosX = Left;
             Info.PosY = Top;
             if (!collapsed)

@@ -46,6 +46,12 @@ Astuce : pour un bureau rangé, créez un dossier comme `Documents\Barrières\Tr
 - **Groupes** : clic droit → Groupe → « Nouveau groupe… » ou un groupe existant. Les barrières d'un groupe se déplacent
   ensemble quand vous en faites glisser une, et « Replier le groupe » les réduit toutes à leur barre de titre jusqu'à ce
   que vous les dépliiez.
+- **Barre latérale** : clic droit → Groupe → **Ancrer au bord de l'écran** → gauche, droite, haut ou bas. Les
+  barrières du groupe s'alignent le long de ce bord (une barrière sans groupe va dans un nouveau groupe « Barre
+  latérale »). **Masquer automatiquement** : la barre glisse quand la souris touche le bord, puis repart ; sinon elle
+  réserve sa place comme la barre des tâches et les fenêtres agrandies s'arrêtent à côté. Faites glisser une barrière
+  dans la barre pour changer l'ordre, tirez le bord intérieur pour l'élargir. Elle n'apparaît jamais au-dessus d'un jeu
+  en plein écran. « Non ancré » remet les barrières à leur place.
 - **Tapez simplement** pour chercher dans cette barrière ; le texte s'affiche en haut à droite, Échap arrête.
 - Menu de la barrière → **Trier par** : manuel, nom, type, date de modification, taille ou **les plus utilisés d'abord**
   (NoFences compte combien de fois vous ouvrez quelque chose depuis la barrière).

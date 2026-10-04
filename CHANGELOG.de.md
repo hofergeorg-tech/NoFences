@@ -4,7 +4,12 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.6.0] - unveröffentlicht
+## [2.7.0] - unveröffentlicht
+
+### Neu
+- **Seitenleiste**: eine Fence-Gruppe am linken, rechten, oberen oder unteren Bildschirmrand andocken (Rechtsklick → Gruppe → An Bildschirmrand andocken). Sie fährt herein, wenn die Maus den Rand berührt, oder reserviert ihren Platz wie die Taskleiste; nie über Spielen im Vollbild.
+
+## [2.6.0] - 2026-10-04
 
 ### Neu
 - **Eigene Übersetzungen**: Einstellungen → Allgemein → „Eigene Übersetzungen…“ öffnet den Ordner `lang` mit einer englischen Vorlage. Eine Datei wie `nl.json` fügt eine Sprache hinzu, eine `de.json` mit einzelnen Texten ändert genau diese. Alle Texte liegen jetzt in einer JSON-Datei pro Sprache.
