@@ -152,7 +152,23 @@ namespace NoFences.Util
         public static string WidgetSteamDeals => T("Steam sales", "Steam-Angebote", "Offerte Steam", "Promos Steam", "Ofertas de Steam");
         public static string SteamWishlist => T("On your wishlist", "Auf deiner Wunschliste", "Nella tua lista dei desideri", "Dans votre liste de souhaits", "En tu lista de deseos");
         public static string SteamSpecials => T("Current sales", "Aktuelle Angebote", "Offerte attuali", "Promotions actuelles", "Ofertas actuales");
-        public static string SteamIdMenu => T("Steam account for the wishlist…", "Steam-Konto für die Wunschliste…", "Account Steam per la lista dei desideri…", "Compte Steam pour la liste de souhaits…", "Cuenta de Steam para la lista de deseos…");
+        public static string SteamSettingsMenu => T("What to show…", "Was angezeigt wird…", "Cosa mostrare…", "Que montrer…", "Qué mostrar…");
+        public static string SteamSourceLabel => T("Show", "Anzeigen", "Mostra", "Afficher", "Mostrar");
+        public static string SteamSourceName(Widgets.SteamDealsWidget.DealSource source) => source switch
+        {
+            Widgets.SteamDealsWidget.DealSource.TopSellers => T("Top sellers", "Topseller", "I più venduti", "Meilleures ventes", "Más vendidos"),
+            Widgets.SteamDealsWidget.DealSource.NewReleases => T("New releases", "Neuerscheinungen", "Nuove uscite", "Nouveautés", "Novedades"),
+            Widgets.SteamDealsWidget.DealSource.Wishlist => T("Only my wishlist on sale", "Nur meine Wunschliste im Angebot", "Solo la mia lista dei desideri in offerta", "Seulement ma liste de souhaits en promo", "Solo mi lista de deseos en oferta"),
+            _ => T("Current sales", "Aktuelle Angebote", "Offerte attuali", "Promotions actuelles", "Ofertas actuales")
+        };
+        public static string SteamWishlistFirst => T("Wishlist games on sale first", "Wunschliste-Spiele im Angebot zuerst", "Prima i giochi in offerta della lista dei desideri", "D'abord les jeux en promo de la liste de souhaits", "Primero los juegos en oferta de la lista de deseos");
+        public static string SteamMinDiscount => T("Minimum discount (%)", "Mindestrabatt (%)", "Sconto minimo (%)", "Remise minimale (%)", "Descuento mínimo (%)");
+        public static string SteamMaxPrice => T("Highest price (0 = any)", "Höchstpreis (0 = egal)", "Prezzo massimo (0 = qualsiasi)", "Prix maximal (0 = tous)", "Precio máximo (0 = cualquiera)");
+        public static string SteamCount => T("Number of games", "Anzahl Spiele", "Numero di giochi", "Nombre de jeux", "Número de juegos");
+        public static string SteamAccount => T("Steam account", "Steam-Konto", "Account Steam", "Compte Steam", "Cuenta de Steam");
+        public static string SteamIdAuto => T("the one signed in on this PC", "das auf diesem PC angemeldete", "quello collegato su questo PC", "celui connecté sur ce PC", "la iniciada en este PC");
+        public static string SteamFree => T("Free", "Kostenlos", "Gratis", "Gratuit", "Gratis");
+        public static string SteamIdMenu =>T("Steam account for the wishlist…", "Steam-Konto für die Wunschliste…", "Account Steam per la lista dei desideri…", "Compte Steam pour la liste de souhaits…", "Cuenta de Steam para la lista de deseos…");
         public static string SteamIdPrompt => T(
             "SteamID64 (17 digits, starts with 7656…). Leave empty to use the account signed in on this PC. The wishlist must be public.",
             "SteamID64 (17 Ziffern, beginnt mit 7656…). Leer lassen, um das auf diesem PC angemeldete Konto zu nehmen. Die Wunschliste muss öffentlich sein.",
@@ -553,7 +569,16 @@ namespace NoFences.Util
         public static string GamesHide(string name) => T($"Hide \"{name}\"", $"„{name}“ ausblenden", $"Nascondi «{name}»", $"Masquer « {name} »", $"Ocultar «{name}»");
         public static string GamesShowHidden(int n) => T($"Show hidden games ({n})", $"Ausgeblendete Spiele zeigen ({n})", $"Mostra giochi nascosti ({n})", $"Afficher les jeux masqués ({n})", $"Mostrar juegos ocultos ({n})");
         public static string GamesSortByName => T("Sort by name", "Nach Name sortieren", "Ordina per nome", "Trier par nom", "Ordenar por nombre");
-        public static string GamesRescan => T("Search again", "Erneut suchen", "Cerca di nuovo", "Rechercher à nouveau", "Buscar de nuevo");
+        public static string WidgetTwitch => T("Twitch live", "Twitch live", "Twitch in diretta", "Twitch en direct", "Twitch en directo");
+        public static string TwitchHint => T("Double-click and enter Twitch channels – you'll see who's live and get a notification when someone goes live.", "Doppelklick und Twitch-Kanäle eintragen – du siehst, wer live ist, und bekommst eine Meldung, wenn jemand live geht.", "Doppio clic e inserisci i canali Twitch: vedi chi è in diretta e ricevi un avviso quando qualcuno va in diretta.", "Double-cliquez et saisissez des chaînes Twitch : vous voyez qui est en direct et êtes prévenu quand quelqu'un lance un live.", "Haz doble clic y escribe canales de Twitch: verás quién está en directo y recibirás un aviso cuando alguien empiece.");
+        public static string TwitchPrompt => T("Twitch channels, one per line (name or twitch.tv link):", "Twitch-Kanäle, einer pro Zeile (Name oder twitch.tv-Link):", "Canali Twitch, uno per riga (nome o link twitch.tv):", "Chaînes Twitch, une par ligne (nom ou lien twitch.tv) :", "Canales de Twitch, uno por línea (nombre o enlace de twitch.tv):");
+        public static string TwitchSet => T("Channels…", "Kanäle…", "Canali…", "Chaînes…", "Canales…");
+        public static string TwitchOffline => T("offline", "offline", "offline", "hors ligne", "desconectado");
+        public static string TwitchWentLive(string name, string game) => T($"{name} is live: {game}", $"{name} ist live: {game}", $"{name} è in diretta: {game}", $"{name} est en direct : {game}", $"{name} está en directo: {game}");
+        public static string WidgetGameNews =>T("Game news (Steam)", "Spiele-News (Steam)", "Notizie sui giochi (Steam)", "Actus des jeux (Steam)", "Noticias de juegos (Steam)");
+        public static string GameNewsNone => T("No news yet – this shows announcements and patch notes of your installed Steam games.", "Noch keine News – hier erscheinen Ankündigungen und Patchnotes deiner installierten Steam-Spiele.", "Ancora nessuna notizia – qui compaiono annunci e note di patch dei tuoi giochi Steam installati.", "Pas encore d'actus – ici apparaissent les annonces et notes de mise à jour de vos jeux Steam installés.", "Aún no hay noticias: aquí aparecen anuncios y notas de parche de tus juegos de Steam instalados.");
+        public static string GamesSortByPlaytime =>T("Most played first", "Meistgespielte zuerst", "Prima i più giocati", "Les plus joués d'abord", "Más jugados primero");
+        public static string GamesRescan =>T("Search again", "Erneut suchen", "Cerca di nuovo", "Rechercher à nouveau", "Buscar de nuevo");
 
         public static string WidgetAgenda => T("Appointments (calendar)", "Termine (Kalender)", "Appuntamenti (calendario)", "Rendez-vous (agenda)", "Citas (calendario)");
         public static string AgendaHint => T("Double-click and paste the link of your calendar (.ics) – from Google, Outlook or iCloud.", "Doppelklick und den Link deines Kalenders (.ics) einfügen – aus Google, Outlook oder iCloud.", "Doppio clic e incolla il link del tuo calendario (.ics) – da Google, Outlook o iCloud.", "Double-cliquez et collez le lien de votre agenda (.ics) – Google, Outlook ou iCloud.", "Haz doble clic y pega el enlace de tu calendario (.ics): Google, Outlook o iCloud.");

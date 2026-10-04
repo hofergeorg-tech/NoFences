@@ -5,6 +5,13 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.5.0] - unreleased
+
+### Added
+- **Games**: playtime of every detected game, counted automatically and shown under its cover; sort by most played.
+- Widgets **game news** (announcements and patch notes of your Steam games) and **Twitch live** (who's live, with a notification).
+- **Steam sales** can be set up: sales, top sellers, new releases or only your wishlist; minimum discount, highest price, count.
+
 ## [2.4.2] - 2026-10-03
 
 ### Changed

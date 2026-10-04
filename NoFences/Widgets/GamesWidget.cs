@@ -14,6 +14,7 @@ namespace NoFences.Widgets
         {
             public List<string> Hidden { get; set; } = new();
             public bool SortByName { get; set; }
+            public bool SortByPlaytime { get; set; }
         }
 
         private static readonly TimeSpan RescanEvery = TimeSpan.FromMinutes(30);
@@ -28,10 +29,14 @@ namespace NoFences.Widgets
         private float scroll, maxScroll;
         private GameInfo? hovered;
 
-        public GamesWidget(Func<string?> getOption, Action<string?> setOption)
+        private readonly Func<Model.PlaytimeLog>? playtime;
+        private bool forceRescan;
+
+        public GamesWidget(Func<string?> getOption, Action<string?> setOption, Func<Model.PlaytimeLog>? playtime = null)
         {
             this.getOption = getOption;
             this.setOption = setOption;
+            this.playtime = playtime;
             IconCache.Shared.ImageLoaded += IconsLoaded;
         }
 
@@ -75,7 +80,8 @@ namespace NoFences.Widgets
             nextScan = DateTime.UtcNow + RescanEvery;
             try
             {
-                var found = await Task.Run(GameLibrary.Scan);
+                var found = await GameLibrary.CachedAsync(forceRescan);
+                forceRescan = false;
                 // Load covers off the UI thread, shrunk to what a tile needs
                 var missing = found.Where(g => g.CoverPath != null && !covers.ContainsKey(g.Id)).ToList();
                 var loaded = await Task.Run(() => missing.Select(g => (g.Id, Cover: LoadCover(g.CoverPath!))).ToList());
@@ -112,18 +118,29 @@ namespace NoFences.Widgets
         }
 
         /// <summary>Visible games in display order.</summary>
-        public static List<GameInfo> Arrange(IEnumerable<GameInfo> games, Options options) =>
+        public static List<GameInfo> Arrange(IEnumerable<GameInfo> games, Options options, Func<GameInfo, TimeSpan>? played = null) =>
             (options.SortByName
                 ? games.OrderBy(g => g.Name, StringComparer.CurrentCultureIgnoreCase)
-                : games.OrderByDescending(g => g.LastPlayed).ThenBy(g => g.Name, StringComparer.CurrentCultureIgnoreCase))
+                : options.SortByPlaytime && played != null
+                    ? games.OrderByDescending(played).ThenBy(g => g.Name, StringComparer.CurrentCultureIgnoreCase)
+                    : games.OrderByDescending(g => g.LastPlayed).ThenBy(g => g.Name, StringComparer.CurrentCultureIgnoreCase))
             .Where(g => !options.Hidden.Contains(g.Id))
             .ToList();
+
+        /// <summary>Total time recorded for a game (NoFences counts while anything from its install folder runs).</summary>
+        private TimeSpan Played(GameInfo game)
+        {
+            if (playtime == null)
+                return TimeSpan.Zero;
+            var sessions = playtime().SessionsOfKey(Model.PlaytimeLog.GameKey(game.Id));
+            return TimeSpan.FromSeconds(sessions.Sum(s => s.End - s.Start));
+        }
 
         public override void Draw(WidgetCanvas c)
         {
             tiles.Clear();
             var line = c.Label.GetHeight(c.G) + c.Px(2);
-            var list = Arrange(games, Settings);
+            var list = Arrange(games, Settings, Played);
             if (list.Count == 0)
             {
                 c.Text(scanning || games.Count == 0 && nextScan == DateTime.MinValue ? Strings.GamesSearching : Strings.GamesNone,
@@ -182,6 +199,18 @@ namespace NoFences.Widgets
                 using var font = c.Sized(Math.Max(c.Px(10), rect.Width / 8f), FontStyle.Bold);
                 using var format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Near, Trimming = StringTrimming.EllipsisWord };
                 c.Theme.DrawLabel(c.G, game.Name, new RectangleF(rect.X + c.Px(4), iconRect.Bottom + c.Px(8), rect.Width - c.Px(8), rect.Bottom - iconRect.Bottom - c.Px(10)), font, format, c.S);
+            }
+            // Playtime on a dark strip at the bottom of the cover
+            var played = Played(game);
+            if (played >= TimeSpan.FromMinutes(1))
+            {
+                using var font = new Font(c.Label.FontFamily, Math.Max(9 * c.S, rect.Width / 9f), FontStyle.Bold, GraphicsUnit.Pixel);
+                var text = PlaytimeSummary.Format(played);
+                var strip = new RectangleF(rect.X, rect.Bottom - font.GetHeight(c.G) - c.Px(6), rect.Width, font.GetHeight(c.G) + c.Px(6));
+                using (var back = new SolidBrush(Color.FromArgb(170, 0, 0, 0)))
+                    c.G.FillRectangle(back, strip);
+                using var format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+                c.G.DrawString(text, font, Brushes.White, strip, format);
             }
             if (hover)
             {
@@ -254,13 +283,23 @@ namespace NoFences.Widgets
             menu.Add(new ToolStripMenuItem(Strings.GamesSortByName, null, (_, _) =>
             {
                 options.SortByName = !options.SortByName;
+                options.SortByPlaytime = false;
                 Settings = options;
                 scroll = 0;
                 RequestRedraw();
             }) { Checked = options.SortByName });
+            menu.Add(new ToolStripMenuItem(Strings.GamesSortByPlaytime, null, (_, _) =>
+            {
+                options.SortByPlaytime = !options.SortByPlaytime;
+                options.SortByName = false;
+                Settings = options;
+                scroll = 0;
+                RequestRedraw();
+            }) { Checked = options.SortByPlaytime });
             menu.Add(Strings.GamesRescan, null, (_, _) =>
             {
                 nextScan = DateTime.MinValue;
+                forceRescan = true;
                 Refresh();
             });
         }

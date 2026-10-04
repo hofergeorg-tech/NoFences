@@ -36,15 +36,56 @@ namespace NoFences.Widgets
         private bool wrongLinks;
         private float scroll, maxScroll;
 
-        public NewsWidget(Func<string?> getOption, Action<string?> setOption)
+        /// <summary>Game news: announcements of your installed Steam games instead of RSS feeds.</summary>
+        private readonly bool gameNews;
+
+        public NewsWidget(Func<string?> getOption, Action<string?> setOption, bool gameNews = false)
         {
             this.getOption = getOption;
             this.setOption = setOption;
+            this.gameNews = gameNews;
         }
 
-        public override string Type => "news";
+        public override string Type => gameNews ? "gamenews" : "news";
 
         public override int RefreshMs => 30_000;
+
+        /// <summary>Official announcements (patch notes, events) of the most recently played installed Steam games.</summary>
+        private static async Task<List<NewsItem>> LoadGameNewsAsync()
+        {
+            var library = await GameLibrary.CachedAsync();
+            var steam = library.Where(g => g.Source == GameSource.Steam)
+                .OrderByDescending(g => g.LastPlayed).Take(10).ToList();
+            var tasks = steam.Select(async game =>
+            {
+                try
+                {
+                    var appId = game.Id["steam:".Length..];
+                    var json = await Web.Http.GetStringAsync($"https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid={appId}&count=4&maxlength=1&feeds=steam_community_announcements");
+                    return ParseSteamNews(json, game.Name);
+                }
+                catch (Exception e)
+                {
+                    Log.Write("Game news", $"{game.Name}: {Log.Describe(e)}");
+                    return new List<NewsItem>();
+                }
+            });
+            return (await Task.WhenAll(tasks)).SelectMany(x => x).ToList();
+        }
+
+        public static List<NewsItem> ParseSteamNews(string json, string game)
+        {
+            using var doc = System.Text.Json.JsonDocument.Parse(json);
+            var list = new List<NewsItem>();
+            if (!doc.RootElement.TryGetProperty("appnews", out var news) || !news.TryGetProperty("newsitems", out var items))
+                return list;
+            foreach (var i in items.EnumerateArray())
+            {
+                var date = i.TryGetProperty("date", out var d) ? DateTimeOffset.FromUnixTimeSeconds(d.GetInt64()).LocalDateTime : (DateTime?)null;
+                list.Add(new NewsItem(Clean(i.GetProperty("title").GetString()), i.TryGetProperty("url", out var u) ? u.GetString() : null, date, game));
+            }
+            return list;
+        }
 
         internal void SetPreview(IEnumerable<NewsItem> demo)
         {
@@ -60,7 +101,7 @@ namespace NoFences.Widgets
             var option = getOption();
             if (option != loadedFor)
                 nextFetch = DateTime.MinValue;
-            if (fetching || DateTime.UtcNow < nextFetch || AgendaWidget.Urls(option).Count == 0)
+            if (fetching || DateTime.UtcNow < nextFetch || !gameNews && AgendaWidget.Urls(option).Count == 0)
                 return;
             _ = FetchAsync(option);
         }
@@ -73,7 +114,20 @@ namespace NoFences.Widgets
                 var all = new List<NewsItem>();
                 var problems = new List<string>();
                 var onlyWrongLinks = true;
-                foreach (var url in AgendaWidget.Urls(option))
+                if (gameNews)
+                {
+                    try
+                    {
+                        all.AddRange(await LoadGameNewsAsync());
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Write("Game news", Log.Describe(e));
+                        problems.Add(Strings.WeatherOffline);
+                        onlyWrongLinks = false;
+                    }
+                }
+                foreach (var url in gameNews ? Array.Empty<string>() : AgendaWidget.Urls(option))
                 {
                     try
                     {
@@ -237,13 +291,19 @@ namespace NoFences.Widgets
         {
             rows.Clear();
             var line = c.Label.GetHeight(c.G) + c.Px(2);
-            if (AgendaWidget.Urls(getOption()).Count == 0)
+            if (!gameNews && AgendaWidget.Urls(getOption()).Count == 0)
             {
                 c.Text(Strings.NewsHint, new RectangleF(c.Area.X, c.Area.Y, c.Area.Width, line * 2));
                 return;
             }
             if (items.Count == 0)
             {
+                // Loaded, but no installed Steam games (or none with news)
+                if (gameNews && !failed && !fetching && nextFetch > DateTime.UtcNow)
+                {
+                    c.TextWrapped(Strings.GameNewsNone, c.Area.X, c.Area.Y, c.Area.Width, c.Label, 3);
+                    return;
+                }
                 if (!failed)
                 {
                     c.Text(Strings.WeatherLoading, new RectangleF(c.Area.X, c.Area.Y, c.Area.Width, line));
@@ -322,13 +382,14 @@ namespace NoFences.Widgets
 
         public override void DoubleClick(Point p)
         {
-            if (AgendaWidget.Urls(getOption()).Count == 0)
+            if (!gameNews && AgendaWidget.Urls(getOption()).Count == 0)
                 Edit(null);
         }
 
         public override void AddMenuItems(ToolStripItemCollection menu, IWin32Window owner)
         {
-            menu.Add(Strings.NewsSet, null, (_, _) => Edit(owner));
+            if (!gameNews)
+                menu.Add(Strings.NewsSet, null, (_, _) => Edit(owner));
             menu.Add(Strings.WeatherUpdateNow, null, (_, _) =>
             {
                 nextFetch = DateTime.MinValue;

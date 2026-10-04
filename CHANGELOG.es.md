@@ -4,6 +4,13 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
+## [2.5.0] - sin publicar
+
+### Novedades
+- **Juegos**: tiempo de juego de cada juego detectado, contado automáticamente y mostrado bajo su carátula; orden por más jugados.
+- Widgets de **noticias de juegos** (anuncios y notas de parche de tus juegos de Steam) y **Twitch en directo** (quién está en directo, con aviso).
+- **Ofertas de Steam** configurables: ofertas, más vendidos, novedades o solo tu lista de deseos; descuento mínimo, precio máximo, número.
+
 ## [2.4.2] - 2026-10-03
 
 ### Cambios

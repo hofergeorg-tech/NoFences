@@ -8,7 +8,7 @@ namespace NoFences.Widgets
     public enum GameSource { Steam, Epic, Gog, Xbox }
 
     /// <summary>An installed game. <see cref="Launch"/> is a URI (steam://…) or an exe; the cover may be missing.</summary>
-    public sealed record GameInfo(string Id, string Name, GameSource Source, string Launch, string? CoverPath, string? IconPath, DateTime LastPlayed = default)
+    public sealed record GameInfo(string Id, string Name, GameSource Source, string Launch, string? CoverPath, string? IconPath, DateTime LastPlayed = default, string? InstallDir = null)
     {
         public void Start()
         {
@@ -33,6 +33,30 @@ namespace NoFences.Widgets
     /// <summary>Finds installed games of Steam, Epic, GOG and the Xbox app (read-only, nothing is changed).</summary>
     public static partial class GameLibrary
     {
+        private static Task<List<GameInfo>>? cached;
+        private static DateTime cachedAt;
+
+        /// <summary>
+        /// The library, scanned in the background at most every 30 minutes and shared by the games widget,
+        /// the playtime counter and the game news.
+        /// </summary>
+        public static Task<List<GameInfo>> CachedAsync(bool refresh = false)
+        {
+            if (refresh || cached == null || cached.IsCompleted && DateTime.UtcNow - cachedAt > TimeSpan.FromMinutes(30))
+            {
+                cachedAt = DateTime.UtcNow;
+                cached = Task.Run(Scan);
+            }
+            return cached;
+        }
+
+        /// <summary>The library if it has been scanned already (never waits).</summary>
+        public static List<GameInfo>? CachedNow()
+        {
+            var task = CachedAsync();
+            return task.IsCompletedSuccessfully ? task.Result : null;
+        }
+
         public static List<GameInfo> Scan()
         {
             var games = new List<GameInfo>();
@@ -76,7 +100,7 @@ namespace NoFences.Widgets
                     GameInfo? game = null;
                     try
                     {
-                        game = ParseAppManifest(File.ReadAllText(manifest), steam);
+                        game = ParseAppManifest(File.ReadAllText(manifest), steam, library);
                     }
                     catch (IOException) { }
                     if (game != null)
@@ -103,7 +127,7 @@ namespace NoFences.Widgets
             || name.StartsWith("Steam Linux Runtime", StringComparison.OrdinalIgnoreCase);
 
         /// <summary>One game from an appmanifest_*.acf; null for tools and unfinished installs.</summary>
-        public static GameInfo? ParseAppManifest(string acf, string steamPath)
+        public static GameInfo? ParseAppManifest(string acf, string steamPath, string? library = null)
         {
             var values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             foreach (Match m in VdfPair().Matches(acf))
@@ -116,7 +140,8 @@ namespace NoFences.Widgets
             var lastPlayed = values.TryGetValue("LastPlayed", out var lp) && long.TryParse(lp, out var unix) && unix > 0
                 ? DateTimeOffset.FromUnixTimeSeconds(unix).LocalDateTime
                 : default;
-            return new GameInfo("steam:" + id, name, GameSource.Steam, $"steam://rungameid/{id}", SteamCover(steamPath, id), null, lastPlayed);
+            var installDir = library != null && values.TryGetValue("installdir", out var dir) ? Path.Combine(library, "steamapps", "common", dir) : null;
+            return new GameInfo("steam:" + id, name, GameSource.Steam, $"steam://rungameid/{id}", SteamCover(steamPath, id), null, lastPlayed, installDir);
         }
 
         /// <summary>The 600×900 library image Steam keeps locally (old flat and newer per-app folder layout).</summary>
@@ -172,7 +197,7 @@ namespace NoFences.Widgets
                 return null;
             var uri = $"com.epicgames.launcher://apps/{S("CatalogNamespace")}%3A{S("CatalogItemId")}%3A{S("AppName")}?action=launch&silent=true";
             var exe = Path.Combine(S("InstallLocation"), S("LaunchExecutable"));
-            return new GameInfo("epic:" + S("AppName"), S("DisplayName"), GameSource.Epic, uri, null, File.Exists(exe) ? exe : null);
+            return new GameInfo("epic:" + S("AppName"), S("DisplayName"), GameSource.Epic, uri, null, File.Exists(exe) ? exe : null, default, S("InstallLocation").Length > 0 ? S("InstallLocation") : null);
         }
 
         #endregion
@@ -192,7 +217,7 @@ namespace NoFences.Widgets
                 // DLCs point to their base game
                 if (game.GetValue("dependsOn") is string dependsOn && dependsOn.Length > 0)
                     continue;
-                yield return new GameInfo("gog:" + id, name, GameSource.Gog, exe, null, exe);
+                yield return new GameInfo("gog:" + id, name, GameSource.Gog, exe, null, exe, default, game.GetValue("path") as string ?? Path.GetDirectoryName(exe));
             }
         }
 
@@ -219,7 +244,7 @@ namespace NoFences.Widgets
                         continue;
                     var logo = package.Logo?.LocalPath;
                     game = new GameInfo("xbox:" + package.Id.FamilyName, package.DisplayName, GameSource.Xbox,
-                        $"shell:AppsFolder\\{entry.AppUserModelId}", null, logo != null && File.Exists(logo) ? logo : null);
+                        $"shell:AppsFolder\\{entry.AppUserModelId}", null, logo != null && File.Exists(logo) ? logo : null, default, folder);
                 }
                 catch (Exception) { }
                 if (game != null)

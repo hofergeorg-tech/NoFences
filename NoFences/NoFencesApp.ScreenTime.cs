@@ -66,7 +66,13 @@ namespace NoFences
             if (cls.ToString() is "Progman" or "WorkerW" or "Shell_TrayWnd")
                 return null;
             Native.GetWindowThreadProcessId(hwnd, out var pid);
-            var process = OpenProcess(0x1000 /* PROCESS_QUERY_LIMITED_INFORMATION */, false, pid);
+            return ProcessImagePath((int)pid);
+        }
+
+        /// <summary>Full exe path of a process (also for elevated ones, with limited query rights); null if not allowed.</summary>
+        private static string? ProcessImagePath(int pid)
+        {
+            var process = OpenProcess(0x1000 /* PROCESS_QUERY_LIMITED_INFORMATION */, false, (uint)pid);
             if (process == IntPtr.Zero)
                 return null;
             try

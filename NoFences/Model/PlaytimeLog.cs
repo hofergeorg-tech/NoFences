@@ -17,16 +17,22 @@ namespace NoFences.Model
 
         public static string Key(string exePath) => Path.GetFileName(exePath).ToLowerInvariant();
 
-        public IReadOnlyCollection<PlaySession> SessionsOf(string exePath) =>
-            Games.TryGetValue(Key(exePath), out var list) ? list : Array.Empty<PlaySession>();
+        /// <summary>Key for a game found in a library (Steam/Epic/GOG/Xbox id), tracked by its install folder.</summary>
+        public static string GameKey(string gameId) => "game:" + gameId.ToLowerInvariant();
+
+        public IReadOnlyCollection<PlaySession> SessionsOf(string exePath) => SessionsOfKey(Key(exePath));
+
+        public IReadOnlyCollection<PlaySession> SessionsOfKey(string key) =>
+            Games.TryGetValue(key, out var list) ? list : Array.Empty<PlaySession>();
 
         /// <summary>
         /// Called every few seconds while the game runs: extends the current session or starts a new one
         /// (from the process start time if known). Returns true if something changed.
         /// </summary>
-        public bool Running(string exePath, DateTime now, DateTime? processStart)
+        public bool Running(string exePath, DateTime now, DateTime? processStart) => RunningKey(Key(exePath), now, processStart);
+
+        public bool RunningKey(string key, DateTime now, DateTime? processStart)
         {
-            var key = Key(exePath);
             if (!Games.TryGetValue(key, out var list))
                 Games[key] = list = new List<PlaySession>();
 

@@ -32,6 +32,8 @@ namespace NoFences.Widgets
             ("worldclock", () => Strings.WidgetWorldClock, new Size(290, 260)),
             ("power", () => Strings.WidgetPower, new Size(280, 170)),
             ("steamdeals", () => Strings.WidgetSteamDeals, new Size(340, 360)),
+            ("gamenews", () => Strings.WidgetGameNews, new Size(340, 360)),
+            ("twitch", () => Strings.WidgetTwitch, new Size(300, 260)),
         };
 
         public enum Group { Time, Info, System, GamesMedia }
@@ -42,7 +44,7 @@ namespace NoFences.Widgets
             (Group.Time, new[] { "clock", "worldclock", "todo", "countdown", "agenda", "focus", "screentime" }),
             (Group.Info, new[] { "weather", "news", "ticker", "status" }),
             (Group.System, new[] { "system", "audio", "power", "network", "drives", "battery", "recyclebin", "clipboard" }),
-            (Group.GamesMedia, new[] { "games", "steamdeals", "playtime", "media", "photos" }),
+            (Group.GamesMedia, new[] { "games", "steamdeals", "gamenews", "twitch", "playtime", "media", "photos" }),
         };
 
         public static FenceWidget? Create(FenceInfo info, IFenceHost host)
@@ -90,7 +92,7 @@ namespace NoFences.Widgets
                 "network" => new NetworkWidget(),
                 "clipboard" => new ClipboardWidget(),
                 "battery" => new BatteryWidget(),
-                "games" => new GamesWidget(() => info.WidgetOption, Set),
+                "games" => new GamesWidget(() => info.WidgetOption, Set, () => host.Playtime),
                 "agenda" => new AgendaWidget(() => info.WidgetOption, Set),
                 "photos" => new PhotoWidget(() => info.WidgetOption, Set),
                 "focus" => new FocusWidget(() => info.WidgetOption, Set, host.Notify, host),
@@ -102,6 +104,8 @@ namespace NoFences.Widgets
                 "worldclock" => new WorldClockWidget(() => info.WidgetOption, Set),
                 "power" => new PowerWidget(),
                 "steamdeals" => new SteamDealsWidget(() => info.WidgetOption, Set),
+                "gamenews" => new NewsWidget(() => info.WidgetOption, Set, gameNews: true),
+                "twitch" => new TwitchWidget(() => info.WidgetOption, Set, host.Notify),
                 "screentime" =>new ScreenTimeWidget(() => info.WidgetOption, Set, () => host.ScreenTime),
                 _ => null
             };

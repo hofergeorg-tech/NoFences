@@ -4,6 +4,13 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.5.0] - unveröffentlicht
+
+### Neu
+- **Spiele**: Spielzeit jedes erkannten Spiels, automatisch gezählt und unter dem Cover angezeigt; Sortierung nach meistgespielt.
+- Widgets **Spiele-News** (Ankündigungen und Patchnotes deiner Steam-Spiele) und **Twitch live** (wer live ist, mit Benachrichtigung).
+- **Steam-Angebote** einstellbar: Angebote, Topseller, Neuerscheinungen oder nur deine Wunschliste; Mindestrabatt, Höchstpreis, Anzahl.
+
 ## [2.4.2] - 2026-10-03
 
 ### Geändert

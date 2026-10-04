@@ -63,9 +63,10 @@ namespace NoFences.Widgets
             fetching = true;
             try
             {
+                var o = Settings;
                 var list = new List<SteamDeal>();
-                var steamId = getOption() is { Length: > 0 } manual ? manual : LocalSteamId();
-                if (steamId != null)
+                var steamId = o.SteamId is { Length: > 0 } manual ? manual : LocalSteamId();
+                if (steamId != null && (o.WishlistFirst || o.Source == DealSource.Wishlist))
                 {
                     try
                     {
@@ -76,9 +77,13 @@ namespace NoFences.Widgets
                         Log.Write("Steam", "Wishlist: " + Log.Describe(e));
                     }
                 }
-                var specials = ParseSpecials(await Web.Http.GetStringAsync($"https://store.steampowered.com/api/featuredcategories?cc={Country}&l={SteamLanguage}"));
-                list.AddRange(specials.Where(s => list.All(w => w.AppId != s.AppId)));
-                deals = list;
+                if (o.Source != DealSource.Wishlist)
+                {
+                    var category = o.Source switch { DealSource.TopSellers => "top_sellers", DealSource.NewReleases => "new_releases", _ => "specials" };
+                    var store = ParseCategory(await Web.Http.GetStringAsync($"https://store.steampowered.com/api/featuredcategories?cc={Country}&l={SteamLanguage}"), category);
+                    list.AddRange(store.Where(s => list.All(w => w.AppId != s.AppId)));
+                }
+                deals = Filter(list, o);
                 failed = false;
                 nextFetch = DateTime.UtcNow + UpdateEvery;
                 RequestRedraw();
@@ -97,16 +102,57 @@ namespace NoFences.Widgets
             }
         }
 
-        public static List<SteamDeal> ParseSpecials(string json)
+        public enum DealSource { Specials, TopSellers, NewReleases, Wishlist }
+
+        /// <summary>What the widget shows; stored as JSON in the fence's widget option.</summary>
+        public sealed class Options
+        {
+            public DealSource Source { get; set; }
+            public bool WishlistFirst { get; set; } = true;
+            public int MinDiscount { get; set; }
+            /// <summary>Highest price in whole currency units; 0 = no limit.</summary>
+            public int MaxPrice { get; set; }
+            public int Count { get; set; } = 15;
+            /// <summary>SteamID64 for the wishlist; empty = the account signed in on this PC.</summary>
+            public string? SteamId { get; set; }
+        }
+
+        private Options Settings
+        {
+            get
+            {
+                var raw = getOption();
+                // Before 2.5 the option was just a SteamID
+                if (raw is { Length: 17 } && raw.StartsWith("7656") && raw.All(char.IsDigit))
+                    return new Options { SteamId = raw };
+                try { return raw == null ? new() : JsonSerializer.Deserialize<Options>(raw, Model.FenceStore.JsonOptions) ?? new(); }
+                catch (JsonException) { return new(); }
+            }
+            set => setOption(JsonSerializer.Serialize(value, Model.FenceStore.JsonOptions));
+        }
+
+        /// <summary>Applies the minimum discount, maximum price and count; wishlist entries keep their place first.</summary>
+        public static List<SteamDeal> Filter(IEnumerable<SteamDeal> deals, Options o) =>
+            deals.Where(d => d.DiscountPercent >= o.MinDiscount && (o.MaxPrice <= 0 || d.FinalCents <= o.MaxPrice * 100))
+                .Take(Math.Clamp(o.Count, 1, 50))
+                .ToList();
+
+        public static List<SteamDeal> ParseSpecials(string json) => ParseCategory(json, "specials");
+
+        /// <summary>One list of the store's featured categories (specials, top_sellers, new_releases).</summary>
+        public static List<SteamDeal> ParseCategory(string json, string category)
         {
             using var doc = JsonDocument.Parse(json);
             var list = new List<SteamDeal>();
-            if (!doc.RootElement.TryGetProperty("specials", out var specials) || !specials.TryGetProperty("items", out var items))
+            if (!doc.RootElement.TryGetProperty(category, out var specials) || !specials.TryGetProperty("items", out var items))
                 return list;
             foreach (var i in items.EnumerateArray())
             {
                 var discount = i.TryGetProperty("discount_percent", out var d) ? d.GetInt32() : 0;
-                if (discount <= 0)
+                // Sales show discounted games only; top sellers and new releases show all
+                if (discount <= 0 && category == "specials")
+                    continue;
+                if (!i.TryGetProperty("final_price", out _) || !i.TryGetProperty("original_price", out var op) || op.ValueKind != JsonValueKind.Number)
                     continue;
                 list.Add(new SteamDeal(i.GetProperty("id").GetInt32(), i.GetProperty("name").GetString() ?? "?", discount,
                     i.GetProperty("final_price").GetInt32(), i.GetProperty("original_price").GetInt32(),
@@ -261,16 +307,23 @@ namespace NoFences.Widgets
                 c.Text(deal.Name, new RectangleF(x, y, c.Area.Right - x, line), bold);
 
                 // "-70 %" badge, new price, old price struck through
-                var badge = $"-{deal.DiscountPercent} %";
-                var badgeSize = c.G.MeasureString(badge, small);
-                using (var green = new SolidBrush(Color.FromArgb(255, 76, 107, 34)))
-                    c.G.FillRectangle(green, x, y + line + c.Px(2), badgeSize.Width + c.Px(4), badgeSize.Height);
-                using (var lime = new SolidBrush(Color.FromArgb(255, 190, 238, 17)))
-                    c.G.DrawString(badge, small, lime, x + c.Px(2), y + line + c.Px(2));
-                var px = x + badgeSize.Width + c.Px(10);
-                px += c.Muted(FormatPrice(deal.FinalCents, deal.Currency), px, y + line + c.Px(2), small, c.Ink) + c.Px(8);
-                using (var struck = new Font(small, FontStyle.Strikeout))
-                    c.Muted(FormatPrice(deal.OriginalCents, deal.Currency), px, y + line + c.Px(2), struck);
+                var px = x;
+                if (deal.DiscountPercent > 0)
+                {
+                    var badge = $"-{deal.DiscountPercent} %";
+                    var badgeSize = c.G.MeasureString(badge, small);
+                    using (var green = new SolidBrush(Color.FromArgb(255, 76, 107, 34)))
+                        c.G.FillRectangle(green, x, y + line + c.Px(2), badgeSize.Width + c.Px(4), badgeSize.Height);
+                    using (var lime = new SolidBrush(Color.FromArgb(255, 190, 238, 17)))
+                        c.G.DrawString(badge, small, lime, x + c.Px(2), y + line + c.Px(2));
+                    px += badgeSize.Width + c.Px(10);
+                }
+                // Free games and full-price ones (top sellers, new releases) show just the price
+                var price = deal.FinalCents == 0 ? Strings.SteamFree : FormatPrice(deal.FinalCents, deal.Currency);
+                px += c.Muted(price, px, y + line + c.Px(2), small, c.Ink) + c.Px(8);
+                if (deal.DiscountPercent > 0)
+                    using (var struck = new Font(small, FontStyle.Strikeout))
+                        c.Muted(FormatPrice(deal.OriginalCents, deal.Currency), px, y + line + c.Px(2), struck);
                 rows.Add((rect, deal));
                 y += imageHeight + c.Px(8);
             }
@@ -310,14 +363,14 @@ namespace NoFences.Widgets
 
         public override void AddMenuItems(ToolStripItemCollection menu, IWin32Window owner)
         {
-            menu.Add(Strings.SteamIdMenu, null, (_, _) =>
+            menu.Add(Strings.SteamSettingsMenu, null, (_, _) =>
             {
-                using var dialog = new InputDialog(Strings.WidgetSteamDeals, Strings.SteamIdPrompt, getOption() ?? "");
+                using var dialog = new SteamDealsDialog(Settings);
                 if (dialog.ShowDialog(owner) != DialogResult.OK)
                     return;
-                var value = dialog.Value.Trim();
-                setOption(Regex.IsMatch(value, @"^7656\d{13}$") ? value : null);
+                Settings = dialog.Result;
                 nextFetch = DateTime.MinValue;
+                scroll = 0;
                 Refresh();
             });
             menu.Add(Strings.WeatherUpdateNow, null, (_, _) =>
