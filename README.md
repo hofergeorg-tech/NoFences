@@ -132,9 +132,11 @@ dotnet test NoFences.Tests/NoFences.Tests.csproj
 
 ## Configuration
 
-Stored in `%LocalAppData%\NoFences\` (`fences.json`, `playtime.json`, `backups\`, `themes\`). Fences from NoFences 1.x are
-migrated automatically. **Portable mode:** put an empty `portable.txt` next to `NoFences.exe`. With a shared folder
-(Settings → Data & styles), the data lives there and `sync-folder.txt` in the local folder points to it.
+Stored next to `NoFences.exe`, sorted into `config\` (`fences.json`, `playtime.json`, `usage.json`), `backups\`,
+`themes\`, `media\`, `cache\`, `logs\` and `lang\`. If the exe's folder isn't writable (Program Files, a WinGet package
+folder), the same layout is used in `%LocalAppData%\NoFences\`. Data of 2.5 and older (flat in `%LocalAppData%\NoFences\`)
+is copied over once; the old folder gets a `moved.txt`. Fences from NoFences 1.x are migrated automatically. With a
+shared folder (Settings → Data & styles), fences, playtime and styles live there and `config\sync-folder.txt` points to it.
 
 ## Credits
 

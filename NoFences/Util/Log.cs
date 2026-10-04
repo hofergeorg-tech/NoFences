@@ -1,7 +1,7 @@
 namespace NoFences.Util
 {
     /// <summary>
-    /// A small text log (log.txt next to the config) for things that fail quietly, like a feed that can't be
+    /// A small text log (logs\log.txt in the data folder) for things that fail quietly, like a feed that can't be
     /// loaded. Kept under 256 KB; never throws.
     /// </summary>
     public static class Log
@@ -20,6 +20,7 @@ namespace NoFences.Util
             {
                 lock (Gate)
                 {
+                    Directory.CreateDirectory(Folder);
                     var path = Path.Combine(Folder, "log.txt");
                     if (File.Exists(path) && new FileInfo(path).Length > MaxBytes)
                         File.Move(path, path + ".old", overwrite: true);

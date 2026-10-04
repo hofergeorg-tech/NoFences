@@ -267,9 +267,11 @@ fuentes de noticias, las cotizaciones (Yahoo Finance), ofertas y noticias de Ste
 (decapi.me), el test de velocidad (Cloudflare) y las páginas del widget Página web. No se envía nada más.
 
 **¿Dónde está mi configuración?**
-En `%LocalAppData%\NoFences\fences.json` (copias de seguridad al lado), o en la carpeta compartida si elegiste una. Con un
-archivo vacío `portable.txt` junto a `NoFences.exe`, se guarda junto al exe.
+Junto a `NoFences.exe`, ordenada en carpetas: `config` (fences.json, tiempo de juego), `backups`, `themes`, `media`
+(imágenes y notas de voz, bandeja), `cache`, `logs` y `lang` (traducciones propias). Si no se puede escribir en la carpeta
+del programa (p. ej. Archivos de programa), está en `%LocalAppData%\NoFences`. Con una carpeta compartida, vallas y
+estilos están allí. Los datos de versiones anteriores se mueven automáticamente.
 
 **¿Cómo desinstalo NoFences?**
 Configuración → General: desmarca «Iniciar con Windows»; desactiva la medición de FPS si la usas; bandeja → Salir; elimina
-`NoFences.exe` y la carpeta `%LocalAppData%\NoFences`. Los archivos de las vallas de carpeta se quedan en sus carpetas.
+`NoFences.exe` y sus carpetas de datos (ver arriba). Los archivos de las vallas de carpeta se quedan en sus carpetas.

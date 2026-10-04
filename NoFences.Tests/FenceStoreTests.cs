@@ -66,7 +66,7 @@ namespace NoFences.Tests
             Assert.True(fence.Locked);
             Assert.Equal(40, fence.TitleHeight);
             Assert.Equal(@"C:\Windows\notepad.exe", Assert.Single(fence.Files));
-            Assert.True(File.Exists(Path.Combine(dir.Path, "fences.json")));
+            Assert.True(File.Exists(Path.Combine(dir.Path, "config", "fences.json")));
         }
 
         [Fact]
@@ -82,11 +82,11 @@ namespace NoFences.Tests
         public void Load_KeepsBrokenConfigAndStartsEmpty()
         {
             using var dir = new TempFolder();
-            dir.File("fences.json", "{ this is not json");
+            dir.File(@"config\fences.json", "{ this is not json");
             var store = new FenceStore(dir.Path);
             store.Load();
             Assert.Empty(store.Config.Fences);
-            Assert.Contains(Directory.GetFiles(dir.Path), f => Path.GetFileName(f).StartsWith("fences.json.broken-"));
+            Assert.Contains(Directory.GetFiles(Path.Combine(dir.Path, "config")), f => Path.GetFileName(f).StartsWith("fences.json.broken-"));
         }
 
         [Fact]

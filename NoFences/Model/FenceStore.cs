@@ -12,7 +12,6 @@ namespace NoFences.Model
     public class FenceStore
     {
         private const string ConfigFileName = "fences.json";
-        private const string PortableMarker = "portable.txt";
         private const string LegacyMetaFileName = "__fence_metadata.xml";
 
         internal static readonly JsonSerializerOptions JsonOptions = new()
@@ -23,34 +22,46 @@ namespace NoFences.Model
 
         private readonly System.Windows.Forms.Timer saveTimer = new() { Interval = 750 };
 
+        /// <summary>Where fences.json, playtime.json and usage.json are: the sync folder or the local config folder.</summary>
         public string DataDirectory { get; }
 
-        public bool IsPortable { get; }
+        /// <summary>The local data folder with its subfolders.</summary>
+        public DataFolder Folder { get; }
+
+        /// <summary>Custom styles (shared when syncing).</summary>
+        public string ThemesDirectory => SyncFolder != null ? Path.Combine(SyncFolder, DataFolder.ThemesName) : Folder.Themes;
+
+        /// <summary>Note pictures, voice notes, pinned clipboard pictures (shared when syncing).</summary>
+        public string MediaDirectory => SyncFolder ?? Folder.Media;
 
         public AppConfig Config { get; private set; } = new();
 
         private string ConfigPath => Path.Combine(DataDirectory, ConfigFileName);
 
-        public FenceStore()
+        public FenceStore() : this(DataFolder.Prepare())
         {
-            var exeDir = AppContext.BaseDirectory;
-            IsPortable = File.Exists(Path.Combine(exeDir, PortableMarker)) || File.Exists(Path.Combine(exeDir, ConfigFileName));
-            LocalDirectory = IsPortable
-                ? exeDir
-                : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "NoFences");
+        }
+
+        public FenceStore(DataFolder folder)
+        {
+            Folder = folder;
             Directory.CreateDirectory(LocalDirectory);
             SyncFolder = ReadSyncPointer(LocalDirectory);
             DataDirectory = SyncFolder ?? LocalDirectory;
-
             saveTimer.Tick += (_, _) => SaveNow();
+        }
+
+        /// <summary>Store in a given folder (tests).</summary>
+        public FenceStore(string root) : this(new DataFolder(root, true))
+        {
         }
 
         #region Sync folder
 
         private const string SyncPointerFile = "sync-folder.txt";
 
-        /// <summary>Where the data lives without sync (and where the sync pointer is kept).</summary>
-        public string LocalDirectory { get; }
+        /// <summary>Where the config lives without sync (and where the sync pointer is kept).</summary>
+        public string LocalDirectory => Folder.Config;
 
         /// <summary>A folder shared with other PCs (e.g. in OneDrive), or null.</summary>
         public string? SyncFolder { get; }
@@ -84,7 +95,7 @@ namespace NoFences.Model
             SaveNow();
             Directory.CreateDirectory(folder);
             if (!useExisting)
-                CopyData(DataDirectory, folder);
+                CopyData(DataDirectory, ThemesDirectory, folder, Path.Combine(folder, DataFolder.ThemesName));
             File.WriteAllText(Path.Combine(LocalDirectory, SyncPointerFile), folder);
         }
 
@@ -93,22 +104,21 @@ namespace NoFences.Model
         {
             SaveNow();
             if (SyncFolder != null)
-                CopyData(SyncFolder, LocalDirectory);
+                CopyData(SyncFolder, ThemesDirectory, LocalDirectory, Folder.Themes);
             File.Delete(Path.Combine(LocalDirectory, SyncPointerFile));
         }
 
-        private static void CopyData(string from, string to)
+        private static void CopyData(string from, string fromThemes, string to, string toThemes)
         {
             if (string.Equals(Path.GetFullPath(from), Path.GetFullPath(to), StringComparison.OrdinalIgnoreCase))
                 return;
             foreach (var name in SyncedFiles)
                 TryCopy(Path.Combine(from, name), Path.Combine(to, name));
-            var themes = Path.Combine(from, "themes");
-            if (Directory.Exists(themes))
+            if (Directory.Exists(fromThemes))
             {
-                Directory.CreateDirectory(Path.Combine(to, "themes"));
-                foreach (var file in Directory.EnumerateFiles(themes, "*.json"))
-                    TryCopy(file, Path.Combine(to, "themes", Path.GetFileName(file)));
+                Directory.CreateDirectory(toThemes);
+                foreach (var file in Directory.EnumerateFiles(fromThemes, "*.json"))
+                    TryCopy(file, Path.Combine(toThemes, Path.GetFileName(file)));
             }
         }
 
@@ -131,14 +141,6 @@ namespace NoFences.Model
 
         #endregion
 
-        /// <summary>Store in a given folder (tests).</summary>
-        public FenceStore(string dataDirectory)
-        {
-            DataDirectory = LocalDirectory = dataDirectory;
-            IsPortable = true;
-            Directory.CreateDirectory(DataDirectory);
-            saveTimer.Tick += (_, _) => SaveNow();
-        }
 
         public void Load()
         {
@@ -149,6 +151,8 @@ namespace NoFences.Model
                     var json = File.ReadAllText(ConfigPath);
                     Config = JsonSerializer.Deserialize<AppConfig>(json, JsonOptions) ?? new AppConfig();
                     lastWritten = json;
+                    if (Folder.MovedPaths.Count > 0)
+                        ApplyMovedPaths();
                     return;
                 }
                 catch (Exception e)
@@ -188,7 +192,24 @@ namespace NoFences.Model
             }
         }
 
-        private string BackupDirectory => Path.Combine(DataDirectory, "backups");
+        /// <summary>Shelf and bookmark fences whose folder moved with the data now point to the new place.</summary>
+        private void ApplyMovedPaths()
+        {
+            var changed = false;
+            foreach (var fence in Config.Fences)
+            {
+                var path = Folder.MapMovedPath(fence.FolderPath);
+                if (path != fence.FolderPath)
+                {
+                    fence.FolderPath = path;
+                    changed = true;
+                }
+            }
+            if (changed)
+                SaveNow();
+        }
+
+        private string BackupDirectory => SyncFolder != null ? Path.Combine(SyncFolder, DataFolder.BackupsName) : Folder.Backups;
 
         private const int KeepBackups = 10;
 
@@ -240,7 +261,8 @@ namespace NoFences.Model
         {
             var result = new List<FenceInfo>();
             var serializer = new XmlSerializer(typeof(LegacyFenceInfo), new XmlRootAttribute("FenceInfo"));
-            foreach (var dir in Directory.EnumerateDirectories(DataDirectory))
+            var folders = new[] { Folder.Root, DataFolder.LegacyFolder }.Where(Directory.Exists).Distinct(StringComparer.OrdinalIgnoreCase);
+            foreach (var dir in folders.SelectMany(Directory.EnumerateDirectories))
             {
                 var metaFile = Path.Combine(dir, LegacyMetaFileName);
                 if (!File.Exists(metaFile))

@@ -444,11 +444,7 @@ namespace NoFences
             }
 
             var sync = Section(page, Strings.SectionSync, ContentWidth);
-            if (app.Store.IsPortable)
-            {
-                Hint(sync, Strings.SyncPortable, ContentWidth);
-            }
-            else if (app.Store.SyncFolder is { } folder)
+            if (app.Store.SyncFolder is { } folder)
             {
                 Hint(sync, Strings.SyncActive(folder), ContentWidth);
                 Wide(sync, Action(Strings.SyncStop, () => app.StopSync(this)));
@@ -467,7 +463,7 @@ namespace NoFences
                 app.LoadCustomThemes(report: true);
                 app.ApplyToAll();
             }));
-            Wide(styles, Action(Strings.OpenDataFolder, () => Open(app.Store.DataDirectory)));
+            Wide(styles, Action(Strings.OpenDataFolder, () => Open(app.Store.Folder.Root)));
         }
 
         #endregion

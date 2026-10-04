@@ -105,7 +105,7 @@ namespace NoFences.Util
         public static string Theme => T("Style", "Style", "Stile", "Style", "Estilo");
         public static string ThemeGlobal => T("Default style", "Standard-Style", "Stile predefinito", "Style par défaut", "Estilo predeterminado");
         public static string ThemeInherit => T("(use default style)", "(Standard-Style verwenden)", "(usa lo stile predefinito)", "(utiliser le style par défaut)", "(usar el estilo predeterminado)");
-        public static string OpenDataFolder => T("Open config folder", "Konfigurationsordner öffnen", "Apri cartella di configurazione", "Ouvrir le dossier de configuration", "Abrir carpeta de configuración");
+        public static string OpenDataFolder => T("Open data folder", "Datenordner öffnen", "Apri cartella dati", "Ouvrir le dossier de données", "Abrir carpeta de datos");
         public static string Exit => T("Exit", "Beenden", "Esci", "Quitter", "Salir");
         public static string Rename => T("Rename", "Umbenennen", "Rinomina", "Renommer", "Cambiar nombre");
         public static string NewName => T("New name:", "Neuer Name:", "Nuovo nome:", "Nouveau nom :", "Nuevo nombre:");
@@ -942,7 +942,6 @@ namespace NoFences.Util
             "Copiare i recinti condivisi su questo PC e smettere di usare la cartella condivisa? NoFences si riavvia.",
             "Copier les barrières partagées sur ce PC et ne plus utiliser le dossier partagé ? NoFences redémarre.",
             "¿Copiar las vallas compartidas a este PC y dejar de usar la carpeta compartida? NoFences se reinicia.");
-        public static string SyncPortable => T("Not available in portable mode (the data lives next to NoFences.exe).", "Im portablen Modus nicht verfügbar (die Daten liegen neben NoFences.exe).", "Non disponibile in modalità portatile (i dati sono accanto a NoFences.exe).", "Indisponible en mode portable (les données sont à côté de NoFences.exe).", "No disponible en modo portátil (los datos están junto a NoFences.exe).");
         public static string SyncReloaded => T("Fences updated from another PC.", "Fences von einem anderen PC aktualisiert.", "Recinti aggiornati da un altro PC.", "Barrières mises à jour depuis un autre PC.", "Vallas actualizadas desde otro PC.");
 
         #endregion

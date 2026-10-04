@@ -268,9 +268,12 @@ Nur, was du einrichtest: die Update-Prüfung (GitHub), Wetter (Open-Meteo), dein
 Webseiten-Widget. Sonst wird nichts gesendet.
 
 **Wo liegen meine Einstellungen?**
-In `%LocalAppData%\NoFences\fences.json` (Sicherungen daneben) oder im gemeinsamen Ordner, wenn du einen gewählt hast.
-Liegt eine leere `portable.txt` neben der `NoFences.exe`, werden sie stattdessen neben der EXE gespeichert.
+Neben der `NoFences.exe`, sortiert in Ordner: `config` (fences.json, Spielzeit), `backups`, `themes`, `media`
+(Notiz-Bilder, Sprachnotizen, Ablage), `cache`, `logs` und `lang` (eigene Übersetzungen). Ist der Programmordner nicht
+beschreibbar (z. B. „Programme“), liegen sie stattdessen in `%LocalAppData%\NoFences`. Mit gemeinsamem Ordner liegen
+Fences und Styles dort. Einstellungen → Daten & Styles → „Datenordner öffnen“ zeigt den Ordner. Daten älterer Versionen
+werden automatisch umgezogen.
 
 **Wie deinstalliere ich NoFences?**
 Einstellungen → Allgemein: „Mit Windows starten“ abhaken; FPS-Messung ausschalten, falls genutzt; Tray → Beenden;
-`NoFences.exe` und den Ordner `%LocalAppData%\NoFences` löschen. Dateien in Ordner-Fences bleiben in ihren Ordnern.
+`NoFences.exe` und ihre Datenordner (siehe oben) löschen. Dateien in Ordner-Fences bleiben in ihren Ordnern.

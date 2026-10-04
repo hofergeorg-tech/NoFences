@@ -267,9 +267,11 @@ feed di notizie, le quotazioni (Yahoo Finance), offerte e notizie di Steam (Stea
 speed test (Cloudflare) e le pagine del widget Pagina web. Nient'altro viene inviato.
 
 **Dove sono le mie impostazioni?**
-In `%LocalAppData%\NoFences\fences.json` (backup accanto) o nella cartella condivisa, se ne hai scelta una. Con un file
-vuoto `portable.txt` accanto a `NoFences.exe` vengono invece salvate accanto all'eseguibile.
+Accanto a `NoFences.exe`, ordinate in cartelle: `config` (fences.json, tempo di gioco), `backups`, `themes`, `media`
+(immagini e note vocali delle note, ripiano), `cache`, `logs` e `lang` (traduzioni proprie). Se nella cartella del
+programma non si può scrivere (ad es. Programmi), si trovano invece in `%LocalAppData%\NoFences`. Con una cartella
+condivisa, recinti e stili sono lì. I dati delle versioni precedenti vengono spostati automaticamente.
 
 **Come si disinstalla?**
 Impostazioni → Generale: togli "Avvia con Windows"; disattiva la misurazione FPS se usata; barra → Esci; elimina
-`NoFences.exe` e la cartella `%LocalAppData%\NoFences`. I file nei recinti cartella restano nelle loro cartelle.
+`NoFences.exe` e le sue cartelle dati (vedi sopra). I file nei recinti cartella restano nelle loro cartelle.

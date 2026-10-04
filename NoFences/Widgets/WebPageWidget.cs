@@ -163,7 +163,7 @@ namespace NoFences.Widgets
             host.Controls.Add(view);
             host.Show();
             // The browser cache lives with NoFences' local data, not next to the exe
-            var cache = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "NoFences", "WebView2");
+            var cache = Path.Combine(AppData.Cache, "WebView2");
             // Chromium pauses windows it thinks nobody sees; this one is never seen, but must keep drawing
             var options = new CoreWebView2EnvironmentOptions("--disable-features=CalculateNativeWinOcclusion --disable-background-timer-throttling --disable-renderer-backgrounding");
             var environment = await CoreWebView2Environment.CreateAsync(null, cache, options);

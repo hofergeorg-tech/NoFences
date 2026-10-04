@@ -5,7 +5,12 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.5.0] - unreleased
+## [2.6.0] - unreleased
+
+### Changed
+- **All data next to NoFences.exe**, sorted into folders (`config`, `backups`, `themes`, `media`, `cache`, `logs`, `lang`). Data of older versions is copied over once; in a non-writable program folder (Program Files, WinGet) the data stays in `%LocalAppData%\NoFences`, sorted the same way.
+
+## [2.5.0] - 2026-10-04
 
 ### Added
 - **Games**: playtime of every detected game, counted automatically and shown under its cover; sort by most played.

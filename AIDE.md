@@ -280,10 +280,12 @@ les flux d'actualités, les cours (Yahoo Finance), les promos et actus Steam (St
 de débit (Cloudflare) et les pages du widget Page web. Rien d'autre n'est envoyé.
 
 **Où sont mes réglages ?**
-Dans `%LocalAppData%\NoFences\fences.json` (sauvegardes à côté), ou dans le dossier partagé si vous en avez choisi un.
-Avec un fichier vide `portable.txt` à côté de `NoFences.exe`, ils sont enregistrés à côté de l'exe.
+À côté de `NoFences.exe`, rangés en dossiers : `config` (fences.json, temps de jeu), `backups`, `themes`, `media`
+(images et notes vocales des notes, étagère), `cache`, `logs` et `lang` (traductions personnelles). Si le dossier du
+programme n'est pas accessible en écriture (p. ex. Program Files), ils sont dans `%LocalAppData%\NoFences`. Avec un
+dossier partagé, barrières et styles y sont. Les données des versions précédentes sont déplacées automatiquement.
 
 **Comment désinstaller ?**
 Paramètres → Général : décochez « Démarrer avec Windows » ; désactivez la mesure des FPS si utilisée ; zone de
-notification → Quitter ; supprimez `NoFences.exe` et le dossier `%LocalAppData%\NoFences`. Les fichiers des barrières de
+notification → Quitter ; supprimez `NoFences.exe` et ses dossiers de données (voir ci-dessus). Les fichiers des barrières de
 dossier restent dans leurs dossiers.

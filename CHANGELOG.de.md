@@ -4,7 +4,12 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.5.0] - unveröffentlicht
+## [2.6.0] - unveröffentlicht
+
+### Geändert
+- **Alle Daten neben der NoFences.exe**, sortiert in Ordner (`config`, `backups`, `themes`, `media`, `cache`, `logs`, `lang`). Daten älterer Versionen werden einmalig übernommen; in einem nicht beschreibbaren Programmordner (Programme, WinGet) bleiben sie in `%LocalAppData%\NoFences`, genauso sortiert.
+
+## [2.5.0] - 2026-10-04
 
 ### Neu
 - **Spiele**: Spielzeit jedes erkannten Spiels, automatisch gezählt und unter dem Cover angezeigt; Sortierung nach meistgespielt.

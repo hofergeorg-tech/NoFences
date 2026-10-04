@@ -257,9 +257,11 @@ Finance), Steam sales and news (Steam), Twitch status (decapi.me), the speed tes
 widget. Nothing else is sent anywhere.
 
 **Where are my settings?**
-`%LocalAppData%\NoFences\fences.json` (backups next to it), or in the shared folder if you chose one. With an empty
-`portable.txt` next to `NoFences.exe` they are kept next to the exe instead.
+Next to `NoFences.exe`, sorted into folders: `config` (fences.json, playtime), `backups`, `themes`, `media` (note
+pictures, voice notes, shelf), `cache`, `logs` and `lang` (own translations). If the program folder can't be written to
+(e.g. Program Files), they are in `%LocalAppData%\NoFences` instead. With a shared folder, fences and styles are there.
+Settings → Data & styles → "Open data folder" shows the folder. Data of older versions is moved automatically.
 
 **How do I uninstall?**
 Settings → General: uncheck "Start with Windows"; turn off FPS measurement if used; tray → Exit; delete `NoFences.exe`
-and the folder `%LocalAppData%\NoFences`. Files in folder fences stay in their folders.
+and its data folders (see above). Files in folder fences stay in their folders.

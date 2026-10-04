@@ -123,7 +123,7 @@ namespace NoFences
         /// <summary>A folder fence that empties itself: what lies there longer than a week goes to the recycle bin.</summary>
         public void CreateShelf()
         {
-            var folder = Path.Combine(Store.LocalDirectory, "Shelf");
+            var folder = Path.Combine(Store.Folder.Media, "Shelf");
             Directory.CreateDirectory(folder);
             AddFence(new FenceInfo
             {
@@ -159,7 +159,7 @@ namespace NoFences
             {
                 Name = browserName,
                 Kind = FenceKind.Folder,
-                FolderPath = Path.Combine(Store.LocalDirectory, "Bookmarks", browserId),
+                FolderPath = Path.Combine(Store.Folder.Media, "Bookmarks", browserId),
                 AutoSource = "bookmarks:" + browserId,
                 ReadOnly = true,
                 Width = 340,

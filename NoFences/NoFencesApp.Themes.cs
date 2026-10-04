@@ -8,7 +8,7 @@ namespace NoFences
     /// <summary>User styles from the "themes" folder and the animation switch.</summary>
     public sealed partial class NoFencesApp
     {
-        internal string ThemesFolder => Path.Combine(Store.DataDirectory, "themes");
+        internal string ThemesFolder => Store.ThemesDirectory;
 
         public void OpenStyleDesigner(FenceInfo? info)
         {

@@ -8,8 +8,7 @@ namespace NoFences.Widgets
     /// </summary>
     public sealed record FpsReading(string Process, double Fps, DateTime Time)
     {
-        public static string FilePath => Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "NoFences", "fps.json");
+        public static string FilePath => Path.Combine(Util.AppData.Cache, "fps.json");
 
         private static readonly JsonSerializerOptions Options = new() { PropertyNameCaseInsensitive = true };
 
