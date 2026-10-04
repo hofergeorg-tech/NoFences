@@ -23,6 +23,12 @@ English: [HELP.md](HELP.md) · Italiano: [AIUTO.md](AIUTO.md) · Français : [AI
 - **Widget**: Live-Inhalt – Uhr, Wetter, Spiele, Termine und mehr, siehe unten.
 - **Zuletzt verwendet**: die 20 zuletzt geöffneten Dateien (nur lesen).
 - **Schnellstart-Leiste**: ein schmaler Verknüpfungs-Fence nur mit Icons; die Namen erscheinen als Tooltip.
+- **Weitere Fences** (Menü → Weitere Fences):
+  - **Vorlagen** (Gaming-Setup, Büro, Minimal) legen mehrere passende Fences auf einmal an.
+  - Die **Ablage** ist ein Ordner-Fence zum kurzen Parken; was eine Woche dort liegt, wandert in den Papierkorb
+    (die Frist stellst du in den Fence-Einstellungen ein, auch für jeden anderen Ordner-Fence).
+  - **Browser-Lesezeichen** zeigt die Lesezeichenleiste von Chrome, Edge, Brave, Vivaldi oder Opera und bleibt aktuell.
+  - **Zuletzt geöffnete Ordner**: die 15 Ordner, in denen du zuletzt gearbeitet hast.
 
 Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit` anlegen und als Ordner-Fence verwenden.
 
@@ -33,7 +39,12 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 - Ein angeklickter Fence reagiert auf die Tastatur: **Enter** öffnet, **F2** benennt um, **Entf** entfernt
   (Verknüpfungs-Fence: nur den Verweis; Ordner-Fence: Papierkorb), **Strg+A**, **Strg+C**, Pfeiltasten, **Esc**.
 - **Lostippen** sucht in diesem Fence; das Suchwort steht oben rechts, Esc beendet die Suche.
-- Fence-Menü → **Sortieren nach**: manuell, Name, Typ, Änderungsdatum oder Größe.
+- Fence-Menü → **Sortieren nach**: manuell, Name, Typ, Änderungsdatum, Größe oder **meistgenutzt zuerst** (NoFences
+  zählt, wie oft du etwas aus dem Fence öffnest).
+- **Farbmarkierungen**: Shift+Rechtsklick auf einen Eintrag → Markieren, oder **Strg+1…6** für die gewählten Einträge
+  (Strg+0 entfernt) – ein farbiger Punkt am Symbol, z. B. Rot für Wichtiges.
+- **Vorschau beim Darüberfahren**: Bleibt die Maus kurz auf einem Ordner, zeigt NoFences seinen Inhalt; auf Bildern,
+  PDFs und Videos eine große Vorschau (abschaltbar unter Einstellungen → Desktop).
 - **Reiter** (Verknüpfungs-Fences): Fence-Menü → Reiter hinzufügen. Klick wechselt, Doppelklick benennt um, Einträge auf einen
   Reiter ziehen verschiebt sie dorthin.
 
@@ -54,6 +65,11 @@ du unter Einstellungen → Desktop.
 - **Immer im Vordergrund** hält einen Fence über allen Fenstern (über Spielen nur im Modus „Randloses Fenster“).
 - **Nur auf diesem virtuellen Desktop** zeigt einen Fence nur auf dem aktuellen virtuellen Desktop (Win+Strg+Pfeiltasten).
 - **Strg+Alt+D** holt alle Fences vor die offenen Fenster; Esc oder ein Klick daneben schickt sie zurück.
+- **Tastenkürzel pro Fence** (Fence-Einstellungen, Strg+Shift+F1…F12) holt genau diesen Fence nach vorne – auch aus
+  einem anderen Profil.
+- **Ausblenden bei Mausferne** (Einstellungen → Desktop): Fences werden durchsichtiger, je weiter die Maus weg ist.
+  Einzelne Fences nimmst du in ihren Einstellungen aus („Diesen Fence nie ausblenden“).
+- Werkzeuge ▸ **Alle Fences auf Monitor ▸** schiebt alle sichtbaren Fences an dieselbe Stelle auf einem anderen Bildschirm.
 
 ## Notizen
 
@@ -65,28 +81,39 @@ du unter Einstellungen → Desktop.
 - **Strg+Alt+N** (änderbar unter Einstellungen → Desktop) legt von überall eine Notiz an der Maus an, bereit zum Tippen.
 - Fence-Menü → **Erinnerung…**: Zur gewählten Zeit meldet sich NoFences mit Ton und Benachrichtigung – einmalig,
   täglich, werktags, wöchentlich oder monatlich.
+- **Bilder**: Strg+V im Editor fügt ein Bild aus der Zwischenablage ein; es erscheint direkt in der Notiz.
+- **Sprachnotiz aufnehmen…** (Notiz-Menü) nimmt über das Mikrofon auf; der Abspielknopf in der Notiz spielt sie ab.
+- **Mit Passwort schützen…** (Notiz-Menü): Die Notiz wird verschlüsselt gespeichert und sperrt sich nach 2 Minuten ohne
+  Benutzung; Doppelklick entsperrt. **Ohne das Passwort lässt sie sich nicht mehr öffnen** – auch nicht von NoFences.
 - Post-it-Style in Gelb, Rosa, Grün, Blau und Orange.
 
 ## Widgets
 
 Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem Mausrad.
 
-- **Uhr & Kalender**.
-- **System-Monitor**: CPU, RAM, GPU-Last und -Temperatur (NVIDIA) und **FPS**, wenn aktiviert (siehe unten).
+- **Uhr & Kalender**; Tage mit Terminen aus einem Termine-Widget tragen einen Punkt.
+- **System-Monitor**: CPU, RAM, GPU-Last und -Temperatur (NVIDIA), eine Kurve der letzten zwei Minuten und **FPS**, wenn
+  aktiviert (siehe unten). Bleibt die Grafikkarte zu heiß, warnt NoFences (Grenze im Menü: 75–90 °C oder aus).
 - **Laufwerke**: Füllstand und freier Platz; Klick öffnet das Laufwerk.
 - **Papierkorb**: Dateien darauf ziehen löscht sie, Doppelklick öffnet ihn, im Menü leeren.
 - **Spielzeit**: heute / diese Woche / diesen Monat / gesamt für ein beliebiges Spiel. Doppelklick und die EXE des Spiels
   auswählen; NoFences zeichnet auf, wie lange es läuft.
 - **Countdown**: Tage und Stunden bis zu einem Datum; Doppelklick zum Festlegen.
-- **Wetter**: aktuelles Wetter und drei Tage Vorschau für einen gesuchten Ort (Daten: Open-Meteo, ohne Konto).
+- **Wetter**: aktuelles Wetter und drei Tage Vorschau für einen gesuchten Ort (Daten: Open-Meteo, ohne Konto), dazu
+  ein **Regen-Hinweis** für die nächsten zwei Stunden („Regen in ca. 20 Min.“), Sonnenauf- und -untergang und die
+  **Mondphase** (Tooltip mit Namen).
 - **Medien**: Titel, Interpret und Cover von dem, was Spotify, ein Browser oder ein Mediaplayer gerade abspielt, mit
   Zurück / Play-Pause / Weiter.
-- **Netzwerk**: Download- und Upload-Rate mit Verlauf der letzten Minute und Ping.
-- **Zwischenablage-Verlauf**: die letzten 15 kopierten Texte; anklicken kopiert sie erneut. Nur solange NoFences läuft,
-  Passwörter aus Passwort-Managern werden übersprungen.
-- **Akku**: Ladestand, ob geladen wird, Restzeit (Laptops).
+- **Netzwerk**: Download- und Upload-Rate mit Verlauf der letzten Minute und Ping; **Speedtest** per Klick (misst etwa
+  12 Sekunden über speed.cloudflare.com).
+- **Zwischenablage-Verlauf**: die letzten 15 kopierten Texte und **Bilder**; anklicken kopiert sie erneut. Rechtsklick auf
+  einen Eintrag → **anheften**: Angeheftete bleiben oben, auch nach einem Neustart. Der Rest gilt nur, solange NoFences
+  läuft; Passwörter aus Passwort-Managern werden übersprungen.
+- **Akku**: Ladestand, ob geladen wird, Restzeit (Laptops), dazu der Akku von **Controllern** (Xbox/XInput) und
+  **Bluetooth-Geräten**, die ihn an Windows melden (Headsets, viele Mäuse und Tastaturen).
 - **Spiele**: deine installierten Spiele aus Steam (mit Cover), Epic, GOG und der Xbox-App; zuletzt gespielte zuerst.
-  Klick startet ein Spiel. Im Menü Spiele ausblenden, nach Name sortieren oder erneut suchen.
+  Unter jedem Cover steht die **Spielzeit**, die NoFences automatisch mitzählt. Klick startet ein Spiel. Im Menü Spiele
+  ausblenden, nach Name oder Spielzeit sortieren oder erneut suchen.
 - **Termine**: die nächsten zwei Wochen aus Kalender-Links (.ics). Google: Kalendereinstellungen → „Privatadresse im
   iCal-Format“; Outlook: Einstellungen → Kalender → Freigegebene Kalender → Veröffentlichen → ICS; iCloud: Kalender
   öffentlich freigeben. Mehrere Kalender: ein Link pro Zeile. Wiederkehrende Termine werden unterstützt.
@@ -109,8 +136,20 @@ Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem
   ausgeblendet ist.
 - **Weltzeituhr**: die Uhrzeit an anderen Orten mit dem Unterschied zu deiner; Doppelklick wählt die Zeitzonen.
 - **Energiesparplan**: mit einem Klick zwischen Ausbalanciert, Höchstleistung und anderen wechseln.
-- **Steam-Angebote**: aktuelle Angebote auf Steam; Spiele von deiner Wunschliste stehen oben, wenn sie öffentlich ist
-  (genommen wird das auf diesem PC angemeldete Steam-Konto). Klick öffnet die Shop-Seite in Steam.
+- **Steam-Angebote**: alle aktuellen Angebote, Topseller oder beliebte Neuerscheinungen (beim Scrollen lädt mehr nach);
+  jedes reduzierte Spiel deiner **Wunschliste** steht oben. Im Menü → Einstellungen: Liste, Mindestrabatt, Höchstpreis,
+  Spiele pro Seite und das Konto (leer = das auf diesem PC angemeldete). Ist die Wunschliste nicht öffentlich, füge ihren
+  **Freigabelink** ein (Steam: Wunschliste → Teilen). Klick öffnet die Shop-Seite in Steam.
+- **Spiele-News**: Ankündigungen und Patchnotes deiner installierten Steam-Spiele.
+- **Twitch live**: welche deiner Streamer gerade live sind, mit Spiel und Titel; Benachrichtigung, wenn jemand startet.
+- **Timer & Wecker**: Schnell-Timer (Knöpfe +1, +5, +10, +15, +30 Minuten) und Wecker an gewählten Tagen; sie klingeln auch,
+  wenn das Widget ausgeblendet ist.
+- **Gewohnheiten**: die letzten 7 Tage abhaken, mit Serien-Zähler.
+- **Zeit-Fortschritt**: wie viel von Tag, Woche, Monat und Jahr schon vorbei ist.
+- **Autostart**: Programme, die mit Windows starten, mit Schalter (wie im Task-Manager). Einträge für alle Benutzer sind
+  ausgegraut, sie brauchen Administratorrechte.
+- **Webseite**: eine kleine Seite (Dashboard, Statusseite …) direkt im Fence, alle 10 Sekunden bis 15 Minuten
+  aktualisiert. Klick öffnet sie im Browser, das Mausrad scrollt, im Menü Adresse, Intervall und Zoom.
 
 Jedes Widget hat im Menü eigene Einstellungen. Im Menü des Fokus-Timers gibt es außerdem den **Fokus-Modus**: Er
 wechselt während einer Fokus-Runde zu einem Profil deiner Wahl (z. B. „Fokus“ nur mit Arbeits-Fences) und in den
@@ -130,13 +169,20 @@ Doppelklick oder Leertaste dreht es, Pfeiltasten verschieben pixelgenau (Shift: 
 zwischen Pixel, Zentimeter und Zoll (echte Größe, aus der Größe, die dein Monitor meldet). Eine rote Linie folgt der
 Maus und zeigt den Abstand. Esc schließt es.
 
-## Farbpipette und Aufräumen
+## Weitere Werkzeuge
 
 - Werkzeuge ▸ **Farbpipette**: Der Bildschirm friert ein, eine Lupe folgt der Maus; ein Klick kopiert die Farbe als
   `#RRGGBB` (Shift+Klick: `rgb(…)`), Esc bricht ab.
 - Werkzeuge ▸ **Ordner aufräumen…**: zeigt, was seit einer Woche, einem Monat, drei Monaten oder einem Jahr unberührt
   liegt, größte zuerst; Gewähltes wandert in den Papierkorb (wiederherstellbar). Zu Beginn ist es der Downloads-Ordner;
   **Ordner hinzufügen…** nimmt weitere dazu (Desktop, Videos, ein Spiele-Ordner …), die Liste bleibt gespeichert.
+  Die Auswahl **Doppelte Dateien** findet Dateien mit gleichem Inhalt; das älteste Exemplar gilt als Original, die
+  Kopien sind schon angehakt.
+- Werkzeuge ▸ **QR-Code…**: zeigt einen Text oder Link (aus der Zwischenablage vorausgefüllt) als QR-Code zum Scannen
+  mit dem Handy; kopieren oder als Bild speichern.
+- Werkzeuge ▸ **Bildschirmlupe**: eine runde Lupe folgt der Maus; **+/–** ändert den Zoom (2× bis 8×), Esc oder ein Klick
+  schließt sie.
+- Werkzeuge ▸ **Desktop-Symbole anzeigen**: blendet die Windows-Desktop-Symbole mit einem Klick aus und wieder ein.
 
 ## Profile
 
@@ -145,7 +191,9 @@ umschalten. Rechtsklick auf ein Fence → **In Profil zeigen** ordnet es zu; ein
 Profilen. Neue Fences gehören zum gerade aktiven Profil. **Strg+Alt+F1…F9** wechseln zu Profil 1…9, **Strg+Alt+F10**
 zeigt alle Fences. Ist ein Profil aktiv, gibt Tray → Profil ▸ **Hintergrundbild für „…“** ihm ein eigenes
 Hintergrundbild; in Profilen ohne eigenes kommt dein gewohntes zurück. **Energiesparplan für „…“ ▸** im selben Menü
-wechselt mit dem Profil auch den Energiesparplan (z. B. Höchstleistung bei Gaming).
+wechselt mit dem Profil auch den Energiesparplan (z. B. Höchstleistung bei Gaming). **Programme für „…“ ▸** startet
+Programme beim Wechsel in das Profil (z. B. Steam und Discord bei Gaming); mit „Beim Verlassen des Profils schließen“
+schließt NoFences sie beim Wechsel wieder – aber nur, wenn es sie selbst gestartet hat.
 
 ## Automatik (Einstellungen → Automatik)
 
@@ -157,6 +205,10 @@ wechselt mit dem Profil auch den Energiesparplan (z. B. Höchstleistung bei Gami
 - **Heller und dunkler Style**: Der Standard-Style wechselt mit dem hellen/dunklen Modus von Windows oder zu festen
   Uhrzeiten – z. B. tagsüber Post-it, abends Glas. Fences mit eigenem Style behalten ihn.
 - Der Style **Windows-Akzentfarbe** übernimmt die Farbe aus Einstellungen → Personalisierung → Farben.
+- **Pausen-Erinnerung**: nach 30 bis 120 Minuten aktiver Nutzung eine Erinnerung, Pause zu machen (eigener Text möglich,
+  z. B. „Wasser trinken“). Wer länger weg war, beginnt von vorne.
+- **Hintergrundbild nach Tageszeit**: Bilder mit Startzeit (z. B. ab 7:00 hell, ab 19:00 dunkel); jedes bleibt, bis das
+  nächste beginnt. Ein eigenes Profil-Hintergrundbild hat Vorrang.
 
 ## Mehrere PCs
 
@@ -181,20 +233,23 @@ hinzufügen. Neue Desktop-Dateien, die passen, wandern in diesen Fence (auch fer
 ## Styles
 
 Den Standard wählst du unter **Einstellungen → Allgemein**, pro Fence im Fence-Menü → Style oder in den Fence-Einstellungen
-mit Live-Vorschau. Es gibt 25 Styles – Glas, Windows-Akzentfarbe, Star Citizen HUD, Retro-Arcade, Hardware, Nerd, Hobby,
-Arbeit, Familie, Gaming, Finanzen, Social, Dokumente, Multimedia, Musik, Sport, Fotos, Reisen, Kochen, Natur und Post-it
-in fünf Farben.
+mit Live-Vorschau. Es gibt 26 Styles – Glas, Windows-Akzentfarbe, **Hochkontrast** (schwarz, große fette Schrift),
+Star Citizen HUD, Retro-Arcade, Hardware, Nerd, Hobby, Arbeit, Familie, Gaming, Finanzen, Social, Dokumente, Multimedia,
+Musik, Sport, Fotos, Reisen, Kochen, Natur und Post-it in fünf Farben.
 
-**Eigene Styles**: Einstellungen → Daten & Styles → Styles-Ordner öffnen. `beispiel-mocha.json` kopieren, Farben ändern
-(`#RRGGBB` oder `#RRGGBBAA`) und neu laden. Eigene Styles tragen einen ★.
+**Eigene Styles**: Fence-Menü → Style ▸ **Eigenen Style gestalten…** (oder Einstellungen → Daten & Styles) öffnet den
+**Style-Designer**: Farben, Schriften, Titelleiste, Rahmen und Ecken per Klick, mit Live-Vorschau. „Speichern und für
+diesen Fence verwenden“ übernimmt ihn gleich. Gespeichert wird als JSON im Styles-Ordner – dort lassen sich Styles auch
+von Hand bearbeiten (`#RRGGBB` oder `#RRGGBBAA`) und weitergeben. Eigene Styles tragen einen ★.
 
 ## Einstellungen (Tray → Einstellungen)
 
 - **Allgemein**: Sprache (automatisch, English, Deutsch, Italiano, Français, Español), mit Windows starten, Dateiendungen,
   Standard-Style, Animationen.
 - **Desktop**: Doppelklick auf den Desktop blendet Fences aus/ein; Tastenkürzel, um Fences nach vorne zu holen
-  (Strg+Alt+D); Profile; Tastenkürzel für die Suche (Strg+Alt+F); Einsortieren.
-- **Automatik**: Profilregeln, Vollbild, heller und dunkler Style (siehe oben).
+  (Strg+Alt+D); Ausblenden bei Mausferne; Vorschau beim Darüberfahren; Profile; Tastenkürzel für die Suche (Strg+Alt+F);
+  Einsortieren.
+- **Automatik**: Profilregeln, Pausen-Erinnerung, Vollbild, heller und dunkler Style, Hintergrund nach Tageszeit (siehe oben).
 - **Updates**: NoFences prüft GitHub und installiert neue Versionen mit einem Klick; Spenden.
 - **FPS-Messung**: siehe oben.
 - **Daten & Styles**: Fences exportieren/importieren, Sicherung wiederherstellen (alle 12 Stunden), gemeinsamer Ordner, Ordner.
@@ -208,8 +263,9 @@ Bei einem Verknüpfungs-Fence nicht, er verweist nur darauf. Bei einem Ordner-Fe
 Die EXE ist noch nicht signiert. Auf „Weitere Informationen“ → „Trotzdem ausführen“ klicken.
 
 **Was geht ins Internet?**
-Nur, was du einrichtest: die Update-Prüfung (GitHub), Wetter (Open-Meteo), deine Kalender-Links, News-Feeds und Kurse
-(Yahoo Finance). Sonst wird nichts gesendet.
+Nur, was du einrichtest: die Update-Prüfung (GitHub), Wetter (Open-Meteo), deine Kalender-Links, News-Feeds, Kurse
+(Yahoo Finance), Steam-Angebote und -News (Steam), Twitch-Status (decapi.me), der Speedtest (Cloudflare) und Seiten im
+Webseiten-Widget. Sonst wird nichts gesendet.
 
 **Wo liegen meine Einstellungen?**
 In `%LocalAppData%\NoFences\fences.json` (Sicherungen daneben) oder im gemeinsamen Ordner, wenn du einen gewählt hast.

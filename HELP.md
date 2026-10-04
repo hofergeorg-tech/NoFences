@@ -21,6 +21,12 @@ Deutsch: [HILFE.md](HILFE.md) · Italiano: [AIUTO.md](AIUTO.md) · Français : [
 - **Widget**: live content – clock, weather, games, appointments and more, see below.
 - **Recent files**: the 20 files you opened last (read-only).
 - **Quick-launch bar**: a slim link fence with icons only; names show as tooltips.
+- **More fences** (menu → More fences):
+  - **Templates** (gaming setup, office, minimal) create several matching fences at once.
+  - The **shelf** is a folder fence for parking files briefly; what lies there for a week goes to the recycle bin
+    (set the time in the fence settings – for any other folder fence too).
+  - **Browser bookmarks** shows the bookmarks bar of Chrome, Edge, Brave, Vivaldi or Opera and stays up to date.
+  - **Recently opened folders**: the 15 folders you worked in last.
 
 Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use it as a folder fence.
 
@@ -31,7 +37,12 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
 - A clicked fence listens to the keyboard: **Enter** opens, **F2** renames, **Delete** removes (link fences: only the
   link; folder fences: recycle bin), **Ctrl+A**, **Ctrl+C**, arrow keys, **Esc**.
 - **Just type** to search in that fence; the search text shows top right, Esc ends it.
-- Fence menu → **Sort by**: manual, name, type, date modified or size.
+- Fence menu → **Sort by**: manual, name, type, date modified, size or **most used first** (NoFences counts how often
+  you open something from the fence).
+- **Color marks**: Shift+right-click an item → Mark, or **Ctrl+1…6** for the selected items (Ctrl+0 removes) – a
+  colored dot on the icon, e.g. red for important things.
+- **Preview on hover**: rest the mouse on a folder to see its contents, on pictures, PDFs and videos for a large
+  preview (can be turned off in Settings → Desktop).
 - **Tabs** (link fences): fence menu → Add tab. Click a tab to switch, double-click to rename, drag items onto a tab
   to move them there.
 
@@ -51,6 +62,11 @@ settings pages ("bluetooth", "sound"). Type a calculation like `12*7` or `200*15
 - **Always on top** keeps a fence above all windows (over games only in "borderless window" mode).
 - **Only on this virtual desktop** shows a fence only on the current virtual desktop (Win+Ctrl+arrows).
 - **Ctrl+Alt+D** brings all fences in front of the open windows; Esc or a click elsewhere sends them back.
+- A **shortcut per fence** (fence settings, Ctrl+Shift+F1…F12) brings just that fence to the front – even from another
+  profile.
+- **Fade when the mouse is far away** (Settings → Desktop): fences grow more transparent the further away the mouse is.
+  Exclude single fences in their settings ("Never fade this fence").
+- Tools ▸ **Move all fences to monitor ▸** moves all shown fences to the same place on another screen.
 
 ## Notes
 
@@ -62,28 +78,39 @@ settings pages ("bluetooth", "sound"). Type a calculation like `12*7` or `200*15
 - **Ctrl+Alt+N** (changeable in Settings → Desktop) creates a note at the mouse, ready to type – from anywhere.
 - Fence menu → **Reminder…**: NoFences plays a sound and shows a notification at that time – once, daily, on weekdays,
   weekly or monthly.
+- **Pictures**: Ctrl+V in the editor pastes a picture from the clipboard; it shows right in the note.
+- **Record voice note…** (note menu) records from the microphone; the play button in the note plays it.
+- **Protect with password…** (note menu): the note is saved encrypted and locks itself after 2 minutes without use;
+  double-click unlocks it. **Without the password it can't be opened any more** – not even by NoFences.
 - Post-it style in yellow, pink, green, blue and orange.
 
 ## Widgets
 
 Tray or fence menu → **New widget**. Widgets with a list scroll with the mouse wheel.
 
-- **Clock & calendar**.
-- **System monitor**: CPU, RAM, GPU load and temperature (NVIDIA), and **FPS** if enabled (see below).
+- **Clock & calendar**; days with appointments from an appointments widget carry a dot.
+- **System monitor**: CPU, RAM, GPU load and temperature (NVIDIA), a graph of the last two minutes, and **FPS** if
+  enabled (see below). If the graphics card stays too hot, NoFences warns you (limit in the menu: 75–90 °C or off).
 - **Drives**: fill level and free space; click opens the drive.
 - **Recycle bin**: drop files on it to delete them, double-click opens it, the menu empties it.
 - **Playtime**: today / this week / this month / total for any game. Double-click and pick the game's exe; NoFences
   records how long it runs.
 - **Countdown**: days and hours until a date; double-click to set it.
-- **Weather**: current weather and three days ahead for a place you search for (data: Open-Meteo, no account needed).
+- **Weather**: current weather and three days ahead for a place you search for (data: Open-Meteo, no account needed),
+  plus a **rain hint** for the next two hours ("Rain in about 20 min"), sunrise and sunset and the **moon phase**
+  (tooltip with its name).
 - **Now playing**: title, artist and cover of what Spotify, a browser or a media player is playing, with
   previous / play-pause / next.
-- **Network**: download and upload rate with a one-minute graph, and the ping.
-- **Clipboard history**: the last 15 copied texts; click one to copy it again. Kept only while NoFences runs, and
-  passwords from password managers are skipped.
-- **Battery**: charge, charging or not, time left (laptops).
-- **Games**: your installed games from Steam (with covers), Epic, GOG and the Xbox app; recently played first.
-  Click starts a game. The menu hides games, sorts by name or searches again.
+- **Network**: download and upload rate with a one-minute graph, and the ping; a **speed test** with one click (measures
+  about 12 seconds via speed.cloudflare.com).
+- **Clipboard history**: the last 15 copied texts and **pictures**; click one to copy it again. Right-click an entry →
+  **pin**: pinned entries stay on top, even after a restart. The rest is kept only while NoFences runs; passwords from
+  password managers are skipped.
+- **Battery**: charge, charging or not, time left (laptops), plus the battery of **controllers** (Xbox/XInput) and
+  **Bluetooth devices** that report it to Windows (headsets, many mice and keyboards).
+- **Games**: your installed games from Steam (with covers), Epic, GOG and the Xbox app; recently played first. Under
+  each cover is the **playtime** NoFences counts automatically. Click starts a game. The menu hides games, sorts by name
+  or playtime, or searches again.
 - **Appointments**: the next two weeks from calendar links (.ics). Google: calendar settings → "Secret address in iCal
   format"; Outlook: Settings → Calendar → Shared calendars → Publish → ICS; iCloud: share the calendar publicly.
   Several calendars: one link per line. Recurring events are supported.
@@ -105,8 +132,20 @@ Tray or fence menu → **New widget**. Widgets with a list scroll with the mouse
   off (repeating ones move to their next date). Due to-dos are announced even while the widget is hidden.
 - **World clock**: the time in other places, with the difference to yours; double-click to choose time zones.
 - **Power plan**: switch between Balanced, High performance and others with one click.
-- **Steam sales**: current sales on Steam; games from your wishlist come first if the wishlist is public (the Steam
-  account signed in on this PC is used). Click opens the store page in Steam.
+- **Steam sales**: all current sales, top sellers or popular new releases (more load when scrolling); every discounted
+  game on your **wishlist** comes first. Menu → Settings: list, minimum discount, highest price, games per page and the
+  account (empty = the one signed in on this PC). If the wishlist isn't public, paste its **share link** (Steam:
+  wishlist → Share). Click opens the store page in Steam.
+- **Game news**: announcements and patch notes of your installed Steam games.
+- **Twitch live**: which of your streamers are live, with game and title; a notification when someone goes live.
+- **Timer & alarm**: quick timers (buttons +1, +5, +10, +15, +30 minutes) and alarms on chosen days; they ring even
+  while the widget is hidden.
+- **Habits**: tick off the last 7 days, with a streak counter.
+- **Time progress**: how much of the day, week, month and year has passed.
+- **Autostart**: programs that start with Windows, each with a switch (like Task Manager). Entries for all users are
+  dimmed, they need admin rights.
+- **Web page**: a small page (dashboard, status page …) right in a fence, refreshed every 10 seconds to 15 minutes.
+  Click opens it in the browser, the wheel scrolls; address, interval and zoom in the menu.
 
 Every widget's menu has its own settings. The focus timer's menu also has **focus mode**: it switches to a profile you
 choose (e.g. "Focus" with only work fences) while a focus round runs, and back in breaks.
@@ -123,13 +162,18 @@ Tray or fence menu → Tools ▸ **Screen ruler** puts a ruler above everything:
 space turns it, arrow keys nudge it (Shift: 10 px), U or the menu switches between pixels, centimetres and inches
 (real size, from the size your monitor reports). A red line follows the mouse and shows the distance. Esc closes it.
 
-## Color picker and clean-up
+## More tools
 
 - Tools ▸ **Color picker**: the screen freezes and a magnifier follows the mouse; a click copies the color as `#RRGGBB`
   (Shift+click: `rgb(…)`), Esc cancels.
 - Tools ▸ **Clean up folders…**: lists what has been lying untouched for a week, month, three months or a year, biggest
   first, and moves the chosen items to the recycle bin (restorable). It starts with Downloads; **Add folder…** adds more
-  (desktop, videos, a game folder …), and the list is kept.
+  (desktop, videos, a game folder …), and the list is kept. The choice **Duplicate files** finds files with the same
+  content; the oldest copy counts as the original, the others are already ticked.
+- Tools ▸ **QR code…**: shows a text or link (prefilled from the clipboard) as a QR code to scan with your phone; copy it
+  or save it as a picture.
+- Tools ▸ **Magnifier**: a round lens follows the mouse; **+/–** changes the zoom (2× to 8×), Esc or a click closes it.
+- Tools ▸ **Show desktop icons**: hides and shows the Windows desktop icons with one click.
 
 ## Profiles
 
@@ -138,7 +182,9 @@ Group fences into profiles like "Work" and "Gaming" and switch between them in t
 every profile. Fences created while a profile is active belong to it. **Ctrl+Alt+F1…F9** switch to profile 1…9,
 **Ctrl+Alt+F10** shows all fences. With a profile active, tray → Profile ▸ **Wallpaper for "…"** gives it its own
 wallpaper; your usual wallpaper comes back in profiles without one. **Power plan for "…" ▸** in the same menu switches
-the power plan along with the profile (e.g. High performance for Gaming).
+the power plan along with the profile (e.g. High performance for Gaming). **Programs for "…" ▸** starts programs when
+switching to the profile (e.g. Steam and Discord for Gaming); with "Close when leaving the profile" NoFences closes them
+again on the next switch – but only if it started them itself.
 
 ## Automation (Settings → Automation)
 
@@ -149,6 +195,10 @@ the power plan along with the profile (e.g. High performance for Gaming).
 - **Light and dark style**: the default style changes with Windows' light/dark mode or at set times – for example
   Post-it during the day and glass at night. Fences with their own style keep it.
 - The **Windows accent color** style takes its color from Settings → Personalization → Colors.
+- **Break reminder**: after 30 to 120 minutes of active use, a reminder to take a break (own text possible, e.g. "Drink
+  some water"). Being away for a while starts over.
+- **Wallpaper by time of day**: pictures with a start time (e.g. bright from 7:00, dark from 19:00); each stays until
+  the next one starts. A profile's own wallpaper takes precedence.
 
 ## Several PCs
 
@@ -173,20 +223,22 @@ sorts what is already there.
 ## Styles
 
 Pick the default in **Settings → General**, or one per fence (fence menu → Style, or the fence settings with a live
-preview). There are 25 styles – glass, Windows accent color, Star Citizen HUD, Retro-Arcade, Hardware, Nerd, Hobby,
-Work, Family, Gaming, Finance, Social, Documents, Multimedia, Music, Sport, Photos, Travel, Cooking, Nature and Post-it
-in five colors.
+preview). There are 26 styles – glass, Windows accent color, **high contrast** (black, large bold text), Star Citizen
+HUD, Retro-Arcade, Hardware, Nerd, Hobby, Work, Family, Gaming, Finance, Social, Documents, Multimedia, Music, Sport,
+Photos, Travel, Cooking, Nature and Post-it in five colors.
 
-**Own styles**: Settings → Data & styles → Open styles folder. Copy `beispiel-mocha.json`, change the colors
-(`#RRGGBB` or `#RRGGBBAA`) and reload. Own styles carry a ★.
+**Own styles**: fence menu → Style ▸ **Design your own style…** (or Settings → Data & styles) opens the **style
+designer**: colors, fonts, title bar, border and corners by clicking, with a live preview. "Save and use for this
+fence" applies it right away. It is saved as JSON in the styles folder, where styles can also be edited by hand
+(`#RRGGBB` or `#RRGGBBAA`) and shared. Own styles carry a ★.
 
 ## Settings (tray → Settings)
 
 - **General**: language (automatic, English, Deutsch, Italiano, Français, Español), start with Windows, file
   extensions, default style, animations.
 - **Desktop**: double-click on the desktop hides/shows fences; shortcut to bring fences to the front (Ctrl+Alt+D);
-  profiles; search shortcut (Ctrl+Alt+F); auto-sort.
-- **Automation**: profile rules, full screen, light and dark style (see above).
+  fading far from the mouse; preview on hover; profiles; search shortcut (Ctrl+Alt+F); auto-sort.
+- **Automation**: profile rules, break reminder, full screen, light and dark style, wallpaper by time of day (see above).
 - **Updates**: NoFences checks GitHub and installs new versions with one click; donate.
 - **FPS measurement**: see above.
 - **Data & styles**: export/import fences, restore a backup (made every 12 hours), shared folder, folders.
@@ -200,8 +252,9 @@ In a link fence: no, the fence only links to it. In a folder fence the file was 
 The exe is not code-signed yet. Click "More info" → "Run anyway".
 
 **What goes online?**
-Only what you set up: update checks (GitHub), weather (Open-Meteo), your calendar links, news feeds and prices
-(Yahoo Finance). Nothing else is sent anywhere.
+Only what you set up: update checks (GitHub), weather (Open-Meteo), your calendar links, news feeds, prices (Yahoo
+Finance), Steam sales and news (Steam), Twitch status (decapi.me), the speed test (Cloudflare) and pages in the web page
+widget. Nothing else is sent anywhere.
 
 **Where are my settings?**
 `%LocalAppData%\NoFences\fences.json` (backups next to it), or in the shared folder if you chose one. With an empty

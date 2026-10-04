@@ -16,14 +16,22 @@ English · Deutsch · Italiano · Français · Español
 - **Link fences**: drag files/folders in from anywhere; they stay where they are.
 - **Folder fences**: show the live contents of a folder; dropping files moves them in, so the icons really leave the desktop.
 - **Auto-sort**: patterns like `*.pdf; *.docx` move new desktop files (and finished downloads) into a fence automatically.
-- **Tabs**, **recent files**, an icons-only **quick-launch bar**, sorting (manual, name, type, date, size).
+- **Tabs**, **recent files**, an icons-only **quick-launch bar**, sorting (manual, name, type, date, size, most used).
+- **More fences**: templates (gaming, office, minimal), a self-emptying **shelf**, **browser bookmarks** (Chrome, Edge,
+  Brave, Vivaldi, Opera) and **recently opened folders**.
+- **Color marks** for items, a **preview on hover** (folder contents, large picture/PDF preview).
 - Multi-select, keyboard (Enter, Delete, F2, Ctrl+A/C, arrows) and type-to-search.
-- Snapping, positions per monitor setup, per virtual desktop, always on top, collapse to the title bar.
+- Snapping, positions per monitor setup, per virtual desktop, always on top, collapse to the title bar, optional
+  fading when the mouse is far away, a **shortcut per fence**.
 - Double-click empty desktop space to hide all fences; **Ctrl+Alt+D** brings them in front of all windows.
 
-**Sticky notes** – free text, clickable `[ ]` checkboxes, links, reminders, a taped-on Post-it look in five colors.
+![Preview on hover](docs/hover-preview.png)
+
+**Sticky notes** – free text, clickable `[ ]` checkboxes, links, reminders, a taped-on Post-it look in five colors;
+pasted **pictures**, **voice notes** and **password-protected** (encrypted) notes.
 
 ![Sticky notes](docs/notes.png)
+![Pictures, voice notes and a protected note](docs/notes-media.png)
 
 **Widgets** – clock & calendar, system monitor (CPU, RAM, GPU, optional FPS), drives, recycle bin,
 **playtime** of any game (pick its exe, NoFences records how long it runs), a **countdown**, **weather**
@@ -42,27 +50,44 @@ Also **screen time**, **sound** (volume, mute, switch playback device) and **ser
 **Search** – Ctrl+Alt+F searches everything in all fences (links, folder contents, tabs, notes), Start menu apps and
 Windows settings, and calculates (`12*7`).
 
-Plus a **to-do list** with due times and repetition, a **world clock**, **power plans** and **Steam sales**:
+Plus a **to-do list** with due times and repetition, a **world clock**, **power plans** and **Steam sales** (all sales,
+your whole wishlist – also private ones via the share link):
 
 ![Planning widgets](docs/widgets-planning-docs.png)
+
+**Timer & alarm**, **habits**, **time progress**, **Twitch live** and **game news**; the games widget shows the playtime
+of every game:
+
+![Time widgets](docs/widgets-time-docs.png)
+
+The system monitor has a graph and a **temperature warning**, the network widget a **speed test**, the battery widget
+shows **controllers and Bluetooth devices**, and there is an **autostart** manager. The weather adds a **rain hint**,
+sunrise/sunset and the moon phase. A **web page** widget shows a dashboard or status page:
+
+![System widgets](docs/widgets-system-docs.png)
+![Web page widget and high contrast style](docs/widgets-look-docs.png)
 
 **Notes** understand simple formatting – `# headings`, `- bullets`, `> quotes`, `**bold**`, `*italic*` – and Ctrl+Alt+N
 creates one from anywhere. Reminders can repeat.
 
-**Tools** – a desktop assistant that sorts your desktop icons into fences, a screen ruler (px, cm, in), a color picker
-and a Downloads clean-up (to the recycle bin).
+**Tools** – a desktop assistant that sorts your desktop icons into fences, a screen ruler (px, cm, in), a color picker,
+a magnifier, QR codes, desktop icons on/off, all fences to another monitor, and a folder clean-up (old and duplicate
+files, to the recycle bin).
 
 ![Screen ruler](docs/ruler.png)
 
 **Profiles & automation** – group fences into profiles like "Work" and "Gaming"; switch by hand or automatically while
-a program runs or at set times. Fences hide while something runs full screen, and the default style can follow
-Windows' light/dark mode or the clock.
+a program runs or at set times; a profile can bring its own wallpaper, power plan and programs. Fences hide while
+something runs full screen, the default style can follow Windows' light/dark mode or the clock, the wallpaper can change
+with the time of day, and a break reminder nudges you after a long session.
 
 **Several PCs** – keep fences in a shared folder (e.g. OneDrive); positions stay per monitor setup.
 
-**Styles** – 25 built-in styles (glass, Windows accent color, Star Citizen HUD, Retro-Arcade, Hardware, Nerd, Hobby,
-Work, Family, Gaming, Finance, Social, Documents, Multimedia, Music, Sport, Photos, Travel, Cooking, Nature, Post-it ×5)
-plus your own as JSON files; optional animations.
+**Styles** – 26 built-in styles (glass, Windows accent color, high contrast, Star Citizen HUD, Retro-Arcade, Hardware,
+Nerd, Hobby, Work, Family, Gaming, Finance, Social, Documents, Multimedia, Music, Sport, Photos, Travel, Cooking, Nature,
+Post-it ×5) plus your own – made in the **style designer** with a live preview, or as JSON files; optional animations.
+
+![Style designer](docs/style-designer.png)
 
 **App** – settings window, five languages (English, Deutsch, Italiano, Français, Español), built-in updates with one
 click, export/import, automatic backups, help and changelog inside the app.
