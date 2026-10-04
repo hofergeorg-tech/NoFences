@@ -255,7 +255,9 @@ styles personnels portent une ★.
 ## Paramètres (zone de notification → Paramètres)
 
 - **Général** : langue (automatique, English, Deutsch, Italiano, Français, Español), démarrer avec Windows, extensions,
-  style par défaut, animations.
+  style par défaut, animations. **Traductions personnelles…** ouvre le dossier `lang` avec un modèle anglais : copiez-le
+  p. ex. en `nl.json` et traduisez-le pour une nouvelle langue, ou mettez quelques textes dans `fr.json` pour les
+  modifier. Choisissez ensuite à nouveau la langue pour charger les fichiers.
 - **Bureau** : double-clic sur le bureau pour masquer/afficher les barrières ; raccourci pour les mettre au premier plan
   (Ctrl+Alt+D) ; estomper loin de la souris ; aperçu au survol ; profils ; raccourci de recherche (Ctrl+Alt+F) ; rangement.
 - **Automatisation** : règles de profil, rappel de pause, plein écran, style clair et sombre, fond d'écran selon l'heure

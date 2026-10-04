@@ -245,7 +245,9 @@ von Hand bearbeiten (`#RRGGBB` oder `#RRGGBBAA`) und weitergeben. Eigene Styles 
 ## Einstellungen (Tray → Einstellungen)
 
 - **Allgemein**: Sprache (automatisch, English, Deutsch, Italiano, Français, Español), mit Windows starten, Dateiendungen,
-  Standard-Style, Animationen.
+  Standard-Style, Animationen. **Eigene Übersetzungen…** öffnet den Ordner `lang` mit einer englischen Vorlage: als z. B.
+  `nl.json` kopieren und übersetzen ergibt eine neue Sprache; einzelne Texte in einer `de.json` ändern genau diese.
+  Danach die Sprache noch einmal wählen, um die Dateien zu laden.
 - **Desktop**: Doppelklick auf den Desktop blendet Fences aus/ein; Tastenkürzel, um Fences nach vorne zu holen
   (Strg+Alt+D); Ausblenden bei Mausferne; Vorschau beim Darüberfahren; Profile; Tastenkürzel für die Suche (Strg+Alt+F);
   Einsortieren.

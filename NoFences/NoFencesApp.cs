@@ -30,6 +30,7 @@ namespace NoFences
             Log.Folder = Store.Folder.Logs;
             AppData.Folder = Store.MediaDirectory;
             AppData.CacheFolder = Store.Folder.Cache;
+            var languageErrors = Strings.LoadFolder(Store.Folder.Lang);
             Strings.Language = Store.Config.Language;
             appliedTheme = DefaultThemeId;
             var themeErrors = LoadCustomThemesQuiet().Errors;
@@ -67,7 +68,9 @@ namespace NoFences
             InitFenceTools();
             UpdateProfileHotkeys();
             UpdateQuickNoteHotkey();
-            if (themeErrors.Count > 0)
+            if (languageErrors.Count > 0)
+                ShowBalloon(Strings.LanguageFileErrors(string.Join("\n", languageErrors)), timeout: 10_000);
+            else if (themeErrors.Count > 0)
                 ShowBalloon(Strings.ThemeErrors(string.Join("\n", themeErrors)), timeout: 10_000);
 
             if (firstStart)
@@ -131,6 +134,7 @@ namespace NoFences
 
         internal void SetLanguage(string code)
         {
+            ReloadLanguages();
             Store.Config.Language = code;
             Strings.Language = code;
             Store.RequestSave();

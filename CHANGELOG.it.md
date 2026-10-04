@@ -6,6 +6,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 
 ## [2.6.0] - non pubblicata
 
+### Novità
+- **Traduzioni proprie**: Impostazioni → Generale → "Traduzioni proprie…" apre la cartella `lang` con un modello inglese. Un file come `nl.json` aggiunge una lingua, un `it.json` con singoli testi cambia solo quelli. Tutti i testi ora sono in un file JSON per lingua.
+
 ### Modifiche
 - **Tutti i dati accanto a NoFences.exe**, ordinati in cartelle (`config`, `backups`, `themes`, `media`, `cache`, `logs`, `lang`). I dati delle versioni precedenti vengono copiati una volta; in una cartella del programma non scrivibile (Programmi, WinGet) restano in `%LocalAppData%\NoFences`, ordinati allo stesso modo.
 

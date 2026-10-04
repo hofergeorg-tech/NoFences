@@ -242,7 +242,9 @@ modificare a mano (`#RRGGBB` o `#RRGGBBAA`) e condividere. Gli stili personali h
 ## Impostazioni (barra → Impostazioni)
 
 - **Generale**: lingua (automatica, English, Deutsch, Italiano, Français, Español), avvio con Windows, estensioni, stile
-  predefinito, animazioni.
+  predefinito, animazioni. **Traduzioni proprie…** apre la cartella `lang` con un modello inglese: copialo ad es. in
+  `nl.json` e traducilo per una nuova lingua, oppure metti singoli testi in `it.json` per cambiarli. Poi scegli di nuovo
+  la lingua per caricare i file.
 - **Desktop**: doppio clic sul desktop nasconde/mostra i recinti; scorciatoia per portarli in primo piano (Ctrl+Alt+D);
   sfumatura lontano dal mouse; anteprima al passaggio del mouse; profili; scorciatoia per la ricerca (Ctrl+Alt+F);
   ordinamento.

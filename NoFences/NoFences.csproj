@@ -60,6 +60,8 @@
     <EmbeddedResource Include="..\AIUTO.md" LogicalName="AIUTO.md" />
     <EmbeddedResource Include="..\AIDE.md" LogicalName="AIDE.md" />
     <EmbeddedResource Include="..\AYUDA.md" LogicalName="AYUDA.md" />
+    <!-- UI texts, one file per language -->
+    <EmbeddedResource Include="Lang\*.json" LogicalName="Lang.%(Filename).json" WithCulture="false" />
   </ItemGroup>
 
 </Project>

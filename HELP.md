@@ -235,7 +235,9 @@ fence" applies it right away. It is saved as JSON in the styles folder, where st
 ## Settings (tray → Settings)
 
 - **General**: language (automatic, English, Deutsch, Italiano, Français, Español), start with Windows, file
-  extensions, default style, animations.
+  extensions, default style, animations. **Own translations…** opens the `lang` folder with an English template: copy
+  it to e.g. `nl.json` and translate it for a new language, or put single texts into `de.json` to change them. Choose
+  the language again to load the files.
 - **Desktop**: double-click on the desktop hides/shows fences; shortcut to bring fences to the front (Ctrl+Alt+D);
   fading far from the mouse; preview on hover; profiles; search shortcut (Ctrl+Alt+F); auto-sort.
 - **Automation**: profile rules, break reminder, full screen, light and dark style, wallpaper by time of day (see above).

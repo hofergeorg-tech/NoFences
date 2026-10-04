@@ -7,6 +7,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 
 ## [2.6.0] - unreleased
 
+### Added
+- **Own translations**: Settings → General → "Own translations…" opens the `lang` folder with an English template. A file like `nl.json` adds a language, a `de.json` with single texts changes just those. All texts now live in one JSON file per language.
+
 ### Changed
 - **All data next to NoFences.exe**, sorted into folders (`config`, `backups`, `themes`, `media`, `cache`, `logs`, `lang`). Data of older versions is copied over once; in a non-writable program folder (Program Files, WinGet) the data stays in `%LocalAppData%\NoFences`, sorted the same way.
 

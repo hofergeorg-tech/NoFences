@@ -127,6 +127,7 @@ namespace NoFences
             Row(grid, Strings.LanguageLabel, WithFlags(Choice(Strings.Languages.Select(Strings.LanguageName), IndexOf(Strings.Languages, Config.Language), i =>
             {
                 Config.Language = Strings.Languages[i];
+                app.ReloadLanguages();
                 Strings.Language = Config.Language;
                 app.Store.RequestSave();
                 app.ApplyToAll();
@@ -139,6 +140,7 @@ namespace NoFences
                 nav.Items.AddRange(pages.Select(x => (object)x.Title).ToArray());
                 BeginInvoke(() => nav.SelectedIndex = selected);
             })));
+            Wide(grid, Action(Strings.OwnTranslations, app.OpenLanguageFolder));
             Wide(grid, Check(Strings.Autostart, SystemSettings.AutostartEnabled, _ => NoFencesApp.ToggleAutostart()));
 
             var ext = new[] { (bool?)null, true, false };

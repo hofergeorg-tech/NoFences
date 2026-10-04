@@ -243,7 +243,9 @@ también se pueden editar a mano (`#RRGGBB` o `#RRGGBBAA`) y compartir. Los esti
 ## Configuración (bandeja → Configuración)
 
 - **General**: idioma (automático, English, Deutsch, Italiano, Français, Español), iniciar con Windows, extensiones,
-  estilo predeterminado, animaciones.
+  estilo predeterminado, animaciones. **Traducciones propias…** abre la carpeta `lang` con una plantilla en inglés:
+  cópiala p. ej. a `nl.json` y tradúcela para un idioma nuevo, o pon textos sueltos en `es.json` para cambiarlos.
+  Después elige de nuevo el idioma para cargar los archivos.
 - **Escritorio**: doble clic en el escritorio oculta/muestra las vallas; atajo para traerlas al frente (Ctrl+Alt+D);
   atenuar lejos del ratón; vista previa al pasar el ratón; perfiles; atajo de búsqueda (Ctrl+Alt+F); ordenación.
 - **Automatización**: reglas de perfil, recordatorio de descanso, pantalla completa, estilo claro y oscuro, fondo según la
