@@ -52,6 +52,8 @@ Astuce : pour un bureau rangé, créez un dossier comme `Documents\Barrières\Tr
   réserve sa place comme la barre des tâches et les fenêtres agrandies s'arrêtent à côté. Faites glisser une barrière
   dans la barre pour changer l'ordre, tirez le bord intérieur pour l'élargir. Elle n'apparaît jamais au-dessus d'un jeu
   en plein écran. « Non ancré » remet les barrières à leur place.
+  **Fond de la barre** : le même menu donne à la barre son propre style – p. ex. « Planche » : les barrières sont posées
+  sur une table en bois avec une nappe à carreaux, du lard, du fromage et du pain.
 - **Tapez simplement** pour chercher dans cette barrière ; le texte s'affiche en haut à droite, Échap arrête.
 - Menu de la barrière → **Trier par** : manuel, nom, type, date de modification, taille ou **les plus utilisés d'abord**
   (NoFences compte combien de fois vous ouvrez quelque chose depuis la barrière).
@@ -275,7 +277,7 @@ terminés aussi). **Ranger le bureau maintenant** (zone de notification ou param
 Choisissez le style par défaut dans **Paramètres → Général**, ou un par barrière (menu → Style, ou paramètres de la
 barrière avec aperçu en direct). Il y a 26 styles – verre, couleur d'accentuation Windows, **contraste élevé** (noir,
 grand texte en gras), HUD Star Citizen, Retro-Arcade, Matériel, Geek, Loisirs, Travail, Famille, Gaming, Finance,
-Réseaux sociaux, Documents, Multimédia, Musique, Sport, Photos, Voyages, Cuisine, Nature et post-it en cinq couleurs.
+Réseaux sociaux, Documents, Multimédia, Musique, Sport, Photos, Voyages, Cuisine, Planche (lard et fromage), Nature et post-it en cinq couleurs.
 
 **Styles personnels** : menu de la barrière → Style ▸ **Créer votre propre style…** (ou Paramètres → Données et styles)
 ouvre le **créateur de styles** : couleurs, polices, barre de titre, bordure et coins en quelques clics, avec aperçu en

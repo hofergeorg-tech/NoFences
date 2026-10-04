@@ -46,6 +46,8 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
   when the mouse touches the edge and away again; otherwise it reserves its space like the taskbar and maximized windows
   end next to it. Drag a fence within the bar to change the order, drag its inner edge to make the bar wider. It never
   shows over a full-screen game. "Not docked" puts the fences back where they were.
+  **Bar background**: the same menu gives the bar a style of its own – e.g. "Bread board": the fences lie on a wooden
+  table with a checked cloth, bacon, cheese and bread.
 - **Just type** to search in that fence; the search text shows top right, Esc ends it.
 - Fence menu → **Sort by**: manual, name, type, date modified, size or **most used first** (NoFences counts how often
   you open something from the fence).
@@ -250,7 +252,7 @@ sorts what is already there.
 Pick the default in **Settings → General**, or one per fence (fence menu → Style, or the fence settings with a live
 preview). There are 26 styles – glass, Windows accent color, **high contrast** (black, large bold text), Star Citizen
 HUD, Retro-Arcade, Hardware, Nerd, Hobby, Work, Family, Gaming, Finance, Social, Documents, Multimedia, Music, Sport,
-Photos, Travel, Cooking, Nature and Post-it in five colors.
+Photos, Travel, Cooking, Bread board (bacon & cheese), Nature and Post-it in five colors.
 
 **Own styles**: fence menu → Style ▸ **Design your own style…** (or Settings → Data & styles) opens the **style
 designer**: colors, fonts, title bar, border and corners by clicking, with a live preview. "Save and use for this

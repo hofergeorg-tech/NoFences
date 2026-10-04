@@ -606,6 +606,27 @@ namespace NoFences
             ApplyZOrder();
         }
 
+        /// <summary>
+        /// Owned by a bar's background while docked (Windows keeps owned windows above their owner);
+        /// null = back to the desktop. With <paramref name="ifOwner"/> only if that window is the owner now.
+        /// </summary>
+        public void SetOwner(IntPtr? owner, IntPtr? ifOwner = null)
+        {
+            if (!IsHandleCreated)
+                return;
+            var current = Native.GetWindowLongPtr(Handle, Native.GWLP_HWNDPARENT);
+            if (ifOwner != null && current != ifOwner.Value)
+                return;
+            if (owner == null)
+            {
+                if (ifOwner != null || current != Native.FindWindow("Progman", null))
+                    Native.GlueToDesktop(Handle);
+                return;
+            }
+            if (current != owner.Value)
+                Native.SetWindowLongPtr(Handle, Native.GWLP_HWNDPARENT, owner.Value);
+        }
+
         /// <summary>Moved or resized by the user right now.</summary>
         public bool InSizeMove => inSizeMove;
 

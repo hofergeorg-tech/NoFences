@@ -11,6 +11,12 @@ namespace NoFences
     public sealed partial class NoFencesApp
     {
         private const int DockGap = 6;
+
+        /// <summary>Space around the fences when the bar has a background style (logical px).</summary>
+        private const int BarPadding = 14;
+
+        private readonly Dictionary<string, DockBackdrop> backdrops = new(StringComparer.CurrentCultureIgnoreCase);
+        private readonly Dictionary<string, Rectangle> barStrips = new(StringComparer.CurrentCultureIgnoreCase);
         private const int HideDelayMs = 700;
 
         private readonly System.Windows.Forms.Timer dockTimer = new() { Interval = 120 };
@@ -57,6 +63,8 @@ namespace NoFences
         {
             // Groups whose fences were all deleted or left
             Docks.RemoveAll(d => !Store.Config.Fences.Any(f => string.Equals(f.Group, d.Group, StringComparison.CurrentCultureIgnoreCase)));
+            foreach (var group in backdrops.Keys.Where(g => DockOf(g) is not { Theme: not null }).ToList())
+                RemoveBackdrop(group);
             if (Docks.Count == 0)
             {
                 dockTimer.Stop();
@@ -84,6 +92,7 @@ namespace NoFences
                     // Nothing to show in this profile: give the space back
                     if (appBars.Remove(dock.Group, out var unused))
                         unused.Dispose();
+                    RemoveBackdrop(dock.Group);
                     continue;
                 }
                 var screen = ScreenOf(dock);
@@ -107,8 +116,15 @@ namespace NoFences
                     strip = bar.Reserve(screen.Bounds, dock.Edge, thickness);
                 }
 
+                barStrips[dock.Group] = strip;
+                var inner = strip;
+                if (dock.Theme != null)
+                {
+                    var pad = (int)Math.Round(BarPadding * scale);
+                    inner = Rectangle.Inflate(strip, -pad, -pad);
+                }
                 if (!members.Any(m => m.InSizeMove))
-                    Arrange(dock, members, strip, scale);
+                    Arrange(dock, members, inner, scale);
 
                 if (dock.AutoHide)
                     visibilityChanged |= UpdateAutoHide(dock, members, screen, cursor, underGame);
@@ -120,7 +136,100 @@ namespace NoFences
             }
             if (visibilityChanged)
                 ApplyVisibility();
+            UpdateBackdrops();
         }
+
+        #region Bar background
+
+        /// <summary>Shows each styled bar's background where its fences are, below them (they are owned by it).</summary>
+        private void UpdateBackdrops()
+        {
+            foreach (var dock in Docks.Where(d => d.Theme != null))
+            {
+                var members = DockMembers(dock);
+                var shown = members.Where(m => m.Visible).ToList();
+                if (shown.Count == 0 || !barStrips.TryGetValue(dock.Group, out var strip))
+                {
+                    if (backdrops.TryGetValue(dock.Group, out var hidden) && hidden.Visible)
+                        hidden.Visible = false;
+                    continue;
+                }
+                var theme = Themes.ThemeRegistry.Get(dock.Theme);
+                var vertical = DockLayout.Vertical(dock.Edge);
+                if (!backdrops.TryGetValue(dock.Group, out var backdrop))
+                {
+                    backdrop = new DockBackdrop(dock.Group, theme, vertical);
+                    var group = dock.Group;
+                    backdrop.MenuRequested += at => ShowBarMenu(group, at);
+                    backdrops[dock.Group] = backdrop;
+                }
+                backdrop.SetLook(theme, vertical);
+                if (backdrop.Bounds != strip)
+                    backdrop.Bounds = strip;
+                if (!backdrop.Visible)
+                    backdrop.Visible = true;
+                backdrop.SetRaised(shown[0].DockRaised);
+                foreach (var m in shown)
+                    m.SetOwner(backdrop.Handle);
+            }
+        }
+
+        /// <summary>Gives the fences back to the desktop, then closes the background.</summary>
+        private void RemoveBackdrop(string group)
+        {
+            if (!backdrops.Remove(group, out var backdrop))
+                return;
+            // Owned windows would be destroyed together with their owner
+            foreach (var w in windows)
+                w.SetOwner(null, ifOwner: backdrop.Handle);
+            backdrop.Dispose();
+        }
+
+        /// <summary>Right-click on the bar's background: the group menu of its first fence.</summary>
+        private void ShowBarMenu(string group, Point at)
+        {
+            var dock = DockOf(group);
+            var first = dock == null ? null : DockMembers(dock).FirstOrDefault();
+            if (first == null)
+                return;
+            var menu = new ContextMenuStrip();
+            AddGroupItems(menu.Items, first);
+            if (menu.Items[0] is ToolStripMenuItem groupMenu)
+            {
+                // Show the group's entries directly
+                var entries = groupMenu.DropDownItems.Cast<ToolStripItem>().ToList();
+                menu.Items.Clear();
+                menu.Items.AddRange(entries.ToArray());
+            }
+            menu.Closed += (_, _) => menu.BeginInvoke(menu.Dispose);
+            menu.Show(at);
+        }
+
+        private void AddBarStyleItems(ToolStripMenuItem menu, DockBar dock)
+        {
+            var styles = new ToolStripMenuItem(Strings.BarStyle);
+            styles.DropDownItems.Add(new ToolStripMenuItem(Strings.BarStyleNone, null, (_, _) => SetBarStyle(dock, null)) { Checked = dock.Theme == null });
+            foreach (var group in Themes.ThemeRegistry.All.GroupBy(Themes.ThemeRegistry.GroupOf))
+            {
+                var sub = new ToolStripMenuItem(Strings.ThemeGroupName(group.Key));
+                foreach (var theme in group)
+                {
+                    var id = theme.Id;
+                    sub.DropDownItems.Add(new ToolStripMenuItem(theme.DisplayName, null, (_, _) => SetBarStyle(dock, id)) { Checked = dock.Theme == id });
+                }
+                styles.DropDownItems.Add(sub);
+            }
+            menu.DropDownItems.Add(styles);
+        }
+
+        private void SetBarStyle(DockBar dock, string? theme)
+        {
+            dock.Theme = theme;
+            Store.RequestSave();
+            UpdateDocks();
+        }
+
+        #endregion
 
         private void BeginInvokeDock()
         {
@@ -166,6 +275,8 @@ namespace NoFences
             }
 
             var area = members.Select(m => m.Bounds).Aggregate(Rectangle.Union);
+            if (dock.Theme != null && barStrips.TryGetValue(dock.Group, out var strip))
+                area = Rectangle.Union(area, strip);
             area.Inflate(24, 24);
             var busy = members.Any(m => m.Busy) || OwnDialogActive || Control.MouseButtons != MouseButtons.None;
             if (busy || area.Contains(cursor) || DockLayout.Trigger(screen.Bounds, dock.Edge).Contains(cursor))
@@ -193,8 +304,9 @@ namespace NoFences
             var scale = window.DeviceDpi / 96f;
             if (window.Size != before.Size)
             {
-                var thickness = vertical ? window.Width : window.Height;
-                if (thickness != (vertical ? before.Width : before.Height))
+                var padding = dock.Theme != null ? 2 * (int)Math.Round(BarPadding * scale) : 0;
+                var thickness = (vertical ? window.Width : window.Height) + padding;
+                if (thickness - padding != (vertical ? before.Width : before.Height))
                     dock.Thickness = Math.Clamp((int)Math.Round(thickness / scale), DockBar.MinThickness, DockBar.MaxThickness);
             }
             else
@@ -242,6 +354,7 @@ namespace NoFences
 
         private void Undock(DockBar dock)
         {
+            RemoveBackdrop(dock.Group);
             Docks.Remove(dock);
             shownBars.Remove(dock.Group);
             if (appBars.Remove(dock.Group, out var bar))
@@ -266,6 +379,8 @@ namespace NoFences
         /// <summary>A fence joined a docked group (it goes into the bar) or left one (back to its old place).</summary>
         private void DockGroupChanged(FenceWindow window, string? oldGroup)
         {
+            if (oldGroup != null && backdrops.TryGetValue(oldGroup, out var oldBackdrop))
+                window.SetOwner(null, ifOwner: oldBackdrop.Handle);
             if (DockOf(oldGroup) is { } left && left.Saved.Remove(window.Info.Id, out var p) && p.Length == 4)
             {
                 window.SetDockRaised(false);
@@ -305,6 +420,7 @@ namespace NoFences
                     UpdateDocks();
                     ApplyVisibility();
                 }) { Checked = dock.AutoHide });
+                AddBarStyleItems(edges, dock);
                 if (Screen.AllScreens.Length > 1)
                 {
                     var screens = new ToolStripMenuItem(Strings.DockScreen);
@@ -329,6 +445,8 @@ namespace NoFences
         private void DisposeDocks()
         {
             dockTimer.Dispose();
+            foreach (var group in backdrops.Keys.ToList())
+                RemoveBackdrop(group);
             foreach (var bar in appBars.Values)
                 bar.Dispose();
             appBars.Clear();

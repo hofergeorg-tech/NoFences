@@ -5,7 +5,12 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.7.0] - unreleased
+## [2.8.0] - unreleased
+
+### Added
+- New style **Bread board (bacon & cheese)**: a wooden board with bacon, cheese, bread and radishes. Sidebars can have a **background style** (Group → Dock to screen edge → Bar background), e.g. a wooden table with a checked cloth and food between the fences.
+
+## [2.7.0] - 2026-10-04
 
 ### Added
 - **Sidebar**: dock a fence group to the left, right, top or bottom edge of a monitor (right-click → Group → Dock to screen edge). It slides in when the mouse touches the edge, or reserves its space like the taskbar; never over full-screen games.

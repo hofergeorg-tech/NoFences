@@ -4,7 +4,12 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.7.0] - unveröffentlicht
+## [2.8.0] - unveröffentlicht
+
+### Neu
+- Neuer Style **Brettljause (Speck & Käse)**: ein Holzbrett mit Speck, Käse, Brot und Radieschen. Seitenleisten können einen **Hintergrund-Style** bekommen (Gruppe → An Bildschirmrand andocken → Leisten-Hintergrund), z. B. einen Holztisch mit Karo-Tuch und Jause zwischen den Fences.
+
+## [2.7.0] - 2026-10-04
 
 ### Neu
 - **Seitenleiste**: eine Fence-Gruppe am linken, rechten, oberen oder unteren Bildschirmrand andocken (Rechtsklick → Gruppe → An Bildschirmrand andocken). Sie fährt herein, wenn die Maus den Rand berührt, oder reserviert ihren Platz wie die Taskleiste; nie über Spielen im Vollbild.

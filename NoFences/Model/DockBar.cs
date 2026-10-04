@@ -22,6 +22,9 @@ namespace NoFences.Model
         /// <summary>Width of a sidebar or height of a top/bottom bar, in logical (96 dpi) pixels.</summary>
         public int Thickness { get; set; } = 320;
 
+        /// <summary>Style of the bar's background (e.g. "jause" = a wooden table); null = no background.</summary>
+        public string? Theme { get; set; }
+
         /// <summary>Order of the fences along the bar (fence ids); others follow.</summary>
         public List<Guid> Order { get; set; } = new();
 

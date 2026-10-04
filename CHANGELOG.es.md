@@ -4,7 +4,12 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
-## [2.7.0] - sin publicar
+## [2.8.0] - sin publicar
+
+### Novedades
+- Nuevo estilo **Tabla (speck y queso)**: una tabla de madera con speck, queso, pan y rábanos. Las barras laterales pueden tener un **estilo de fondo** (Grupo → Anclar al borde de la pantalla → Fondo de la barra), p. ej. una mesa de madera con mantel de cuadros y comida entre las vallas.
+
+## [2.7.0] - 2026-10-04
 
 ### Novedades
 - **Barra lateral**: ancla un grupo de vallas al borde izquierdo, derecho, superior o inferior de un monitor (clic derecho → Grupo → Anclar al borde de la pantalla). Entra cuando el ratón toca el borde o reserva su espacio como la barra de tareas; nunca sobre juegos a pantalla completa.

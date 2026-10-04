@@ -48,6 +48,8 @@ Consejo: para un escritorio ordenado, crea una carpeta como `Documentos\Vallas\T
   la barra de tareas y las ventanas maximizadas terminan a su lado. Arrastra una valla dentro de la barra para cambiar
   el orden y el borde interior para ensancharla. Nunca aparece sobre un juego a pantalla completa. «Sin anclar»
   devuelve las vallas a su sitio.
+  **Fondo de la barra**: el mismo menú da a la barra un estilo propio – p. ej. «Tabla»: las vallas están sobre una mesa
+  de madera con mantel de cuadros, speck, queso y pan.
 - **Escribe directamente** para buscar en esa valla; el texto aparece arriba a la derecha, Esc termina.
 - Menú de la valla → **Ordenar por**: manual, nombre, tipo, fecha de modificación, tamaño o **más usados primero**
   (NoFences cuenta cuántas veces abres algo desde la valla).
@@ -261,7 +263,7 @@ plantilla. Los archivos nuevos del escritorio que coincidan van a esa valla (tam
 Elige el predeterminado en **Configuración → General**, o uno por valla (menú → Estilo, o la configuración de la valla con
 vista previa en directo). Hay 26 estilos – cristal, color de énfasis de Windows, **alto contraste** (negro, texto
 grande en negrita), HUD de Star Citizen, Retro-Arcade, Hardware, Friki, Aficiones, Trabajo, Familia, Gaming, Finanzas,
-Redes sociales, Documentos, Multimedia, Música, Deporte, Fotos, Viajes, Cocina, Naturaleza y pósit en cinco colores.
+Redes sociales, Documentos, Multimedia, Música, Deporte, Fotos, Viajes, Cocina, Tabla (speck y queso), Naturaleza y pósit en cinco colores.
 
 **Estilos propios**: menú de la valla → Estilo ▸ **Diseñar tu propio estilo…** (o Configuración → Datos y estilos) abre el
 **diseñador de estilos**: colores, fuentes, barra de título, borde y esquinas con clics, con vista previa en directo.

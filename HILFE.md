@@ -51,6 +51,8 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
   sie ihren Platz wie die Taskleiste, und maximierte Fenster enden daneben. Einen Fence innerhalb der Leiste ziehen
   ändert die Reihenfolge, die Innenkante ziehen macht die Leiste breiter. Über einem Spiel im Vollbild erscheint sie nie.
   „Nicht angedockt“ stellt die Fences wieder an ihren alten Platz.
+  **Leisten-Hintergrund**: Im selben Menü bekommt die Leiste einen eigenen Style – z. B. „Brettljause“: Die Fences
+  liegen auf einem Holztisch mit Karo-Tuch, Speck, Käse und Brot.
 - **Lostippen** sucht in diesem Fence; das Suchwort steht oben rechts, Esc beendet die Suche.
 - Fence-Menü → **Sortieren nach**: manuell, Name, Typ, Änderungsdatum, Größe oder **meistgenutzt zuerst** (NoFences
   zählt, wie oft du etwas aus dem Fence öffnest).
@@ -264,7 +266,7 @@ hinzufügen. Neue Desktop-Dateien, die passen, wandern in diesen Fence (auch fer
 Den Standard wählst du unter **Einstellungen → Allgemein**, pro Fence im Fence-Menü → Style oder in den Fence-Einstellungen
 mit Live-Vorschau. Es gibt 26 Styles – Glas, Windows-Akzentfarbe, **Hochkontrast** (schwarz, große fette Schrift),
 Star Citizen HUD, Retro-Arcade, Hardware, Nerd, Hobby, Arbeit, Familie, Gaming, Finanzen, Social, Dokumente, Multimedia,
-Musik, Sport, Fotos, Reisen, Kochen, Natur und Post-it in fünf Farben.
+Musik, Sport, Fotos, Reisen, Kochen, Brettljause (Speck & Käse), Natur und Post-it in fünf Farben.
 
 **Eigene Styles**: Fence-Menü → Style ▸ **Eigenen Style gestalten…** (oder Einstellungen → Daten & Styles) öffnet den
 **Style-Designer**: Farben, Schriften, Titelleiste, Rahmen und Ecken per Klick, mit Live-Vorschau. „Speichern und für

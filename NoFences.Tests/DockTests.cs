@@ -74,7 +74,7 @@ namespace NoFences.Tests
             var store = new FenceStore(dir.Path);
             store.Load();
             var id = Guid.NewGuid();
-            store.Config.Docks.Add(new DockBar { Group = "Seitenleiste", Edge = DockEdge.Left, AutoHide = false, Thickness = 280, Order = { id }, Saved = { [id] = new[] { 1, 2, 3, 4 } } });
+            store.Config.Docks.Add(new DockBar { Group = "Seitenleiste", Edge = DockEdge.Left, AutoHide = false, Thickness = 280, Theme = "jause", Order = { id }, Saved = { [id] = new[] { 1, 2, 3, 4 } } });
             store.SaveNow();
 
             var reloaded = new FenceStore(dir.Path);
@@ -83,7 +83,24 @@ namespace NoFences.Tests
             Assert.Equal(DockEdge.Left, dock.Edge);
             Assert.False(dock.AutoHide);
             Assert.Equal(280, dock.Thickness);
+            Assert.Equal("jause", dock.Theme);
             Assert.Equal(new[] { 1, 2, 3, 4 }, dock.Saved[id]);
+        }
+
+        [Fact]
+        public void JauseStyle_DrawsAsFenceAndAsBar()
+        {
+            var theme = NoFences.Themes.ThemeRegistry.Get("jause");
+            Assert.Equal("jause", theme.Id);
+            Assert.Equal(NoFences.Themes.ThemeRegistry.Group.Leisure, NoFences.Themes.ThemeRegistry.GroupOf(theme));
+            using var bitmap = new Bitmap(320, 400);
+            using var g = Graphics.FromImage(bitmap);
+            theme.DrawFrame(g, new Rectangle(0, 0, 320, 400), 35, new FenceInfo(), 1f);
+            using var font = theme.CreateTitleFont(35);
+            theme.DrawTitle(g, new Rectangle(0, 0, 320, 35), "Brotzeit", font, 1f);
+            theme.DrawBar(g, new Rectangle(0, 0, 320, 400), true, new FenceInfo(), 1f);
+            theme.DrawBar(g, new Rectangle(0, 0, 320, 120), false, new FenceInfo(), 1.5f);
+            Assert.Equal(255, bitmap.GetPixel(160, 200).A); // a table, not a hole
         }
     }
 }

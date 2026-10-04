@@ -193,6 +193,7 @@ namespace NoFences.Util
             "photos" => L("ThemeName.photos"),
             "travel" => L("ThemeName.travel"),
             "cooking" => L("ThemeName.cooking"),
+            "jause" => L("ThemeName.jause"),
             "nature" => L("ThemeName.nature"),
             "postit" => L("ThemeName.postit"),
             "postit-pink" => L("ThemeName.postit-pink"),
@@ -275,6 +276,8 @@ namespace NoFences.Util
         };
         public static string DockAutoHide => L("DockAutoHide");
         public static string DockScreen => L("DockScreen");
+        public static string BarStyle => L("BarStyle");
+        public static string BarStyleNone => L("BarStyleNone");
         public static string NewName => L("NewName");
         public static string RenameFailed(string reason) => L("RenameFailed", reason);
         public static string Search => L("Search");

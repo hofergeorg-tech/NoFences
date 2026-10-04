@@ -4,7 +4,12 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.7.0] - non pubblicata
+## [2.8.0] - non pubblicata
+
+### Novità
+- Nuovo stile **Tagliere (speck e formaggio)**: un tagliere di legno con speck, formaggio, pane e ravanelli. Le barre laterali possono avere uno **stile di sfondo** (Gruppo → Aggancia al bordo dello schermo → Sfondo della barra), ad es. un tavolo di legno con tovaglia a quadri e cibo tra i recinti.
+
+## [2.7.0] - 2026-10-04
 
 ### Novità
 - **Barra laterale**: aggancia un gruppo di recinti al bordo sinistro, destro, superiore o inferiore di un monitor (clic destro → Gruppo → Aggancia al bordo dello schermo). Entra quando il mouse tocca il bordo oppure riserva il suo spazio come la barra delle applicazioni; mai sopra i giochi a schermo intero.

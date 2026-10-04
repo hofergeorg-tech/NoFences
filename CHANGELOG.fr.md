@@ -4,7 +4,12 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.7.0] - non publiée
+## [2.8.0] - non publiée
+
+### Nouveautés
+- Nouveau style **Planche (lard et fromage)** : une planche en bois avec du lard, du fromage, du pain et des radis. Les barres latérales peuvent avoir un **style de fond** (Groupe → Ancrer au bord de l'écran → Fond de la barre), p. ex. une table en bois avec une nappe à carreaux et de quoi manger entre les barrières.
+
+## [2.7.0] - 2026-10-04
 
 ### Nouveautés
 - **Barre latérale** : ancrez un groupe de barrières au bord gauche, droit, haut ou bas d'un écran (clic droit → Groupe → Ancrer au bord de l'écran). Elle glisse quand la souris touche le bord ou réserve sa place comme la barre des tâches ; jamais au-dessus des jeux en plein écran.

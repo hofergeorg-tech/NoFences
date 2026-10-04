@@ -48,6 +48,8 @@ Suggerimento: per un desktop ordinato, crea una cartella come `Documenti\Recinti
   riserva il suo spazio come la barra delle applicazioni e le finestre massimizzate finiscono accanto. Trascina un
   recinto nella barra per cambiare l'ordine, trascina il bordo interno per allargarla. Non appare mai sopra un gioco a
   schermo intero. "Non agganciato" rimette i recinti dove erano.
+  **Sfondo della barra**: nello stesso menu la barra riceve uno stile proprio – ad es. "Tagliere": i recinti stanno su
+  un tavolo di legno con tovaglia a quadri, speck, formaggio e pane.
 - **Basta digitare** per cercare in quel recinto; il testo appare in alto a destra, Esc termina.
 - Menu del recinto → **Ordina per**: manuale, nome, tipo, data di modifica, dimensione o **più usati prima** (NoFences
   conta quante volte apri qualcosa dal recinto).
@@ -259,7 +261,7 @@ un modello. I nuovi file del desktop che corrispondono finiscono in quel recinto
 Lo stile predefinito si sceglie in **Impostazioni → Generale**, per singolo recinto dal menu → Stile o nelle impostazioni
 del recinto con anteprima dal vivo. Ci sono 26 stili – vetro, colore d'accento di Windows, **alto contrasto** (nero,
 testo grande in grassetto), HUD Star Citizen, Retro-Arcade, Hardware, Nerd, Hobby, Lavoro, Famiglia, Gaming, Finanza,
-Social, Documenti, Multimedia, Musica, Sport, Foto, Viaggi, Cucina, Natura e post-it in cinque colori.
+Social, Documenti, Multimedia, Musica, Sport, Foto, Viaggi, Cucina, Tagliere (speck e formaggio), Natura e post-it in cinque colori.
 
 **Stili personali**: menu del recinto → Stile ▸ **Crea il tuo stile…** (o Impostazioni → Dati e stili) apre il **designer
 di stili**: colori, caratteri, barra del titolo, bordo e angoli con pochi clic e anteprima dal vivo. "Salva e usa per

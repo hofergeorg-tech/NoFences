@@ -53,6 +53,10 @@ namespace NoFences.Themes
 
         public abstract void DrawFrame(Graphics g, Rectangle bounds, int titleHeight, FenceInfo info, float s);
 
+        /// <summary>Background of a docked sidebar/bar in this style; by default the fence frame without a title.</summary>
+        public virtual void DrawBar(Graphics g, Rectangle bounds, bool vertical, FenceInfo info, float s) =>
+            DrawFrame(g, bounds, 0, info, s);
+
         public abstract void DrawTitle(Graphics g, Rectangle titleRect, string text, Font font, float s);
 
         public abstract void DrawItemBackground(Graphics g, Rectangle rect, bool hover, bool selected, float s);
@@ -220,6 +224,7 @@ namespace NoFences.Themes
             new PhotosTheme(),
             new TravelTheme(),
             new CookingTheme(),
+            new JauseTheme(),
             new NatureTheme()
         }.Concat(PostItTheme.AllColors()).ToList();
 
@@ -237,7 +242,7 @@ namespace NoFences.Themes
             "default" or "windows" or "contrast" => Group.Basic,
             "starcitizen" or "retroarcade" or "gaming" or "hardware" or "nerd" => Group.GamingTech,
             "work" or "finance" or "documents" or "social" or "family" => Group.WorkLife,
-            "hobby" or "music" or "multimedia" or "sport" or "photos" or "travel" or "cooking" or "nature" => Group.Leisure,
+            "hobby" or "music" or "multimedia" or "sport" or "photos" or "travel" or "cooking" or "jause" or "nature" => Group.Leisure,
             _ when theme.Id.StartsWith("postit", StringComparison.OrdinalIgnoreCase) => Group.PostIt,
             _ => Group.Own
         };
