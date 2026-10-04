@@ -1,3 +1,4 @@
+using NoFences.Util;
 using NoFences.Win32;
 
 namespace NoFences
@@ -71,6 +72,7 @@ namespace NoFences
 
             if (save && name.Length > 0 && name != Info.Name)
             {
+                app.RecordUndo(Strings.UndoRenameFence(Info.Name), new[] { Info.Id });
                 Info.Name = name;
                 Text = name;
                 app.RequestSave();

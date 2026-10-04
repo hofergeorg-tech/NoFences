@@ -103,8 +103,34 @@ namespace NoFences
             ApplyLayoutForCurrentScreens();
             ReloadEntries();
             linkPollTimer.Start();
-            if (Info.CanMinify)
+            if (Info.CanMinify || Info.Folded)
                 Collapse();
+        }
+
+        /// <summary>Folds the fence to its title bar (with its group) or unfolds it.</summary>
+        public void SetFolded(bool folded)
+        {
+            Info.Folded = folded;
+            if (folded)
+                Collapse();
+            else if (!Info.CanMinify)
+                Expand();
+        }
+
+        /// <summary>After undo: shows the fence as <see cref="Info"/> says (position, size, name, items).</summary>
+        public void RefreshFromInfo()
+        {
+            selection.Clear();
+            ApplySettings();
+            suppressBoundsSave = true;
+            Bounds = new Rectangle(Info.PosX, Info.PosY, Math.Max(80, Info.Width), collapsed ? CollapsedHeight : Math.Max(60, Info.Height));
+            suppressBoundsSave = false;
+            if (Info.Folded && !collapsed)
+                Collapse();
+            else if (!Info.Folded && !Info.CanMinify && collapsed)
+                Expand();
+            ApplyZOrder();
+            ReloadEntries();
         }
 
         /// <summary>Re-reads everything derived from <see cref="Info"/> and the global config.</summary>
@@ -595,7 +621,7 @@ namespace NoFences
 
         private int HitTest(Point pt, int current)
         {
-            if (collapsed && Info.CanMinify)
+            if (collapsed && Info.CanMinify && !Info.Folded)
                 Expand();
 
             // Right clicks always go to the client area so our context menu shows instead of the system menu.
@@ -656,7 +682,7 @@ namespace NoFences
 
         private void CollapseIfMouseAway()
         {
-            if (!Info.CanMinify || collapsed)
+            if (!Info.CanMinify || collapsed || Info.Folded)
             {
                 collapseTimer.Stop();
                 return;
@@ -683,6 +709,7 @@ namespace NoFences
         {
             base.OnMove(e);
             LayoutEditor();
+            MoveGroupAlong();
             // While dragging, save once at the end (EndSizeMove) instead of on every pixel.
             if (suppressBoundsSave || !IsHandleCreated || inSizeMove)
                 return;
@@ -728,7 +755,7 @@ namespace NoFences
         {
             base.OnMouseMove(e);
             HoverStarted();
-            if (collapsed && Info.CanMinify)
+            if (collapsed && Info.CanMinify && !Info.Folded)
                 Expand();
             if (IsNote)
             {
@@ -947,6 +974,7 @@ namespace NoFences
             if (menu.Items.Count > 0)
                 menu.Items.Add(new ToolStripSeparator());
 
+            app.AddUndoItem(menu.Items);
             menu.Items.Add(Strings.Rename, null, (_, _) => StartEditTitle());
             if (Info.Kind == FenceKind.Links && !Info.ReadOnly)
                 menu.Items.Add(Strings.AddTab, null, (_, _) => AddTab());
@@ -957,6 +985,7 @@ namespace NoFences
             if (app.CurrentVirtualDesktop != null)
                 menu.Items.Add(new ToolStripMenuItem(Strings.OnlyThisDesktop, null, (_, _) => app.TogglePinToDesktop(Info)) { Checked = Info.VirtualDesktop != null });
             app.AddFenceProfileItems(menu.Items, Info, this);
+            app.AddGroupItems(menu.Items, this);
 
             var style = new ToolStripMenuItem(Strings.Theme);
             style.DropDownItems.Add(new ToolStripMenuItem(Strings.ThemeInherit, null, (_, _) => SetTheme(null)) { Checked = Info.Theme == null });
@@ -1032,6 +1061,7 @@ namespace NoFences
 
         private void RemoveLink(string path)
         {
+            app.RecordUndo(Strings.UndoRemoveItems(1, Info.Name), new[] { Info.Id });
             Info.Files.RemoveAll(f => f.Equals(path, StringComparison.OrdinalIgnoreCase));
             app.RequestSave();
             ReloadEntries();
@@ -1136,7 +1166,7 @@ namespace NoFences
         protected override void OnDragEnter(DragEventArgs e)
         {
             base.OnDragEnter(e);
-            if (collapsed)
+            if (collapsed && !Info.Folded)
                 Expand();
             UpdateDrag(e);
         }
@@ -1196,6 +1226,7 @@ namespace NoFences
                 dropTab = -1;
                 var dropped = e.Data?.GetData(DataFormats.FileDrop) as string[] ?? Array.Empty<string>();
                 var fromHere = GetInternal(e.Data)?.fence == Info.Id;
+                RecordDropUndo(e.Data, Strings.UndoTabs(Info.Name));
                 MoveToTab(dropped, tab, removeFromCurrent: fromHere);
                 // From another links fence with Move: that fence removes them
                 lastDropWasFenceMove = !fromHere && GetInternal(e.Data) != null && e.Effect == DragDropEffects.Move;
@@ -1230,10 +1261,12 @@ namespace NoFences
 
             if (internalItem?.fence == Info.Id)
             {
+                RecordDropUndo(e.Data, Strings.UndoMoveItems(Info.Name));
                 MoveInOrder(internalItem.Value.paths, index);
             }
             else if (Info.Kind == FenceKind.Links)
             {
+                RecordDropUndo(e.Data, internalItem != null && effect == DragDropEffects.Move ? Strings.UndoMoveItems(Info.Name) : Strings.UndoAddItems(Info.Name));
                 InsertInOrder(files.Where(f => File.Exists(f) || Directory.Exists(f)), index);
                 lastDropWasFenceMove = internalItem != null && effect == DragDropEffects.Move;
             }
@@ -1248,6 +1281,13 @@ namespace NoFences
 
             app.RequestSave();
             ReloadEntries();
+        }
+
+        /// <summary>Remembers this fence and, for links dragged from another fence, that one too (it loses them).</summary>
+        private void RecordDropUndo(IDataObject? data, string description)
+        {
+            var source = GetInternal(data)?.fence;
+            app.RecordUndo(description, source is { } other && other != Info.Id ? new[] { Info.Id, other } : new[] { Info.Id });
         }
 
         /// <summary>Converts an index into the visible entry list into an index into <see cref="FenceInfo.Files"/>.</summary>

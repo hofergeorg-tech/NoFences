@@ -23,13 +23,34 @@ namespace NoFences
         private Rectangle dragStartBounds;
         private Point dragStartCursor;
 
+        // The rest of the group follows a move; all of them can be put back with Ctrl+Z.
+        private List<(FenceWindow Window, Point Start)> groupStart = new();
+        private List<string> moveSnapshots = new();
+
         private void BeginSizeMove()
         {
             inSizeMove = true;
-            snapFences = app.OtherFenceSurfaces(this);
+            groupStart = app.GroupMembers(this).Select(w => (w, w.Location)).ToList();
+            var others = groupStart.Select(g => g.Window).ToHashSet();
+            snapFences = app.OtherFenceSurfaces(this).Where(r => !others.Any(o => o.SurfaceOnScreen == r)).ToList();
             snapScreens = ScreenAreas();
             dragStartBounds = Bounds;
             dragStartCursor = Cursor.Position;
+            moveSnapshots = new[] { Info }.Concat(others.Select(o => o.Info)).Select(Model.UndoStack.Snapshot).ToList();
+        }
+
+        /// <summary>While the fence is dragged (not resized): its group moves along.</summary>
+        private void MoveGroupAlong()
+        {
+            if (!inSizeMove || groupStart.Count == 0 || Size != dragStartBounds.Size)
+                return;
+            var dx = Left - dragStartBounds.Left;
+            var dy = Top - dragStartBounds.Top;
+            foreach (var (window, start) in groupStart)
+            {
+                if (!window.IsDisposed)
+                    window.Location = new Point(start.X + dx, start.Y + dy);
+            }
         }
 
         private Size DragDelta => new(Cursor.Position.X - dragStartCursor.X, Cursor.Position.Y - dragStartCursor.Y);
@@ -38,6 +59,13 @@ namespace NoFences
         private void EndSizeMove()
         {
             inSizeMove = false;
+            if (Bounds != dragStartBounds && moveSnapshots.Count > 0)
+            {
+                var description = Size == dragStartBounds.Size || collapsed ? Strings.UndoMoveFence(Info.Name) : Strings.UndoResizeFence(Info.Name);
+                app.RecordUndo(description, moveSnapshots);
+            }
+            moveSnapshots = new List<string>();
+            groupStart = new();
             Info.PosX = Left;
             Info.PosY = Top;
             if (!collapsed)

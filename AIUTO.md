@@ -37,6 +37,11 @@ Suggerimento: per un desktop ordinato, crea una cartella come `Documenti\Recinti
 - **Ctrl+clic** seleziona più elementi, **Maiusc+clic** un intervallo; trascinando nello spazio vuoto si disegna un rettangolo.
 - Un recinto cliccato ascolta la tastiera: **Invio** apre, **F2** rinomina, **Canc** rimuove (recinto collegamenti: solo
   il collegamento; recinto cartella: cestino), **Ctrl+A**, **Ctrl+C**, frecce, **Esc**.
+- **Ctrl+Z** annulla l'ultima modifica: un recinto eliminato ritorna, recinti spostati o ridimensionati tornano al loro
+  posto, collegamenti rimossi o spostati ricompaiono, elementi e recinti rinominati riprendono il vecchio nome. Anche nel
+  menu della barra e del recinto ("Annulla: …"). I file nel cestino si ripristinano da lì.
+- **Gruppi**: clic destro → Gruppo → "Nuovo gruppo…" o un gruppo esistente. I recinti di un gruppo si spostano insieme
+  quando ne trascini uno, e "Comprimi gruppo" li riduce tutti alla barra del titolo finché non li espandi.
 - **Basta digitare** per cercare in quel recinto; il testo appare in alto a destra, Esc termina.
 - Menu del recinto → **Ordina per**: manuale, nome, tipo, data di modifica, dimensione o **più usati prima** (NoFences
   conta quante volte apri qualcosa dal recinto).

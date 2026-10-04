@@ -37,6 +37,11 @@ Consejo: para un escritorio ordenado, crea una carpeta como `Documentos\Vallas\T
 - **Ctrl+clic** selecciona varios elementos, **Mayús+clic** un rango; arrastrar en un espacio vacío dibuja un rectángulo de selección.
 - Una valla en la que has hecho clic responde al teclado: **Intro** abre, **F2** cambia el nombre, **Supr** quita (valla
   de accesos directos: solo el enlace; valla de carpeta: papelera), **Ctrl+A**, **Ctrl+C**, flechas, **Esc**.
+- **Ctrl+Z** deshace el último cambio: una valla eliminada vuelve, las vallas movidas o redimensionadas regresan a su
+  sitio, los enlaces quitados o movidos reaparecen y los elementos y vallas renombrados recuperan su nombre. También en
+  el menú de la bandeja y de la valla («Deshacer: …»). Los archivos de la papelera se recuperan desde allí.
+- **Grupos**: clic derecho → Grupo → «Nuevo grupo…» o un grupo existente. Las vallas de un grupo se mueven juntas al
+  arrastrar una de ellas, y «Plegar grupo» las reduce todas a su barra de título hasta que las despliegues.
 - **Escribe directamente** para buscar en esa valla; el texto aparece arriba a la derecha, Esc termina.
 - Menú de la valla → **Ordenar por**: manual, nombre, tipo, fecha de modificación, tamaño o **más usados primero**
   (NoFences cuenta cuántas veces abres algo desde la valla).

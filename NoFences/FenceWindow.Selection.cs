@@ -120,6 +120,11 @@ namespace NoFences
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
+            if (keyData == (Keys.Control | Keys.Z) && !Editing)
+            {
+                app.Undo();
+                return true;
+            }
             if (IsNote || IsWidget || Editing)
                 return base.ProcessCmdKey(ref msg, keyData);
 
@@ -273,6 +278,7 @@ namespace NoFences
                 return;
             if (Info.Kind == FenceKind.Links)
             {
+                app.RecordUndo(Strings.UndoRemoveItems(paths.Count, Info.Name), new[] { Info.Id });
                 Info.Files.RemoveAll(f => paths.Contains(f, StringComparer.OrdinalIgnoreCase));
                 app.RequestSave();
             }
@@ -312,6 +318,14 @@ namespace NoFences
                 return;
             }
 
+            var isFolder = Directory.Exists(target);
+            app.RecordUndo(Strings.UndoRenameItem(newName), new[] { Info.Id }, () =>
+            {
+                if (isFolder)
+                    Directory.Move(target, path);
+                else
+                    File.Move(target, path);
+            });
             var i = Info.Files.FindIndex(f => f.Equals(path, StringComparison.OrdinalIgnoreCase));
             if (i >= 0)
                 Info.Files[i] = target;

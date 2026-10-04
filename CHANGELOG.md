@@ -10,6 +10,8 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 ### Added
 - **Own translations**: Settings → General → "Own translations…" opens the `lang` folder with an English template. A file like `nl.json` adds a language, a `de.json` with single texts changes just those. All texts now live in one JSON file per language.
 - **Flags for every language**: the language menu shows real country flags (flag-icons), so own languages get their flag too (by language code, region like `pt-BR`, or `"_flag": "at"` in the language file).
+- **Undo (Ctrl+Z)** for deleting, moving, resizing and renaming fences and for removing, moving and renaming items; also "Undo: …" in the tray and fence menu.
+- **Fence groups**: right-click → Group. Fences in a group move together and can be folded to their title bars together.
 
 ### Changed
 - **All data next to NoFences.exe**, sorted into folders (`config`, `backups`, `themes`, `media`, `cache`, `logs`, `lang`). Data of older versions is copied over once; in a non-writable program folder (Program Files, WinGet) the data stays in `%LocalAppData%\NoFences`, sorted the same way.

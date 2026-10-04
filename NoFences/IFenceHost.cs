@@ -71,5 +71,26 @@ namespace NoFences
 
         /// <summary>Visible surfaces (screen coordinates) of all other fences, for snapping.</summary>
         IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except);
+
+        /// <summary>Remembers these fences as they are now, so Ctrl+Z can bring them back.</summary>
+        void RecordUndo(string description, IEnumerable<Guid> fences, Action? reverse = null);
+
+        /// <summary>Remembers fences copied earlier (see <see cref="Model.UndoStack.Snapshot"/>).</summary>
+        void RecordUndo(string description, IReadOnlyList<string> snapshots);
+
+        /// <summary>Undoes the last change (Ctrl+Z).</summary>
+        void Undo();
+
+        /// <summary>Adds "Undo: …" to a menu when there is something to undo.</summary>
+        void AddUndoItem(ToolStripItemCollection items);
+
+        /// <summary>What Ctrl+Z would undo, or null.</summary>
+        string? UndoDescription { get; }
+
+        /// <summary>The other fences in this fence's group (empty without a group).</summary>
+        IReadOnlyList<FenceWindow> GroupMembers(FenceWindow window);
+
+        /// <summary>Adds "Group ▸" (join, new group, leave, fold) for this fence to a menu.</summary>
+        void AddGroupItems(ToolStripItemCollection items, FenceWindow window);
     }
 }

@@ -39,6 +39,13 @@ namespace NoFences
             public void SwitchProfile(string? profile, bool automatic = false) { }
             public void AddFenceProfileItems(ToolStripItemCollection items, FenceInfo info, IWin32Window owner) { }
             public IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except) => Array.Empty<Rectangle>();
+            public void RecordUndo(string description, IEnumerable<Guid> fences, Action? reverse = null) { }
+            public void RecordUndo(string description, IReadOnlyList<string> snapshots) { }
+            public void Undo() { }
+            public void AddUndoItem(ToolStripItemCollection items) { }
+            public string? UndoDescription => null;
+            public IReadOnlyList<FenceWindow> GroupMembers(FenceWindow window) => Array.Empty<FenceWindow>();
+            public void AddGroupItems(ToolStripItemCollection items, FenceWindow window) { }
             public void FenceSettingsChanged(FenceInfo info) { }
             public bool HoverPreview => false;
             public void OpenStyleDesigner(FenceInfo? info) { }

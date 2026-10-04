@@ -38,6 +38,13 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
 - **Strg+Klick** wählt mehrere Einträge, **Shift+Klick** einen Bereich; Ziehen auf freier Fläche zeichnet ein Auswahlrechteck.
 - Ein angeklickter Fence reagiert auf die Tastatur: **Enter** öffnet, **F2** benennt um, **Entf** entfernt
   (Verknüpfungs-Fence: nur den Verweis; Ordner-Fence: Papierkorb), **Strg+A**, **Strg+C**, Pfeiltasten, **Esc**.
+- **Strg+Z** macht die letzte Änderung rückgängig: Ein gelöschter Fence kommt zurück, verschobene oder vergrößerte
+  Fences kehren an ihren Platz zurück, entfernte oder verschobene Verknüpfungen erscheinen wieder, umbenannte Einträge
+  und Fences bekommen ihren alten Namen. Auch im Tray- und Fence-Menü („Rückgängig: …“). Dateien im Papierkorb holst du
+  dort zurück.
+- **Gruppen**: Rechtsklick → Gruppe → „Neue Gruppe…“ oder eine bestehende Gruppe. Fences einer Gruppe bewegen sich
+  gemeinsam, wenn du einen davon ziehst, und „Gruppe einklappen“ verkleinert alle auf ihre Titelleisten, bis du sie
+  wieder ausklappst.
 - **Lostippen** sucht in diesem Fence; das Suchwort steht oben rechts, Esc beendet die Suche.
 - Fence-Menü → **Sortieren nach**: manuell, Name, Typ, Änderungsdatum, Größe oder **meistgenutzt zuerst** (NoFences
   zählt, wie oft du etwas aus dem Fence öffnest).

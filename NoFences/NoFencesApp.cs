@@ -240,6 +240,7 @@ namespace NoFences
 
         public void RemoveFence(FenceWindow window)
         {
+            RecordUndo(Strings.UndoDeleteFence(window.Info.Name), new[] { window.Info.Id });
             Store.Config.Fences.Remove(window.Info);
             Store.SaveNow();
             windows.Remove(window);
@@ -296,6 +297,7 @@ namespace NoFences
             AddProfileItems(menu.Items);
             AddPeekItems(menu.Items);
             AddToolItems(menu.Items);
+            AddUndoItem(menu.Items);
             menu.Items.Add(new ToolStripSeparator());
             // Everything else lives in the settings window
             AddAppSettingsItems(menu.Items);

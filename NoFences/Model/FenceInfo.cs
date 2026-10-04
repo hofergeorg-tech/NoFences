@@ -137,6 +137,12 @@ namespace NoFences.Model
         /// <summary>Link fences filled by NoFences: "recentfolders" or "bookmarks:&lt;browser&gt;".</summary>
         public string? AutoSource { get; set; }
 
+        /// <summary>Fences with the same group name move together and fold together; null = no group.</summary>
+        public string? Group { get; set; }
+
+        /// <summary>Folded with its group: only the title bar shows until the group is unfolded.</summary>
+        public bool Folded { get; set; }
+
         public void CountOpen(string path)
         {
             OpenCounts ??= new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);

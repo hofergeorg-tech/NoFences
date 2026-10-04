@@ -39,6 +39,13 @@ Astuce : pour un bureau rangé, créez un dossier comme `Documents\Barrières\Tr
 - **Ctrl+clic** sélectionne plusieurs éléments, **Maj+clic** une plage ; glisser dans un espace vide trace un rectangle de sélection.
 - Une barrière cliquée écoute le clavier : **Entrée** ouvre, **F2** renomme, **Suppr** retire (barrière de raccourcis :
   seulement le lien ; barrière de dossier : corbeille), **Ctrl+A**, **Ctrl+C**, flèches, **Échap**.
+- **Ctrl+Z** annule la dernière modification : une barrière supprimée revient, les barrières déplacées ou redimensionnées
+  reprennent leur place, les liens retirés ou déplacés réapparaissent, les éléments et barrières renommés retrouvent leur
+  ancien nom. Aussi dans le menu de la zone de notification et de la barrière (« Annuler : … »). Les fichiers de la
+  corbeille se restaurent depuis celle-ci.
+- **Groupes** : clic droit → Groupe → « Nouveau groupe… » ou un groupe existant. Les barrières d'un groupe se déplacent
+  ensemble quand vous en faites glisser une, et « Replier le groupe » les réduit toutes à leur barre de titre jusqu'à ce
+  que vous les dépliiez.
 - **Tapez simplement** pour chercher dans cette barrière ; le texte s'affiche en haut à droite, Échap arrête.
 - Menu de la barrière → **Trier par** : manuel, nom, type, date de modification, taille ou **les plus utilisés d'abord**
   (NoFences compte combien de fois vous ouvrez quelque chose depuis la barrière).

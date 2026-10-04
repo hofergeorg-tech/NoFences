@@ -117,6 +117,7 @@ namespace NoFences
         {
             if (index < 0 || index >= Info.Tabs.Count)
                 return;
+            app.RecordUndo(Strings.UndoTabs(Info.Name), new[] { Info.Id });
             Info.Tabs[Info.ActiveTab].Files = Info.Files.ToList();
             var removed = Info.Tabs[index];
             Info.Tabs.RemoveAt(index);

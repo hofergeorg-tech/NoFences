@@ -36,6 +36,11 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
 - **Ctrl+click** selects several items, **Shift+click** a range; dragging on empty space draws a selection rectangle.
 - A clicked fence listens to the keyboard: **Enter** opens, **F2** renames, **Delete** removes (link fences: only the
   link; folder fences: recycle bin), **Ctrl+A**, **Ctrl+C**, arrow keys, **Esc**.
+- **Ctrl+Z** undoes the last change: a deleted fence comes back, moved or resized fences return, removed or moved
+  links reappear, renamed items and fences get their old name. Also in the tray and fence menu ("Undo: …"). Files that
+  went to the recycle bin are restored from there.
+- **Groups**: right-click → Group → "New group…" or an existing group. Fences in a group move together when you drag
+  one of them, and "Fold group" shrinks them all to their title bars until you unfold them again.
 - **Just type** to search in that fence; the search text shows top right, Esc ends it.
 - Fence menu → **Sort by**: manual, name, type, date modified, size or **most used first** (NoFences counts how often
   you open something from the fence).
