@@ -337,7 +337,7 @@
   "LanguageLabel": "Idioma",
   "OwnTranslations": "Traducciones propias…",
   "LanguageFileErrors": "No se pudieron leer algunos archivos de idioma:\n{0}",
-  "LanguageFolderReadme": "Archivos de idioma de NoFences\r\n==============================\r\n\r\nIdioma nuevo: copia {0} p. ej. a nl.json (el código del idioma), traduce los textos y pon en \"_language\" el nombre del idioma (\"Nederlands\"). Los textos que no traduzcas quedan en inglés.\r\nCambiar textos sueltos: un archivo es.json solo con las claves que quieras distintas sustituye solo esos textos en español.\r\nLos marcadores como {{0}} deben quedarse en el texto.\r\n\r\nDespués elige de nuevo el idioma en la configuración (o reinicia NoFences) para cargar los archivos.\r\n",
+  "LanguageFolderReadme": "Archivos de idioma de NoFences\r\n==============================\r\n\r\nIdioma nuevo: copia {0} p. ej. a nl.json (el código del idioma), traduce los textos y pon en \"_language\" el nombre del idioma (\"Nederlands\"). Los textos que no traduzcas quedan en inglés. La bandera sigue el código de idioma; \"_flag\": \"at\" elige otro país.\r\nCambiar textos sueltos: un archivo es.json solo con las claves que quieras distintas sustituye solo esos textos en español.\r\nLos marcadores como {{0}} deben quedarse en el texto.\r\n\r\nDespués elige de nuevo el idioma en la configuración (o reinicia NoFences) para cargar los archivos.\r\n",
   "VersionLabel": "Versión instalada: {0}",
   "FpsShortHint": "Necesita un pequeño asistente con permisos de administrador (Windows lo pide una vez). Solo cuenta fotogramas: nada del contenido de la pantalla ni de lo que escribes.",
   "FpsEnabledLabel": "Medir los FPS de los juegos",

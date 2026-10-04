@@ -337,7 +337,7 @@
   "LanguageLabel": "Language",
   "OwnTranslations": "Own translations…",
   "LanguageFileErrors": "Some language files could not be read:\n{0}",
-  "LanguageFolderReadme": "NoFences language files\r\n=======================\r\n\r\nNew language: copy {0} to e.g. nl.json (the language code), translate the texts and set \"_language\" to the language's own name (\"Nederlands\"). Texts you leave out stay English.\r\nChange single texts: a file de.json with only the keys you want different replaces just those German texts.\r\nPlaceholders like {{0}} must stay in the text.\r\n\r\nThen choose the language again in the settings (or restart NoFences) to load the files.\r\n",
+  "LanguageFolderReadme": "NoFences language files\r\n=======================\r\n\r\nNew language: copy {0} to e.g. nl.json (the language code), translate the texts and set \"_language\" to the language's own name (\"Nederlands\"). Texts you leave out stay English. The flag follows the language code; \"_flag\": \"at\" picks another country.\r\nChange single texts: a file de.json with only the keys you want different replaces just those German texts.\r\nPlaceholders like {{0}} must stay in the text.\r\n\r\nThen choose the language again in the settings (or restart NoFences) to load the files.\r\n",
   "VersionLabel": "Installed version: {0}",
   "FpsShortHint": "Needs a small helper with administrator rights (Windows asks once). It only counts frames – no screen content, no input.",
   "FpsEnabledLabel": "Measure FPS of games",

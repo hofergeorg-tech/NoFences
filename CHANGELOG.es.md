@@ -8,6 +8,7 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 
 ### Novedades
 - **Traducciones propias**: Configuración → General → «Traducciones propias…» abre la carpeta `lang` con una plantilla en inglés. Un archivo como `nl.json` añade un idioma, un `es.json` con textos sueltos cambia solo esos. Todos los textos están ahora en un archivo JSON por idioma.
+- **Banderas para cada idioma**: el menú de idiomas muestra banderas reales (flag-icons), así los idiomas propios también tienen bandera (por el código de idioma, una región como `pt-BR` o `"_flag": "at"` en el archivo de idioma).
 
 ### Cambios
 - **Todos los datos junto a NoFences.exe**, ordenados en carpetas (`config`, `backups`, `themes`, `media`, `cache`, `logs`, `lang`). Los datos de versiones anteriores se copian una vez; en una carpeta de programa sin permiso de escritura (Archivos de programa, WinGet) se quedan en `%LocalAppData%\NoFences`, ordenados igual.

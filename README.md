@@ -143,6 +143,8 @@ shared folder (Settings → Data & styles), fences, playtime and styles live the
 - **[Twometer](https://github.com/Twometer)**: original author of NoFences ([Twometer/NoFences](https://github.com/Twometer/NoFences)).
 - Contributors to the original project: Birol Capa, damianb53, Daniel Lerch, GordnCZ, lucarnosky, QIVD, Tim.
 - Shell context menu (`Win32/ShellContextMenu.cs`): Andreas Johansson, based on FileBrowser from CodeProject.
+- Language flags: [flag-icons](https://github.com/lipis/flag-icons) by Panayiotis Lipiridis (MIT, `NoFences/Flags/LICENSE.txt`),
+  drawn with [SVG.NET](https://github.com/svg-net/SVG) (MS-PL).
 - Fork maintained by Georg Hofer – [www.georg-hofer.com](https://www.georg-hofer.com).
 
 ## Support

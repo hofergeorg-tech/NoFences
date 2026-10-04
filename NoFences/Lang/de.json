@@ -337,7 +337,7 @@
   "LanguageLabel": "Sprache",
   "OwnTranslations": "Eigene Übersetzungen…",
   "LanguageFileErrors": "Einige Sprachdateien konnten nicht gelesen werden:\n{0}",
-  "LanguageFolderReadme": "NoFences-Sprachdateien\r\n======================\r\n\r\nNeue Sprache: {0} kopieren, z. B. nach nl.json (der Sprachcode), die Texte übersetzen und \"_language\" auf den eigenen Namen der Sprache setzen (\"Nederlands\"). Weggelassene Texte bleiben Englisch.\r\nEinzelne Texte ändern: Eine Datei de.json mit nur den Schlüsseln, die anders sein sollen, ersetzt genau diese deutschen Texte.\r\nPlatzhalter wie {{0}} müssen im Text bleiben.\r\n\r\nDanach die Sprache in den Einstellungen noch einmal wählen (oder NoFences neu starten), um die Dateien zu laden.\r\n",
+  "LanguageFolderReadme": "NoFences-Sprachdateien\r\n======================\r\n\r\nNeue Sprache: {0} kopieren, z. B. nach nl.json (der Sprachcode), die Texte übersetzen und \"_language\" auf den eigenen Namen der Sprache setzen (\"Nederlands\"). Weggelassene Texte bleiben Englisch. Die Flagge richtet sich nach dem Sprachcode; \"_flag\": \"at\" wählt ein anderes Land.\r\nEinzelne Texte ändern: Eine Datei de.json mit nur den Schlüsseln, die anders sein sollen, ersetzt genau diese deutschen Texte.\r\nPlatzhalter wie {{0}} müssen im Text bleiben.\r\n\r\nDanach die Sprache in den Einstellungen noch einmal wählen (oder NoFences neu starten), um die Dateien zu laden.\r\n",
   "VersionLabel": "Installierte Version: {0}",
   "FpsShortHint": "Braucht einen kleinen Helfer mit Administratorrechten (Windows fragt einmal). Er zählt nur Bilder – keine Bildinhalte, keine Eingaben.",
   "FpsEnabledLabel": "FPS von Spielen messen",

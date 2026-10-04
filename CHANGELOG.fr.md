@@ -8,6 +8,7 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 
 ### Nouveautés
 - **Traductions personnelles** : Paramètres → Général → « Traductions personnelles… » ouvre le dossier `lang` avec un modèle anglais. Un fichier comme `nl.json` ajoute une langue, un `fr.json` avec quelques textes ne modifie que ceux-ci. Tous les textes sont désormais dans un fichier JSON par langue.
+- **Drapeaux pour chaque langue** : le menu des langues affiche de vrais drapeaux (flag-icons), les langues personnelles ont donc aussi leur drapeau (par le code de langue, une région comme `pt-BR` ou `"_flag": "at"` dans le fichier de langue).
 
 ### Modifications
 - **Toutes les données à côté de NoFences.exe**, rangées en dossiers (`config`, `backups`, `themes`, `media`, `cache`, `logs`, `lang`). Les données des versions précédentes sont copiées une fois ; dans un dossier de programme non accessible en écriture (Program Files, WinGet), elles restent dans `%LocalAppData%\NoFences`, rangées de la même façon.

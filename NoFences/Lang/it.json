@@ -337,7 +337,7 @@
   "LanguageLabel": "Lingua",
   "OwnTranslations": "Traduzioni proprie…",
   "LanguageFileErrors": "Alcuni file di lingua non sono leggibili:\n{0}",
-  "LanguageFolderReadme": "File di lingua di NoFences\r\n==========================\r\n\r\nNuova lingua: copia {0} ad es. in nl.json (il codice della lingua), traduci i testi e imposta \"_language\" sul nome della lingua (\"Nederlands\"). I testi tralasciati restano in inglese.\r\nCambiare singoli testi: un file it.json con solo le chiavi da cambiare sostituisce solo quei testi italiani.\r\nI segnaposto come {{0}} devono restare nel testo.\r\n\r\nPoi scegli di nuovo la lingua nelle impostazioni (o riavvia NoFences) per caricare i file.\r\n",
+  "LanguageFolderReadme": "File di lingua di NoFences\r\n==========================\r\n\r\nNuova lingua: copia {0} ad es. in nl.json (il codice della lingua), traduci i testi e imposta \"_language\" sul nome della lingua (\"Nederlands\"). I testi tralasciati restano in inglese. La bandiera segue il codice della lingua; \"_flag\": \"at\" sceglie un altro paese.\r\nCambiare singoli testi: un file it.json con solo le chiavi da cambiare sostituisce solo quei testi italiani.\r\nI segnaposto come {{0}} devono restare nel testo.\r\n\r\nPoi scegli di nuovo la lingua nelle impostazioni (o riavvia NoFences) per caricare i file.\r\n",
   "VersionLabel": "Versione installata: {0}",
   "FpsShortHint": "Richiede un piccolo programma di supporto con diritti di amministratore (Windows lo chiede una volta). Conta solo i fotogrammi, nessun contenuto e nessun input.",
   "FpsEnabledLabel": "Misura gli FPS dei giochi",
