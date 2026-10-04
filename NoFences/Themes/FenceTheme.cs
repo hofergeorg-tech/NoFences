@@ -1,4 +1,4 @@
-﻿using System.Drawing.Drawing2D;
+using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using NoFences.Model;
 
@@ -202,6 +202,7 @@ namespace NoFences.Themes
         {
             new DefaultTheme(),
             new WindowsAccentTheme(),
+            new HighContrastTheme(),
             new StarCitizenTheme(),
             new RetroArcadeTheme(),
             new HardwareTheme(),
@@ -233,7 +234,7 @@ namespace NoFences.Themes
         /// <summary>The menu group of a style; user styles (JSON) go to "Own".</summary>
         public static Group GroupOf(FenceTheme theme) => theme.Id switch
         {
-            "default" or "windows" => Group.Basic,
+            "default" or "windows" or "contrast" => Group.Basic,
             "starcitizen" or "retroarcade" or "gaming" or "hardware" or "nerd" => Group.GamingTech,
             "work" or "finance" or "documents" or "social" or "family" => Group.WorkLife,
             "hobby" or "music" or "multimedia" or "sport" or "photos" or "travel" or "cooking" or "nature" => Group.Leisure,

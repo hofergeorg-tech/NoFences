@@ -25,6 +25,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - Das **Akku-Widget** zeigt auch **Controller und Bluetooth-Geräte**; neues Widget **Autostart** (Windows-Autostart-Programme ein/aus).
 - Werkzeuge: **QR-Code** (Text oder Link aus der Zwischenablage), **Bildschirmlupe**; "Ordner aufräumen" findet **doppelte Dateien**.
 - **Wetter**: Regen-Hinweis für die nächsten zwei Stunden („Regen in ca. 20 Min.“), Sonnenauf- und -untergang, Mondphase.
+- **Style-Designer**: eigenen Style per Klick gestalten (Farben, Schrift, Rahmen, Ecken) mit Live-Vorschau; neuer Style **Hochkontrast** mit großer Schrift.
+- Neues Widget **Webseite**: eine kleine Seite (Dashboard, Statusseite …) direkt im Fence, regelmäßig aktualisiert.
+- **Steam-Angebote**: eine nicht öffentliche Wunschliste funktioniert über ihren **Freigabelink**.
 
 ## [2.4.2] - 2026-10-03
 

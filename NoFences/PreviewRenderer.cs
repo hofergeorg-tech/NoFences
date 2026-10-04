@@ -21,7 +21,9 @@ namespace NoFences
             public PlaytimeLog Playtime { get; } = DemoPlaytime();
             public UsageLog ScreenTime { get; } = DemoUsage();
             public void ToggleFps() { }
-            public FenceTheme ThemeFor(FenceInfo info) => ThemeRegistry.Get(info.Theme);
+            /// <summary>Style designer: draws with a style that isn't registered (yet).</summary>
+            public Func<FenceInfo, FenceTheme>? ThemeOverride { get; init; }
+            public FenceTheme ThemeFor(FenceInfo info) => ThemeOverride?.Invoke(info) ?? ThemeRegistry.Get(info.Theme);
             public void RequestSave() { }
             public void Notify(string text) { }
             public void StopAlarmSound() { }
@@ -39,6 +41,7 @@ namespace NoFences
             public IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except) => Array.Empty<Rectangle>();
             public void FenceSettingsChanged(FenceInfo info) { }
             public bool HoverPreview => false;
+            public void OpenStyleDesigner(FenceInfo? info) { }
         }
 
         internal const string DemoGame = @"C:\Games\Space Game.exe";
@@ -133,6 +136,7 @@ namespace NoFences
             RenderDialog(RulerWindow.CreateForPreview(), Path.Combine(outDir, "ruler.png"));
             RenderDialog(new FenceSettingsDialog(new FenceInfo { Name = "Spiele", Theme = "gaming", Files = samples, Width = 340, Height = 260, AutoSortPatterns = "*.lnk" }),
                 Path.Combine(outDir, "settings.png"));
+            RenderDialog(new StyleDesignerDialog(Path.Combine(Path.GetTempPath(), "NoFencesPreviewStyles"), null, () => { }), Path.Combine(outDir, "style-designer.png"));
             RenderWidgets(outDir, host);
             RenderFlags(outDir);
             RenderExtras(outDir, host, samples);
@@ -287,12 +291,48 @@ namespace NoFences
                 ("battery", "nature", new Size(240, 230)),
                 ("autostart", "windows", new Size(300, 300)),
             });
+            RenderWidgetSheet(outDir, host, "widgets-look-docs.png", new (string, string, Size)[]
+            {
+                ("webpage", "default", new Size(420, 320)),
+                ("clock", "contrast", new Size(280, 320)),
+            });
             // Checking: news in a wide dark style, as people actually use it
             RenderWidgetSheet(outDir, host, "check-news.png", new (string, string, Size)[]
             {
                 ("news", "multimedia", new Size(685, 344)),
                 ("news", "postit", new Size(330, 330)),
             });
+        }
+
+        /// <summary>A made-up web dashboard for the web page widget.</summary>
+        private static Bitmap DemoDashboard()
+        {
+            var bitmap = new Bitmap(400, 280);
+            using var g = Graphics.FromImage(bitmap);
+            g.Clear(Color.FromArgb(245, 247, 250));
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            using (var bar = new SolidBrush(Color.FromArgb(36, 41, 56)))
+                g.FillRectangle(bar, 0, 0, 400, 40);
+            using var title = new Font("Segoe UI Semibold", 15, GraphicsUnit.Pixel);
+            g.DrawString("Home Dashboard", title, Brushes.White, 14, 10);
+            using var small = new Font("Segoe UI", 12, GraphicsUnit.Pixel);
+            using var big = new Font("Segoe UI Semibold", 26, GraphicsUnit.Pixel);
+            var cards = new[] { ("Solar", "4.2 kW", Color.FromArgb(255, 184, 0)), ("Inside", "21.5 °C", Color.FromArgb(0, 150, 136)), ("Battery", "86 %", Color.FromArgb(76, 175, 80)) };
+            for (var i = 0; i < cards.Length; i++)
+            {
+                var r = new Rectangle(14 + i * 126, 54, 116, 80);
+                g.FillRectangle(Brushes.White, r);
+                using (var accent = new SolidBrush(cards[i].Item3))
+                    g.FillRectangle(accent, r.X, r.Y, 4, r.Height);
+                g.DrawString(cards[i].Item1, small, Brushes.DimGray, r.X + 12, r.Y + 10);
+                g.DrawString(cards[i].Item2, big, Brushes.Black, r.X + 10, r.Y + 32);
+            }
+            g.FillRectangle(Brushes.White, 14, 146, 372, 120);
+            using var line = new Pen(Color.FromArgb(0, 120, 212), 2.5f);
+            var points = Enumerable.Range(0, 30).Select(i => new PointF(24 + i * 12.2f, 240 - 70 * (float)Math.Pow(Math.Sin(i / 9.5), 2) - (i % 4) * 3)).ToArray();
+            g.DrawLines(line, points);
+            g.DrawString("Power today", small, Brushes.DimGray, 24, 152);
+            return bitmap;
         }
 
         /// <summary>A made-up game cover: gradient with the title.</summary>
@@ -465,6 +505,9 @@ namespace NoFences
                 case Widgets.BatteryWidget battery:
                     battery.SetPreview(new List<Widgets.DeviceBattery> { new("Controller 1", 0.65), new("Headset", 0.8), new("Maus", 0.3) });
                     break;
+                case Widgets.WebPageWidget web:
+                    web.SetPreview(DemoDashboard());
+                    break;
                 case Widgets.AutostartWidget autostart:
                     autostart.SetPreview(new List<AutostartEntry>
                     {
@@ -623,6 +666,9 @@ namespace NoFences
             using var brush = new LinearGradientBrush(r, Color.FromArgb(58, 84, 120), Color.FromArgb(150, 130, 120), LinearGradientMode.ForwardDiagonal);
             g.FillRectangle(brush, r);
         }
+
+        /// <summary>Harmless sample items (in the temp folder) for previews.</summary>
+        internal static List<string> SampleFiles() => CreateSampleFiles(Path.Combine(Path.GetTempPath(), "NoFencesPreview"));
 
         private static List<string> CreateSampleFiles(string dir)
         {

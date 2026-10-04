@@ -63,6 +63,9 @@ namespace NoFences
         /// <summary>The fence's settings dialog was confirmed (shortcut, shelf, … may have changed).</summary>
         void FenceSettingsChanged(FenceInfo info);
 
+        /// <summary>Opens the style designer; with a fence, "Save and use" applies the style to it.</summary>
+        void OpenStyleDesigner(FenceInfo? info);
+
         /// <summary>Hovering items shows a folder's contents or a large image preview.</summary>
         bool HoverPreview { get; }
 

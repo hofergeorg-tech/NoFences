@@ -11,7 +11,7 @@ namespace NoFences.Widgets
         private readonly NumericUpDown minDiscount = new() { Minimum = 0, Maximum = 95, Increment = 5, Width = 80 };
         private readonly NumericUpDown maxPrice = new() { Minimum = 0, Maximum = 500, Increment = 5, Width = 80 };
         private readonly NumericUpDown count = new() { Minimum = 3, Maximum = 50, Width = 80 };
-        private readonly TextBox steamId = new() { Width = 220 };
+        private readonly TextBox steamId = new() { Width = 300 };
 
         public SteamDealsWidget.Options Result => new()
         {
@@ -20,7 +20,8 @@ namespace NoFences.Widgets
             MinDiscount = (int)minDiscount.Value,
             MaxPrice = (int)maxPrice.Value,
             Count = (int)count.Value,
-            SteamId = Regex.IsMatch(steamId.Text.Trim(), @"^7656\d{13}$") ? steamId.Text.Trim() : null
+            SteamId = SteamDealsWidget.ParseAccount(steamId.Text).SteamId,
+            ShareToken = SteamDealsWidget.ParseAccount(steamId.Text).Token
         };
 
         public SteamDealsDialog(SteamDealsWidget.Options current)
@@ -44,7 +45,10 @@ namespace NoFences.Widgets
             minDiscount.Value = Math.Clamp(current.MinDiscount, 0, 95);
             maxPrice.Value = Math.Clamp(current.MaxPrice, 0, 500);
             count.Value = Math.Clamp(current.Count, 3, 50);
-            steamId.Text = current.SteamId ?? "";
+            // A share link is shown as such again, so the token isn't lost on the next OK
+            steamId.Text = current.ShareToken != null && current.SteamId != null
+                ? $"https://store.steampowered.com/wishlist/profiles/{current.SteamId}/?st={current.ShareToken}"
+                : current.SteamId ?? "";
             steamId.PlaceholderText = Strings.SteamIdAuto;
             source.SelectedIndexChanged += (_, _) => wishlistFirst.Enabled = source.SelectedIndex != (int)SteamDealsWidget.DealSource.Wishlist;
             wishlistFirst.Enabled = source.SelectedIndex != (int)SteamDealsWidget.DealSource.Wishlist;

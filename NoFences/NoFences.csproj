@@ -35,6 +35,7 @@
   <ItemGroup>
     <!-- ETW real-time session for the (opt-in, elevated) FPS helper -->
     <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.*" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4258.31" />
     <!-- QR codes for Tools > QR code (MIT license) -->
     <PackageReference Include="QRCoder" Version="1.8.0" />
   </ItemGroup>

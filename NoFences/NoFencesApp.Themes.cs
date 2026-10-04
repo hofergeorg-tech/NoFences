@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using NoFences.Model;
 using NoFences.Themes;
 using NoFences.Util;
 
@@ -8,6 +9,16 @@ namespace NoFences
     public sealed partial class NoFencesApp
     {
         internal string ThemesFolder => Path.Combine(Store.DataDirectory, "themes");
+
+        public void OpenStyleDesigner(FenceInfo? info)
+        {
+            using var dialog = new StyleDesignerDialog(ThemesFolder, info, () =>
+            {
+                LoadCustomThemes(report: false);
+                ApplyToAll();
+            });
+            dialog.ShowDialog();
+        }
 
         /// <summary>Loads user styles and reports problems (or the count) in a notification.</summary>
         internal void LoadCustomThemes(bool report)

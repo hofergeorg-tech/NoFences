@@ -26,6 +26,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Battery widget** also shows **controllers and Bluetooth devices**; new widget **Autostart** (switch Windows startup programs on/off).
 - Tools: **QR code** (text or link from the clipboard), **magnifier**; "Clean up folders" finds **duplicate files**.
 - **Weather**: rain hint for the next two hours ("Rain in about 20 min"), sunrise and sunset, moon phase.
+- **Style designer**: make your own style by clicking (colors, fonts, border, corners) with a live preview; new **high contrast** style with large text.
+- New widget **Web page**: a small page (dashboard, status page …) right in a fence, refreshed regularly.
+- **Steam sales**: a wishlist that isn't public works via its **share link**.
 
 ## [2.4.2] - 2026-10-03
 

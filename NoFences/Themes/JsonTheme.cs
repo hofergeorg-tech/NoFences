@@ -110,6 +110,26 @@ namespace NoFences.Themes
         public override void DrawInsertMarker(Graphics g, int x, int top, int height, float s) =>
             DrawBarMarker(g, accent, x, top, height, 2 * s);
 
+        /// <summary>The definition this style was made from (for the style designer).</summary>
+        public Definition Source => d;
+
+        public static JsonTheme FromDefinition(Definition definition) => new(definition);
+
+        /// <summary>"#RRGGBB", or "#RRGGBBAA" when not fully opaque.</summary>
+        public static string Hex(Color c) => c.A == 255 ? $"#{c.R:X2}{c.G:X2}{c.B:X2}" : $"#{c.R:X2}{c.G:X2}{c.B:X2}{c.A:X2}";
+
+        public static string ToJson(Definition definition) =>
+            JsonSerializer.Serialize(definition, new JsonSerializerOptions { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+
+        /// <summary>An id for a style name: "Mein Blau" → "mein-blau".</summary>
+        public static string IdFor(string name)
+        {
+            var plain = name.Trim().ToLowerInvariant().Replace("ä", "ae").Replace("ö", "oe").Replace("ü", "ue").Replace("ß", "ss");
+            var chars = plain.Select(ch => char.IsLetterOrDigit(ch) && ch < 128 ? ch : '-').ToArray();
+            var id = string.Join('-', new string(chars).Split('-', StringSplitOptions.RemoveEmptyEntries));
+            return id.Length == 0 ? "style" : id;
+        }
+
         public static Color ParseColor(string value)
         {
             var hex = value.Trim().TrimStart('#');

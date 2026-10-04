@@ -25,6 +25,9 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 - El **widget de batería** muestra también **mandos y dispositivos Bluetooth**; nuevo widget **Inicio automático** (activar/desactivar programas de inicio de Windows).
 - Herramientas: **código QR** (texto o enlace del portapapeles), **lupa**; "Ordenar carpetas" encuentra **archivos duplicados**.
 - **Tiempo**: aviso de lluvia para las próximas dos horas («Lluvia en unos 20 min»), salida y puesta del sol, fase lunar.
+- **Diseñador de estilos**: crea tu propio estilo con clics (colores, fuentes, borde, esquinas) con vista previa en vivo; nuevo estilo **Alto contraste** con texto grande.
+- Nuevo widget **Página web**: una página pequeña (panel, página de estado …) directamente en la valla, actualizada con regularidad.
+- **Ofertas de Steam**: una lista de deseos no pública funciona con su **enlace para compartir**.
 
 ## [2.4.2] - 2026-10-03
 

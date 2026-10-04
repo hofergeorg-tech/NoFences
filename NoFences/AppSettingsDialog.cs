@@ -460,6 +460,7 @@ namespace NoFences
             }
 
             var styles = Section(page, Strings.CustomThemes, ContentWidth);
+            Wide(styles, Action(Strings.DesignerMenu, () => app.OpenStyleDesigner(null)));
             Wide(styles, Action(Strings.OpenThemesFolder, () => Open(app.ThemesFolder)));
             Wide(styles, Action(Strings.ReloadThemes, () =>
             {

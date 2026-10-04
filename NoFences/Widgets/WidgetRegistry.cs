@@ -38,6 +38,7 @@ namespace NoFences.Widgets
             ("progress", () => Strings.WidgetProgress, new Size(260, 230)),
             ("twitch", () => Strings.WidgetTwitch, new Size(300, 260)),
             ("autostart", () => Strings.WidgetAutostart, new Size(300, 320)),
+            ("webpage", () => Strings.WidgetWebPage, new Size(420, 340)),
         };
 
         public enum Group { Time, Info, System, GamesMedia }
@@ -46,7 +47,7 @@ namespace NoFences.Widgets
         public static IReadOnlyList<(Group Group, string[] Types)> Groups { get; } = new (Group, string[])[]
         {
             (Group.Time, new[] { "clock", "worldclock", "timer", "todo", "habits", "countdown", "agenda", "focus", "progress", "screentime" }),
-            (Group.Info, new[] { "weather", "news", "ticker", "status" }),
+            (Group.Info, new[] { "weather", "news", "ticker", "status", "webpage" }),
             (Group.System, new[] { "system", "audio", "power", "network", "drives", "battery", "recyclebin", "clipboard", "autostart" }),
             (Group.GamesMedia, new[] { "games", "steamdeals", "gamenews", "twitch", "playtime", "media", "photos" }),
         };
@@ -112,6 +113,7 @@ namespace NoFences.Widgets
                 "habits" => new HabitsWidget(() => info.WidgetOption, Set),
                 "progress" => new ProgressWidget(),
                 "autostart" => new AutostartWidget(),
+                "webpage" => new WebPageWidget(() => info.WidgetOption, Set),
                 "gamenews" =>new NewsWidget(() => info.WidgetOption, Set, gameNews: true),
                 "twitch" => new TwitchWidget(() => info.WidgetOption, Set, host.Notify),
                 "screentime" =>new ScreenTimeWidget(() => info.WidgetOption, Set, () => host.ScreenTime),

@@ -70,7 +70,7 @@ namespace NoFences.Widgets
                 {
                     try
                     {
-                        list.AddRange(await WishlistDealsAsync(steamId));
+                        list.AddRange(await WishlistDealsAsync(steamId, o.SteamId == steamId ? o.ShareToken : null));
                     }
                     catch (Exception e)
                     {
@@ -115,6 +115,8 @@ namespace NoFences.Widgets
             public int Count { get; set; } = 15;
             /// <summary>SteamID64 for the wishlist; empty = the account signed in on this PC.</summary>
             public string? SteamId { get; set; }
+            /// <summary>The "st" of a wishlist share link: opens a wishlist that isn't public.</summary>
+            public string? ShareToken { get; set; }
         }
 
         private Options Settings
@@ -162,13 +164,34 @@ namespace NoFences.Widgets
             return list;
         }
 
-        private async Task<List<SteamDeal>> WishlistDealsAsync(string steamId)
+        /// <summary>Account and share token from what the user entered: a SteamID64 or a wishlist share link.</summary>
+        public static (string? SteamId, string? Token) ParseAccount(string text)
+        {
+            text = text.Trim();
+            if (System.Text.RegularExpressions.Regex.IsMatch(text, @"^7656\d{13}$"))
+                return (text, null);
+            var link = System.Text.RegularExpressions.Regex.Match(text, @"/wishlist/profiles/(7656\d{13})/?(?:\?(?:.*&)?st=(\d+))?");
+            return link.Success ? (link.Groups[1].Value, link.Groups[2].Success ? link.Groups[2].Value : null) : (null, null);
+        }
+
+        /// <summary>The games of a shared wishlist page (the page carries them for its first render).</summary>
+        public static List<int> ParseSharedWishlist(string html) =>
+            System.Text.RegularExpressions.Regex.Matches(html, @"appid\\*"":(\d+),\\*""priority")
+                .Select(m => int.Parse(m.Groups[1].Value)).Distinct().ToList();
+
+        private async Task<List<SteamDeal>> WishlistDealsAsync(string steamId, string? shareToken)
         {
             var json = await Web.Http.GetStringAsync($"https://api.steampowered.com/IWishlistService/GetWishlist/v1/?steamid={steamId}");
-            using var doc = JsonDocument.Parse(json);
-            if (!doc.RootElement.GetProperty("response").TryGetProperty("items", out var items))
-                return new();
-            var ids = items.EnumerateArray().Select(i => i.GetProperty("appid").GetInt32()).Take(100).ToList();
+            List<int> ids;
+            using (var doc = JsonDocument.Parse(json))
+            {
+                ids = doc.RootElement.GetProperty("response").TryGetProperty("items", out var items)
+                    ? items.EnumerateArray().Select(i => i.GetProperty("appid").GetInt32()).Take(100).ToList()
+                    : new();
+            }
+            // Not public: the share link's page still lists the games
+            if (ids.Count == 0 && shareToken != null)
+                ids = ParseSharedWishlist(await Web.Http.GetStringAsync($"https://store.steampowered.com/wishlist/profiles/{steamId}/?st={shareToken}")).Take(100).ToList();
             var result = new List<SteamDeal>();
             // Prices in batches (only "price_overview" works for several apps at once)
             foreach (var batch in ids.Chunk(25))

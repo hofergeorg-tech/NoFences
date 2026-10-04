@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using NoFences.Model;
 
 namespace NoFences.Util
@@ -45,6 +45,7 @@ namespace NoFences.Util
         public static string ThemeName(string id) => id switch
         {
             "default" => T("Standard (glass)", "Standard (Glas)", "Standard (vetro)", "Standard (verre)", "Estándar (cristal)"),
+            "contrast" => T("High contrast (large)", "Hochkontrast (groß)", "Alto contrasto (grande)", "Contraste élevé (grand)", "Alto contraste (grande)"),
             "windows" => T("Windows accent color", "Windows-Akzentfarbe", "Colore d'accento di Windows", "Couleur d'accentuation Windows", "Color de énfasis de Windows"),
             "starcitizen" => "Star Citizen (HUD)",
             "retroarcade" => "Retro-Arcade",
@@ -170,11 +171,11 @@ namespace NoFences.Util
         public static string SteamFree => T("Free", "Kostenlos", "Gratis", "Gratuit", "Gratis");
         public static string SteamIdMenu =>T("Steam account for the wishlist…", "Steam-Konto für die Wunschliste…", "Account Steam per la lista dei desideri…", "Compte Steam pour la liste de souhaits…", "Cuenta de Steam para la lista de deseos…");
         public static string SteamIdPrompt => T(
-            "SteamID64 (17 digits, starts with 7656…). Leave empty to use the account signed in on this PC. The wishlist must be public.",
-            "SteamID64 (17 Ziffern, beginnt mit 7656…). Leer lassen, um das auf diesem PC angemeldete Konto zu nehmen. Die Wunschliste muss öffentlich sein.",
-            "SteamID64 (17 cifre, inizia con 7656…). Lascia vuoto per usare l'account collegato su questo PC. La lista dei desideri deve essere pubblica.",
-            "SteamID64 (17 chiffres, commence par 7656…). Laissez vide pour utiliser le compte connecté sur ce PC. La liste de souhaits doit être publique.",
-            "SteamID64 (17 dígitos, empieza por 7656…). Déjalo vacío para usar la cuenta iniciada en este PC. La lista de deseos debe ser pública.");
+            "SteamID64 (17 digits, starts with 7656…) or the wishlist's share link. Leave empty to use the account signed in on this PC. For a wishlist that isn't public, paste its share link (Steam: wishlist → Share).",
+            "SteamID64 (17 Ziffern, beginnt mit 7656…) oder der Freigabelink der Wunschliste. Leer lassen, um das auf diesem PC angemeldete Konto zu nehmen. Für eine nicht öffentliche Wunschliste den Freigabelink einfügen (Steam: Wunschliste → Teilen).",
+            "SteamID64 (17 cifre, inizia con 7656…) o il link di condivisione della lista dei desideri. Lascia vuoto per usare l'account collegato su questo PC. Per una lista dei desideri non pubblica incolla il suo link di condivisione (Steam: lista dei desideri → Condividi).",
+            "SteamID64 (17 chiffres, commence par 7656…) ou le lien de partage de la liste de souhaits. Laissez vide pour utiliser le compte connecté sur ce PC. Pour une liste de souhaits non publique, collez son lien de partage (Steam : liste de souhaits → Partager).",
+            "SteamID64 (17 dígitos, empieza por 7656…) o el enlace para compartir la lista de deseos. Déjalo vacío para usar la cuenta iniciada en este PC. Para una lista de deseos no pública, pega su enlace para compartir (Steam: lista de deseos → Compartir).");
         public static string WidgetPower =>T("Power plan", "Energiesparplan", "Combinazione di risparmio energia", "Mode de gestion de l'alimentation", "Plan de energía");
         public static string PowerNone => T("No power plans found.", "Keine Energiesparpläne gefunden.", "Nessuna combinazione trovata.", "Aucun mode d'alimentation trouvé.", "No se encontraron planes de energía.");
         public static string PowerSettings => T("Power settings…", "Energie-Einstellungen…", "Impostazioni di alimentazione…", "Paramètres d'alimentation…", "Configuración de energía…");
@@ -249,6 +250,43 @@ namespace NoFences.Util
                                                  "Faites glisser des fichiers sur la barrière. Clic droit sur une barrière pour les options ; l'icône de la zone de notification contient les paramètres et l'aide.",
                                                  "Arrastra archivos a la valla. Clic derecho en una valla para ver las opciones; el icono de la bandeja tiene la configuración y la ayuda.");
 
+        // Appearance: style designer, web page widget
+        public static string DesignerMenu => T("Design your own style…", "Eigenen Style gestalten…", "Crea il tuo stile…", "Créer votre propre style…", "Diseñar tu propio estilo…");
+        public static string DesignerTitle => T("Style designer", "Style-Designer", "Designer di stili", "Créateur de styles", "Diseñador de estilos");
+        public static string DesignerStart => T("Start from:", "Ausgangspunkt:", "Parti da:", "Partir de :", "Partir de:");
+        public static string DesignerNew => T("New style", "Neuer Style", "Nuovo stile", "Nouveau style", "Nuevo estilo");
+        public static string DesignerNewName => T("My style", "Mein Style", "Il mio stile", "Mon style", "Mi estilo");
+        public static string DesignerGlass => T("Frosted glass", "Milchglas", "Vetro satinato", "Verre dépoli", "Cristal esmerilado");
+        public static string DesignerTitleBar => T("Title bar:", "Titelleiste:", "Barra del titolo:", "Barre de titre :", "Barra de título:");
+        public static string DesignerTitleText => T("Title text:", "Titelschrift:", "Testo del titolo:", "Texte du titre :", "Texto del título:");
+        public static string DesignerUppercase => T("CAPITALS", "GROSSBUCHSTABEN", "MAIUSCOLO", "MAJUSCULES", "MAYÚSCULAS");
+        public static string DesignerAlignLeft => T("Left", "Links", "Sinistra", "Gauche", "Izquierda");
+        public static string DesignerAlignCenter => T("Centered", "Mittig", "Centrato", "Centré", "Centrado");
+        public static string DesignerLabels => T("Item names:", "Beschriftung:", "Nomi degli elementi:", "Noms des éléments :", "Nombres de elementos:");
+        public static string DesignerShadow => T("Text shadow", "Schatten unter der Schrift", "Ombra del testo", "Ombre du texte", "Sombra del texto");
+        public static string DesignerAccent => T("Accent color:", "Akzentfarbe:", "Colore d'accento:", "Couleur d'accent :", "Color de acento:");
+        public static string DesignerBorder => T("Border:", "Rahmen:", "Bordo:", "Bordure :", "Borde:");
+        public static string DesignerCorners => T("Corner radius:", "Eckenradius:", "Raggio degli angoli:", "Rayon des coins :", "Radio de esquinas:");
+        public static string DesignerSave => T("Save", "Speichern", "Salva", "Enregistrer", "Guardar");
+        public static string DesignerSaveApply => T("Save and use for this fence", "Speichern und für diesen Fence verwenden", "Salva e usa per questo recinto", "Enregistrer et utiliser pour cette barrière", "Guardar y usar en esta valla");
+        public static string DesignerFolder => T("Styles folder", "Style-Ordner", "Cartella stili", "Dossier des styles", "Carpeta de estilos");
+        public static string DesignerSaved(string name) => T($"\"{name}\" saved", $"„{name}“ gespeichert", $"\"{name}\" salvato", $"« {name} » enregistré", $"«{name}» guardado");
+        public static string WidgetWebPage => T("Web page", "Webseite", "Pagina web", "Page web", "Página web");
+        public static string WebPagePrompt => T("Address of the page (e.g. a dashboard or status page):", "Adresse der Seite (z. B. ein Dashboard oder eine Statusseite):", "Indirizzo della pagina (ad es. una dashboard o una pagina di stato):", "Adresse de la page (p. ex. un tableau de bord ou une page d'état) :", "Dirección de la página (p. ej. un panel o una página de estado):");
+        public static string WebPageInvalid => T("That is not a web address.", "Das ist keine Webadresse.", "Questo non è un indirizzo web.", "Ce n'est pas une adresse web.", "Eso no es una dirección web.");
+        public static string WebPageHint => T("Double-click to choose a web page.", "Doppelklick, um eine Webseite zu wählen.", "Doppio clic per scegliere una pagina web.", "Double-cliquez pour choisir une page web.", "Doble clic para elegir una página web.");
+        public static string WebPageNoRuntime => T("This needs the Microsoft Edge WebView2 runtime (included in Windows 11; for Windows 10 free from microsoft.com).",
+            "Dafür wird die Microsoft-Edge-WebView2-Laufzeit benötigt (in Windows 11 enthalten; für Windows 10 kostenlos bei microsoft.com).",
+            "Serve il runtime Microsoft Edge WebView2 (incluso in Windows 11; per Windows 10 gratuito su microsoft.com).",
+            "Le runtime Microsoft Edge WebView2 est nécessaire (inclus dans Windows 11 ; gratuit sur microsoft.com pour Windows 10).",
+            "Necesita el runtime Microsoft Edge WebView2 (incluido en Windows 11; para Windows 10 gratis en microsoft.com).");
+        public static string WebPageTooltip(string url) => T($"{url}\nClick: open in the browser · Wheel: scroll", $"{url}\nKlick: im Browser öffnen · Mausrad: scrollen", $"{url}\nClic: apri nel browser · Rotella: scorri", $"{url}\nClic : ouvrir dans le navigateur · Molette : défiler", $"{url}\nClic: abrir en el navegador · Rueda: desplazar");
+        public static string WebPageChange => T("Change address…", "Adresse ändern…", "Cambia indirizzo…", "Changer l'adresse…", "Cambiar dirección…");
+        public static string WebPageEvery => T("Refresh every", "Aktualisieren alle", "Aggiorna ogni", "Actualiser toutes les", "Actualizar cada");
+        public static string WebPageZoom => T("Zoom", "Zoom", "Zoom", "Zoom", "Zoom");
+        public static string Interval(int seconds) => seconds < 60
+            ? T($"{seconds} seconds", $"{seconds} Sekunden", $"{seconds} secondi", $"{seconds} secondes", $"{seconds} segundos")
+            : T($"{seconds / 60} min", $"{seconds / 60} Min.", $"{seconds / 60} min", $"{seconds / 60} min", $"{seconds / 60} min");
         // Weather: rain hint, sun and moon
         public static string RainStarts(int minutes) => T($"Rain in about {minutes} min", $"Regen in ca. {minutes} Min.", $"Pioggia tra circa {minutes} min", $"Pluie dans env. {minutes} min", $"Lluvia en unos {minutes} min");
         public static string RainStops(int minutes) => T($"Rain stops in about {minutes} min", $"Regen hört in ca. {minutes} Min. auf", $"La pioggia smette tra circa {minutes} min", $"La pluie s'arrête dans env. {minutes} min", $"La lluvia para en unos {minutes} min");

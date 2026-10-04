@@ -53,6 +53,13 @@ namespace NoFences
             {
                 option = NewsWidget.AskFeeds(null, null);
             }
+            else if (type == "webpage")
+            {
+                option = WebPageWidget.AskUrl(null, null);
+                if (option == null)
+                    return;
+                title = new Uri(WebPageWidget.Parse(option).Url).Host;
+            }
             else if (type == "ticker")
             {
                 option = TickerWidget.DefaultSymbols;

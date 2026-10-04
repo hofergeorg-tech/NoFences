@@ -968,6 +968,8 @@ namespace NoFences
                     sub.DropDownItems.Add(new ToolStripMenuItem(t.DisplayName, null, (_, _) => SetTheme(t.Id)) { Checked = Info.Theme == t.Id });
                 style.DropDownItems.Add(sub);
             }
+            style.DropDownItems.Add(new ToolStripSeparator());
+            style.DropDownItems.Add(Strings.DesignerMenu, null, (_, _) => app.OpenStyleDesigner(Info));
             menu.Items.Add(style);
 
             var sort = new ToolStripMenuItem(Strings.SortBy);
