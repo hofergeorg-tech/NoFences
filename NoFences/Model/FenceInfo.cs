@@ -143,6 +143,24 @@ namespace NoFences.Model
         /// <summary>Folded with its group: only the title bar shows until the group is unfolded.</summary>
         public bool Folded { get; set; }
 
+        /// <summary>Picture or pattern behind the content (full path or "media/…"), or null.</summary>
+        public string? BackgroundImage { get; set; }
+
+        /// <summary>How strongly the background picture shows (5–100 %).</summary>
+        public int BackgroundImageOpacity { get; set; } = 35;
+
+        /// <summary>Repeat the picture as a pattern instead of filling the fence with it.</summary>
+        public bool BackgroundImageTiled { get; set; }
+
+        /// <summary>Program that opens the fence's files on double-click (null = their default program).</summary>
+        public string? OpenWith { get; set; }
+
+        /// <summary>Short notes on single items (path → text), shown as tooltip.</summary>
+        public Dictionary<string, string>? ItemNotes { get; set; }
+
+        /// <summary>Folders shown opened inside the fence (their contents indented below them).</summary>
+        public List<string>? ExpandedFolders { get; set; }
+
         public void CountOpen(string path)
         {
             OpenCounts ??= new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);

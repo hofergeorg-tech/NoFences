@@ -54,6 +54,14 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
   PDFs und Videos eine große Vorschau (abschaltbar unter Einstellungen → Desktop).
 - **Reiter** (Verknüpfungs-Fences): Fence-Menü → Reiter hinzufügen. Klick wechselt, Doppelklick benennt um, Einträge auf einen
   Reiter ziehen verschiebt sie dorthin.
+- **Ordner im Fence aufklappen**: auf einen Ordner zeigen und auf den kleinen Pfeil in seiner Ecke klicken (oder
+  Rechtsklick → „Inhalt im Fence aufklappen“); sein Inhalt erscheint eingerückt darunter. Der Pfeil klappt ihn wieder zu.
+- **Notizen an Einträgen**: Shift+Rechtsklick auf einen Eintrag → Notiz…; die Notiz erscheint beim Darüberzeigen, ein
+  kleiner Zettel markiert den Eintrag.
+- Fence-Menü → **Nutzung und Aufräumen…**: wie oft jeder Eintrag aus dem Fence geöffnet wurde; nie geöffnete werden zum
+  Entfernen vorgeschlagen (Verknüpfungs-Fences, Strg+Z holt sie zurück) bzw. für den Papierkorb (Ordner-Fences).
+- Fence-Einstellungen → **Hintergrundbild**: ein Foto oder Muster hinter den Einträgen, mit Deckkraft und „Als Muster
+  wiederholen“. **Dateien öffnen mit**: ein Programm, das die Dateien des Fences per Doppelklick öffnet (z. B. ein Editor).
 
 ## In allen Fences suchen
 
@@ -88,6 +96,9 @@ du unter Einstellungen → Desktop.
 - **Strg+Alt+N** (änderbar unter Einstellungen → Desktop) legt von überall eine Notiz an der Maus an, bereit zum Tippen.
 - Fence-Menü → **Erinnerung…**: Zur gewählten Zeit meldet sich NoFences mit Ton und Benachrichtigung – einmalig,
   täglich, werktags, wöchentlich oder monatlich.
+- **Termine**: Schreib eine Zeile wie `Mo 14:00 Zahnarzt`, `morgen 9:30 Meeting`, `12.10. 15:00 Friseur` oder
+  `15:00 Anruf` – nach dem Bearbeiten bietet NoFences eine Erinnerung 15 Minuten vorher an (Klick auf die
+  Benachrichtigung). Alle Termine einer Notiz stehen auch im Notiz-Menü → „An Termin erinnern“.
 - **Bilder**: Strg+V im Editor fügt ein Bild aus der Zwischenablage ein; es erscheint direkt in der Notiz.
 - **Sprachnotiz aufnehmen…** (Notiz-Menü) nimmt über das Mikrofon auf; der Abspielknopf in der Notiz spielt sie ab.
 - **Mit Passwort schützen…** (Notiz-Menü): Die Notiz wird verschlüsselt gespeichert und sperrt sich nach 2 Minuten ohne
@@ -151,6 +162,7 @@ Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem
 - **Twitch live**: welche deiner Streamer gerade live sind, mit Spiel und Titel; Benachrichtigung, wenn jemand startet.
 - **Timer & Wecker**: Schnell-Timer (Knöpfe +1, +5, +10, +15, +30 Minuten) und Wecker an gewählten Tagen; sie klingeln auch,
   wenn das Widget ausgeblendet ist.
+  Klingelt er, bietet ein kleines Fenster **Aus**, **In 5 Min. nochmal** und **In 10 Min. nochmal**.
 - **Gewohnheiten**: die letzten 7 Tage abhaken, mit Serien-Zähler.
 - **Zeit-Fortschritt**: wie viel von Tag, Woche, Monat und Jahr schon vorbei ist.
 - **Autostart**: Programme, die mit Windows starten, mit Schalter (wie im Task-Manager). Einträge für alle Benutzer sind
@@ -187,6 +199,10 @@ Maus und zeigt den Abstand. Esc schließt es.
   Kopien sind schon angehakt.
 - Werkzeuge ▸ **QR-Code…**: zeigt einen Text oder Link (aus der Zwischenablage vorausgefüllt) als QR-Code zum Scannen
   mit dem Handy; kopieren oder als Bild speichern.
+- Werkzeuge ▸ **Passwort-Generator**: zufällige Passwörter (Länge, Zeichenarten, ohne verwechselbare Zeichen);
+  „Kopieren“ hält sie aus dem Zwischenablage-Verlauf heraus und leert die Zwischenablage nach einer Minute.
+- Werkzeuge ▸ **Netzwerk-Infos**: öffentliche und lokale Adressen, WLAN-Name und -Signal, Router und MAC-Adresse; ein
+  Klick kopiert einen Wert.
 - Werkzeuge ▸ **Bildschirmlupe**: eine runde Lupe folgt der Maus; **+/–** ändert den Zoom (2× bis 8×), Esc oder ein Klick
   schließt sie.
 - Werkzeuge ▸ **Desktop-Symbole anzeigen**: blendet die Windows-Desktop-Symbole mit einem Klick aus und wieder ein.
@@ -274,7 +290,7 @@ Die EXE ist noch nicht signiert. Auf „Weitere Informationen“ → „Trotzdem
 **Was geht ins Internet?**
 Nur, was du einrichtest: die Update-Prüfung (GitHub), Wetter (Open-Meteo), deine Kalender-Links, News-Feeds, Kurse
 (Yahoo Finance), Steam-Angebote und -News (Steam), Twitch-Status (decapi.me), der Speedtest (Cloudflare) und Seiten im
-Webseiten-Widget. Sonst wird nichts gesendet.
+Webseiten-Widget sowie die öffentliche Adresse in Werkzeuge ▸ Netzwerk-Infos (ipify.org). Sonst wird nichts gesendet.
 
 **Wo liegen meine Einstellungen?**
 Neben der `NoFences.exe`, sortiert in Ordner: `config` (fences.json, Spielzeit), `backups`, `themes`, `media`

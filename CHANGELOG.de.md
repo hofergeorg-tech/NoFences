@@ -11,6 +11,8 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Flaggen für jede Sprache**: Das Sprachmenü zeigt echte Länderflaggen (flag-icons), damit auch eigene Sprachen ihre Flagge bekommen (über den Sprachcode, eine Region wie `pt-BR` oder `"_flag": "at"` in der Sprachdatei).
 - **Rückgängig (Strg+Z)** für Löschen, Verschieben, Größe ändern und Umbenennen von Fences sowie Entfernen, Verschieben und Umbenennen von Einträgen; auch „Rückgängig: …“ im Tray- und Fence-Menü.
 - **Fence-Gruppen**: Rechtsklick → Gruppe. Fences einer Gruppe bewegen sich gemeinsam und lassen sich zusammen auf ihre Titelleisten einklappen.
+- **Fences**: Ordner im Fence aufklappen (Pfeil in der Ordner-Ecke, Inhalt eingerückt darunter), **Notizen an Einträgen** (Tooltip), **Nutzung und Aufräumen** (nie geöffnete Einträge als Vorschlag), **Hintergrundbild** oder Muster pro Fence und **Dateien öffnen mit** einem gewählten Programm.
+- **Notizen** erkennen Termine („Mo 14:00 Zahnarzt“, „morgen 9:30 …“, „12.10. 15:00 …“) und bieten eine Erinnerung 15 Minuten vorher an; klingelnde Timer und Wecker lassen sich um 5 oder 10 Minuten **verschieben (Schlummern)**. Neue Werkzeuge: **Passwort-Generator** (kopiert ohne Zwischenablage-Verlauf) und **Netzwerk-Infos** (Adressen, WLAN, Router; Klick kopiert).
 
 ### Geändert
 - **Alle Daten neben der NoFences.exe**, sortiert in Ordner (`config`, `backups`, `themes`, `media`, `cache`, `logs`, `lang`). Daten älterer Versionen werden einmalig übernommen; in einem nicht beschreibbaren Programmordner (Programme, WinGet) bleiben sie in `%LocalAppData%\NoFences`, genauso sortiert.

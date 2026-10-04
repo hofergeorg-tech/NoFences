@@ -37,6 +37,17 @@ namespace NoFences
         private readonly ComboBox cleanBox = new() { Width = 160, DropDownStyle = ComboBoxStyle.DropDownList };
         private readonly TextBox autoSortBox = new() { Width = 200 };
         private readonly ComboBox presetBox = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 150 };
+        private readonly TextBox pictureBox = new() { Width = 170, ReadOnly = true };
+        private readonly Button pictureBrowse = new() { Text = Strings.Browse, AutoSize = true };
+        private readonly Button pictureClear = new() { Text = "×", Width = 28 };
+        private readonly TrackBar pictureOpacity = new() { Minimum = 5, Maximum = 100, TickStyle = TickStyle.None, Width = 150, AutoSize = false, Height = 26 };
+        private readonly Label pictureOpacityValue = new() { AutoSize = true, Margin = new Padding(4, 5, 0, 0) };
+        private readonly CheckBox pictureTiled = new() { Text = Strings.BackgroundPictureTiled, AutoSize = true };
+        private readonly TextBox openWithBox = new() { Width = 170, ReadOnly = true };
+        private readonly Button openWithBrowse = new() { Text = Strings.Browse, AutoSize = true };
+        private readonly Button openWithClear = new() { Text = "×", Width = 28 };
+        private string? picturePath;
+        private string? openWithPath;
         private readonly PictureBox preview = new() { Size = new Size(300, 270), SizeMode = PictureBoxSizeMode.Zoom, BorderStyle = BorderStyle.FixedSingle };
         private readonly System.Windows.Forms.Timer previewTimer = new() { Interval = 150 };
         private readonly System.Windows.Forms.Timer iconsTimer = new() { Interval = 700 };
@@ -92,6 +103,12 @@ namespace NoFences
             Row(look, Strings.Opacity, opacityRow);
             if (info.Kind == FenceKind.Links)
                 Wide(look, compactBox);
+            Row(look, Strings.BackgroundPicture, Inline(pictureBox, pictureBrowse, pictureClear));
+            var pictureOpacityRow = new FlowLayoutPanel { AutoSize = true, WrapContents = false, Margin = new Padding(0) };
+            pictureOpacityRow.Controls.Add(pictureOpacity);
+            pictureOpacityRow.Controls.Add(pictureOpacityValue);
+            Row(look, Strings.BackgroundPictureOpacity, pictureOpacityRow);
+            Wide(look, pictureTiled);
 
             var behavior = Section(left, Strings.SectionBehavior, ColumnWidth);
             foreach (var mode in Enum.GetValues<FenceSortMode>())
@@ -111,6 +128,11 @@ namespace NoFences
                 cleanBox.Items.Add(Strings.ShelfDays(days));
             if (info.Kind == FenceKind.Folder)
                 Row(behavior, Strings.ShelfCleanup, cleanBox);
+            if (hasItems)
+            {
+                Row(behavior, Strings.OpenWithLabel, Inline(openWithBox, openWithBrowse, openWithClear));
+                Hint(behavior, Strings.OpenWithHint, ColumnWidth);
+            }
 
             if (hasItems)
             {
@@ -164,6 +186,13 @@ namespace NoFences
             cleanBox.SelectedIndex = Math.Max(0, cleanIndex);
             autoSortBox.Text = info.AutoSortPatterns ?? "";
             sortBox.SelectedIndex = (int)info.SortMode;
+            picturePath = info.BackgroundImage;
+            pictureBox.Text = picturePath == null ? "" : Path.GetFileName(picturePath);
+            pictureOpacity.Value = Math.Clamp(info.BackgroundImageOpacity, 5, 100);
+            pictureTiled.Checked = info.BackgroundImageTiled;
+            openWithPath = info.OpenWith;
+            openWithBox.Text = openWithPath == null ? "" : Path.GetFileName(openWithPath);
+            UpdatePictureOpacityLabel();
             UpdateColorButton();
             UpdateOpacityLabel();
             UpdateEnabled();
@@ -173,6 +202,35 @@ namespace NoFences
             themeBox.SelectedIndexChanged += (_, _) => UpdateEnabled();
             opacity.ValueChanged += (_, _) => UpdateOpacityLabel();
             browseButton.Click += (_, _) => BrowseFolder();
+            pictureOpacity.ValueChanged += (_, _) => UpdatePictureOpacityLabel();
+            pictureBrowse.Click += (_, _) =>
+            {
+                using var dlg = new OpenFileDialog { Filter = Strings.PictureFilter, Title = Strings.BackgroundPicture };
+                if (dlg.ShowDialog(this) != DialogResult.OK)
+                    return;
+                picturePath = dlg.FileName;
+                pictureBox.Text = Path.GetFileName(picturePath);
+                SchedulePreview();
+            };
+            pictureClear.Click += (_, _) =>
+            {
+                picturePath = null;
+                pictureBox.Text = "";
+                SchedulePreview();
+            };
+            openWithBrowse.Click += (_, _) =>
+            {
+                using var dlg = new OpenFileDialog { Filter = Strings.ProgramFilter, Title = Strings.OpenWithLabel.TrimEnd(':', ' ') };
+                if (dlg.ShowDialog(this) != DialogResult.OK)
+                    return;
+                openWithPath = dlg.FileName;
+                openWithBox.Text = Path.GetFileName(openWithPath);
+            };
+            openWithClear.Click += (_, _) =>
+            {
+                openWithPath = null;
+                openWithBox.Text = "";
+            };
             presetBox.SelectedIndexChanged += (_, _) =>
             {
                 if (presetBox.SelectedIndex <= 0)
@@ -202,7 +260,7 @@ namespace NoFences
             };
 
             // Any change refreshes the preview (debounced)
-            foreach (var c in new Control[] { nameBox, kindBox, folderBox, themeBox, titleHeight, iconSizeBox, opacity, compactBox, sortBox })
+            foreach (var c in new Control[] { nameBox, kindBox, folderBox, themeBox, titleHeight, iconSizeBox, opacity, compactBox, sortBox, pictureOpacity, pictureTiled })
             {
                 switch (c)
                 {
@@ -282,6 +340,16 @@ namespace NoFences
 
         private void UpdateOpacityLabel() => opacityValue.Text = $"{opacity.Value * 100 / 255} %";
 
+        /// <summary>Several controls side by side in one settings row.</summary>
+        private static FlowLayoutPanel Inline(params Control[] controls)
+        {
+            var row = new FlowLayoutPanel { AutoSize = true, WrapContents = false, Margin = new Padding(0) };
+            row.Controls.AddRange(controls);
+            return row;
+        }
+
+        private void UpdatePictureOpacityLabel() => pictureOpacityValue.Text = $"{pictureOpacity.Value} %";
+
         private void BrowseFolder()
         {
             using var dlg = new FolderBrowserDialog { Description = Strings.ChooseFolder, UseDescriptionForTitle = true, SelectedPath = folderBox.Text };
@@ -315,6 +383,10 @@ namespace NoFences
             info.AutoCleanDays = kind == FenceKind.Folder ? FenceExtras.ShelfDayChoices[Math.Max(0, cleanBox.SelectedIndex)] : 0;
             info.AutoSortPatterns = string.IsNullOrWhiteSpace(autoSortBox.Text) ? null : autoSortBox.Text.Trim();
             info.SortMode = (FenceSortMode)Math.Max(0, sortBox.SelectedIndex);
+            info.BackgroundImage = picturePath;
+            info.BackgroundImageOpacity = pictureOpacity.Value;
+            info.BackgroundImageTiled = pictureTiled.Checked;
+            info.OpenWith = kind is FenceKind.Links or FenceKind.Folder ? openWithPath : null;
         }
 
         protected override void Dispose(bool disposing)

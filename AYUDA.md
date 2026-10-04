@@ -51,6 +51,15 @@ Consejo: para un escritorio ordenado, crea una carpeta como `Documentos\Vallas\T
   para una vista previa grande (se desactiva en Configuración → Escritorio).
 - **Pestañas** (vallas de accesos directos): menú → Añadir pestaña. Clic para cambiar, doble clic para cambiar el nombre,
   arrastra elementos a una pestaña para moverlos allí.
+- **Abrir carpetas dentro de la valla**: señala una carpeta y haz clic en la pequeña flecha de su esquina (o clic
+  derecho → «Mostrar el contenido en la valla»); su contenido aparece sangrado debajo. La flecha la vuelve a cerrar.
+- **Notas en elementos**: Mayús+clic derecho en un elemento → Nota…; la nota aparece al pasar el ratón, una pequeña hoja
+  la señala.
+- Menú de la valla → **Uso y limpieza…**: cuántas veces se abrió cada elemento desde la valla; los nunca abiertos se
+  proponen para quitarlos (vallas de accesos directos, Ctrl+Z los recupera) o para la papelera (vallas de carpeta).
+- Configuración de la valla → **Imagen de fondo**: una foto o un patrón detrás de los elementos, con su intensidad y
+  «Repetir como patrón». **Abrir archivos con**: un programa que abre los archivos de la valla con doble clic (p. ej. un
+  editor).
 
 ## Buscar en todas las vallas
 
@@ -86,6 +95,9 @@ atajo se cambia en Configuración → Escritorio.
   escribir.
 - Menú de la valla → **Recordatorio…**: a la hora elegida, NoFences suena y muestra una notificación – una vez, a diario,
   entre semana, cada semana o cada mes.
+- **Citas**: escribe una línea como `lunes 14:00 Dentista`, `mañana 9:30 Reunión`, `12.10. 15:00 Peluquería` o
+  `15:00 Llamada` – tras editar, NoFences ofrece un recordatorio 15 minutos antes (clic en la notificación). Todas las
+  citas de una nota están también en el menú de la nota → «Recordarme una cita».
 - **Imágenes**: Ctrl+V en el editor pega una imagen del portapapeles; aparece directamente en la nota.
 - **Grabar nota de voz…** (menú de la nota) graba con el micrófono; el botón de reproducción de la nota la reproduce.
 - **Proteger con contraseña…** (menú de la nota): la nota se guarda cifrada y se bloquea tras 2 minutos sin uso; doble clic
@@ -148,6 +160,7 @@ Menú de la bandeja o de una valla → **Nuevo widget**. Los widgets con listas 
 - **Twitch en directo**: cuáles de tus streamers están en directo, con juego y título; una notificación cuando alguien empieza.
 - **Temporizador y alarma**: temporizadores rápidos (botones +1, +5, +10, +15, +30 minutos) y alarmas en los días
   elegidos; suenan aunque el widget esté oculto.
+  Cuando suena, una pequeña ventana ofrece **Detener**, **En 5 min** y **En 10 min**.
 - **Hábitos**: marca los últimos 7 días, con contador de rachas.
 - **Progreso del tiempo**: cuánto ha pasado ya del día, la semana, el mes y el año.
 - **Inicio automático**: los programas que arrancan con Windows, cada uno con un interruptor (como el Administrador de
@@ -185,6 +198,10 @@ distancia. Esc la cierra.
   marcadas.
 - Herramientas ▸ **Código QR…**: muestra un texto o enlace (rellenado desde el portapapeles) como código QR para escanear
   con el móvil; cópialo o guárdalo como imagen.
+- Herramientas ▸ **Generador de contraseñas**: contraseñas aleatorias (longitud, tipos de caracteres, sin caracteres
+  parecidos); «Copiar» las mantiene fuera del historial del portapapeles y vacía el portapapeles al cabo de un minuto.
+- Herramientas ▸ **Información de red**: direcciones pública y locales, nombre y señal de Wi-Fi, router y dirección MAC;
+  un clic copia un valor.
 - Herramientas ▸ **Lupa**: una lupa redonda sigue al ratón; **+/–** cambia el zoom (de 2× a 8×), Esc o un clic la cierra.
 - Herramientas ▸ **Mostrar iconos del escritorio**: oculta y muestra los iconos del escritorio de Windows con un clic.
 
@@ -271,7 +288,7 @@ El exe aún no está firmado. Haz clic en «Más información» → «Ejecutar d
 **¿Qué se conecta a Internet?**
 Solo lo que configures: la búsqueda de actualizaciones (GitHub), el tiempo (Open-Meteo), tus enlaces de calendario, las
 fuentes de noticias, las cotizaciones (Yahoo Finance), ofertas y noticias de Steam (Steam), el estado de Twitch
-(decapi.me), el test de velocidad (Cloudflare) y las páginas del widget Página web. No se envía nada más.
+(decapi.me), el test de velocidad (Cloudflare) y las páginas del widget Página web, además de la dirección pública en Herramientas ▸ Información de red (ipify.org). No se envía nada más.
 
 **¿Dónde está mi configuración?**
 Junto a `NoFences.exe`, ordenada en carpetas: `config` (fences.json, tiempo de juego), `backups`, `themes`, `media`

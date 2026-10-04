@@ -80,14 +80,6 @@ namespace NoFences
             }
         }
 
-        /// <summary>Tooltip with the item name in compact (icons-only) fences.</summary>
-        private void UpdateCompactTooltip(string? path)
-        {
-            if (!Info.Compact)
-                return;
-            var entry = path == null ? null : FenceEntry.FromPath(path);
-            toolTip.SetToolTip(this, entry?.GetDisplayName(app.ShowExtensions) ?? "");
-        }
 
         /// <summary>Preview renderer: the widget, to fill in demo content.</summary>
         internal FenceWidget? WidgetForPreview => widget;

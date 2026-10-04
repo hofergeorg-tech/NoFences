@@ -40,6 +40,10 @@ namespace NoFences.Model
 
         public string Format() => JsonSerializer.Serialize(this, FenceStore.JsonOptions);
 
+        /// <summary>Rings again in <paramref name="minutes"/> minutes (a short timer with the same label).</summary>
+        public void Snooze(string label, int minutes, DateTime now) =>
+            Timers.Add(new CountdownTimer { Label = label, Start = now, End = now.AddMinutes(minutes) });
+
         /// <summary>
         /// What rings now: finished timers (marked fired) and alarms whose time has come today (missed by at
         /// most 10 minutes, e.g. the PC was asleep). One-time alarms switch off after ringing.

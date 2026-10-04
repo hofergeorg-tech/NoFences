@@ -12,6 +12,8 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Flags for every language**: the language menu shows real country flags (flag-icons), so own languages get their flag too (by language code, region like `pt-BR`, or `"_flag": "at"` in the language file).
 - **Undo (Ctrl+Z)** for deleting, moving, resizing and renaming fences and for removing, moving and renaming items; also "Undo: …" in the tray and fence menu.
 - **Fence groups**: right-click → Group. Fences in a group move together and can be folded to their title bars together.
+- **Fences**: open folders inside the fence (arrow in the folder's corner, contents indented below), **notes on items** (tooltip), **usage and tidy up** (never opened items as a suggestion), a **background picture** or pattern per fence, and **open files with** a chosen program.
+- **Notes** recognize appointments ("Mo 14:00 Dentist", "tomorrow 9:30 …", "12.10. 15:00 …") and offer a reminder 15 minutes before; ringing timers and alarms can be **snoozed** for 5 or 10 minutes. New tools: **password generator** (copies without clipboard history) and **network info** (addresses, Wi-Fi, router; a click copies).
 
 ### Changed
 - **All data next to NoFences.exe**, sorted into folders (`config`, `backups`, `themes`, `media`, `cache`, `logs`, `lang`). Data of older versions is copied over once; in a non-writable program folder (Program Files, WinGet) the data stays in `%LocalAppData%\NoFences`, sorted the same way.

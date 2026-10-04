@@ -50,6 +50,13 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
   preview (can be turned off in Settings → Desktop).
 - **Tabs** (link fences): fence menu → Add tab. Click a tab to switch, double-click to rename, drag items onto a tab
   to move them there.
+- **Open folders inside the fence**: point at a folder and click the small arrow in its corner (or right-click →
+  "Show contents in the fence"); its contents appear indented below it. The arrow closes it again.
+- **Notes on items**: Shift+right-click an item → Note…; the note shows when you point at it, a small sheet marks it.
+- Fence menu → **Usage and tidy up…**: how often each item was opened from the fence; never opened ones are suggested
+  for removing (link fences, Ctrl+Z brings them back) or the recycle bin (folder fences).
+- Fence settings → **Background picture**: a photo or pattern behind the items, with its strength and "Repeat as a
+  pattern". **Open files with**: a program that opens the fence's files on double-click (e.g. an editor).
 
 ## Search across all fences
 
@@ -83,6 +90,9 @@ settings pages ("bluetooth", "sound"). Type a calculation like `12*7` or `200*15
 - **Ctrl+Alt+N** (changeable in Settings → Desktop) creates a note at the mouse, ready to type – from anywhere.
 - Fence menu → **Reminder…**: NoFences plays a sound and shows a notification at that time – once, daily, on weekdays,
   weekly or monthly.
+- **Appointments**: write a line like `Mo 14:00 Dentist`, `tomorrow 9:30 Meeting`, `12.10. 15:00 Hairdresser` or
+  `15:00 Call` – after editing, NoFences offers a reminder 15 minutes before (click the notification). All appointments
+  of a note are also in the note menu → "Remind me of an appointment".
 - **Pictures**: Ctrl+V in the editor pastes a picture from the clipboard; it shows right in the note.
 - **Record voice note…** (note menu) records from the microphone; the play button in the note plays it.
 - **Protect with password…** (note menu): the note is saved encrypted and locks itself after 2 minutes without use;
@@ -145,6 +155,7 @@ Tray or fence menu → **New widget**. Widgets with a list scroll with the mouse
 - **Twitch live**: which of your streamers are live, with game and title; a notification when someone goes live.
 - **Timer & alarm**: quick timers (buttons +1, +5, +10, +15, +30 minutes) and alarms on chosen days; they ring even
   while the widget is hidden.
+  When one rings, a small window offers **Stop**, **5 min later** and **10 min later**.
 - **Habits**: tick off the last 7 days, with a streak counter.
 - **Time progress**: how much of the day, week, month and year has passed.
 - **Autostart**: programs that start with Windows, each with a switch (like Task Manager). Entries for all users are
@@ -177,6 +188,10 @@ space turns it, arrow keys nudge it (Shift: 10 px), U or the menu switches betwe
   content; the oldest copy counts as the original, the others are already ticked.
 - Tools ▸ **QR code…**: shows a text or link (prefilled from the clipboard) as a QR code to scan with your phone; copy it
   or save it as a picture.
+- Tools ▸ **Password generator**: random passwords (length, kinds of characters, without look-alikes); "Copy" keeps
+  them out of the clipboard history and empties the clipboard after a minute.
+- Tools ▸ **Network info**: public and local addresses, Wi-Fi name and signal, router and MAC address; a click copies a
+  value.
 - Tools ▸ **Magnifier**: a round lens follows the mouse; **+/–** changes the zoom (2× to 8×), Esc or a click closes it.
 - Tools ▸ **Show desktop icons**: hides and shows the Windows desktop icons with one click.
 
@@ -261,7 +276,7 @@ The exe is not code-signed yet. Click "More info" → "Run anyway".
 **What goes online?**
 Only what you set up: update checks (GitHub), weather (Open-Meteo), your calendar links, news feeds, prices (Yahoo
 Finance), Steam sales and news (Steam), Twitch status (decapi.me), the speed test (Cloudflare) and pages in the web page
-widget. Nothing else is sent anywhere.
+widget, and the public address in Tools ▸ Network info (ipify.org). Nothing else is sent anywhere.
 
 **Where are my settings?**
 Next to `NoFences.exe`, sorted into folders: `config` (fences.json, playtime), `backups`, `themes`, `media` (note

@@ -176,6 +176,7 @@ namespace NoFences
             entries = ApplySearch(FenceEntry.Sort(entries, Info.SortMode, Info.OpenCounts));
             if (Info.MaxItems > 0 && entries.Count > Info.MaxItems)
                 entries = entries.Take(Info.MaxItems).ToList();
+            AddExpandedChildren();
             selection.RemoveWhere(p => !entries.Any(e => e.Path.Equals(p, StringComparison.OrdinalIgnoreCase)));
 
             if (hoverPath != null && !entries.Any(x => x.Path == hoverPath))
@@ -284,11 +285,28 @@ namespace NoFences
             var columns = Math.Max(1, (usable + gap) / (itemWidth + gap));
 
             itemRects.Clear();
+            // The contents of an opened folder start on a new row, indented; the fence continues on a new row after them.
+            var indent = Px(18);
+            int col = 0, y = pad, previousDepth = 0;
             for (var i = 0; i < entries.Count; i++)
             {
-                var col = i % columns;
-                var row = i / columns;
-                itemRects.Add(new Rectangle(pad + col * (itemWidth + gap), pad + row * (itemHeight + gap), itemWidth, itemHeight));
+                var depth = Depth(i);
+                if (depth != previousDepth)
+                {
+                    if (col > 0)
+                        y += itemHeight + gap;
+                    col = 0;
+                    y += Px(4);
+                }
+                var x0 = pad + (depth > 0 ? indent : 0);
+                var rowColumns = depth > 0 ? Math.Max(1, (usable - indent + gap) / (itemWidth + gap)) : columns;
+                itemRects.Add(new Rectangle(x0 + col * (itemWidth + gap), y, itemWidth, itemHeight));
+                if (++col >= rowColumns)
+                {
+                    col = 0;
+                    y += itemHeight + gap;
+                }
+                previousDepth = depth;
             }
 
             // Notes measure their text while painting and set contentHeight there.
@@ -345,7 +363,8 @@ namespace NoFences
         /// <summary>Opens an item and counts it (for "most used first").</summary>
         private void OpenEntry(string path)
         {
-            FenceEntry.FromPath(path)?.Open();
+            if (!OpenWithFenceProgram(path))
+                FenceEntry.FromPath(path)?.Open();
             Info.CountOpen(path);
             app.RequestSave();
             if (Info.SortMode == FenceSortMode.MostUsed)
@@ -395,6 +414,7 @@ namespace NoFences
             var bounds = ClientRectangle;
             g.SetClip(bounds);
             theme.DrawFrame(g, bounds, titleHeight, Info, scale);
+            DrawBackgroundPicture(g);
             if (HasTabs)
                 DrawTabs(g);
             else if (titleFont != null)
@@ -414,6 +434,7 @@ namespace NoFences
                 DrawWidget(g);
             else if (entries.Count == 0)
                 DrawEmptyHint(g, view);
+            DrawChildBands(g, view);
 
             for (var i = 0; i < entries.Count; i++)
             {
@@ -442,6 +463,8 @@ namespace NoFences
                     g.FillEllipse(markBrush, r.Right - d - Px(3), r.Y + Px(3), d, d);
                     g.DrawEllipse(ring, r.Right - d - Px(3), r.Y + Px(3), d, d);
                 }
+                DrawItemNoteMark(g, entry.Path, r);
+                DrawChevron(g, i, r);
 
                 if (Info.Compact)
                     continue;
@@ -777,7 +800,7 @@ namespace NoFences
             {
                 hoverPath = path;
                 RestartHoverPreview();
-                UpdateCompactTooltip(path);
+                UpdateItemTooltip(path);
                 Invalidate();
             }
 
@@ -829,6 +852,8 @@ namespace NoFences
                     Invalidate();
                 return;
             }
+            if (e.Clicks == 1 && ChevronClick(e.Location))
+                return;
             SelectionMouseDown(e);
         }
 
@@ -945,6 +970,7 @@ namespace NoFences
             {
                 menu.Items.Add(Strings.EditNote, null, (_, _) => StartEditNote());
                 menu.Items.Add(new ToolStripMenuItem(Strings.Reminder, null, (_, _) => EditReminder()) { Checked = Info.ReminderAt != null });
+                AddAppointmentItems(menu.Items);
                 menu.Items.Add(Strings.VoiceNoteRecord, null, (_, _) => RecordVoiceNote());
                 AddNoteProtectionItems(menu.Items);
             }
@@ -968,7 +994,13 @@ namespace NoFences
                     markMenu.DropDownItems.Add(item);
                 }
                 menu.Items.Add(markMenu);
+                var notePath = entry.Path;
+                menu.Items.Add(new ToolStripMenuItem(Strings.ItemNoteMenu, null, (_, _) => EditItemNote(notePath)) { Checked = NoteOf(notePath) != null });
+                if (entry.IsFolder && !Info.Compact && !IsChildPath(entry.Path))
+                    menu.Items.Add(new ToolStripMenuItem(Strings.ShowFolderInFence, null, (_, _) => ToggleExpanded(notePath)) { Checked = IsExpanded(notePath) });
             }
+            if (Info.Kind is FenceKind.Links or FenceKind.Folder)
+                menu.Items.Add(Strings.FenceStatsMenu, null, (_, _) => FenceStatsDialog.Show(this, Info, app));
             if (Info.Kind == FenceKind.Folder && Directory.Exists(Info.FolderPath))
                 menu.Items.Add(Strings.OpenFolder, null, (_, _) => FenceEntry.FromPath(Info.FolderPath!)?.Open());
             if (menu.Items.Count > 0)
@@ -1137,7 +1169,10 @@ namespace NoFences
 
             var internalItem = GetInternal(e.Data);
             if (internalItem?.fence == Info.Id)
-                return Info.SortMode == FenceSortMode.Manual ? DragDropEffects.Move : DragDropEffects.None; // reorder
+            {
+                // Reorder; items inside an opened folder keep the folder's order
+                return Info.SortMode == FenceSortMode.Manual && !internalItem.Value.paths.Any(IsChildPath) ? DragDropEffects.Move : DragDropEffects.None;
+            }
 
             var allowed = e.AllowedEffect;
             if (Info.Kind == FenceKind.Links)
@@ -1327,6 +1362,7 @@ namespace NoFences
             if (disposing)
             {
                 IconCache.Shared.ImageLoaded -= IconCache_ImageLoaded;
+                DisposeBackgroundPicture();
                 watcher?.Dispose();
                 collapseTimer.Dispose();
                 HideHoverPreview();

@@ -76,6 +76,8 @@ namespace NoFences
             tools.DropDownItems.Add(Strings.ColorPickerMenu, null, (_, _) => PickColor());
             tools.DropDownItems.Add(Strings.MagnifierMenu, null, (_, _) => Magnifier.Toggle());
             tools.DropDownItems.Add(Strings.QrMenu, null, (_, _) => QrCodeDialog.ShowSingle());
+            tools.DropDownItems.Add(Strings.PasswordMenu, null, (_, _) => PasswordDialog.ShowSingle());
+            tools.DropDownItems.Add(Strings.NetInfoMenu, null, (_, _) => NetworkInfoDialog.ShowSingle());
             tools.DropDownItems.Add(Strings.DownloadsMenu, null, (_, _) => DownloadsCleaner.Show(Store.Config, Store.RequestSave));
             tools.DropDownItems.Add(new ToolStripSeparator());
             AddDesktopToolItems(tools.DropDownItems);

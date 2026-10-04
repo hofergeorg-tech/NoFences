@@ -51,6 +51,14 @@ Suggerimento: per un desktop ordinato, crea una cartella come `Documenti\Recinti
   un'anteprima grande (disattivabile in Impostazioni → Desktop).
 - **Schede** (recinti collegamenti): menu → Aggiungi scheda. Clic per cambiare, doppio clic per rinominare, trascina gli
   elementi su una scheda per spostarli lì.
+- **Aprire le cartelle nel recinto**: passa sopra una cartella e fai clic sulla piccola freccia nell'angolo (o clic
+  destro → "Mostra il contenuto nel recinto"); il contenuto appare rientrato sotto. La freccia la richiude.
+- **Note sugli elementi**: Maiusc+clic destro su un elemento → Nota…; la nota appare al passaggio del mouse, un piccolo
+  foglietto la segnala.
+- Menu del recinto → **Utilizzo e riordino…**: quante volte ogni elemento è stato aperto dal recinto; quelli mai aperti
+  sono proposti per la rimozione (recinti collegamenti, Ctrl+Z li riporta) o per il cestino (recinti cartella).
+- Impostazioni del recinto → **Immagine di sfondo**: una foto o un motivo dietro gli elementi, con intensità e "Ripeti
+  come motivo". **Apri i file con**: un programma che apre i file del recinto con il doppio clic (ad es. un editor).
 
 ## Cercare in tutti i recinti
 
@@ -85,6 +93,9 @@ cambia in Impostazioni → Desktop.
 - **Ctrl+Alt+N** (modificabile in Impostazioni → Desktop) crea da ovunque una nota accanto al mouse, pronta da scrivere.
 - Menu del recinto → **Promemoria…**: a quell'ora NoFences emette un suono e mostra una notifica – una volta, ogni giorno,
   nei giorni feriali, ogni settimana o ogni mese.
+- **Appuntamenti**: scrivi una riga come `lun 14:00 Dentista`, `domani 9:30 Riunione`, `12.10. 15:00 Parrucchiere`
+  o `15:00 Chiamata` – dopo la modifica NoFences propone un promemoria 15 minuti prima (clic sulla notifica). Tutti gli
+  appuntamenti di una nota sono anche nel menu della nota → "Ricordami un appuntamento".
 - **Immagini**: Ctrl+V nell'editor incolla un'immagine dagli appunti; appare direttamente nella nota.
 - **Registra nota vocale…** (menu della nota) registra dal microfono; il pulsante di riproduzione nella nota la riproduce.
 - **Proteggi con password…** (menu della nota): la nota viene salvata cifrata e si blocca dopo 2 minuti di inattività;
@@ -147,6 +158,7 @@ Menu della barra o del recinto → **Nuovo widget**. I widget con un elenco scor
 - **Twitch live**: quali dei tuoi streamer sono in diretta, con gioco e titolo; una notifica quando qualcuno inizia.
 - **Timer e sveglia**: timer rapidi (pulsanti +1, +5, +10, +15, +30 minuti) e sveglie nei giorni scelti; suonano anche
   se il widget è nascosto.
+  Quando suona, una piccola finestra offre **Stop**, **Tra 5 min** e **Tra 10 min**.
 - **Abitudini**: spunta gli ultimi 7 giorni, con contatore delle serie.
 - **Avanzamento del tempo**: quanto è già passato di giorno, settimana, mese e anno.
 - **Avvio automatico**: i programmi che partono con Windows, ognuno con un interruttore (come in Gestione attività). Le
@@ -182,6 +194,10 @@ mostra la distanza. Esc lo chiude.
   duplicati** trova i file con lo stesso contenuto; la copia più vecchia vale come originale, le altre sono già spuntate.
 - Strumenti ▸ **Codice QR…**: mostra un testo o un link (precompilato dagli appunti) come codice QR da scansionare con il
   telefono; copialo o salvalo come immagine.
+- Strumenti ▸ **Generatore di password**: password casuali (lunghezza, tipi di caratteri, senza caratteri simili);
+  "Copia" le tiene fuori dalla cronologia degli appunti e svuota gli appunti dopo un minuto.
+- Strumenti ▸ **Informazioni di rete**: indirizzi pubblico e locali, nome e segnale Wi-Fi, router e indirizzo MAC; un
+  clic copia un valore.
 - Strumenti ▸ **Lente d'ingrandimento**: una lente rotonda segue il mouse; **+/–** cambia lo zoom (da 2× a 8×), Esc o un
   clic la chiude.
 - Strumenti ▸ **Mostra icone del desktop**: nasconde e mostra le icone del desktop di Windows con un clic.
@@ -271,7 +287,7 @@ L'eseguibile non è ancora firmato. Fai clic su "Ulteriori informazioni" → "Es
 **Cosa va su Internet?**
 Solo ciò che imposti tu: il controllo degli aggiornamenti (GitHub), il meteo (Open-Meteo), i link dei tuoi calendari, i
 feed di notizie, le quotazioni (Yahoo Finance), offerte e notizie di Steam (Steam), lo stato di Twitch (decapi.me), lo
-speed test (Cloudflare) e le pagine del widget Pagina web. Nient'altro viene inviato.
+speed test (Cloudflare) e le pagine del widget Pagina web, oltre all'indirizzo pubblico in Strumenti ▸ Informazioni di rete (ipify.org). Nient'altro viene inviato.
 
 **Dove sono le mie impostazioni?**
 Accanto a `NoFences.exe`, ordinate in cartelle: `config` (fences.json, tempo di gioco), `backups`, `themes`, `media`

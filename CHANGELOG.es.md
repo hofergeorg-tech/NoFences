@@ -11,6 +11,8 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 - **Banderas para cada idioma**: el menú de idiomas muestra banderas reales (flag-icons), así los idiomas propios también tienen bandera (por el código de idioma, una región como `pt-BR` o `"_flag": "at"` en el archivo de idioma).
 - **Deshacer (Ctrl+Z)** para eliminar, mover, redimensionar y renombrar vallas y para quitar, mover y renombrar elementos; también «Deshacer: …» en el menú de la bandeja y de la valla.
 - **Grupos de vallas**: clic derecho → Grupo. Las vallas de un grupo se mueven juntas y se pliegan juntas a su barra de título.
+- **Vallas**: abrir carpetas dentro de la valla (flecha en la esquina, contenido sangrado debajo), **notas en elementos** (información emergente), **uso y limpieza** (elementos nunca abiertos como sugerencia), **imagen de fondo** o patrón por valla y **abrir archivos con** un programa elegido.
+- Las **notas** reconocen citas («lunes 14:00 Dentista», «mañana 9:30 …», «12.10. 15:00 …») y ofrecen un recordatorio 15 minutos antes; los temporizadores y alarmas que suenan se pueden **posponer** 5 o 10 minutos. Nuevas herramientas: **generador de contraseñas** (copia sin historial del portapapeles) e **información de red** (direcciones, Wi-Fi, router; un clic copia).
 
 ### Cambios
 - **Todos los datos junto a NoFences.exe**, ordenados en carpetas (`config`, `backups`, `themes`, `media`, `cache`, `logs`, `lang`). Los datos de versiones anteriores se copian una vez; en una carpeta de programa sin permiso de escritura (Archivos de programa, WinGet) se quedan en `%LocalAppData%\NoFences`, ordenados igual.

@@ -88,8 +88,21 @@ namespace NoFences
                 if (due.Count == 0)
                     continue;
                 StartAlarmSound();
-                ShowBalloon(Strings.TimerRinging(string.Join(", ", due.Where(d => d.Length > 0).DefaultIfEmpty(Strings.WidgetTimer))), StopAlarmSound, timeout: 30_000);
+                var label = string.Join(", ", due.Where(d => d.Length > 0).DefaultIfEmpty(Strings.WidgetTimer));
+                var timerFence = fence;
+                AlarmPopup.Show(Strings.TimerRinging(label), StopAlarmSound, minutes => Snooze(timerFence, label, minutes));
             }
+        }
+
+        /// <summary>"5 min" / "10 min" in the alarm popup: rings again later.</summary>
+        private void Snooze(FenceInfo fence, string label, int minutes)
+        {
+            StopAlarmSound();
+            var set = TimerSet.Parse(fence.WidgetOption);
+            set.Snooze(label, minutes, DateTime.Now);
+            fence.WidgetOption = set.Format();
+            Store.RequestSave();
+            windows.FirstOrDefault(w => w.Info == fence)?.Invalidate();
         }
 
         /// <summary>The Windows alarm sound, looping for at most 30 seconds (clicking the notification stops it).</summary>

@@ -11,6 +11,8 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Bandiere per ogni lingua**: il menu delle lingue mostra vere bandiere (flag-icons), così anche le lingue proprie hanno la loro bandiera (dal codice della lingua, da una regione come `pt-BR` o da `"_flag": "at"` nel file di lingua).
 - **Annulla (Ctrl+Z)** per eliminare, spostare, ridimensionare e rinominare recinti e per rimuovere, spostare e rinominare elementi; anche "Annulla: …" nel menu della barra e del recinto.
 - **Gruppi di recinti**: clic destro → Gruppo. I recinti di un gruppo si spostano insieme e si possono comprimere insieme alla barra del titolo.
+- **Recinti**: aprire le cartelle nel recinto (freccia nell'angolo, contenuto rientrato sotto), **note sugli elementi** (tooltip), **utilizzo e riordino** (elementi mai aperti come suggerimento), **immagine di sfondo** o motivo per recinto e **apri i file con** un programma scelto.
+- Le **note** riconoscono gli appuntamenti ("lun 14:00 Dentista", "domani 9:30 …", "12.10. 15:00 …") e propongono un promemoria 15 minuti prima; timer e sveglie che suonano si possono **posticipare** di 5 o 10 minuti. Nuovi strumenti: **generatore di password** (copia senza cronologia degli appunti) e **informazioni di rete** (indirizzi, Wi-Fi, router; un clic copia).
 
 ### Modifiche
 - **Tutti i dati accanto a NoFences.exe**, ordinati in cartelle (`config`, `backups`, `themes`, `media`, `cache`, `logs`, `lang`). I dati delle versioni precedenti vengono copiati una volta; in una cartella del programma non scrivibile (Programmi, WinGet) restano in `%LocalAppData%\NoFences`, ordinati allo stesso modo.

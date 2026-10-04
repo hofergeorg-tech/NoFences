@@ -429,12 +429,69 @@ namespace NoFences
 
             if (text != NoteContent)
             {
+                var before = NoteContent;
                 NoteContent = text;
                 app.RequestSave();
+                OfferNewAppointment(before, text);
             }
             if (!OnTop)
                 Native.SendToBottom(Handle);
             Invalidate();
+        }
+
+        /// <summary>Minutes before an appointment that its reminder rings.</summary>
+        private const int AppointmentLead = 15;
+
+        private IEnumerable<NoteAppointments.Appointment> Appointments(string text) =>
+            NoteAppointments.Find(text, DateTime.Now, Strings.Effective);
+
+        /// <summary>A line like "Mo 14:00 Zahnarzt" was just written: offer a reminder (click on the notification).</summary>
+        private void OfferNewAppointment(string before, string after)
+        {
+            var oldLines = before.Split('\n').ToHashSet();
+            var found = Appointments(after).FirstOrDefault(a => !oldLines.Contains(a.Line));
+            if (found == null || Info.ReminderAt == ReminderFor(found))
+                return;
+            app.Offer(Strings.AppointmentOffer(found.Title.Length > 0 ? found.Title : Info.Name, FormatAppointment(found.When), AppointmentLead), () => SetAppointmentReminder(found));
+        }
+
+        private static DateTime ReminderFor(NoteAppointments.Appointment a) =>
+            a.When.AddMinutes(-AppointmentLead) > DateTime.Now ? a.When.AddMinutes(-AppointmentLead) : a.When;
+
+        private static string FormatAppointment(DateTime when)
+        {
+            var culture = new System.Globalization.CultureInfo(Strings.Effective);
+            return when.Date == DateTime.Today
+                ? when.ToString("t", culture)
+                : $"{when.ToString("ddd", culture)} {when.ToString("M", culture)}, {when.ToString("t", culture)}";
+        }
+
+        private void SetAppointmentReminder(NoteAppointments.Appointment appointment)
+        {
+            Info.ReminderAt = ReminderFor(appointment);
+            Info.ReminderRepeat = Repeat.None;
+            app.RequestSave();
+            Invalidate();
+        }
+
+        /// <summary>"Reminder for an appointment ▸" with the appointments found in the note.</summary>
+        private void AddAppointmentItems(ToolStripItemCollection items)
+        {
+            if (NoteLockedNow)
+                return;
+            var found = Appointments(NoteContent).Take(10).ToList();
+            if (found.Count == 0)
+                return;
+            var menu = new ToolStripMenuItem(Strings.AppointmentMenu(AppointmentLead));
+            foreach (var a in found)
+            {
+                var appointment = a;
+                menu.DropDownItems.Add(new ToolStripMenuItem($"{FormatAppointment(a.When)}  ·  {(a.Title.Length > 0 ? a.Title : Info.Name)}", null, (_, _) => SetAppointmentReminder(appointment))
+                {
+                    Checked = Info.ReminderAt == ReminderFor(a)
+                });
+            }
+            items.Add(menu);
         }
 
         /// <summary>Keeps the editor window exactly over the note area (after moving/resizing the fence).</summary>

@@ -23,6 +23,9 @@ namespace NoFences
         /// <summary>Tray notification (e.g. "Break time!" from the focus timer).</summary>
         void Notify(string text);
 
+        /// <summary>Tray notification that does something when clicked.</summary>
+        void Offer(string text, Action onClick);
+
         /// <summary>Stops a ringing timer or alarm.</summary>
         void StopAlarmSound();
 

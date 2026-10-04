@@ -116,6 +116,8 @@ namespace NoFences
 
         public void Notify(string text) => ShowBalloon(text, timeout: 8000);
 
+        public void Offer(string text, Action onClick) => ShowBalloon(text, onClick, timeout: 12_000);
+
         internal static void OpenUrl(string url) => Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
 
         /// <summary>"Settings…" (bold) and "Language ▸" – in the tray and in every fence's menu.</summary>

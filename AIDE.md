@@ -55,6 +55,16 @@ Astuce : pour un bureau rangé, créez un dossier comme `Documents\Barrières\Tr
   grand aperçu (désactivable dans Paramètres → Bureau).
 - **Onglets** (barrières de raccourcis) : menu → Ajouter un onglet. Clic pour changer, double-clic pour renommer, faites
   glisser des éléments sur un onglet pour les y déplacer.
+- **Ouvrir les dossiers dans la barrière** : pointez un dossier et cliquez sur la petite flèche dans son coin (ou clic
+  droit → « Afficher le contenu dans la barrière ») ; son contenu apparaît en retrait en dessous. La flèche le referme.
+- **Notes sur les éléments** : Maj+clic droit sur un élément → Note… ; la note s'affiche au survol, une petite feuille la
+  signale.
+- Menu de la barrière → **Utilisation et rangement…** : combien de fois chaque élément a été ouvert depuis la barrière ;
+  ceux jamais ouverts sont proposés au retrait (barrières de raccourcis, Ctrl+Z les ramène) ou à la corbeille (barrières
+  de dossier).
+- Paramètres de la barrière → **Image de fond** : une photo ou un motif derrière les éléments, avec son intensité et
+  « Répéter comme motif ». **Ouvrir les fichiers avec** : un programme qui ouvre les fichiers de la barrière par
+  double-clic (p. ex. un éditeur).
 
 ## Rechercher dans toutes les barrières
 
@@ -92,6 +102,9 @@ résultat, **↑↓** pour choisir, **Échap** ferme. Le raccourci se change dan
 - **Ctrl+Alt+N** (modifiable dans Paramètres → Bureau) crée de n'importe où une note près de la souris, prête à écrire.
 - Menu de la barrière → **Rappel…** : à l'heure choisie, NoFences joue un son et affiche une notification – une fois,
   chaque jour, en semaine, chaque semaine ou chaque mois.
+- **Rendez-vous** : écrivez une ligne comme `lundi 14:00 Dentiste`, `demain 9:30 Réunion`, `12.10. 15:00 Coiffeur` ou
+  `15:00 Appel` – après la modification, NoFences propose un rappel 15 minutes avant (clic sur la notification). Tous les
+  rendez-vous d'une note sont aussi dans le menu de la note → « Me rappeler un rendez-vous ».
 - **Images** : Ctrl+V dans l'éditeur colle une image du presse-papiers ; elle s'affiche directement dans la note.
 - **Enregistrer une note vocale…** (menu de la note) enregistre avec le micro ; le bouton de lecture dans la note la joue.
 - **Protéger par mot de passe…** (menu de la note) : la note est enregistrée chiffrée et se verrouille après 2 minutes
@@ -160,6 +173,7 @@ Menu de la zone de notification ou d'une barrière → **Nouveau widget**. Les w
   commence.
 - **Minuteur et réveil** : minuteurs rapides (boutons +1, +5, +10, +15, +30 minutes) et réveils les jours choisis ; ils
   sonnent même si le widget est masqué.
+  Quand il sonne, une petite fenêtre propose **Arrêter**, **Dans 5 min** et **Dans 10 min**.
 - **Habitudes** : cochez les 7 derniers jours, avec un compteur de séries.
 - **Progression du temps** : quelle part du jour, de la semaine, du mois et de l'année est déjà passée.
 - **Démarrage auto** : les programmes qui démarrent avec Windows, chacun avec un interrupteur (comme le Gestionnaire des
@@ -197,6 +211,10 @@ rouge suit la souris et affiche la distance. Échap la ferme.
   original, les copies sont déjà cochées.
 - Outils ▸ **Code QR…** : affiche un texte ou un lien (prérempli depuis le presse-papiers) en code QR à scanner avec le
   téléphone ; copiez-le ou enregistrez-le en image.
+- Outils ▸ **Générateur de mots de passe** : mots de passe aléatoires (longueur, types de caractères, sans caractères
+  ambigus) ; « Copier » les garde hors de l'historique du presse-papiers et vide le presse-papiers après une minute.
+- Outils ▸ **Infos réseau** : adresses publique et locales, nom et signal Wi-Fi, routeur et adresse MAC ; un clic copie
+  une valeur.
 - Outils ▸ **Loupe** : une loupe ronde suit la souris ; **+/–** change le zoom (2× à 8×), Échap ou un clic la ferme.
 - Outils ▸ **Afficher les icônes du bureau** : masque et réaffiche les icônes du bureau Windows d'un clic.
 
@@ -286,7 +304,7 @@ L'exe n'est pas encore signé. Cliquez sur « Informations complémentaires » �
 **Qu'est-ce qui passe par Internet ?**
 Seulement ce que vous configurez : la vérification des mises à jour (GitHub), la météo (Open-Meteo), vos liens d'agenda,
 les flux d'actualités, les cours (Yahoo Finance), les promos et actus Steam (Steam), l'état Twitch (decapi.me), le test
-de débit (Cloudflare) et les pages du widget Page web. Rien d'autre n'est envoyé.
+de débit (Cloudflare) et les pages du widget Page web, ainsi que l'adresse publique dans Outils ▸ Infos réseau (ipify.org). Rien d'autre n'est envoyé.
 
 **Où sont mes réglages ?**
 À côté de `NoFences.exe`, rangés en dossiers : `config` (fences.json, temps de jeu), `backups`, `themes`, `media`
