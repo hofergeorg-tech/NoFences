@@ -21,6 +21,9 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 - **Perfiles**: iniciar programas con un perfil (y cerrarlos al salir, si se desea); **fondo según la hora del día** (Configuración → Automatización).
 - **Notas**: protección con contraseña (cifrada, se bloquea sola tras 2 minutos), pegar **imágenes** con Ctrl+V, grabar **notas de voz**.
 - El **historial del portapapeles** guarda también imágenes; **fija** entradas (clic derecho) para que queden arriba, incluso tras reiniciar.
+- **Monitor del sistema** con gráfico de dos minutos y **aviso si la tarjeta gráfica se calienta demasiado**; **test de velocidad** en el widget de red.
+- El **widget de batería** muestra también **mandos y dispositivos Bluetooth**; nuevo widget **Inicio automático** (activar/desactivar programas de inicio de Windows).
+- Herramientas: **código QR** (texto o enlace del portapapeles), **lupa**; "Ordenar carpetas" encuentra **archivos duplicados**.
 
 ## [2.4.2] - 2026-10-03
 

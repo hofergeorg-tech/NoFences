@@ -22,6 +22,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Profiles**: start programs with a profile (and close them again when leaving, if wanted); **wallpaper by time of day** (Settings → Automation).
 - **Notes**: protect with a password (encrypted, locks itself after 2 minutes), paste **images** with Ctrl+V, record **voice notes**.
 - **Clipboard history** also keeps images; **pin** entries (right-click) so they stay on top, even after a restart.
+- **System monitor** with a two-minute graph and a **warning when the graphics card gets too hot**; **speed test** in the network widget.
+- **Battery widget** also shows **controllers and Bluetooth devices**; new widget **Autostart** (switch Windows startup programs on/off).
+- Tools: **QR code** (text or link from the clipboard), **magnifier**; "Clean up folders" finds **duplicate files**.
 
 ## [2.4.2] - 2026-10-03
 

@@ -280,6 +280,13 @@ namespace NoFences
                 ("progress", "windows", new Size(260, 240)),
                 ("twitch", "gaming", new Size(300, 260)),
             });
+            RenderWidgetSheet(outDir, host, "widgets-system-docs.png", new (string, string, Size)[]
+            {
+                ("system", "gaming", new Size(260, 330)),
+                ("network", "hardware", new Size(270, 270)),
+                ("battery", "nature", new Size(240, 230)),
+                ("autostart", "windows", new Size(300, 300)),
+            });
             // Checking: news in a wide dark style, as people actually use it
             RenderWidgetSheet(outDir, host, "check-news.png", new (string, string, Size)[]
             {
@@ -444,6 +451,26 @@ namespace NoFences
                         new Widgets.ServiceStatus("Game Network", Widgets.ServiceLevel.Ok, "", Array.Empty<string>(), "https://example.com"),
                         new Widgets.ServiceStatus("Chat Service", Widgets.ServiceLevel.Degraded, "Partially Degraded Service", new[] { "Voice", "Media Proxy" }, "https://example.com"),
                         new Widgets.ServiceStatus("Store", Widgets.ServiceLevel.Notice, "Maintenance", new[] { "Payments" }, "https://example.com"),
+                    });
+                    break;
+                case Widgets.SystemWidget system:
+                    system.SetPreview(Enumerable.Range(0, 120).Select(i => (0.25 + 0.2 * Math.Sin(i / 9.0) + (i % 7) * 0.02, (double?)(0.5 + 0.35 * Math.Sin(i / 14.0)))));
+                    break;
+                case Widgets.NetworkWidget network:
+                    network.SetPreview(new Widgets.SpeedTest.Result(248, 41, DateTime.Now));
+                    break;
+                case Widgets.BatteryWidget battery:
+                    battery.SetPreview(new List<Widgets.DeviceBattery> { new("Controller 1", 0.65), new("Headset", 0.8), new("Maus", 0.3) });
+                    break;
+                case Widgets.AutostartWidget autostart:
+                    autostart.SetPreview(new List<AutostartEntry>
+                    {
+                        new("Chat App", @"C:\Demo\chat.exe", AutostartSource.UserRun, true),
+                        new("Cloud Drive", @"C:\Demo\cloud.exe", AutostartSource.UserRun, true),
+                        new("Game Launcher", @"C:\Demo\launcher.exe", AutostartSource.UserRun, false),
+                        new("Music Player", @"C:\Demo\music.exe", AutostartSource.UserFolder, false),
+                        new("NoFences", @"C:\Demo\NoFences.exe", AutostartSource.UserRun, true),
+                        new("Audio Driver", @"C:\Demo\audio.exe", AutostartSource.MachineRun, true),
                     });
                     break;
                 case Widgets.ClipboardWidget clipboard:

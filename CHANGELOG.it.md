@@ -21,6 +21,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Profili**: avvia programmi con un profilo (e, se vuoi, chiudili quando lo lasci); **sfondo in base all'ora** (Impostazioni → Automazione).
 - **Note**: proteggi con password (cifrata, si blocca da sola dopo 2 minuti), incolla **immagini** con Ctrl+V, registra **note vocali**.
 - La **cronologia degli appunti** conserva anche le immagini; **fissa** le voci (clic destro) perché restino in alto, anche dopo un riavvio.
+- **Monitor di sistema** con grafico di due minuti e **avviso se la scheda grafica è troppo calda**; **speed test** nel widget di rete.
+- Il **widget batteria** mostra anche **controller e dispositivi Bluetooth**; nuovo widget **Avvio automatico** (attiva/disattiva i programmi all'avvio di Windows).
+- Strumenti: **codice QR** (testo o link dagli appunti), **lente d'ingrandimento**; "Riordina cartelle" trova i **file duplicati**.
 
 ## [2.4.2] - 2026-10-03
 

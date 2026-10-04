@@ -25,6 +25,8 @@ namespace NoFences
         private readonly Model.AppConfig config;
         private readonly Action save;
         private List<Entry> entries = new();
+        private List<List<Model.DuplicateFinder.FileItem>>? duplicates;
+        private bool DuplicateMode => age.SelectedIndex == Ages.Length;
         private int scanVersion;
 
         public static void Show(Model.AppConfig config, Action save)
@@ -82,6 +84,7 @@ namespace NoFences
             list.Columns.Add(Strings.DownloadsAge, 120, HorizontalAlignment.Right);
             list.ItemChecked += (_, _) => UpdateTotal();
             age.Items.AddRange(Ages.Select(d => (object)Strings.DownloadsOlderThan(d)).ToArray());
+            age.Items.Add(Strings.DuplicatesMode);
             age.SelectedIndex = 1;
             age.SelectedIndexChanged += (_, _) => Fill();
             recycle.Text = Strings.DownloadsRecycle;
@@ -165,6 +168,7 @@ namespace NoFences
             var version = ++scanVersion;
             total.Text = Strings.WeatherLoading;
             var folders = Folders.ToList();
+            duplicates = null;
             var found = await Task.Run(() => folders.SelectMany(Scan).ToList());
             // A newer scan (folder added meanwhile) wins
             if (version != scanVersion || IsDisposed)
@@ -208,8 +212,25 @@ namespace NoFences
             return size;
         }
 
-        private void Fill()
+        private async void Fill()
         {
+            if (DuplicateMode)
+            {
+                if (duplicates == null)
+                {
+                    list.Items.Clear();
+                    total.Text = Strings.DuplicatesSearching;
+                    var version = scanVersion;
+                    var folders = Folders.ToList();
+                    var found = await Task.Run(() => Model.DuplicateFinder.Find(Model.DuplicateFinder.Scan(folders), Model.DuplicateFinder.Sha256));
+                    if (version != scanVersion || IsDisposed || !DuplicateMode)
+                        return;
+                    duplicates = found;
+                }
+                FillDuplicates();
+                return;
+            }
+            list.Groups.Clear();
             var days = Ages[Math.Max(0, age.SelectedIndex)];
             var now = DateTime.Now;
             list.BeginUpdate();
@@ -253,6 +274,9 @@ namespace NoFences
                     else
                         Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(e.Path, Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
                     entries.Remove(e);
+                    foreach (var group in duplicates ?? new())
+                        group.RemoveAll(d => d.Path == e.Path);
+                    duplicates?.RemoveAll(g => g.Count < 2);
                 }
                 catch (Exception ex)
                 {
@@ -260,6 +284,34 @@ namespace NoFences
                 }
             }
             Fill();
+        }
+
+        /// <summary>One list group per set of identical files; the copies are pre-checked, the original (oldest) isn't.</summary>
+        private void FillDuplicates()
+        {
+            list.BeginUpdate();
+            list.Items.Clear();
+            list.Groups.Clear();
+            var now = DateTime.Now;
+            foreach (var group in duplicates ?? new())
+            {
+                var header = new ListViewGroup(Strings.DuplicatesGroup(Path.GetFileName(group[0].Path), group.Count, DrivesWidget.FormatSize(group[0].Size)));
+                list.Groups.Add(header);
+                for (var i = 0; i < group.Count; i++)
+                {
+                    var d = group[i];
+                    var e = new Entry(d.Path, Path.GetFileName(d.Path), d.Size, d.Modified, false);
+                    var item = new ListViewItem((i == 0 ? Strings.DuplicatesOriginal + " " : "") + e.Name, header) { Tag = e, Checked = i > 0 };
+                    item.SubItems.Add(Path.GetFileName(Path.GetDirectoryName(e.Path)) ?? "");
+                    item.SubItems.Add(DrivesWidget.FormatSize(e.Size));
+                    item.SubItems.Add(Strings.CountdownDays((int)(now - e.Modified).TotalDays));
+                    list.Items.Add(item);
+                }
+            }
+            list.EndUpdate();
+            UpdateTotal();
+            if (list.Items.Count == 0)
+                total.Text = Strings.DuplicatesNone;
         }
 
         [DllImport("shell32.dll")]

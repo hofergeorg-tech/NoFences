@@ -21,6 +21,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Profile**: Programme mit dem Profil starten (und beim Verlassen auf Wunsch wieder schließen); **Hintergrundbild nach Tageszeit** (Einstellungen → Automatik).
 - **Notizen**: mit Passwort schützen (verschlüsselt, sperrt sich nach 2 Minuten selbst), **Bilder** mit Strg+V einfügen, **Sprachnotizen** aufnehmen.
 - Der **Zwischenablage-Verlauf** merkt sich auch Bilder; Einträge **anheften** (Rechtsklick), damit sie oben bleiben – auch nach einem Neustart.
+- **Systemmonitor** mit Zwei-Minuten-Kurve und **Warnung bei zu heißer Grafikkarte**; **Speedtest** im Netzwerk-Widget.
+- Das **Akku-Widget** zeigt auch **Controller und Bluetooth-Geräte**; neues Widget **Autostart** (Windows-Autostart-Programme ein/aus).
+- Werkzeuge: **QR-Code** (Text oder Link aus der Zwischenablage), **Bildschirmlupe**; "Ordner aufräumen" findet **doppelte Dateien**.
 
 ## [2.4.2] - 2026-10-03
 

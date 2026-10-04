@@ -16,6 +16,9 @@ namespace NoFences.Widgets
         private long? pingMs;
         private DateTime nextPing;
         private bool pinging;
+        private SpeedTest.Result? speed;
+        private string? speedPhase;
+        private RectangleF speedRow;
 
         public override string Type => "network";
 
@@ -96,14 +99,65 @@ namespace NoFences.Widgets
             c.Text($"↑ {FormatRate(up)}", new RectangleF(c.Area.X, y, c.Area.Width, bigHeight), big);
             y += bigHeight + c.Px(6);
 
-            var graphHeight = Math.Max(0, c.Area.Bottom - y - c.Label.GetHeight(c.G) - c.Px(12));
+            // Room below for two rows: ping and speed test
+            var graphHeight = Math.Max(0, c.Area.Bottom - y - 2 * (c.Label.GetHeight(c.G) + c.Px(9)) - c.Px(4));
             if (graphHeight > c.Px(20))
             {
                 DrawGraph(c, new RectangleF(c.Area.X, y, c.Area.Width, graphHeight));
                 y += graphHeight + c.Px(8);
             }
             c.Row(ref y, "Ping", pingMs is long ms ? $"{ms} ms" : "–");
+            // Speed test: last result, progress, or the invitation to start one
+            var text = speedPhase != null ? Strings.SpeedTestRunning(speedPhase)
+                : speed != null ? $"↓ {speed.DownMbit:0} · ↑ {speed.UpMbit:0} Mbit/s"
+                : Strings.SpeedTestStart;
+            speedRow = c.Row(ref y, Strings.SpeedTest, text);
+            if (speedRow.Bottom > c.Area.Bottom + c.Px(4))
+                speedRow = RectangleF.Empty; // no room: only via the menu
         }
+
+        internal void SetPreview(SpeedTest.Result result) => speed = result;
+
+        private async void StartSpeedTest()
+        {
+            if (speedPhase != null || PreviewMode)
+                return;
+            speedPhase = "…";
+            RequestRedraw();
+            try
+            {
+                speed = await SpeedTest.RunAsync(new Progress<string>(p =>
+                {
+                    speedPhase = p;
+                    RequestRedraw();
+                }));
+            }
+            catch (Exception e)
+            {
+                Log.Write("Speed test", Log.Describe(e));
+                speed = null;
+            }
+            finally
+            {
+                speedPhase = null;
+                RequestRedraw();
+            }
+        }
+
+        public override bool IsClickable(Point p) => speedRow.Contains(p) && speedPhase == null;
+
+        public override bool Click(Point p)
+        {
+            if (!speedRow.Contains(p))
+                return false;
+            StartSpeedTest();
+            return true;
+        }
+
+        public override string? TooltipAt(Point p) => speedRow.Contains(p) ? Strings.SpeedTestHint : null;
+
+        public override void AddMenuItems(ToolStripItemCollection items, IWin32Window owner) =>
+            items.Add(new ToolStripMenuItem(Strings.SpeedTestStart, null, (_, _) => StartSpeedTest()) { Enabled = speedPhase == null });
 
         private void DrawGraph(WidgetCanvas c, RectangleF rect)
         {

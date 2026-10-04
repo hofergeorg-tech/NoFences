@@ -2,16 +2,62 @@ using NoFences.Util;
 
 namespace NoFences.Widgets
 {
-    /// <summary>Battery charge, whether it's charging and the time left (laptops and tablets).</summary>
+    /// <summary>
+    /// Battery charge, whether it's charging and the time left (laptops and tablets), plus the charge of
+    /// controllers and Bluetooth devices.
+    /// </summary>
     public sealed class BatteryWidget : FenceWidget
     {
         private PowerStatus? status;
+        private List<DeviceBattery> devices = new();
+        private DateTime nextDevices;
+        private bool loadingDevices;
 
         public override string Type => "battery";
 
         public override int RefreshMs => 5000;
 
-        public override void Refresh() => status = SystemInformation.PowerStatus;
+        internal void SetPreview(List<DeviceBattery> demo)
+        {
+            devices = demo;
+            nextDevices = DateTime.MaxValue;
+        }
+
+        public override void Refresh()
+        {
+            status = SystemInformation.PowerStatus;
+            if (PreviewMode || loadingDevices || DateTime.Now < nextDevices)
+                return;
+            nextDevices = DateTime.Now.AddSeconds(60);
+            _ = LoadDevicesAsync();
+        }
+
+        private async Task LoadDevicesAsync()
+        {
+            loadingDevices = true;
+            try
+            {
+                devices = await DeviceBatteries.ReadAsync();
+                RequestRedraw();
+            }
+            finally
+            {
+                loadingDevices = false;
+            }
+        }
+
+        /// <summary>Controllers and Bluetooth devices below the PC's own battery; returns the new y.</summary>
+        private float DrawDevices(WidgetCanvas c, float y)
+        {
+            foreach (var d in devices)
+            {
+                if (y + c.Label.GetHeight(c.G) > c.Area.Bottom)
+                    break;
+                // Text only: the shared bar turns red when full, which is the good case here
+                c.Row(ref y, d.Name, d.Level is double level ? $"{level * 100:0} %" : Strings.ControllerWired);
+            }
+            return y;
+        }
 
         /// <summary>"2 h 15 min" from seconds; empty when Windows doesn't know (-1).</summary>
         public static string FormatRemaining(int seconds)
@@ -28,6 +74,11 @@ namespace NoFences.Widgets
             var line = c.Label.GetHeight(c.G) + c.Px(2);
             if (status.BatteryChargeStatus.HasFlag(BatteryChargeStatus.NoSystemBattery) || status.BatteryLifePercent > 1)
             {
+                if (devices.Count > 0)
+                {
+                    DrawDevices(c, c.Area.Y);
+                    return;
+                }
                 c.Text(Strings.BatteryNone, new RectangleF(c.Area.X, c.Area.Y, c.Area.Width, line * 2));
                 return;
             }
@@ -62,6 +113,8 @@ namespace NoFences.Widgets
             var left = FormatRemaining(status.BatteryLifeRemaining);
             if (!plugged && left.Length > 0)
                 c.Text(Strings.BatteryLeft(left), new RectangleF(c.Area.X, y, c.Area.Width, line));
+            y += line + c.Px(8);
+            DrawDevices(c, y);
         }
     }
 }

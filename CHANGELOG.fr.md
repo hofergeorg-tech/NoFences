@@ -21,6 +21,9 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 - **Profils** : démarrer des programmes avec un profil (et les fermer en le quittant, si souhaité) ; **fond d'écran selon l'heure** (Paramètres → Automatisation).
 - **Notes** : protection par mot de passe (chiffrée, se verrouille seule après 2 minutes), coller des **images** avec Ctrl+V, enregistrer des **notes vocales**.
 - L'**historique du presse-papiers** garde aussi les images ; **épinglez** des entrées (clic droit) pour qu'elles restent en haut, même après un redémarrage.
+- **Moniteur système** avec courbe de deux minutes et **alerte quand la carte graphique chauffe trop** ; **test de débit** dans le widget réseau.
+- Le **widget batterie** affiche aussi les **manettes et appareils Bluetooth** ; nouveau widget **Démarrage auto** (activer/désactiver les programmes au démarrage de Windows).
+- Outils : **code QR** (texte ou lien du presse-papiers), **loupe** ; "Ranger les dossiers" trouve les **fichiers en double**.
 
 ## [2.4.2] - 2026-10-03
 

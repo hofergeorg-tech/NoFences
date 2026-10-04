@@ -249,6 +249,33 @@ namespace NoFences.Util
                                                  "Faites glisser des fichiers sur la barrière. Clic droit sur une barrière pour les options ; l'icône de la zone de notification contient les paramètres et l'aide.",
                                                  "Arrastra archivos a la valla. Clic derecho en una valla para ver las opciones; el icono de la bandeja tiene la configuración y la ayuda.");
 
+        // System & tools: QR code, magnifier, device batteries, temperature, speed test, autostart, duplicates
+        public static string QrMenu => T("QR code…", "QR-Code…", "Codice QR…", "Code QR…", "Código QR…");
+        public static string QrTitle => T("QR code", "QR-Code", "Codice QR", "Code QR", "Código QR");
+        public static string QrPrompt => T("Text or link:", "Text oder Link:", "Testo o link:", "Texte ou lien :", "Texto o enlace:");
+        public static string QrCopy => T("Copy image", "Bild kopieren", "Copia immagine", "Copier l'image", "Copiar imagen");
+        public static string QrSave => T("Save…", "Speichern…", "Salva…", "Enregistrer…", "Guardar…");
+        public static string QrHint => T("Scan it with the phone's camera.", "Mit der Handykamera scannen.", "Scansionalo con la fotocamera del telefono.", "Scannez-le avec l'appareil photo du téléphone.", "Escanéalo con la cámara del móvil.");
+        public static string QrEmpty => T("Type or paste a text or link.", "Text oder Link eingeben oder einfügen.", "Scrivi o incolla un testo o un link.", "Saisissez ou collez un texte ou un lien.", "Escribe o pega un texto o enlace.");
+        public static string QrTooLong => T("Too long for a QR code.", "Zu lang für einen QR-Code.", "Troppo lungo per un codice QR.", "Trop long pour un code QR.", "Demasiado largo para un código QR.");
+        public static string MagnifierMenu => T("Magnifier (+/– zoom, Esc closes)", "Bildschirmlupe (+/– Zoom, Esc schließt)", "Lente d'ingrandimento (+/– zoom, Esc chiude)", "Loupe (+/– zoom, Échap ferme)", "Lupa (+/– zoom, Esc cierra)");
+        public static string ControllerName(int n) => T($"Controller {n}", $"Controller {n}", $"Controller {n}", $"Manette {n}", $"Mando {n}");
+        public static string ControllerWired => T("cable", "Kabel", "cavo", "câble", "cable");
+        public static string TemperatureWarning(int t) => T($"The graphics card is very hot: {t} °C", $"Die Grafikkarte ist sehr heiß: {t} °C", $"La scheda grafica è molto calda: {t} °C", $"La carte graphique est très chaude : {t} °C", $"La tarjeta gráfica está muy caliente: {t} °C");
+        public static string TemperatureWarnMenu => T("Temperature warning from", "Temperaturwarnung ab", "Avviso temperatura da", "Alerte de température à partir de", "Aviso de temperatura desde");
+        public static string SpeedTest => T("Speed test", "Speedtest", "Speed test", "Test de débit", "Test de velocidad");
+        public static string SpeedTestStart => T("Start speed test", "Speedtest starten", "Avvia speed test", "Lancer le test de débit", "Iniciar test de velocidad");
+        public static string SpeedTestRunning(string phase) => T($"measuring {phase}", $"misst {phase}", $"misura {phase}", $"mesure {phase}", $"midiendo {phase}");
+        public static string SpeedTestHint => T("Measures for about 12 seconds (speed.cloudflare.com).", "Misst etwa 12 Sekunden lang (speed.cloudflare.com).", "Misura per circa 12 secondi (speed.cloudflare.com).", "Mesure pendant environ 12 secondes (speed.cloudflare.com).", "Mide durante unos 12 segundos (speed.cloudflare.com).");
+        public static string WidgetAutostart => T("Autostart", "Autostart", "Avvio automatico", "Démarrage auto", "Inicio automático");
+        public static string AutostartNone => T("No autostart programs.", "Keine Autostart-Programme.", "Nessun programma all'avvio.", "Aucun programme au démarrage.", "No hay programas de inicio.");
+        public static string AutostartAdminOnly => T("For all users: can only be changed with admin rights.", "Für alle Benutzer: nur mit Administratorrechten änderbar.", "Per tutti gli utenti: modificabile solo con diritti di amministratore.", "Pour tous les utilisateurs : modifiable seulement avec les droits d'administrateur.", "Para todos los usuarios: solo se puede cambiar con derechos de administrador.");
+        public static string AutostartOpenSettings => T("Open Windows startup settings", "Windows-Autostart-Einstellungen öffnen", "Apri impostazioni di avvio di Windows", "Ouvrir les paramètres de démarrage de Windows", "Abrir configuración de inicio de Windows");
+        public static string DuplicatesMode => T("Duplicate files", "Doppelte Dateien", "File duplicati", "Fichiers en double", "Archivos duplicados");
+        public static string DuplicatesSearching => T("Comparing files …", "Dateien werden verglichen …", "Confronto dei file …", "Comparaison des fichiers …", "Comparando archivos …");
+        public static string DuplicatesNone => T("No duplicate files found.", "Keine doppelten Dateien gefunden.", "Nessun file duplicato trovato.", "Aucun fichier en double trouvé.", "No se encontraron archivos duplicados.");
+        public static string DuplicatesOriginal => T("[original]", "[Original]", "[originale]", "[original]", "[original]");
+        public static string DuplicatesGroup(string name, int count, string size) => T($"{name} – {count}× {size}", $"{name} – {count}× {size}", $"{name} – {count}× {size}", $"{name} – {count}× {size}", $"{name} – {count}× {size}");
         // Notes: password, images, voice notes; clipboard pins
         public static string NoteProtect => T("Protect with password…", "Mit Passwort schützen…", "Proteggi con password…", "Protéger par mot de passe…", "Proteger con contraseña…");
         public static string NoteUnlock => T("Unlock…", "Entsperren…", "Sblocca…", "Déverrouiller…", "Desbloquear…");
