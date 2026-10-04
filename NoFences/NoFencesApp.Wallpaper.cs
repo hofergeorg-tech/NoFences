@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 using System.Text;
+using NoFences.Model;
 using NoFences.Util;
 
 namespace NoFences
@@ -12,10 +13,33 @@ namespace NoFences
     {
         private const int SPI_GETDESKWALLPAPER = 0x73, SPI_SETDESKWALLPAPER = 0x14, SPIF_UPDATE_AND_SEND = 0x3;
 
+        /// <summary>The wallpaper NoFences last asked for; the time plan only acts when that changes.</summary>
+        private string? wantedWallpaper;
+
+        /// <summary>Called by the automation timer: switches the wallpaper when the time plan's next entry starts.</summary>
+        private void ApplyTimedWallpaper()
+        {
+            if (Store.Config.TimedWallpapers.Count == 0 && wantedWallpaper == null)
+                return;
+            var wanted = WantedWallpaper(ActiveProfile);
+            if (!string.Equals(wanted, wantedWallpaper, StringComparison.OrdinalIgnoreCase))
+                ApplyProfileWallpaper(ActiveProfile);
+        }
+
+        private string? WantedWallpaper(string? profile)
+        {
+            var c = Store.Config;
+            var own = profile != null && c.ProfileWallpapers.TryGetValue(profile, out var p) && File.Exists(p) ? p : null;
+            var wanted = WallpaperSchedule.Wanted(own, c.TimedWallpapers, DateTime.Now);
+            return wanted != null && File.Exists(wanted) ? wanted : null;
+        }
+
         private void ApplyProfileWallpaper(string? profile)
         {
             var c = Store.Config;
-            if (profile != null && c.ProfileWallpapers.TryGetValue(profile, out var image) && File.Exists(image))
+            var image = WantedWallpaper(profile);
+            wantedWallpaper = image;
+            if (image != null)
             {
                 var current = CurrentWallpaper();
                 if (string.Equals(current, image, StringComparison.OrdinalIgnoreCase))
@@ -74,6 +98,7 @@ namespace NoFences
             foreach (var plan in Win32.PowerPlans.All())
                 power.DropDownItems.Add(new ToolStripMenuItem(plan.Name, null, (_, _) => SetProfilePowerPlan(profile, plan.Id)) { Checked = assigned == plan.Id });
             items.Add(power);
+            AddProfileProgramItems(items, profile);
         }
 
         private void SetProfilePowerPlan(string profile, Guid? plan)

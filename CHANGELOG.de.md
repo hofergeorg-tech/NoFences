@@ -18,6 +18,7 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - Eigenes **Tastenkürzel pro Fence** (Strg+Shift+F1…F12) holt ihn nach vorne, auch aus einem anderen Profil.
 - Fences können sich **ausblenden**, wenn die Maus weit weg ist (Einstellungen → Desktop); einzelne Fences lassen sich ausnehmen.
 - Werkzeuge: **Desktop-Symbole ein/aus** und **alle Fences auf einen anderen Monitor**.
+- **Profile**: Programme mit dem Profil starten (und beim Verlassen auf Wunsch wieder schließen); **Hintergrundbild nach Tageszeit** (Einstellungen → Automatik).
 
 ## [2.4.2] - 2026-10-03
 

@@ -278,6 +278,42 @@ namespace NoFences
             Row(style, Strings.DarkTimesLabel, from, to);
             UpdateEnabled();
             Hint(style, Strings.AutoThemeHint, ContentWidth);
+
+            // Wallpaper by time of day
+            var wallpapers = Section(page, Strings.SectionTimedWallpaper, ContentWidth);
+            var plan = new ListBox { Width = ContentWidth, Height = 90, IntegralHeight = false };
+            void FillPlan()
+            {
+                plan.Items.Clear();
+                foreach (var w in Config.TimedWallpapers.OrderBy(w => ProfileRule.ParseTime(w.From)))
+                    plan.Items.Add($"{Strings.FromTime(w.From)}   {Path.GetFileName(w.Image)}");
+            }
+            FillPlan();
+            Wide(wallpapers, plan);
+            var at = new DateTimePicker { Format = DateTimePickerFormat.Custom, CustomFormat = "HH:mm", ShowUpDown = true, Width = 80, Value = DateTime.Today.AddHours(7) };
+            var planButtons = new FlowLayoutPanel { AutoSize = true, WrapContents = false, Margin = new Padding(0) };
+            planButtons.Controls.Add(Action(Strings.TimedWallpaperAdd, () =>
+                {
+                    using var dialog = new OpenFileDialog { Filter = Strings.WallpaperFilter, InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) };
+                    if (dialog.ShowDialog(this) != DialogResult.OK)
+                        return;
+                    var from = at.Value.ToString("HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+                    Config.TimedWallpapers.RemoveAll(w => w.From == from);
+                    Config.TimedWallpapers.Add(new TimedWallpaper { From = from, Image = dialog.FileName });
+                    app.Store.RequestSave();
+                    FillPlan();
+                }));
+            planButtons.Controls.Add(Action(Strings.RuleRemove, () =>
+                {
+                    if (plan.SelectedIndex < 0)
+                        return;
+                    var sorted = Config.TimedWallpapers.OrderBy(w => ProfileRule.ParseTime(w.From)).ToList();
+                    Config.TimedWallpapers.Remove(sorted[plan.SelectedIndex]);
+                    app.Store.RequestSave();
+                    FillPlan();
+                }));
+            Row(wallpapers, Strings.TimedWallpaperFrom, at, planButtons);
+            Hint(wallpapers, Strings.TimedWallpaperHint, ContentWidth);
         }
 
         private void BuildDesktop(FlowLayoutPanel page)

@@ -37,6 +37,7 @@ namespace NoFences
                 return;
             ApplyProfileRules();
             ApplyAutoTheme();
+            ApplyTimedWallpaper();
         }
 
         #region Default style (light/dark)

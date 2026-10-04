@@ -18,6 +18,7 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - **Scorciatoia per ogni recinto** (Ctrl+Maiusc+F1…F12) lo porta in primo piano, anche da un altro profilo.
 - I recinti possono **sfumare** quando il mouse è lontano (Impostazioni → Desktop); si possono escludere singoli recinti.
 - Strumenti: **mostra/nascondi icone del desktop** e **sposta tutti i recinti su un altro monitor**.
+- **Profili**: avvia programmi con un profilo (e, se vuoi, chiudili quando lo lasci); **sfondo in base all'ora** (Impostazioni → Automazione).
 
 ## [2.4.2] - 2026-10-03
 

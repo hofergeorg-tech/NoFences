@@ -19,6 +19,7 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 - Own **shortcut per fence** (Ctrl+Shift+F1…F12) brings it to the front, even from another profile.
 - Fences can **fade** when the mouse is far away (Settings → Desktop); single fences can be excluded.
 - Tools: **show/hide desktop icons** and **move all fences to another monitor**.
+- **Profiles**: start programs with a profile (and close them again when leaving, if wanted); **wallpaper by time of day** (Settings → Automation).
 
 ## [2.4.2] - 2026-10-03
 

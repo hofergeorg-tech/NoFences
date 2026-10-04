@@ -18,6 +18,7 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 - **Raccourci propre à chaque barrière** (Ctrl+Maj+F1…F12) pour l'afficher au premier plan, même depuis un autre profil.
 - Les barrières peuvent **s'estomper** quand la souris est loin (Paramètres → Bureau) ; chaque barrière peut être exclue.
 - Outils : **afficher/masquer les icônes du bureau** et **déplacer toutes les barrières vers un autre écran**.
+- **Profils** : démarrer des programmes avec un profil (et les fermer en le quittant, si souhaité) ; **fond d'écran selon l'heure** (Paramètres → Automatisation).
 
 ## [2.4.2] - 2026-10-03
 

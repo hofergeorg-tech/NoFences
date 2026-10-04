@@ -249,6 +249,21 @@ namespace NoFences.Util
                                                  "Faites glisser des fichiers sur la barrière. Clic droit sur une barrière pour les options ; l'icône de la zone de notification contient les paramètres et l'aide.",
                                                  "Arrastra archivos a la valla. Clic derecho en una valla para ver las opciones; el icono de la bandeja tiene la configuración y la ayuda.");
 
+        // Profiles: wallpaper by time of day, programs per profile
+        public static string SectionTimedWallpaper => T("Wallpaper by time of day", "Hintergrundbild nach Tageszeit", "Sfondo in base all'ora", "Fond d'écran selon l'heure", "Fondo según la hora del día");
+        public static string TimedWallpaperFrom => T("From:", "Ab:", "Dalle:", "À partir de :", "Desde:");
+        public static string TimedWallpaperAdd => T("Choose image…", "Bild wählen…", "Scegli immagine…", "Choisir une image…", "Elegir imagen…");
+        public static string FromTime(string time) => T($"from {time}", $"ab {time}", $"dalle {time}", $"dès {time}", $"desde {time}");
+        public static string TimedWallpaperHint => T("Each image stays until the next one starts, e.g. bright in the morning, dark in the evening. A profile's own wallpaper takes precedence.",
+            "Jedes Bild bleibt, bis das nächste beginnt, z. B. morgens hell, abends dunkel. Ein eigenes Profil-Hintergrundbild hat Vorrang.",
+            "Ogni immagine resta finché inizia la successiva, ad es. chiara al mattino, scura la sera. Lo sfondo di un profilo ha la precedenza.",
+            "Chaque image reste jusqu'au début de la suivante, p. ex. claire le matin, sombre le soir. Le fond d'écran d'un profil est prioritaire.",
+            "Cada imagen se mantiene hasta que empieza la siguiente, p. ej. clara por la mañana, oscura por la noche. El fondo propio de un perfil tiene prioridad.");
+        public static string ProfilePrograms(string profile) => T($"Programs for \"{profile}\"", $"Programme für „{profile}“", $"Programmi per \"{profile}\"", $"Programmes pour « {profile} »", $"Programas para «{profile}»");
+        public static string ProfileProgramAdd => T("Add program…", "Programm hinzufügen…", "Aggiungi programma…", "Ajouter un programme…", "Añadir programa…");
+        public static string ProfileProgramClose => T("Close when leaving the profile", "Beim Verlassen des Profils schließen", "Chiudi quando si lascia il profilo", "Fermer en quittant le profil", "Cerrar al salir del perfil");
+        public static string ProfileProgramsHint => T("Start when switching to this profile", "Starten beim Wechsel in dieses Profil", "Si avviano passando a questo profilo", "Démarrent en passant à ce profil", "Se inician al cambiar a este perfil");
+        public static string ProgramFilter => T("Programs|*.exe;*.lnk;*.bat;*.cmd|All files|*.*", "Programme|*.exe;*.lnk;*.bat;*.cmd|Alle Dateien|*.*", "Programmi|*.exe;*.lnk;*.bat;*.cmd|Tutti i file|*.*", "Programmes|*.exe;*.lnk;*.bat;*.cmd|Tous les fichiers|*.*", "Programas|*.exe;*.lnk;*.bat;*.cmd|Todos los archivos|*.*");
         // Fading, shortcuts, shelf, bookmarks, recent folders, templates, desktop icons, monitors, hover preview
         public static string FadeFences => T("Fade fences when the mouse is far away", "Fences ausblenden, wenn die Maus weit weg ist", "Sfuma i recinti quando il mouse è lontano", "Estomper les barrières quand la souris est loin", "Atenuar las vallas cuando el ratón está lejos");
         public static string FadeFencesHint => T("The closer the mouse, the more visible. Single fences can be excluded in their settings.",

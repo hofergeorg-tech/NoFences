@@ -48,6 +48,12 @@ namespace NoFences.Model
         /// <summary>Wallpaper per profile (image path); profiles without one keep the current wallpaper.</summary>
         public Dictionary<string, string> ProfileWallpapers { get; set; } = new();
 
+        /// <summary>Wallpaper by time of day (morning, day, evening …); a profile's own wallpaper wins.</summary>
+        public List<TimedWallpaper> TimedWallpapers { get; set; } = new();
+
+        /// <summary>Programs started with a profile (profile name → programs).</summary>
+        public Dictionary<string, List<ProfileProgram>> ProfilePrograms { get; set; } = new();
+
         /// <summary>The wallpaper from before NoFences changed it, restored for profiles without their own.</summary>
         public string? OriginalWallpaper { get; set; }
 
