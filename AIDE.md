@@ -106,7 +106,10 @@ résultat, **↑↓** pour choisir, **Échap** ferme. Le raccourci se change dan
 - Les lignes commençant par `[ ]` deviennent des cases à cocher ; un clic les coche et barre la ligne.
 - Les adresses web et chemins sont soulignés et s'ouvrent d'un clic. Le texte déposé sur une note y est ajouté.
 - **Mise en forme** : `# Titre` (aussi `##`, `###`), `- élément` ou `* élément` pour les listes, `> citation`, `---`
-  pour une ligne, `**gras**` et `*italique*`.
+  pour une ligne, `**gras**`, `*italique*`, `__souligné__`, `~~barré~~`, `==surligné==` (autres couleurs : `=={g}vert==`,
+  `{b}`, `{p}`, `{o}`, `{r}`) et priorité en début de ligne : `!!! haute`, `!! moyenne`, `! basse` (fanion rouge, orange ou
+  bleu). Plus simple : la **barre de mise en forme** au-dessus de l'éditeur (gras, italique, souligné, barré, couleurs,
+  priorité) ou **Ctrl+B / Ctrl+I / Ctrl+U / Ctrl+H** (surligner en jaune). Les formats se combinent.
 - **Ctrl+Alt+N** (modifiable dans Paramètres → Bureau) crée de n'importe où une note près de la souris, prête à écrire.
 - Menu de la barrière → **Rappel…** : à l'heure choisie, NoFences joue un son et affiche une notification – une fois,
   chaque jour, en semaine, chaque semaine ou chaque mois.

@@ -5,7 +5,18 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.8.0] - unreleased
+## [2.9.0] - unreleased
+
+### Added
+- **Note formatting**: underline, strikeout, colored markers and priority flags (!!! / !! / !) besides bold and italic – with a formatting bar above the editor and Ctrl+B / I / U / H.
+
+### Changed
+- The **Bread board** style uses real photos now (bacon, cheese, bread, sausage, pickles, radishes on wood) instead of drawn shapes.
+
+### Fixed
+- A fence that unfolds (collapse when not hovered) now always opens on top of neighbouring fences.
+
+## [2.8.0] - 2026-10-04
 
 ### Added
 - New style **Bread board (bacon & cheese)**: a wooden board with bacon, cheese, bread and radishes. Sidebars can have a **background style** (Group → Dock to screen edge → Bar background), e.g. a wooden table with a checked cloth and food between the fences.

@@ -4,7 +4,18 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.8.0] - unveröffentlicht
+## [2.9.0] - unveröffentlicht
+
+### Neu
+- **Notizen formatieren**: unterstrichen, durchgestrichen, farbig markiert und Prioritäts-Fähnchen (!!! / !! / !) zusätzlich zu fett und kursiv – mit Formatierungsleiste über dem Editor und Strg+B / I / U / H.
+
+### Geändert
+- Der Style **Brettljause** nutzt jetzt echte Fotos (Speck, Käse, Brot, Kaminwurz, Gurkerl, Radieschen auf Holz) statt gezeichneter Formen.
+
+### Behoben
+- Ein Fence, der ausklappt (Einklappen wenn Maus weg), öffnet sich jetzt immer über benachbarten Fences.
+
+## [2.8.0] - 2026-10-04
 
 ### Neu
 - Neuer Style **Brettljause (Speck & Käse)**: ein Holzbrett mit Speck, Käse, Brot und Radieschen. Seitenleisten können einen **Hintergrund-Style** bekommen (Gruppe → An Bildschirmrand andocken → Leisten-Hintergrund), z. B. einen Holztisch mit Karo-Tuch und Jause zwischen den Fences.

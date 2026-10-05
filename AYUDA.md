@@ -98,7 +98,10 @@ atajo se cambia en Configuración → Escritorio.
 - Las líneas que empiezan con `[ ]` se convierten en casillas; un clic las marca y tacha la línea.
 - Las direcciones web y rutas aparecen subrayadas y se abren con un clic. El texto arrastrado a una nota se añade al final.
 - **Formato**: `# Título` (también `##`, `###`), `- elemento` o `* elemento` para listas, `> cita`, `---` para una línea,
-  `**negrita**` y `*cursiva*`.
+  `**negrita**`, `*cursiva*`, `__subrayado__`, `~~tachado~~`, `==resaltado==` (otros colores: `=={g}verde==`, `{b}`,
+  `{p}`, `{o}`, `{r}`) y prioridad al inicio de la línea: `!!! alta`, `!! media`, `! baja` (banderita roja, naranja o
+  azul). Más fácil: la **barra de formato** sobre el editor (negrita, cursiva, subrayado, tachado, colores, prioridad) o
+  **Ctrl+B / Ctrl+I / Ctrl+U / Ctrl+H** (resaltar en amarillo). Los formatos se pueden combinar.
 - **Ctrl+Alt+N** (se cambia en Configuración → Escritorio) crea desde cualquier sitio una nota junto al ratón, lista para
   escribir.
 - Menú de la valla → **Recordatorio…**: a la hora elegida, NoFences suena y muestra una notificación – una vez, a diario,

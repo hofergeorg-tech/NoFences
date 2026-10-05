@@ -4,7 +4,18 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
-## [2.8.0] - sin publicar
+## [2.9.0] - sin publicar
+
+### Novedades
+- **Formato en notas**: subrayado, tachado, resaltado en colores y banderitas de prioridad (!!! / !! / !) además de negrita y cursiva – con una barra de formato sobre el editor y Ctrl+B / I / U / H.
+
+### Cambios
+- El estilo **Tabla** usa ahora fotos reales (speck, queso, pan, salchicha, pepinillos, rábanos sobre madera) en lugar de formas dibujadas.
+
+### Correcciones
+- Una valla que se despliega (contraer cuando el ratón se aleja) se abre ahora siempre por encima de las vallas vecinas.
+
+## [2.8.0] - 2026-10-04
 
 ### Novedades
 - Nuevo estilo **Tabla (speck y queso)**: una tabla de madera con speck, queso, pan y rábanos. Las barras laterales pueden tener un **estilo de fondo** (Grupo → Anclar al borde de la pantalla → Fondo de la barra), p. ej. una mesa de madera con mantel de cuadros y comida entre las vallas.

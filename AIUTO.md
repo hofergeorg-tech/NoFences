@@ -97,7 +97,10 @@ cambia in Impostazioni → Desktop.
 - Le righe che iniziano con `[ ]` diventano caselle; un clic le spunta e barra la riga.
 - Indirizzi web e percorsi sono sottolineati e si aprono con un clic. Il testo trascinato su una nota viene aggiunto.
 - **Formattazione**: `# Titolo` (anche `##`, `###`), `- voce` o `* voce` per gli elenchi, `> citazione`, `---` per una
-  linea, `**grassetto**` e `*corsivo*`.
+  linea, `**grassetto**`, `*corsivo*`, `__sottolineato__`, `~~barrato~~`, `==evidenziato==` (altri colori: `=={g}verde==`,
+  `{b}`, `{p}`, `{o}`, `{r}`) e priorità a inizio riga: `!!! alta`, `!! media`, `! bassa` (bandierina rossa, arancione o
+  blu). Più semplice: la **barra di formattazione** sopra l'editor (grassetto, corsivo, sottolineato, barrato, colori,
+  priorità) o **Ctrl+B / Ctrl+I / Ctrl+U / Ctrl+H** (evidenzia in giallo). I formati si possono combinare.
 - **Ctrl+Alt+N** (modificabile in Impostazioni → Desktop) crea da ovunque una nota accanto al mouse, pronta da scrivere.
 - Menu del recinto → **Promemoria…**: a quell'ora NoFences emette un suono e mostra una notifica – una volta, ogni giorno,
   nei giorni feriali, ogni settimana o ogni mese.

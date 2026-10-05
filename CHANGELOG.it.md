@@ -4,7 +4,18 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.8.0] - non pubblicata
+## [2.9.0] - non pubblicata
+
+### Novità
+- **Formattazione delle note**: sottolineato, barrato, evidenziazione a colori e bandierine di priorità (!!! / !! / !) oltre a grassetto e corsivo – con una barra di formattazione sopra l'editor e Ctrl+B / I / U / H.
+
+### Modifiche
+- Lo stile **Tagliere** ora usa foto vere (speck, formaggio, pane, salamino, cetrioli, ravanelli sul legno) invece di forme disegnate.
+
+### Correzioni
+- Un recinto che si espande (comprimi quando il mouse è fuori) ora si apre sempre sopra i recinti vicini.
+
+## [2.8.0] - 2026-10-04
 
 ### Novità
 - Nuovo stile **Tagliere (speck e formaggio)**: un tagliere di legno con speck, formaggio, pane e ravanelli. Le barre laterali possono avere uno **stile di sfondo** (Gruppo → Aggancia al bordo dello schermo → Sfondo della barra), ad es. un tavolo di legno con tovaglia a quadri e cibo tra i recinti.

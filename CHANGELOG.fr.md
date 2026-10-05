@@ -4,7 +4,18 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.8.0] - non publiée
+## [2.9.0] - non publiée
+
+### Nouveautés
+- **Mise en forme des notes** : souligné, barré, surlignage en couleur et fanions de priorité (!!! / !! / !) en plus du gras et de l'italique – avec une barre de mise en forme au-dessus de l'éditeur et Ctrl+B / I / U / H.
+
+### Modifications
+- Le style **Planche** utilise désormais de vraies photos (lard, fromage, pain, saucisse, cornichons, radis sur bois) au lieu de formes dessinées.
+
+### Corrections
+- Une barrière qui se déplie (replier quand la souris s'éloigne) s'ouvre désormais toujours au-dessus des barrières voisines.
+
+## [2.8.0] - 2026-10-04
 
 ### Nouveautés
 - Nouveau style **Planche (lard et fromage)** : une planche en bois avec du lard, du fromage, du pain et des radis. Les barres latérales peuvent avoir un **style de fond** (Groupe → Ancrer au bord de l'écran → Fond de la barre), p. ex. une table en bois avec une nappe à carreaux et de quoi manger entre les barrières.

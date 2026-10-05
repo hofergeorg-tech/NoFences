@@ -38,6 +38,9 @@ namespace NoFences
             checkFont = new Font("Segoe UI Symbol", noteFont.Size, FontStyle.Regular, GraphicsUnit.Pixel);
             foreach (var f in new[] { noteBold, noteItalic, heading1, heading2, heading3 })
                 f?.Dispose();
+            foreach (var f in styledFonts.Values)
+                f.Dispose();
+            styledFonts.Clear();
             noteBold = new Font(noteFont, FontStyle.Bold);
             noteItalic = new Font(noteFont, FontStyle.Italic);
             heading1 = new Font(noteFont.FontFamily, noteFont.Size * 1.45f, FontStyle.Bold, noteFont.Unit);
@@ -50,6 +53,65 @@ namespace NoFences
                 editor.Font = noteFont;
                 ApplyEditorColors(editor);
             }
+        }
+
+        private readonly Dictionary<(Font, FontStyle), Font> styledFonts = new();
+
+        /// <summary>The font with extra styles (bold, italic, underline, strikeout), cached until the settings change.</summary>
+        private Font Styled(Font font, FontStyle extra)
+        {
+            var style = font.Style | extra;
+            if (style == font.Style)
+                return font;
+            if (!styledFonts.TryGetValue((font, style), out var styled))
+                styledFonts[(font, style)] = styled = new Font(font, style);
+            return styled;
+        }
+
+        /// <summary>Marker colors behind highlighted text (letters as in <see cref="NoteText.HighlightColors"/>).</summary>
+        internal static Color HighlightColor(char c) => c switch
+        {
+            'g' => Color.FromArgb(150, 225, 130),
+            'b' => Color.FromArgb(140, 195, 255),
+            'p' => Color.FromArgb(255, 170, 210),
+            'o' => Color.FromArgb(255, 185, 100),
+            'r' => Color.FromArgb(255, 125, 115),
+            _ => Color.FromArgb(255, 232, 90)
+        };
+
+        internal static Color PriorityColor(int level) => level switch
+        {
+            3 => Color.FromArgb(215, 55, 45),
+            2 => Color.FromArgb(235, 145, 30),
+            _ => Color.FromArgb(60, 135, 225)
+        };
+
+        /// <summary>The priority flag in front of a line ("!", "!!", "!!!" on red, orange or blue); returns its width.</summary>
+        private float DrawPriority(Graphics g, int level, float x, float y, Font font)
+        {
+            var text = new string('!', level);
+            using var bold = new Font(font.FontFamily, font.Size * 0.8f, FontStyle.Bold, font.Unit);
+            var size = g.MeasureString(text, bold, PointF.Empty, StringFormat.GenericTypographic);
+            var h = font.GetHeight(g) * 0.78f;
+            var rect = new RectangleF(x, y + (font.GetHeight(g) - h) / 2, size.Width + Px(10), h);
+            using (var path = RoundedRect(rect, h / 2))
+            using (var fill = new SolidBrush(PriorityColor(level)))
+                g.FillPath(fill, path);
+            using (var format = new StringFormat(StringFormat.GenericTypographic) { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+                g.DrawString(text, bold, Brushes.White, rect, format);
+            return rect.Width + Px(5);
+        }
+
+        private static System.Drawing.Drawing2D.GraphicsPath RoundedRect(RectangleF r, float radius)
+        {
+            var path = new System.Drawing.Drawing2D.GraphicsPath();
+            var d = Math.Min(radius * 2, Math.Min(r.Width, r.Height));
+            path.AddArc(r.X, r.Y, d, d, 180, 90);
+            path.AddArc(r.Right - d, r.Y, d, d, 270, 90);
+            path.AddArc(r.Right - d, r.Bottom - d, d, d, 0, 90);
+            path.AddArc(r.X, r.Bottom - d, d, d, 90, 90);
+            path.CloseFigure();
+            return path;
         }
 
         /// <summary>One tab = about six average characters of the note font (pixels).</summary>
@@ -155,13 +217,24 @@ namespace NoFences
                     }
                 }
 
+                // Priority flag ("!!! urgent") after a checkbox or bullet
+                var (priority, withoutPriority) = NoteText.Priority(line);
+                if (priority > 0)
+                {
+                    if (y + font.Height >= view.Top && y <= view.Bottom)
+                        x += DrawPriority(g, priority, x, y, font);
+                    else
+                        x += font.Height * 1.4f;
+                    line = withoutPriority;
+                }
+
                 var width = area.Right - x;
                 float height;
-                if (NoteText.HasInlineFormatting(line) && font == noteFont)
+                if (NoteText.HasInlineFormatting(line))
                 {
-                    // **bold** / *italic* runs: laid out word by word (links aren't underlined here)
+                    // Formatted runs: laid out word by word (links aren't underlined here)
                     var visible = y + font.Height * 3 >= view.Top && y <= view.Bottom;
-                    height = DrawRuns(g, NoteText.Runs(line), x, y, width, visible);
+                    height = DrawRuns(g, NoteText.Runs(line), x, y, width, visible, font);
                 }
                 else
                 {
@@ -186,17 +259,23 @@ namespace NoFences
             contentHeight = (int)(y + scrollOffset - titleHeight) + Px(8);
         }
 
-        /// <summary>Draws bold/italic runs with word wrapping; returns the height used.</summary>
-        private float DrawRuns(Graphics g, List<NoteText.Run> runs, float x, float y, float width, bool draw)
+        /// <summary>
+        /// Draws formatted runs (bold, italic, underline, strikeout, colored marking) with word wrapping
+        /// on top of <paramref name="baseFont"/> (headings stay big); returns the height used.
+        /// </summary>
+        private float DrawRuns(Graphics g, List<NoteText.Run> runs, float x, float y, float width, bool draw, Font? baseFont = null)
         {
+            baseFont ??= noteFont!;
             var format = StringFormat.GenericTypographic;
-            var lineHeight = noteFont!.GetHeight(g);
+            var lineHeight = baseFont.GetHeight(g);
             var cx = x;
             var cy = y;
-            var space = g.MeasureString(" ", noteFont, PointF.Empty, format).Width + noteFont.Size * 0.25f;
+            var space = g.MeasureString(" ", baseFont, PointF.Empty, format).Width + baseFont.Size * 0.25f;
             foreach (var run in runs)
             {
-                var font = run.Bold ? noteBold! : run.Italic ? noteItalic! : noteFont;
+                var style = (run.Bold ? FontStyle.Bold : 0) | (run.Italic ? FontStyle.Italic : 0)
+                    | (run.Underline ? FontStyle.Underline : 0) | (run.Strike ? FontStyle.Strikeout : 0);
+                var font = Styled(baseFont, style);
                 var words = run.Text.Split(' ');
                 for (var w = 0; w < words.Length; w++)
                 {
@@ -210,7 +289,22 @@ namespace NoFences
                             cy += lineHeight;
                         }
                         if (draw)
-                            theme.DrawLabel(g, word, new RectangleF(cx, cy, size.Width + 2, lineHeight + 2), font, format, scale);
+                        {
+                            var rect = new RectangleF(cx, cy, size.Width + 2, lineHeight + 2);
+                            if (run.Highlight is char color)
+                            {
+                                // Marker pen behind the word (and the space after it inside the marking); dark text on it
+                                var more = w < words.Length - 1 ? space : 0;
+                                using (var marker = new SolidBrush(Color.FromArgb(200, HighlightColor(color))))
+                                    g.FillRectangle(marker, cx - Px(1), cy + lineHeight * 0.08f, size.Width + more + Px(2), lineHeight * 0.9f);
+                                using var ink = new SolidBrush(Color.FromArgb(35, 30, 20));
+                                g.DrawString(word, font, ink, rect, format);
+                            }
+                            else
+                            {
+                                theme.DrawLabel(g, word, rect, font, format, scale);
+                            }
+                        }
                         cx += size.Width;
                     }
                     if (w < words.Length - 1)
@@ -347,6 +441,8 @@ namespace NoFences
             };
             editorHost = new EditorHost { BackColor = back };
             editorHost.Controls.Add(editor);
+            editorHost.Controls.Add(CreateFormatBar(editor));
+            editor.BringToFront(); // the text fills what the bar leaves
             editorHost.Deactivate += (_, _) => BeginInvoke(EndEditNote);
             ApplyEditorColors(editor);
             editor.HandleCreated += (_, _) => ApplyEditorColors(editor);
@@ -356,6 +452,11 @@ namespace NoFences
                 {
                     e.SuppressKeyPress = true;
                     EndEditNote();
+                }
+                else if (FormatShortcut(editor!, e))
+                {
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
                 }
                 else if (e.Control && e.KeyCode == Keys.V || e.Shift && e.KeyCode == Keys.Insert)
                 {
@@ -523,6 +624,9 @@ namespace NoFences
             checkFont?.Dispose();
             foreach (var f in new[] { noteBold, noteItalic, heading1, heading2, heading3 })
                 f?.Dispose();
+            foreach (var f in styledFonts.Values)
+                f.Dispose();
+            styledFonts.Clear();
             noteFormat.Dispose();
         }
     }

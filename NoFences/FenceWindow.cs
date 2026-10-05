@@ -752,6 +752,9 @@ namespace NoFences
             if (!collapsed)
                 return;
             collapsed = false;
+            // Unfold on top of neighbouring fences (still below normal windows)
+            if (!OnTop && IsHandleCreated)
+                app.RaiseAboveOtherFences(this);
             AnimateHeight(Math.Max(Info.Height, titleHeight + Px(40)));
             Relayout();
             Invalidate();

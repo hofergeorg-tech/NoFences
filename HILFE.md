@@ -100,7 +100,11 @@ du unter Einstellungen → Desktop.
 - Zeilen mit `[ ]` am Anfang werden zu Kästchen; ein Klick hakt sie ab und streicht die Zeile durch.
 - Webadressen und Pfade sind unterstrichen und öffnen sich per Klick. Auf die Notiz gezogener Text wird angehängt.
 - **Formatierung**: `# Überschrift` (auch `##`, `###`), `- Punkt` oder `* Punkt` für Aufzählungen, `> Zitat`, `---` für
-  eine Linie, `**fett**` und `*kursiv*`.
+  eine Linie, `**fett**`, `*kursiv*`, `__unterstrichen__`, `~~durchgestrichen~~`, `==markiert==` (andere Farben:
+  `=={g}grün==`, `{b}`, `{p}`, `{o}`, `{r}`) und Priorität am Zeilenanfang: `!!! hoch`, `!! mittel`, `! niedrig` (rotes,
+  oranges oder blaues Fähnchen). Einfacher: die **Formatierungsleiste** über dem Editor (fett, kursiv, unterstrichen,
+  durchgestrichen, Markierfarben, Priorität) oder **Strg+B / Strg+I / Strg+U / Strg+H** (gelb markieren). Formate lassen
+  sich kombinieren.
 - **Strg+Alt+N** (änderbar unter Einstellungen → Desktop) legt von überall eine Notiz an der Maus an, bereit zum Tippen.
 - Fence-Menü → **Erinnerung…**: Zur gewählten Zeit meldet sich NoFences mit Ton und Benachrichtigung – einmalig,
   täglich, werktags, wöchentlich oder monatlich.

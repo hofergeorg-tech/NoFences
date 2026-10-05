@@ -93,7 +93,10 @@ settings pages ("bluetooth", "sound"). Type a calculation like `12*7` or `200*15
 - Lines starting with `[ ]` become checkboxes; a click ticks them and strikes the line through.
 - Web addresses and paths are underlined and open on click. Text dragged onto a note is appended.
 - **Formatting**: `# Heading` (also `##`, `###`), `- item` or `* item` for bullets, `> quote`, `---` for a line,
-  `**bold**` and `*italic*`.
+  `**bold**`, `*italic*`, `__underlined__`, `~~struck through~~`, `==marked==` (other colors: `=={g}green==`, `{b}`, `{p}`,
+  `{o}`, `{r}`) and priority at the start of a line: `!!! high`, `!! medium`, `! low` (a red, orange or blue flag).
+  Easier: the **formatting bar** above the editor (bold, italic, underline, strikeout, marker colors, priority) or
+  **Ctrl+B / Ctrl+I / Ctrl+U / Ctrl+H** (yellow marker). Formats can be combined.
 - **Ctrl+Alt+N** (changeable in Settings → Desktop) creates a note at the mouse, ready to type – from anywhere.
 - Fence menu → **Reminder…**: NoFences plays a sound and shows a notification at that time – once, daily, on weekdays,
   weekly or monthly.

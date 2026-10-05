@@ -622,6 +622,41 @@ namespace NoFences.Util
         public static string NoteName => L("NoteName");
         public static string EditNote => L("EditNote");
         public static string NoteHint => L("NoteHint");
+        public static string FormatBoldShort => L("FormatBoldShort");
+        public static string FormatItalicShort => L("FormatItalicShort");
+        public static string FormatUnderlineShort => L("FormatUnderlineShort");
+        public static string FormatBold => L("FormatBold");
+        public static string FormatItalic => L("FormatItalic");
+        public static string FormatUnderline => L("FormatUnderline");
+        public static string FormatStrike => L("FormatStrike");
+        public static string FormatHighlight(string color) => L("FormatHighlight", color);
+        public static string FormatNoHighlight => L("FormatNoHighlight");
+        public static string MarkerYellow => L("MarkerYellow");
+        public static string MarkerGreen => L("MarkerGreen");
+        public static string MarkerBlue => L("MarkerBlue");
+        public static string MarkerPink => L("MarkerPink");
+        public static string MarkerOrange => L("MarkerOrange");
+        public static string MarkerRed => L("MarkerRed");
+        public static string PriorityHigh => L("PriorityHigh");
+        public static string PriorityMedium => L("PriorityMedium");
+        public static string PriorityLow => L("PriorityLow");
+        public static string PriorityNone => L("PriorityNone");
+        public static string MarkerColorName(char color) => color switch
+        {
+            'g' => MarkerGreen,
+            'b' => MarkerBlue,
+            'p' => MarkerPink,
+            'o' => MarkerOrange,
+            'r' => MarkerRed,
+            _ => MarkerYellow
+        };
+        public static string PriorityName(int level) => level switch
+        {
+            3 => PriorityHigh,
+            2 => PriorityMedium,
+            1 => PriorityLow,
+            _ => PriorityNone
+        };
 
         #endregion
 

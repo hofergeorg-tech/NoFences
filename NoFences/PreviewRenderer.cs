@@ -42,6 +42,7 @@ namespace NoFences
             public void RecordUndo(string description, IEnumerable<Guid> fences, Action? reverse = null) { }
             public void RecordUndo(string description, IReadOnlyList<string> snapshots) { }
             public void Undo() { }
+            public void RaiseAboveOtherFences(FenceWindow window) { }
             public void DockMemberChanged(FenceWindow window, Rectangle before) { }
             public void Offer(string text, Action onClick) { }
             public void AddUndoItem(ToolStripItemCollection items) { }

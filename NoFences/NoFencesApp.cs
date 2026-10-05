@@ -191,6 +191,19 @@ namespace NoFences
 
         public void RequestSave() => Store.RequestSave();
 
+        /// <summary>
+        /// Fences keep themselves at the bottom of the window order, so the one that went down last lies
+        /// lowest. Sending the others down again leaves this one on top of them.
+        /// </summary>
+        public void RaiseAboveOtherFences(FenceWindow window)
+        {
+            foreach (var w in windows)
+            {
+                if (w != window && w.Visible && w.IsHandleCreated && !w.Peeking && !w.DockRaised && !w.Info.AlwaysOnTop)
+                    Win32.Native.SendToBottom(w.Handle);
+            }
+        }
+
         public IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except) =>
             windows.Where(w => w != except && w.Visible).Select(w => w.SurfaceOnScreen).ToList();
 

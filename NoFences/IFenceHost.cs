@@ -84,6 +84,9 @@ namespace NoFences
         /// <summary>Undoes the last change (Ctrl+Z).</summary>
         void Undo();
 
+        /// <summary>Puts this fence above the other fences on the desktop (e.g. while it unfolds over them).</summary>
+        void RaiseAboveOtherFences(FenceWindow window);
+
         /// <summary>Adds "Undo: …" to a menu when there is something to undo.</summary>
         void AddUndoItem(ToolStripItemCollection items);
 
