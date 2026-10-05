@@ -4,7 +4,12 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.9.0] - non pubblicata
+## [2.10.0] - non pubblicata
+
+### Novità
+- **Note**: avanzamento della lista nel titolo, voci fatte in fondo o nascoste, liste che si azzerano ogni giorno/settimana/mese, sottovoci con frecce, contatori cliccabili `[3/8]`, calcoli (`650 + 80 =` → 730), `#tag` colorati (un clic cerca), tabelle, dimensione del testo con Ctrl+rotella, **modelli** (anche propri), le ultime 20 **versioni** da ripristinare, **esportazione** in Markdown o PDF e stampa.
+
+## [2.9.0] - 2026-10-05
 
 ### Novità
 - **Formattazione delle note**: sottolineato, barrato, evidenziazione a colori e bandierine di priorità (!!! / !! / !) oltre a grassetto e corsivo – con una barra di formattazione sopra l'editor e Ctrl+B / I / U / H.

@@ -10,6 +10,7 @@ namespace NoFences
         /// <summary>"New widget ▸", "Recent files", "Quick-launch bar" – used in the tray and fence menus.</summary>
         public void AddCreateExtrasItems(ToolStripItemCollection items)
         {
+            items.Add(NoteTemplateMenu());
             // New widget ▸ Time & planning ▸ …, Info ▸ …, System ▸ …, Games & media ▸ …
             var widgets = new ToolStripMenuItem(Strings.NewWidget);
             foreach (var (group, types) in WidgetRegistry.Groups)

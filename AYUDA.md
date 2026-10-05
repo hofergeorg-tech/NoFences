@@ -102,6 +102,21 @@ atajo se cambia en Configuración → Escritorio.
   `{p}`, `{o}`, `{r}`) y prioridad al inicio de la línea: `!!! alta`, `!! media`, `! baja` (banderita roja, naranja o
   azul). Más fácil: la **barra de formato** sobre el editor (negrita, cursiva, subrayado, tachado, colores, prioridad) o
   **Ctrl+B / Ctrl+I / Ctrl+U / Ctrl+H** (resaltar en amarillo). Los formatos se pueden combinar.
+- **Listas de control**: el título muestra cuántas casillas están marcadas («3/7»). Menú de la nota → **Lista de
+  control**: lo hecho en su sitio, al final u oculto; **desmarcar automáticamente** cada día, entre semana, cada semana o
+  cada mes (p. ej. una rutina), o todo ahora.
+- **Subelementos**: sangra líneas con Tab (o dos espacios); una pequeña flecha delante las pliega y despliega.
+- **Contadores**: `Agua [0/8]` se convierte en una pequeña barra – un clic suma, Mayús+clic resta; se reinician con la
+  lista.
+- **Cálculos**: una línea que termina en `=` muestra el resultado, las palabras se ignoran: `Alquiler 650 + luz 80 =`
+  → **730**.
+- **Etiquetas**: `#trabajo`, `#privado` aparecen como etiquetas de color; un clic busca la etiqueta en todas las vallas.
+- **Tablas**: líneas como `| Nombre | Precio |`; una línea `|---|---|` bajo la primera la convierte en encabezado.
+- **Tamaño del texto**: Ctrl+rueda del ratón sobre una nota (se recuerda por nota).
+- **Plantillas**: Nota desde plantilla ▸ (lista de la compra, plan semanal, reunión, equipaje, rutina diaria) en los
+  menús; menú de la nota → «Guardar como plantilla…» añade las tuyas.
+- **Versiones anteriores…** (menú de la nota): los últimos 20 estados de la nota, cada uno se puede restaurar.
+- **Exportar** (menú de la nota): guardar como Markdown o PDF, o imprimir.
 - **Ctrl+Alt+N** (se cambia en Configuración → Escritorio) crea desde cualquier sitio una nota junto al ratón, lista para
   escribir.
 - Menú de la valla → **Recordatorio…**: a la hora elegida, NoFences suena y muestra una notificación – una vez, a diario,

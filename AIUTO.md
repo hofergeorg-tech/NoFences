@@ -101,6 +101,21 @@ cambia in Impostazioni → Desktop.
   `{b}`, `{p}`, `{o}`, `{r}`) e priorità a inizio riga: `!!! alta`, `!! media`, `! bassa` (bandierina rossa, arancione o
   blu). Più semplice: la **barra di formattazione** sopra l'editor (grassetto, corsivo, sottolineato, barrato, colori,
   priorità) o **Ctrl+B / Ctrl+I / Ctrl+U / Ctrl+H** (evidenzia in giallo). I formati si possono combinare.
+- **Liste di controllo**: il titolo mostra quante caselle sono spuntate ("3/7"). Menu della nota → **Lista di
+  controllo**: voci fatte al loro posto, in fondo o nascoste; **togli le spunte automaticamente** ogni giorno, nei giorni
+  feriali, ogni settimana o ogni mese (ad es. una routine), o subito tutte.
+- **Sottovoci**: rientra le righe con Tab (o due spazi); una piccola freccia davanti le comprime e le espande.
+- **Contatori**: `Acqua [0/8]` diventa una piccola barra – un clic conta in su, Maiusc+clic in giù; si azzerano con la
+  lista.
+- **Calcoli**: una riga che finisce con `=` mostra il risultato, le parole vengono ignorate: `Affitto 650 + luce 80 =`
+  → **730**.
+- **Tag**: `#lavoro`, `#privato` appaiono come etichette colorate; un clic cerca il tag in tutti i recinti.
+- **Tabelle**: righe come `| Nome | Prezzo |`; una riga `|---|---|` sotto la prima la rende intestazione.
+- **Dimensione del testo**: Ctrl+rotella su una nota (ricordata per nota).
+- **Modelli**: Nota da modello ▸ (lista della spesa, piano settimanale, riunione, valigia, routine quotidiana) nel menu
+  della barra e dei recinti; menu della nota → "Salva come modello…" aggiunge i propri.
+- **Versioni precedenti…** (menu della nota): gli ultimi 20 stati della nota, ognuno ripristinabile.
+- **Esporta** (menu della nota): salva come Markdown o PDF, oppure stampa.
 - **Ctrl+Alt+N** (modificabile in Impostazioni → Desktop) crea da ovunque una nota accanto al mouse, pronta da scrivere.
 - Menu del recinto → **Promemoria…**: a quell'ora NoFences emette un suono e mostra una notifica – una volta, ogni giorno,
   nei giorni feriali, ogni settimana o ogni mese.

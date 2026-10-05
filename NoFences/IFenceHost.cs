@@ -84,6 +84,9 @@ namespace NoFences
         /// <summary>Undoes the last change (Ctrl+Z).</summary>
         void Undo();
 
+        /// <summary>Saves a note's text as an own template.</summary>
+        void SaveNoteTemplate(string name, string text);
+
         /// <summary>Opens the search across all fences with this text (e.g. a tag).</summary>
         void SearchFor(string text);
 

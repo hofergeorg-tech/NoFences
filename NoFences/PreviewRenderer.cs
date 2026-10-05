@@ -43,6 +43,7 @@ namespace NoFences
             public void RecordUndo(string description, IReadOnlyList<string> snapshots) { }
             public void Undo() { }
             public void SearchFor(string text) { }
+            public void SaveNoteTemplate(string name, string text) { }
             public void RaiseAboveOtherFences(FenceWindow window) { }
             public void DockMemberChanged(FenceWindow window, Rectangle before) { }
             public void Offer(string text, Action onClick) { }

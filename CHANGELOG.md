@@ -5,7 +5,12 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.9.0] - unreleased
+## [2.10.0] - unreleased
+
+### Added
+- **Notes**: checklist progress in the title, finished items at the end or hidden, checklists that untick themselves daily/weekly/monthly, sub-items with fold arrows, click counters `[3/8]`, calculations (`650 + 80 =` → 730), colored `#tags` (click searches), tables, text size with Ctrl+mouse wheel, **templates** (and own ones), the last 20 **versions** to restore, **export** as Markdown or PDF and printing.
+
+## [2.9.0] - 2026-10-05
 
 ### Added
 - **Note formatting**: underline, strikeout, colored markers and priority flags (!!! / !! / !) besides bold and italic – with a formatting bar above the editor and Ctrl+B / I / U / H.

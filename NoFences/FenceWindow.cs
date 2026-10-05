@@ -1035,6 +1035,7 @@ namespace NoFences
                 menu.Items.Add(new ToolStripMenuItem(Strings.Reminder, null, (_, _) => EditReminder()) { Checked = Info.ReminderAt != null });
                 AddAppointmentItems(menu.Items);
                 AddChecklistItems(menu.Items);
+                AddNoteExtrasMenu(menu.Items);
                 menu.Items.Add(Strings.VoiceNoteRecord, null, (_, _) => RecordVoiceNote());
                 AddNoteProtectionItems(menu.Items);
             }

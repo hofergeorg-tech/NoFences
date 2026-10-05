@@ -599,6 +599,7 @@ namespace NoFences
             if (text != NoteContent)
             {
                 var before = NoteContent;
+                RememberNoteVersion();
                 NoteContent = text;
                 app.RequestSave();
                 OfferNewAppointment(before, text);

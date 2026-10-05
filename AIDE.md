@@ -110,6 +110,22 @@ résultat, **↑↓** pour choisir, **Échap** ferme. Le raccourci se change dan
   `{b}`, `{p}`, `{o}`, `{r}`) et priorité en début de ligne : `!!! haute`, `!! moyenne`, `! basse` (fanion rouge, orange ou
   bleu). Plus simple : la **barre de mise en forme** au-dessus de l'éditeur (gras, italique, souligné, barré, couleurs,
   priorité) ou **Ctrl+B / Ctrl+I / Ctrl+U / Ctrl+H** (surligner en jaune). Les formats se combinent.
+- **Listes de contrôle** : le titre indique combien de cases sont cochées (« 3/7 »). Menu de la note → **Liste de
+  contrôle** : éléments faits à leur place, à la fin ou masqués ; **décocher automatiquement** chaque jour, en semaine,
+  chaque semaine ou chaque mois (p. ex. une routine), ou tout de suite.
+- **Sous-éléments** : indentez les lignes avec Tab (ou deux espaces) ; une petite flèche devant les replie et les
+  déplie.
+- **Compteurs** : `Eau [0/8]` devient une petite barre – un clic compte, Maj+clic décompte ; ils se remettent à zéro
+  avec la liste.
+- **Calculs** : une ligne terminée par `=` affiche le résultat, les mots sont ignorés : `Loyer 650 + électricité 80 =`
+  → **730**.
+- **Tags** : `#travail`, `#perso` s'affichent en étiquettes colorées ; un clic cherche le tag dans toutes les barrières.
+- **Tableaux** : des lignes comme `| Nom | Prix |` ; une ligne `|---|---|` sous la première en fait un en-tête.
+- **Taille du texte** : Ctrl+molette sur une note (mémorisée par note).
+- **Modèles** : Note à partir d'un modèle ▸ (liste de courses, semaine, réunion, bagages, routine du jour) dans les
+  menus ; menu de la note → « Enregistrer comme modèle… » ajoute les vôtres.
+- **Versions précédentes…** (menu de la note) : les 20 derniers états de la note, chacun restaurable.
+- **Exporter** (menu de la note) : enregistrer en Markdown ou PDF, ou imprimer.
 - **Ctrl+Alt+N** (modifiable dans Paramètres → Bureau) crée de n'importe où une note près de la souris, prête à écrire.
 - Menu de la barrière → **Rappel…** : à l'heure choisie, NoFences joue un son et affiche une notification – une fois,
   chaque jour, en semaine, chaque semaine ou chaque mois.

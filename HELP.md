@@ -97,6 +97,19 @@ settings pages ("bluetooth", "sound"). Type a calculation like `12*7` or `200*15
   `{o}`, `{r}`) and priority at the start of a line: `!!! high`, `!! medium`, `! low` (a red, orange or blue flag).
   Easier: the **formatting bar** above the editor (bold, italic, underline, strikeout, marker colors, priority) or
   **Ctrl+B / Ctrl+I / Ctrl+U / Ctrl+H** (yellow marker). Formats can be combined.
+- **Checklists**: the title shows how many boxes are ticked ("3/7"). Note menu → **Checklist**: finished items where they
+  are, at the end or hidden; **untick automatically** every day, on weekdays, weekly or monthly (e.g. a routine), or
+  everything right now.
+- **Sub-items**: indent lines with Tab (or two spaces); a small arrow in front folds them away and back.
+- **Counters**: `Water [0/8]` becomes a little bar – a click counts up, Shift+click down; they reset with the checklist.
+- **Calculations**: a line ending in `=` shows its result, words are ignored: `Rent 650 + power 80 =` → **730**.
+- **Tags**: `#work`, `#private` appear as colored labels; a click searches all fences for the tag.
+- **Tables**: lines like `| Name | Price |`; a line `|---|---|` below the first row makes it a header.
+- **Text size**: Ctrl+mouse wheel over a note (remembered per note).
+- **Templates**: Note from template ▸ (shopping list, week plan, meeting, packing list, daily routine) in the tray and
+  fence menus; note menu → "Save as template…" adds your own.
+- **Earlier versions…** (note menu): the last 20 states of the note, each can be restored.
+- **Export** (note menu): save as Markdown or PDF, or print.
 - **Ctrl+Alt+N** (changeable in Settings → Desktop) creates a note at the mouse, ready to type – from anywhere.
 - Fence menu → **Reminder…**: NoFences plays a sound and shows a notification at that time – once, daily, on weekdays,
   weekly or monthly.

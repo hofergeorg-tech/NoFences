@@ -105,6 +105,21 @@ du unter Einstellungen → Desktop.
   oranges oder blaues Fähnchen). Einfacher: die **Formatierungsleiste** über dem Editor (fett, kursiv, unterstrichen,
   durchgestrichen, Markierfarben, Priorität) oder **Strg+B / Strg+I / Strg+U / Strg+H** (gelb markieren). Formate lassen
   sich kombinieren.
+- **Checklisten**: Der Titel zeigt, wie viele Kästchen abgehakt sind („3/7“). Notiz-Menü → **Checkliste**: Erledigte an
+  ihrem Platz, ans Ende oder ausblenden; **automatisch zurücksetzen** täglich, werktags, wöchentlich oder monatlich
+  (z. B. eine Routine), oder sofort alles.
+- **Unterpunkte**: Zeilen mit Tab (oder zwei Leerzeichen) einrücken; ein kleiner Pfeil davor klappt sie zu und auf.
+- **Zähler**: `Wasser [0/8]` wird zum kleinen Balken – Klick zählt hoch, Shift+Klick runter; sie setzen sich mit der
+  Checkliste zurück.
+- **Rechnen**: Eine Zeile, die mit `=` endet, zeigt das Ergebnis, Wörter werden ignoriert: `Miete 650 + Strom 80 =` →
+  **730**.
+- **Tags**: `#arbeit`, `#privat` erscheinen als farbige Etiketten; ein Klick sucht den Tag in allen Fences.
+- **Tabellen**: Zeilen wie `| Name | Preis |`; eine Zeile `|---|---|` unter der ersten macht sie zur Kopfzeile.
+- **Schriftgröße**: Strg+Mausrad über einer Notiz (pro Notiz gemerkt).
+- **Vorlagen**: Notiz aus Vorlage ▸ (Einkaufsliste, Wochenplan, Besprechung, Packliste, Tagesroutine) im Tray- und
+  Fence-Menü; Notiz-Menü → „Als Vorlage speichern…“ ergänzt eigene.
+- **Frühere Versionen…** (Notiz-Menü): die letzten 20 Stände der Notiz, jeder lässt sich wiederherstellen.
+- **Exportieren** (Notiz-Menü): als Markdown oder PDF speichern oder drucken.
 - **Strg+Alt+N** (änderbar unter Einstellungen → Desktop) legt von überall eine Notiz an der Maus an, bereit zum Tippen.
 - Fence-Menü → **Erinnerung…**: Zur gewählten Zeit meldet sich NoFences mit Ton und Benachrichtigung – einmalig,
   täglich, werktags, wöchentlich oder monatlich.

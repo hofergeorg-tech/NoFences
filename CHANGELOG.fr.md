@@ -4,7 +4,12 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.9.0] - non publiée
+## [2.10.0] - non publiée
+
+### Nouveautés
+- **Notes** : progression de la liste dans le titre, éléments faits à la fin ou masqués, listes qui se décochent chaque jour/semaine/mois, sous-éléments avec flèches, compteurs cliquables `[3/8]`, calculs (`650 + 80 =` → 730), `#tags` colorés (un clic cherche), tableaux, taille du texte avec Ctrl+molette, **modèles** (aussi personnels), les 20 dernières **versions** à restaurer, **export** en Markdown ou PDF et impression.
+
+## [2.9.0] - 2026-10-05
 
 ### Nouveautés
 - **Mise en forme des notes** : souligné, barré, surlignage en couleur et fanions de priorité (!!! / !! / !) en plus du gras et de l'italique – avec une barre de mise en forme au-dessus de l'éditeur et Ctrl+B / I / U / H.
