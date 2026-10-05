@@ -33,7 +33,7 @@ namespace NoFences
             noteFont?.Dispose();
             noteFontDone?.Dispose();
             checkFont?.Dispose();
-            noteFont = theme.CreateNoteFont(scale);
+            noteFont = theme.CreateNoteFont(scale * Math.Clamp(Info.NoteZoom, 60, 250) / 100f);
             noteFontDone = new Font(noteFont, FontStyle.Strikeout);
             checkFont = new Font("Segoe UI Symbol", noteFont.Size, FontStyle.Regular, GraphicsUnit.Pixel);
             foreach (var f in new[] { noteBold, noteItalic, heading1, heading2, heading3 })
@@ -136,6 +136,8 @@ namespace NoFences
         {
             checkboxes.Clear();
             links.Clear();
+            counters.Clear();
+            foldArrows.Clear();
             if (noteFont == null || noteFontDone == null || checkFont == null || Editing)
                 return;
 
@@ -160,11 +162,30 @@ namespace NoFences
             var y = (float)area.Y - scrollOffset;
             (float X, float Y)? quoteBar = null;
             var lines = NoteContent.Split('\n');
-            for (var i = 0; i < lines.Length; i++)
+            // Finished items at the end or hidden, sub-items of folded lines left out
+            var order = NoteLists.DisplayOrder(lines, Info.NoteDone, Info.NoteFolded);
+            var parents = Enumerable.Range(0, lines.Length).Where(k => lines[k].Trim().Length > 0 && NoteLists.HasChildren(lines, k)).ToHashSet();
+            var gutter = parents.Count > 0 ? Px(16) : 0;
+            for (var o = 0; o < order.Count; o++)
             {
+                var i = order[o];
                 var line = lines[i];
-                var x = (float)area.X;
                 var font = noteFont;
+                if (NoteLists.IsTableLine(line))
+                {
+                    // A table: this line and the following table lines
+                    var rows = new List<string> { line };
+                    while (o + 1 < order.Count && order[o + 1] == order[o] + 1 && NoteLists.IsTableLine(lines[order[o + 1]]))
+                        rows.Add(lines[order[++o]]);
+                    y += DrawTable(g, rows, area.X + gutter, y, area.Right - area.X - gutter, view);
+                    continue;
+                }
+                var indent = NoteLists.Indent(line);
+                var x = (float)area.X + gutter + indent * Px(18);
+                if (parents.Contains(i))
+                    DrawFoldArrow(g, x - Px(15), y, font, Info.NoteFolded?.Contains(NoteLists.FoldKey(line)) == true, NoteLists.FoldKey(line), view);
+                if (indent > 0)
+                    line = line.TrimStart();
                 if (NoteText.Media(line) is { } media)
                 {
                     y += DrawMediaLine(g, media, x, y, area.Right - x, view);
@@ -228,13 +249,17 @@ namespace NoFences
                     line = withoutPriority;
                 }
 
+                // "Miete 650 + Strom 80 =" shows its result
+                if (NoteLists.TryCalculate(line, out var result))
+                    line = line.TrimEnd() + " **" + result + "**";
+
                 var width = area.Right - x;
                 float height;
-                if (NoteText.HasInlineFormatting(line))
+                if (NoteText.HasInlineFormatting(line) || NoteLists.HasCounter(line) || NoteLists.HasTag(line))
                 {
-                    // Formatted runs: laid out word by word (links aren't underlined here)
+                    // Formatted runs, counters and tags: laid out word by word (links aren't underlined here)
                     var visible = y + font.Height * 3 >= view.Top && y <= view.Bottom;
-                    height = DrawRuns(g, NoteText.Runs(line), x, y, width, visible, font);
+                    height = DrawRuns(g, NoteText.Runs(line), x, y, width, visible, font, i);
                 }
                 else
                 {
@@ -263,8 +288,9 @@ namespace NoFences
         /// Draws formatted runs (bold, italic, underline, strikeout, colored marking) with word wrapping
         /// on top of <paramref name="baseFont"/> (headings stay big); returns the height used.
         /// </summary>
-        private float DrawRuns(Graphics g, List<NoteText.Run> runs, float x, float y, float width, bool draw, Font? baseFont = null)
+        private float DrawRuns(Graphics g, List<NoteText.Run> runs, float x, float y, float width, bool draw, Font? baseFont = null, int line = -1)
         {
+            var counterIndex = 0;
             baseFont ??= noteFont!;
             var format = StringFormat.GenericTypographic;
             var lineHeight = baseFont.GetHeight(g);
@@ -280,6 +306,40 @@ namespace NoFences
                 for (var w = 0; w < words.Length; w++)
                 {
                     var word = words[w];
+                    // Counters "[3/8]" and tags "#work" are small clickable pills
+                    if (line >= 0 && NoteLists.CounterPattern().Match(word) is { Success: true, Index: 0 } counter && counter.Length == word.Length)
+                    {
+                        var pillWidth = CounterWidth(g, counter.Value, font);
+                        if (cx + pillWidth > x + width && cx > x)
+                        {
+                            cx = x;
+                            cy += lineHeight;
+                        }
+                        if (draw)
+                            DrawCounter(g, counter, new RectangleF(cx, cy, pillWidth, lineHeight), font, line, counterIndex);
+                        counterIndex++;
+                        cx += pillWidth + (w < words.Length - 1 ? space : 0);
+                        continue;
+                    }
+                    if (line >= 0 && NoteLists.TagPattern().Match(word) is { Success: true, Index: 0 } tag)
+                    {
+                        var tagWidth = TagWidth(g, tag.Value, font);
+                        if (cx + tagWidth > x + width && cx > x)
+                        {
+                            cx = x;
+                            cy += lineHeight;
+                        }
+                        if (draw)
+                            DrawTag(g, tag.Value, new RectangleF(cx, cy, tagWidth, lineHeight), font);
+                        cx += tagWidth;
+                        word = word[tag.Length..]; // punctuation after the tag
+                        if (word.Length == 0)
+                        {
+                            if (w < words.Length - 1)
+                                cx += space;
+                            continue;
+                        }
+                    }
                     if (word.Length > 0)
                     {
                         var size = g.MeasureString(word, font, PointF.Empty, format);
@@ -359,8 +419,15 @@ namespace NoFences
                 Invalidate();
                 return true;
             }
+            if (NoteListClick(p))
+                return true;
 
             var target = LinkAt(client);
+            if (target != null && target.StartsWith("tag:", StringComparison.Ordinal))
+            {
+                app.SearchFor(target["tag:".Length..]);
+                return true;
+            }
             if (target != null && target.StartsWith("audio:", StringComparison.Ordinal))
             {
                 PlayAudio(target["audio:".Length..]);
@@ -408,7 +475,8 @@ namespace NoFences
         private void UpdateNoteCursor(Point client)
         {
             var p = new PointF(client.X, client.Y - titleHeight + scrollOffset);
-            var clickable = LinkAt(client) != null || checkboxes.Any(c => RectangleF.Inflate(c.box, Px(3), Px(3)).Contains(p));
+            var clickable = LinkAt(client) != null || checkboxes.Any(c => RectangleF.Inflate(c.box, Px(3), Px(3)).Contains(p))
+                || counters.Any(c => c.rect.Contains(p)) || foldArrows.Any(a => a.rect.Contains(p));
             Cursor = clickable ? Cursors.Hand : Cursors.Default;
         }
 

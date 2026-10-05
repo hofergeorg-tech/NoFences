@@ -107,6 +107,9 @@ namespace NoFences.Model
         /// <summary>Hovering a folder shows its contents, hovering an image or PDF a large preview.</summary>
         public bool HoverPreview { get; set; } = true;
 
+        /// <summary>Own note templates ("Save as template" in a note's menu).</summary>
+        public List<NoteTemplate> NoteTemplates { get; set; } = new();
+
         /// <summary>Fence groups docked to a screen edge (sidebars and bars).</summary>
         public List<DockBar> Docks { get; set; } = new();
 

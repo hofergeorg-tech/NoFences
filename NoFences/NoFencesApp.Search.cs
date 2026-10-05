@@ -32,6 +32,8 @@ namespace NoFences
 
         public void OpenSearch() => SearchWindow.ShowSingle(this);
 
+        public void SearchFor(string text) => SearchWindow.ShowSingle(this, text);
+
         /// <summary>Opens a result: the file, or for a note, brings the fences to the front.</summary>
         internal void OpenSearchResult(SearchItem item)
         {
@@ -118,11 +120,16 @@ namespace NoFences
         private readonly int fenceItemCount;
         private List<SearchItem> shown = new();
 
-        public static void ShowSingle(NoFencesApp app)
+        public static void ShowSingle(NoFencesApp app, string? text = null)
         {
             if (open is { IsDisposed: false })
             {
                 open.Activate();
+                if (text != null)
+                {
+                    open.box.Text = text;
+                    open.box.SelectionStart = text.Length;
+                }
                 return;
             }
             open = new SearchWindow(app);
@@ -131,6 +138,11 @@ namespace NoFences
             Native.SetForegroundWindowSafe(open.Handle);
             open.Activate();
             open.box.Focus();
+            if (text != null)
+            {
+                open.box.Text = text;
+                open.box.SelectionStart = text.Length;
+            }
         }
 
         private SearchWindow(NoFencesApp app)

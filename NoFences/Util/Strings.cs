@@ -641,6 +641,19 @@ namespace NoFences.Util
         public static string PriorityMedium => L("PriorityMedium");
         public static string PriorityLow => L("PriorityLow");
         public static string PriorityNone => L("PriorityNone");
+        public static string ChecklistMenu => L("ChecklistMenu");
+        public static string NoteDoneNormal => L("NoteDoneNormal");
+        public static string NoteDoneBottom => L("NoteDoneBottom");
+        public static string NoteDoneHidden => L("NoteDoneHidden");
+        public static string ChecklistReset => L("ChecklistReset");
+        public static string ChecklistResetNever => L("ChecklistResetNever");
+        public static string ChecklistClearNow => L("ChecklistClearNow");
+        public static string NoteDoneName(NoteDoneMode mode) => mode switch
+        {
+            NoteDoneMode.Bottom => NoteDoneBottom,
+            NoteDoneMode.Hidden => NoteDoneHidden,
+            _ => NoteDoneNormal
+        };
         public static string MarkerColorName(char color) => color switch
         {
             'g' => MarkerGreen,

@@ -84,6 +84,9 @@ namespace NoFences
         /// <summary>Undoes the last change (Ctrl+Z).</summary>
         void Undo();
 
+        /// <summary>Opens the search across all fences with this text (e.g. a tag).</summary>
+        void SearchFor(string text);
+
         /// <summary>Puts this fence above the other fences on the desktop (e.g. while it unfolds over them).</summary>
         void RaiseAboveOtherFences(FenceWindow window);
 

@@ -420,7 +420,10 @@ namespace NoFences
             else if (titleFont != null)
                 theme.DrawTitle(g, new Rectangle(0, 0, bounds.Width, titleHeight), theme.FormatTitle(Text), titleFont, scale);
             if (IsNote)
+            {
                 DrawReminderBadge(g);
+                DrawNoteProgress(g);
+            }
 
             if (collapsed || labelFont == null)
                 return;
@@ -976,6 +979,8 @@ namespace NoFences
         {
             base.OnMouseWheel(e);
             HideHoverPreview();
+            if (ZoomNote(e.Delta))
+                return;
             if (IsWidget)
             {
                 if (widget?.Wheel(e.Delta) == true)
@@ -1029,6 +1034,7 @@ namespace NoFences
                 menu.Items.Add(Strings.EditNote, null, (_, _) => StartEditNote());
                 menu.Items.Add(new ToolStripMenuItem(Strings.Reminder, null, (_, _) => EditReminder()) { Checked = Info.ReminderAt != null });
                 AddAppointmentItems(menu.Items);
+                AddChecklistItems(menu.Items);
                 menu.Items.Add(Strings.VoiceNoteRecord, null, (_, _) => RecordVoiceNote());
                 AddNoteProtectionItems(menu.Items);
             }

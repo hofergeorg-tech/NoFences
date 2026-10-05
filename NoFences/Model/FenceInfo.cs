@@ -183,6 +183,23 @@ namespace NoFences.Model
         /// <summary>Password-protected notes: the encrypted text (<see cref="NoteText"/> stays empty).</summary>
         public string? NoteCipher { get; set; }
 
+        /// <summary>Notes: finished checklist items shown normally, at the end, or hidden.</summary>
+        public NoteDoneMode NoteDone { get; set; }
+
+        /// <summary>Notes: tick boxes and counters are reset daily/weekly/monthly (recurring checklists).</summary>
+        public Repeat NoteResetRepeat { get; set; }
+
+        public DateTime? NoteLastReset { get; set; }
+
+        /// <summary>Notes: lines whose sub-items are folded away (see <see cref="NoteLists.FoldKey"/>).</summary>
+        public List<string>? NoteFolded { get; set; }
+
+        /// <summary>Notes: text size in percent (Ctrl+mouse wheel).</summary>
+        public int NoteZoom { get; set; } = 100;
+
+        /// <summary>Notes: earlier states, newest last (at most 20).</summary>
+        public List<NoteVersion>? NoteVersions { get; set; }
+
         /// <summary>Notes only: local time at which to remind the user; cleared once shown.</summary>
         public DateTime? ReminderAt { get; set; }
 

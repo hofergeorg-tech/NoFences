@@ -23,6 +23,7 @@ namespace NoFences
             CheckTodos(now);
             CheckTimers(now);
             CheckBreakReminder(now);
+            CheckChecklistResets(now);
             foreach (var fence in Store.Config.Fences.Where(f => f.ReminderAt is DateTime at && at <= now).ToList())
             {
                 // Repeating reminders move on to their next time
@@ -54,6 +55,29 @@ namespace NoFences
                 windows.FirstOrDefault(w => w.Info == fence)?.Invalidate();
                 SystemSounds.Asterisk.Play();
                 ShowBalloon(Strings.TodoDue(fence.Name, string.Join("\n", due.Select(i => "• " + i.Text))), () => StartPeek(), timeout: 15_000);
+            }
+        }
+
+        /// <summary>Recurring checklists: a new day/week/month unticks them (weekdays: not on weekends).</summary>
+        private void CheckChecklistResets(DateTime now)
+        {
+            foreach (var fence in Store.Config.Fences.Where(f => f.Kind == FenceKind.Note && f.NoteResetRepeat != Repeat.None && f.NoteCipher == null))
+            {
+                if (fence.NoteResetRepeat == Repeat.Weekdays && now.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday)
+                    continue;
+                if (!NoteLists.ResetDue(fence.NoteLastReset, fence.NoteResetRepeat, now))
+                    continue;
+                var window = windows.FirstOrDefault(w => w.Info == fence);
+                if (window != null)
+                {
+                    window.ResetChecklist();
+                }
+                else
+                {
+                    fence.NoteText = NoteLists.Reset(fence.NoteText);
+                    fence.NoteLastReset = now;
+                    Store.RequestSave();
+                }
             }
         }
 
