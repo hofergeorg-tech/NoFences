@@ -58,7 +58,7 @@ namespace NoFences
             InitUpdates();
             InitReminders();
             InitBackupsAndScreens();
-            InitFps();
+            RemoveLegacyFpsHelper();
             InitVirtualDesktops();
             InitPlaytime();
             InitAutomation();
@@ -84,6 +84,11 @@ namespace NoFences
                     ShowBalloon(Strings.FirstStartHint, timeout: 8000);
             }
             ShowChangelogAfterUpdate(firstStart);
+
+            // Crashes and freezes end up in logs\log.txt; the watchdog starts with the message loop
+            // (starting up isn't a freeze).
+            AppDomain.CurrentDomain.UnhandledException += (_, e) => Log.Write("Crash", e.ExceptionObject.ToString() ?? "");
+            SynchronizationContext.Current?.Post(_ => UiWatchdog.Start(), null);
         }
 
         internal void UpdateDesktopHook()
@@ -324,6 +329,7 @@ namespace NoFences
 
         protected override void ExitThreadCore()
         {
+            UiWatchdog.Stop();
             if (!skipSaveOnExit)
                 Store.SaveNow();
             desktopHook?.Dispose();
@@ -331,7 +337,6 @@ namespace NoFences
             DisposeUpdates();
             DisposeReminders();
             DisposeBackupsAndScreens();
-            DisposeFps();
             virtualDesktopTimer.Dispose();
             DisposePlaytime();
             DisposeAutomation();

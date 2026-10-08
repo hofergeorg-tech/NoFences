@@ -25,7 +25,7 @@ namespace NoFences
 
         private void InitScreenTime()
         {
-            screenTimeTimer.Tick += (_, _) => TrackScreenTime();
+            screenTimeTimer.Tick += Util.UiWatchdog.Named("Screen time", (_, _) => TrackScreenTime());
             screenTimeTimer.Start();
         }
 

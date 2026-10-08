@@ -33,7 +33,7 @@ pasted **pictures**, **voice notes** and **password-protected** (encrypted) note
 ![Sticky notes](docs/notes.png)
 ![Pictures, voice notes and a protected note](docs/notes-media.png)
 
-**Widgets** – clock & calendar, system monitor (CPU, RAM, GPU, optional FPS), drives, recycle bin,
+**Widgets** – clock & calendar, system monitor (CPU, RAM, GPU), drives, recycle bin,
 **playtime** of any game (pick its exe, NoFences records how long it runs), a **countdown**, **weather**
 (Open-Meteo, no account), **now playing** with media controls, **network** rate and ping, **clipboard history** and
 **battery**, your installed **games** (Steam with covers, Epic, GOG, Xbox), **appointments** from calendar links
@@ -106,13 +106,8 @@ file, no installation, no .NET needed. Windows may show a SmartScreen warning be
 **Online:** only what you set up – update checks (GitHub), weather (Open-Meteo), your calendar links, news feeds and
 prices (Yahoo Finance; for information only).
 
-## FPS measurement
-
-Optional and off by default. Windows only provides frame-rate events (ETW) to processes with administrator rights,
-so NoFences starts a small helper (`NoFences.exe --fps-helper`) elevated – the main app never runs as administrator.
-The helper only counts presented frames per process and writes the frame rate of the program in front to a small file;
-it reads no screen content and no input. Enabling it in the settings explains this and asks Windows once (UAC); a
-Task Scheduler task then starts it without asking. Disabling removes the task.
+**No administrator rights:** NoFences never runs elevated. (The optional FPS measurement of earlier versions needed an
+elevated helper and was removed in 2.11.)
 
 ## Build
 

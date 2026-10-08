@@ -259,7 +259,7 @@ namespace NoFences
                 return;
             if (!path.EndsWith(".wav", StringComparison.OrdinalIgnoreCase))
             {
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(path) { UseShellExecute = true });
+                Util.Launcher.Start(new System.Diagnostics.ProcessStartInfo(path) { UseShellExecute = true });
                 return;
             }
             try

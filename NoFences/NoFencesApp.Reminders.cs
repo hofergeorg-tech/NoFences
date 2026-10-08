@@ -12,7 +12,7 @@ namespace NoFences
 
         private void InitReminders()
         {
-            reminderTimer.Tick += (_, _) => CheckReminders();
+            reminderTimer.Tick += Util.UiWatchdog.Named("Reminders", (_, _) => CheckReminders());
             reminderTimer.Start();
             CheckReminders(); // reminders that came due while NoFences wasn't running
         }

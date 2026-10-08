@@ -6,6 +6,9 @@ namespace NoFences.Win32
     /// <summary>
     /// Raises <see cref="DoubleClicked"/> when the user double-clicks empty space on the desktop
     /// (not an icon). Uses a low-level mouse hook, since the desktop belongs to Explorer.
+    /// Windows calls a low-level hook for every mouse event of every program, in the thread that
+    /// installed it – so it lives on its own thread: a busy UI thread must not make the mouse stutter
+    /// system-wide (and Windows silently removes hooks that time out too often).
     /// </summary>
     internal sealed class DesktopDoubleClickHook : IDisposable
     {
@@ -64,10 +67,35 @@ namespace NoFences.Win32
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessageTimeout(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, int flags, int timeout, out IntPtr result);
 
+        [StructLayout(LayoutKind.Sequential)]
+        private struct MSG
+        {
+            public IntPtr hwnd;
+            public uint message;
+            public IntPtr wParam, lParam;
+            public uint time;
+            public POINT pt;
+            public uint lPrivate;
+        }
+
+        [DllImport("user32.dll")]
+        private static extern int GetMessage(out MSG msg, IntPtr hwnd, uint filterMin, uint filterMax);
+
+        [DllImport("user32.dll")]
+        private static extern bool PostThreadMessage(uint threadId, uint msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("kernel32.dll")]
+        private static extern uint GetCurrentThreadId();
+
+        private const uint WM_QUIT = 0x0012;
+
         private readonly LowLevelMouseProc proc; // must stay referenced while the hook is installed
         private readonly SynchronizationContext ui;
+        private readonly Thread thread;
+        private uint threadId;
         private IntPtr hook;
 
+        // Only touched on the hook thread
         private uint lastTime;
         private POINT lastPoint;
 
@@ -77,7 +105,22 @@ namespace NoFences.Win32
         {
             ui = SynchronizationContext.Current ?? new WindowsFormsSynchronizationContext();
             proc = HookProc;
-            hook = SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(null), 0);
+            using var ready = new ManualResetEventSlim();
+            thread = new Thread(() =>
+            {
+                threadId = GetCurrentThreadId();
+                hook = SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(null), 0);
+                ready.Set();
+                // The hook is called while this thread waits for messages; WM_QUIT ends it.
+                while (GetMessage(out _, IntPtr.Zero, 0, 0) > 0)
+                {
+                }
+                if (hook != IntPtr.Zero)
+                    UnhookWindowsHookEx(hook);
+                hook = IntPtr.Zero;
+            }) { IsBackground = true, Name = "Desktop mouse hook" };
+            thread.Start();
+            ready.Wait();
         }
 
         private IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam)
@@ -163,11 +206,10 @@ namespace NoFences.Win32
 
         public void Dispose()
         {
-            if (hook != IntPtr.Zero)
-            {
-                UnhookWindowsHookEx(hook);
-                hook = IntPtr.Zero;
-            }
+            if (!thread.IsAlive)
+                return;
+            PostThreadMessage(threadId, WM_QUIT, IntPtr.Zero, IntPtr.Zero);
+            thread.Join(1000);
         }
     }
 }

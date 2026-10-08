@@ -16,7 +16,7 @@ namespace NoFences
 
         private void InitFenceTools()
         {
-            fadeTimer.Tick += (_, _) => UpdateFading();
+            fadeTimer.Tick += Util.UiWatchdog.Named("Fade", (_, _) => UpdateFading());
             UpdateFading();
             sourcesTimer.Tick += (_, _) =>
             {

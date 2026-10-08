@@ -27,9 +27,29 @@ namespace NoFences.Util
         [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
         private static extern int SHFileOperation(ref SHFILEOPSTRUCT op);
 
-        public static bool Move(IWin32Window owner, IEnumerable<string> sources, string targetDir) => Run(owner, FO_MOVE, sources, targetDir);
+        public static bool Move(IWin32Window? owner, IEnumerable<string> sources, string targetDir) => Run(owner, FO_MOVE, sources, targetDir);
 
-        public static bool Copy(IWin32Window owner, IEnumerable<string> sources, string targetDir) => Run(owner, FO_COPY, sources, targetDir);
+        public static bool Copy(IWin32Window? owner, IEnumerable<string> sources, string targetDir) => Run(owner, FO_COPY, sources, targetDir);
+
+        /// <summary>
+        /// Runs a shell operation on its own STA thread and reports the result on the UI thread.
+        /// Copying big files in a drop handler would freeze the fences – and the Explorer window the
+        /// files came from, which waits until the drop returns. No owner window: a window of the UI
+        /// thread as owner would tie both threads' input together again.
+        /// </summary>
+        public static void InBackground(Func<bool> operation, Action<bool> done)
+        {
+            var ui = SynchronizationContext.Current ?? new WindowsFormsSynchronizationContext();
+            var thread = new Thread(() =>
+            {
+                bool ok;
+                try { ok = operation(); }
+                catch (Exception) { ok = false; }
+                ui.Post(_ => done(ok), null);
+            }) { Name = "Shell file operation" }; // not a background thread: exiting waits for a running move
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+        }
 
         /// <summary>Moves files to the recycle bin (Explorer asks for confirmation as usual).</summary>
         public static bool Recycle(IWin32Window owner, IEnumerable<string> paths) => Run(owner, FO_DELETE, paths, null);

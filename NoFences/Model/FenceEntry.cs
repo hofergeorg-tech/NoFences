@@ -75,17 +75,9 @@ namespace NoFences.Model
             }
         }
 
-        public void Open()
-        {
-            try
-            {
-                // .NET (Core) defaults UseShellExecute to false, which can't open documents.
-                Process.Start(new ProcessStartInfo(Path) { UseShellExecute = true, WorkingDirectory = System.IO.Path.GetDirectoryName(Path) ?? "" });
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "NoFences", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
+        /// <summary>Opens the item without waiting for it (see <see cref="Util.Launcher"/>).</summary>
+        public void Open() =>
+            // .NET (Core) defaults UseShellExecute to false, which can't open documents.
+            Util.Launcher.StartOrWarn(new ProcessStartInfo(Path) { UseShellExecute = true, WorkingDirectory = System.IO.Path.GetDirectoryName(Path) ?? "" });
     }
 }

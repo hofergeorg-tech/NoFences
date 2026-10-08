@@ -31,6 +31,7 @@ namespace NoFences.Widgets
             this.getOption = getOption;
             this.setOption = setOption;
             listener = new Listener(OnClipboardChanged);
+            settle.Tick += UiWatchdog.Named("Clipboard", (_, _) => StartRead());
             LoadPinned();
         }
 
@@ -40,34 +41,82 @@ namespace NoFences.Widgets
 
         internal ClipboardHistory History => history;
 
+        /// <summary>A read that takes longer than this (the source program hangs) no longer blocks new ones.</summary>
+        private static readonly TimeSpan ReadGivesUpAfter = TimeSpan.FromSeconds(10);
+
+        private readonly System.Windows.Forms.Timer settle = new() { Interval = 150 };
+        private DateTime? readingSince;
+        private bool readAgain;
+
         private void OnClipboardChanged()
         {
             if (PreviewMode)
                 return;
+            // Programs often update the clipboard several times in a row: read once it settled
+            settle.Stop();
+            settle.Start();
+        }
+
+        /// <summary>
+        /// Reads the clipboard on its own STA thread. Many programs render the copied data only when
+        /// someone asks for it, and big screenshots take a moment to convert – the fences must not wait for that.
+        /// </summary>
+        private void StartRead()
+        {
+            settle.Stop();
+            if (readingSince is { } since && DateTime.Now - since < ReadGivesUpAfter)
+            {
+                readAgain = true;
+                return;
+            }
+            readingSince = DateTime.Now;
+            var thread = new Thread(() =>
+            {
+                var result = ReadClipboard();
+                Post(() =>
+                {
+                    if (result is string text)
+                        history.Add(text);
+                    else if (result is ClipItem image)
+                        history.AddImage(image);
+                    readingSince = null;
+                    if (readAgain)
+                    {
+                        readAgain = false;
+                        StartRead();
+                    }
+                });
+            }) { IsBackground = true, Name = "Clipboard" };
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+        }
+
+        /// <summary>The copied text, an image ready for the list, or null if there's nothing to record.</summary>
+        private static object? ReadClipboard()
+        {
             try
             {
                 var data = Clipboard.GetDataObject();
                 if (data == null || ClipboardHistory.IsExcluded(data.GetFormats()) || ClipboardHistory.HistoryForbidden(data))
-                    return;
+                    return null;
                 if (data.GetDataPresent(DataFormats.UnicodeText) && data.GetData(DataFormats.UnicodeText) is string text)
+                    return text;
+                if (data.GetDataPresent(DataFormats.Bitmap) && Clipboard.GetImage() is Bitmap image)
                 {
-                    history.Add(text);
-                }
-                else if (data.GetDataPresent(DataFormats.Bitmap) && Clipboard.GetImage() is Bitmap image)
-                {
-                    // Compressing a big screenshot takes a moment: off the UI thread
-                    Task.Run(() =>
-                    {
-                        var item = ClipItem.FromImage(image);
-                        image.Dispose();
-                        Post(() => history.AddImage(item));
-                    });
+                    using (image)
+                        return ClipItem.FromImage(image);
                 }
             }
             catch (ExternalException)
             {
                 // Clipboard is busy (another app holds it); this copy is skipped
             }
+            catch (Exception e)
+            {
+                // Never let a strange clipboard format take the app down from this thread
+                Log.Write("Clipboard", Log.Describe(e));
+            }
+            return null;
         }
 
         private void Post(Action action)
@@ -254,6 +303,7 @@ namespace NoFences.Widgets
 
         public override void Dispose()
         {
+            settle.Dispose();
             listener.Dispose();
             history.Clear(includingPinned: true);
         }

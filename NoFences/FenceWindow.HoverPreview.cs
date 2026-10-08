@@ -19,6 +19,7 @@ namespace NoFences
         {
             hoverPreviewTimer.Tick += (_, _) =>
             {
+                using var _ = UiWatchdog.Activity("Hover preview");
                 hoverPreviewTimer.Stop();
                 ShowHoverPreview();
             };

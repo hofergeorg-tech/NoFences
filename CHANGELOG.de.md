@@ -4,7 +4,18 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.10.0] - unveröffentlicht
+## [2.11.0] - unveröffentlicht
+
+### Behoben
+- **Kurze Hänger**: Doppelklick-auf-Desktop lässt nicht mehr die ganze Maus ruckeln, wenn NoFences gerade beschäftigt ist (der Maus-Hook hat jetzt einen eigenen Thread; vorher konnte Windows ihn auch still abschalten). Zwischenablage lesen, auf einen Fence gezogene Dateien kopieren/verschieben und Einträge öffnen warten nicht mehr auf die Fences – große Kopien frieren weder NoFences noch das Explorer-Fenster ein, aus dem sie kommen.
+
+### Neu
+- NoFences merkt, wenn es hängt, und schreibt in logs\log.txt, was gerade lief (Zeile Freeze: …), Abstürze ebenso.
+
+### Entfernt
+- **FPS-Messung**: Sie brauchte einen Helfer mit Administratorrechten. NoFences braucht jetzt nie Adminrechte. War sie an, bietet NoFences einmal an, die übrig gebliebene Aufgabe in der Aufgabenplanung zu entfernen.
+
+## [2.10.0] - 2026-10-05
 
 ### Neu
 - **Notizen**: Checklisten-Fortschritt im Titel, Erledigte ans Ende oder ausblenden, Checklisten, die sich täglich/wöchentlich/monatlich zurücksetzen, Unterpunkte mit Klapp-Pfeilen, Klick-Zähler `[3/8]`, Rechnen (`650 + 80 =` → 730), farbige `#Tags` (Klick sucht), Tabellen, Schriftgröße mit Strg+Mausrad, **Vorlagen** (auch eigene), die letzten 20 **Versionen** zum Wiederherstellen, **Export** als Markdown oder PDF und Drucken.

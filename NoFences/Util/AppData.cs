@@ -8,7 +8,7 @@ namespace NoFences.Util
     {
         public static string? Folder { get; set; }
 
-        /// <summary>Temporary files (web page widget, FPS helper). Set at startup; found on demand otherwise.</summary>
+        /// <summary>Temporary files (web page widget). Set at startup; found on demand otherwise.</summary>
         public static string? CacheFolder { get; set; }
 
         public static string Cache => CacheFolder ??= Model.DataFolder.Find().Cache;

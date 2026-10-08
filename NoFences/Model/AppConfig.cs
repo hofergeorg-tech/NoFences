@@ -25,7 +25,7 @@ namespace NoFences.Model
         /// <summary>Smooth collapsing and the styles' hover effects.</summary>
         public bool Animations { get; set; } = true;
 
-        /// <summary>Opt-in: run the elevated FPS helper (off by default, user is told about admin rights first).</summary>
+        /// <summary>The removed FPS helper was on: only read once to clean it up (see NoFencesApp.Fps.cs).</summary>
         public bool FpsHelperEnabled { get; set; }
 
         /// <summary>UI language: "auto" (Windows language, English if not German/Italian), "en", "de" or "it".</summary>

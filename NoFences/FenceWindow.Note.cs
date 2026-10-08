@@ -435,14 +435,7 @@ namespace NoFences
             }
             if (target != null)
             {
-                try
-                {
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(target) { UseShellExecute = true });
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message, "NoFences", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                Launcher.StartOrWarn(new System.Diagnostics.ProcessStartInfo(target) { UseShellExecute = true });
                 return true;
             }
             return false;

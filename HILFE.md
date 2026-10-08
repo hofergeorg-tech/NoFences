@@ -137,8 +137,7 @@ du unter Einstellungen → Desktop.
 Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem Mausrad.
 
 - **Uhr & Kalender**; Tage mit Terminen aus einem Termine-Widget tragen einen Punkt.
-- **System-Monitor**: CPU, RAM, GPU-Last und -Temperatur (NVIDIA), eine Kurve der letzten zwei Minuten und **FPS**, wenn
-  aktiviert (siehe unten). Bleibt die Grafikkarte zu heiß, warnt NoFences (Grenze im Menü: 75–90 °C oder aus).
+- **System-Monitor**: CPU, RAM, GPU-Last und -Temperatur (NVIDIA), eine Kurve der letzten zwei Minuten. Bleibt die Grafikkarte zu heiß, warnt NoFences (Grenze im Menü: 75–90 °C oder aus).
 - **Laufwerke**: Füllstand und freier Platz; Klick öffnet das Laufwerk.
 - **Papierkorb**: Dateien darauf ziehen löscht sie, Doppelklick öffnet ihn, im Menü leeren.
 - **Spielzeit**: heute / diese Woche / diesen Monat / gesamt für ein beliebiges Spiel. Doppelklick und die EXE des Spiels
@@ -267,13 +266,6 @@ eigene Styles liegen dann dort, und jeder PC, der auf denselben Ordner zeigt, ha
 pro Monitor-Anordnung, Laptop und Desktop-PC können sie also verschieden anordnen. Speichert ein anderer PC, lädt
 NoFences nach ein paar Sekunden neu. „Nicht mehr teilen“ kopiert alles zurück auf diesen PC.
 
-## FPS-Messung (optional)
-
-Windows gibt die Ereignisse für die Bildrate nur an Programme mit Administratorrechten. NoFences nutzt dafür einen kleinen
-Hilfsprozess, der als Administrator läuft – NoFences selbst nicht. Er zählt nur Bilder, keine Bildinhalte, keine Eingaben.
-Einschalten unter **Einstellungen → FPS-Messung**; Windows fragt einmal, danach startet eine Aufgabe in der Aufgabenplanung
-den Helfer ohne Nachfrage. Beim Ausschalten wird die Aufgabe wieder entfernt.
-
 ## Vom Desktop einsortieren
 
 In den Fence-Einstellungen unter „Vom Desktop einsortieren“ Muster eintragen, z. B. `*.pdf; *.docx`, oder eine Vorlage
@@ -303,7 +295,6 @@ von Hand bearbeiten (`#RRGGBB` oder `#RRGGBBAA`) und weitergeben. Eigene Styles 
   Einsortieren.
 - **Automatik**: Profilregeln, Pausen-Erinnerung, Vollbild, heller und dunkler Style, Hintergrund nach Tageszeit (siehe oben).
 - **Updates**: NoFences prüft GitHub und installiert neue Versionen mit einem Klick; Spenden.
-- **FPS-Messung**: siehe oben.
 - **Daten & Styles**: Fences exportieren/importieren, Sicherung wiederherstellen (alle 12 Stunden), gemeinsamer Ordner, Ordner.
 
 ## Häufige Fragen
@@ -319,6 +310,13 @@ Nur, was du einrichtest: die Update-Prüfung (GitHub), Wetter (Open-Meteo), dein
 (Yahoo Finance), Steam-Angebote und -News (Steam), Twitch-Status (decapi.me), der Speedtest (Cloudflare) und Seiten im
 Webseiten-Widget sowie die öffentliche Adresse in Werkzeuge ▸ Netzwerk-Infos (ipify.org). Sonst wird nichts gesendet.
 
+**Die Fences hängen manchmal kurz.**
+NoFences merkt das selbst und schreibt eine Zeile wie `Freeze: UI blocked 1830 ms during: Clipboard` in `logs\log.txt`
+(Einstellungen → Daten & Styles → „Datenordner öffnen“). Daran sieht man, was gerade lief – hilfreich, wenn du es meldest.
+
+**Braucht NoFences Administratorrechte?**
+Nein, nie. (Die FPS-Messung älterer Versionen brauchte sie und wurde in 2.11 entfernt.)
+
 **Wo liegen meine Einstellungen?**
 Neben der `NoFences.exe`, sortiert in Ordner: `config` (fences.json, Spielzeit), `backups`, `themes`, `media`
 (Notiz-Bilder, Sprachnotizen, Ablage), `cache`, `logs` und `lang` (eigene Übersetzungen). Ist der Programmordner nicht
@@ -327,5 +325,5 @@ Fences und Styles dort. Einstellungen → Daten & Styles → „Datenordner öff
 werden automatisch umgezogen.
 
 **Wie deinstalliere ich NoFences?**
-Einstellungen → Allgemein: „Mit Windows starten“ abhaken; FPS-Messung ausschalten, falls genutzt; Tray → Beenden;
+Einstellungen → Allgemein: „Mit Windows starten“ abhaken; Tray → Beenden;
 `NoFences.exe` und ihre Datenordner (siehe oben) löschen. Dateien in Ordner-Fences bleiben in ihren Ordnern.

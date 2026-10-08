@@ -144,8 +144,8 @@ résultat, **↑↓** pour choisir, **Échap** ferme. Le raccourci se change dan
 Menu de la zone de notification ou d'une barrière → **Nouveau widget**. Les widgets avec une liste défilent à la molette.
 
 - **Horloge et calendrier** ; les jours avec des rendez-vous d'un widget Rendez-vous portent un point.
-- **Moniteur système** : CPU, RAM, charge et température du GPU (NVIDIA), une courbe des deux dernières minutes, et
-  **FPS** si activé (voir plus bas). Si la carte graphique reste trop chaude, NoFences vous prévient (seuil dans le menu :
+- **Moniteur système** : CPU, RAM, charge et température du GPU (NVIDIA), et une courbe des deux dernières minutes.
+  Si la carte graphique reste trop chaude, NoFences vous prévient (seuil dans le menu :
   75–90 °C ou désactivé).
 - **Lecteurs** : niveau de remplissage et espace libre ; un clic ouvre le lecteur.
 - **Corbeille** : déposez-y des fichiers pour les supprimer, double-clic l'ouvre, le menu la vide.
@@ -278,13 +278,6 @@ et styles personnels y sont alors stockés, et chaque PC qui utilise le même do
 positions sont gardées par configuration d'écrans : un portable et un PC fixe peuvent donc les disposer différemment.
 Quand un autre PC enregistre, NoFences recharge au bout de quelques secondes. « Arrêter le partage » recopie tout sur ce PC.
 
-## Mesure des FPS (facultative)
-
-Windows ne fournit les événements de fréquence d'images qu'aux programmes disposant de droits d'administrateur. NoFences
-utilise donc un petit processus assistant qui s'exécute en administrateur – pas NoFences lui-même. Il compte seulement
-les images, aucun contenu, aucune saisie. Activez-la dans **Paramètres → Mesure des FPS** ; Windows demande une fois,
-ensuite une tâche du Planificateur de tâches démarre l'assistant sans demander. La désactiver supprime la tâche.
-
 ## Ranger depuis le bureau
 
 Dans les paramètres d'une barrière, saisissez des modèles sous « Ranger depuis le bureau », par ex. `*.pdf; *.docx`, ou
@@ -315,7 +308,6 @@ styles personnels portent une ★.
 - **Automatisation** : règles de profil, rappel de pause, plein écran, style clair et sombre, fond d'écran selon l'heure
   (voir plus haut).
 - **Mises à jour** : NoFences vérifie GitHub et installe les nouvelles versions en un clic ; dons.
-- **Mesure des FPS** : voir plus haut.
 - **Données et styles** : exporter/importer des barrières, restaurer une sauvegarde (toutes les 12 heures), dossier
   partagé, dossiers.
 
@@ -333,6 +325,14 @@ Seulement ce que vous configurez : la vérification des mises à jour (GitHub), 
 les flux d'actualités, les cours (Yahoo Finance), les promos et actus Steam (Steam), l'état Twitch (decapi.me), le test
 de débit (Cloudflare) et les pages du widget Page web, ainsi que l'adresse publique dans Outils ▸ Infos réseau (ipify.org). Rien d'autre n'est envoyé.
 
+**Les barrières se figent parfois un instant.**
+NoFences le remarque lui-même et écrit une ligne comme `Freeze: UI blocked 1830 ms during: Clipboard` dans
+`logs\log.txt` (Paramètres → Données et styles → « Ouvrir le dossier de données »). Elle montre ce qui était en cours –
+utile pour le signaler.
+
+**NoFences a-t-il besoin de droits d'administrateur ?**
+Non, jamais. (La mesure des FPS des anciennes versions en avait besoin et a été supprimée dans la 2.11.)
+
 **Où sont mes réglages ?**
 À côté de `NoFences.exe`, rangés en dossiers : `config` (fences.json, temps de jeu), `backups`, `themes`, `media`
 (images et notes vocales des notes, étagère), `cache`, `logs` et `lang` (traductions personnelles). Si le dossier du
@@ -340,6 +340,6 @@ programme n'est pas accessible en écriture (p. ex. Program Files), ils sont dan
 dossier partagé, barrières et styles y sont. Les données des versions précédentes sont déplacées automatiquement.
 
 **Comment désinstaller ?**
-Paramètres → Général : décochez « Démarrer avec Windows » ; désactivez la mesure des FPS si utilisée ; zone de
+Paramètres → Général : décochez « Démarrer avec Windows » ; zone de
 notification → Quitter ; supprimez `NoFences.exe` et ses dossiers de données (voir ci-dessus). Les fichiers des barrières de
 dossier restent dans leurs dossiers.

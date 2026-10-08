@@ -127,8 +127,7 @@ settings pages ("bluetooth", "sound"). Type a calculation like `12*7` or `200*15
 Tray or fence menu → **New widget**. Widgets with a list scroll with the mouse wheel.
 
 - **Clock & calendar**; days with appointments from an appointments widget carry a dot.
-- **System monitor**: CPU, RAM, GPU load and temperature (NVIDIA), a graph of the last two minutes, and **FPS** if
-  enabled (see below). If the graphics card stays too hot, NoFences warns you (limit in the menu: 75–90 °C or off).
+- **System monitor**: CPU, RAM, GPU load and temperature (NVIDIA), and a graph of the last two minutes. If the graphics card stays too hot, NoFences warns you (limit in the menu: 75–90 °C or off).
 - **Drives**: fill level and free space; click opens the drive.
 - **Recycle bin**: drop files on it to delete them, double-click opens it, the menu empties it.
 - **Playtime**: today / this week / this month / total for any game. Double-click and pick the game's exe; NoFences
@@ -250,13 +249,6 @@ live there, and every PC pointed at the same folder shows the same fences. Posit
 laptop and a desktop PC can arrange them differently. When another PC saves, NoFences reloads after a few seconds.
 "Stop sharing" copies everything back to this PC.
 
-## FPS measurement (optional)
-
-Windows only gives the frame-rate events to programs with administrator rights. NoFences therefore uses a small
-helper process that runs as administrator – NoFences itself does not. It only counts frames, no screen content,
-no input. Turn it on in **Settings → FPS measurement**; Windows asks once, after that a Task Scheduler task starts the
-helper without asking. Turning it off removes the task again.
-
 ## Auto-sort from the desktop
 
 In a fence's settings, enter patterns under "Auto-sort from the desktop", e.g. `*.pdf; *.docx`, or add a preset.
@@ -285,7 +277,6 @@ fence" applies it right away. It is saved as JSON in the styles folder, where st
   fading far from the mouse; preview on hover; profiles; search shortcut (Ctrl+Alt+F); auto-sort.
 - **Automation**: profile rules, break reminder, full screen, light and dark style, wallpaper by time of day (see above).
 - **Updates**: NoFences checks GitHub and installs new versions with one click; donate.
-- **FPS measurement**: see above.
 - **Data & styles**: export/import fences, restore a backup (made every 12 hours), shared folder, folders.
 
 ## FAQ
@@ -301,6 +292,13 @@ Only what you set up: update checks (GitHub), weather (Open-Meteo), your calenda
 Finance), Steam sales and news (Steam), Twitch status (decapi.me), the speed test (Cloudflare) and pages in the web page
 widget, and the public address in Tools ▸ Network info (ipify.org). Nothing else is sent anywhere.
 
+**The fences sometimes freeze for a moment.**
+NoFences notices that itself and writes a line like `Freeze: UI blocked 1830 ms during: Clipboard` into `logs\log.txt`
+(Settings → Data & styles → "Open data folder"). That line shows what was running – helpful when reporting it.
+
+**Does NoFences need administrator rights?**
+No, never. (The FPS measurement of older versions needed them and was removed in 2.11.)
+
 **Where are my settings?**
 Next to `NoFences.exe`, sorted into folders: `config` (fences.json, playtime), `backups`, `themes`, `media` (note
 pictures, voice notes, shelf), `cache`, `logs` and `lang` (own translations). If the program folder can't be written to
@@ -308,5 +306,5 @@ pictures, voice notes, shelf), `cache`, `logs` and `lang` (own translations). If
 Settings → Data & styles → "Open data folder" shows the folder. Data of older versions is moved automatically.
 
 **How do I uninstall?**
-Settings → General: uncheck "Start with Windows"; turn off FPS measurement if used; tray → Exit; delete `NoFences.exe`
+Settings → General: uncheck "Start with Windows"; tray → Exit; delete `NoFences.exe`
 and its data folders (see above). Files in folder fences stay in their folders.

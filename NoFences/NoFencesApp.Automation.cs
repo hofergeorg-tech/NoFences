@@ -25,7 +25,7 @@ namespace NoFences
 
         private void InitAutomation()
         {
-            automationTimer.Tick += (_, _) => AutomationTick();
+            automationTimer.Tick += Util.UiWatchdog.Named("Automation", (_, _) => AutomationTick());
             automationTimer.Start();
         }
 

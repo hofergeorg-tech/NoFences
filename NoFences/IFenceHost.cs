@@ -10,12 +10,6 @@ namespace NoFences
 
         bool Animations { get; }
 
-        /// <summary>The opt-in FPS helper (needs admin rights) is enabled.</summary>
-        bool FpsEnabled { get; }
-
-        /// <summary>Turns the FPS helper on (after explaining the admin rights) or off.</summary>
-        void ToggleFps();
-
         FenceTheme ThemeFor(FenceInfo info);
 
         void RequestSave();

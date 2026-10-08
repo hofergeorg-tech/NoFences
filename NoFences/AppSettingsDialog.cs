@@ -59,7 +59,6 @@ namespace NoFences
                 (Strings.SectionDesktop, BuildDesktop),
                 (Strings.SectionAutomation, BuildAutomation),
                 (Strings.SectionUpdates, BuildUpdates),
-                (Strings.SectionFps, BuildFps),
                 (Strings.SectionData, BuildData),
             };
 
@@ -135,7 +134,7 @@ namespace NoFences
                 var selected = nav.SelectedIndex;
                 Text = Strings.SettingsTitle;
                 for (var p = 0; p < pages.Count; p++)
-                    pages[p] = (new[] { Strings.SectionGeneral, Strings.SectionDesktop, Strings.SectionAutomation, Strings.SectionUpdates, Strings.SectionFps, Strings.SectionData }[p], pages[p].Build);
+                    pages[p] = (new[] { Strings.SectionGeneral, Strings.SectionDesktop, Strings.SectionAutomation, Strings.SectionUpdates, Strings.SectionData }[p], pages[p].Build);
                 nav.Items.Clear();
                 nav.Items.AddRange(pages.Select(x => (object)x.Title).ToArray());
                 BeginInvoke(() => nav.SelectedIndex = selected);
@@ -404,21 +403,6 @@ namespace NoFences
                 Hint(grid, Strings.DonateHint, ContentWidth);
                 Wide(grid, Action("♥ " + Strings.Donate, AboutDialog.OpenDonate));
             }
-        }
-
-        private void BuildFps(FlowLayoutPanel page)
-        {
-            var grid = Section(page, Strings.SectionFps, ContentWidth);
-            Hint(grid, Strings.FpsShortHint, ContentWidth);
-            CheckBox? box = null;
-            box = Check(Strings.FpsEnabledLabel, app.FpsEnabled, _ =>
-            {
-                // ToggleFps explains the admin rights and may be declined; show the real state afterwards.
-                if (box!.Checked != app.FpsEnabled)
-                    app.ToggleFps();
-                BeginInvoke(() => box.Checked = app.FpsEnabled);
-            });
-            Wide(grid, box);
         }
 
         private void BuildData(FlowLayoutPanel page)

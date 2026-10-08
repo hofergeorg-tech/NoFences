@@ -17,10 +17,8 @@ namespace NoFences
         {
             public bool ShowExtensions => false;
             public bool Animations => false;
-            public bool FpsEnabled => true;
             public PlaytimeLog Playtime { get; } = DemoPlaytime();
             public UsageLog ScreenTime { get; } = DemoUsage();
-            public void ToggleFps() { }
             /// <summary>Style designer: draws with a style that isn't registered (yet).</summary>
             public Func<FenceInfo, FenceTheme>? ThemeOverride { get; init; }
             public FenceTheme ThemeFor(FenceInfo info) => ThemeOverride?.Invoke(info) ?? ThemeRegistry.Get(info.Theme);

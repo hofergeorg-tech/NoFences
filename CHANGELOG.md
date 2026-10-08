@@ -5,7 +5,18 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.10.0] - unreleased
+## [2.11.0] - unreleased
+
+### Fixed
+- **Short freezes**: the double-click-on-desktop feature no longer makes the whole mouse stutter when NoFences is busy (its mouse hook now has its own thread; Windows could also switch it off silently before). Reading the clipboard, copying/moving files dropped onto a fence and opening items no longer wait on the fences – big copies don't freeze NoFences or the Explorer window they come from.
+
+### Added
+- NoFences notices when it freezes and writes what was running into logs\log.txt (line Freeze: …), crashes too.
+
+### Removed
+- **FPS measurement**: it needed a helper with administrator rights. NoFences now never needs them. If it was on, NoFences offers once to remove the leftover scheduled task.
+
+## [2.10.0] - 2026-10-05
 
 ### Added
 - **Notes**: checklist progress in the title, finished items at the end or hidden, checklists that untick themselves daily/weekly/monthly, sub-items with fold arrows, click counters `[3/8]`, calculations (`650 + 80 =` → 730), colored `#tags` (click searches), tables, text size with Ctrl+mouse wheel, **templates** (and own ones), the last 20 **versions** to restore, **export** as Markdown or PDF and printing.

@@ -66,9 +66,20 @@ namespace NoFences
             Bounds = new Rectangle(info.PosX, info.PosY, Math.Max(80, info.Width), Math.Max(60, info.Height));
             suppressBoundsSave = false;
 
-            collapseTimer.Tick += (_, _) => CollapseIfMouseAway();
-            refreshTimer.Tick += (_, _) => { refreshTimer.Stop(); ReloadEntries(); };
-            linkPollTimer.Tick += (_, _) => { if (Info.Kind == FenceKind.Links) ReloadEntries(); };
+            collapseTimer.Tick += UiWatchdog.Named("Collapse check", (_, _) => CollapseIfMouseAway());
+            refreshTimer.Tick += (_, _) =>
+            {
+                using var _ = UiWatchdog.Activity($"Reload fence \"{Info.Name}\"");
+                refreshTimer.Stop();
+                ReloadEntries();
+            };
+            linkPollTimer.Tick += (_, _) =>
+            {
+                if (Info.Kind != FenceKind.Links)
+                    return;
+                using var _ = UiWatchdog.Activity($"Check links of \"{Info.Name}\"");
+                ReloadEntries();
+            };
             IconCache.Shared.ImageLoaded += IconCache_ImageLoaded;
             InitAnimations();
             InitHoverPreview();
@@ -402,7 +413,11 @@ namespace NoFences
 
         #region Painting
 
-        protected override void OnPaint(PaintEventArgs e) => PaintFence(e.Graphics);
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            using var _ = UiWatchdog.Activity($"Paint \"{Info.Name}\"");
+            PaintFence(e.Graphics);
+        }
 
         /// <summary>Paints the whole fence; also used by the <c>--preview</c> renderer.</summary>
         public void PaintFence(Graphics g)
@@ -1320,6 +1335,7 @@ namespace NoFences
         protected override void OnDragDrop(DragEventArgs e)
         {
             base.OnDragDrop(e);
+            using var _ = UiWatchdog.Activity($"Drop on \"{Info.Name}\"");
             if (HasTabs && dropTab >= 0)
             {
                 var tab = dropTab;
@@ -1372,11 +1388,23 @@ namespace NoFences
             }
             else
             {
-                var ok = effect == DragDropEffects.Move
-                    ? ShellFileOps.Move(this, files, Info.FolderPath!)
-                    : ShellFileOps.Copy(this, files, Info.FolderPath!);
-                if (ok)
-                    InsertInOrder(files.Select(f => Path.Combine(Info.FolderPath!, Path.GetFileName(f.TrimEnd('\\')))), index);
+                var folder = Info.FolderPath!;
+                var move = effect == DragDropEffects.Move;
+                // We move the files ourselves, after the drop returns: the source must not see "Move"
+                // and delete the originals itself before we got to them.
+                e.Effect = DragDropEffects.Copy;
+                ShellFileOps.InBackground(
+                    () => move ? ShellFileOps.Move(null, files, folder) : ShellFileOps.Copy(null, files, folder),
+                    ok =>
+                    {
+                        if (IsDisposed || Info.FolderPath != folder)
+                            return;
+                        if (ok)
+                            InsertInOrder(files.Select(f => Path.Combine(folder, Path.GetFileName(f.TrimEnd('\\')))), index);
+                        app.RequestSave();
+                        ReloadEntries();
+                    });
+                return;
             }
 
             app.RequestSave();

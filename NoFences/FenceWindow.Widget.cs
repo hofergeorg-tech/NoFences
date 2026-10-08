@@ -1,4 +1,5 @@
 using NoFences.Model;
+using NoFences.Util;
 using NoFences.Widgets;
 
 namespace NoFences
@@ -44,6 +45,7 @@ namespace NoFences
         {
             if (widget == null || !Visible || collapsed)
                 return;
+            using var _ = UiWatchdog.Activity($"Widget {widget.Type}");
             try
             {
                 widget.Refresh();

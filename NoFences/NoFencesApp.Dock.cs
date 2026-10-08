@@ -35,7 +35,7 @@ namespace NoFences
         private void InitDocks()
         {
             Docks.RemoveAll(d => !Store.Config.Fences.Any(f => string.Equals(f.Group, d.Group, StringComparison.CurrentCultureIgnoreCase)));
-            dockTimer.Tick += (_, _) => UpdateDocks();
+            dockTimer.Tick += Util.UiWatchdog.Named("Sidebar", (_, _) => UpdateDocks());
             UpdateDocks();
         }
 

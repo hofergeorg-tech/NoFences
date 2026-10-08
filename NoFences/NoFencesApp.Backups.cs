@@ -17,7 +17,7 @@ namespace NoFences
             SystemEvents.DisplaySettingsChanged += OnDisplaySettingsChanged;
 
             Store.BackupIfDue();
-            backupTimer.Tick += (_, _) => Store.BackupIfDue();
+            backupTimer.Tick += Util.UiWatchdog.Named("Backup", (_, _) => Store.BackupIfDue());
             backupTimer.Start();
         }
 

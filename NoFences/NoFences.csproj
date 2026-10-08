@@ -13,7 +13,7 @@
     <ApplicationIcon>NoFences.ico</ApplicationIcon>
     <RootNamespace>NoFences</RootNamespace>
     <AssemblyName>NoFences</AssemblyName>
-    <Version>2.10.0</Version>
+    <Version>2.11.0</Version>
     <Product>NoFences</Product>
     <Description>Free desktop fences for Windows</Description>
     <PlatformTarget>x64</PlatformTarget>
@@ -35,8 +35,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- ETW real-time session for the (opt-in, elevated) FPS helper -->
-    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.*" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4258.31" />
     <!-- QR codes for Tools > QR code (MIT license) -->
     <PackageReference Include="QRCoder" Version="1.8.0" />

@@ -135,8 +135,8 @@ atajo se cambia en Configuración → Escritorio.
 Menú de la bandeja o de una valla → **Nuevo widget**. Los widgets con listas se desplazan con la rueda del ratón.
 
 - **Reloj y calendario**; los días con citas de un widget Citas llevan un punto.
-- **Monitor del sistema**: CPU, RAM, carga y temperatura de la GPU (NVIDIA), un gráfico de los dos últimos minutos y
-  **FPS** si está activado (ver más abajo). Si la tarjeta gráfica sigue demasiado caliente, NoFences avisa (límite en el
+- **Monitor del sistema**: CPU, RAM, carga y temperatura de la GPU (NVIDIA), y un gráfico de los dos últimos minutos. Si
+  la tarjeta gráfica sigue demasiado caliente, NoFences avisa (límite en el
   menú: 75–90 °C o desactivado).
 - **Unidades**: nivel de llenado y espacio libre; un clic abre la unidad.
 - **Papelera**: suelta archivos en ella para eliminarlos, doble clic la abre, el menú la vacía.
@@ -263,13 +263,6 @@ y estilos propios se guardan entonces allí, y cada PC que use la misma carpeta 
 se guardan por configuración de monitores, así que un portátil y un PC de sobremesa pueden colocarlas de forma distinta.
 Cuando otro PC guarda, NoFences recarga en pocos segundos. «Dejar de compartir» vuelve a copiar todo a este PC.
 
-## Medición de FPS (opcional)
-
-Windows solo entrega los eventos de la tasa de fotogramas a programas con permisos de administrador. Por eso NoFences usa
-un pequeño proceso asistente que se ejecuta como administrador; NoFences no. Solo cuenta fotogramas, nada del contenido
-ni de lo que escribes. Actívala en **Configuración → Medición de FPS**; Windows pregunta una vez y después una tarea del
-Programador de tareas inicia el asistente sin preguntar. Al desactivarla, la tarea se elimina.
-
 ## Ordenar desde el escritorio
 
 En la configuración de una valla, escribe patrones en «Ordenar desde el escritorio», p. ej. `*.pdf; *.docx`, o añade una
@@ -299,7 +292,6 @@ también se pueden editar a mano (`#RRGGBB` o `#RRGGBBAA`) y compartir. Los esti
 - **Automatización**: reglas de perfil, recordatorio de descanso, pantalla completa, estilo claro y oscuro, fondo según la
   hora del día (ver arriba).
 - **Actualizaciones**: NoFences comprueba GitHub e instala las versiones nuevas con un clic; donaciones.
-- **Medición de FPS**: ver arriba.
 - **Datos y estilos**: exportar/importar vallas, restaurar una copia de seguridad (cada 12 horas), carpeta compartida, carpetas.
 
 ## Preguntas frecuentes
@@ -316,6 +308,14 @@ Solo lo que configures: la búsqueda de actualizaciones (GitHub), el tiempo (Ope
 fuentes de noticias, las cotizaciones (Yahoo Finance), ofertas y noticias de Steam (Steam), el estado de Twitch
 (decapi.me), el test de velocidad (Cloudflare) y las páginas del widget Página web, además de la dirección pública en Herramientas ▸ Información de red (ipify.org). No se envía nada más.
 
+**A veces las vallas se quedan congeladas un momento.**
+NoFences lo nota por sí mismo y escribe una línea como `Freeze: UI blocked 1830 ms during: Clipboard` en
+`logs\log.txt` (Configuración → Datos y estilos → «Abrir carpeta de datos»). Muestra qué se estaba ejecutando; útil si
+lo comunicas.
+
+**¿NoFences necesita permisos de administrador?**
+No, nunca. (La medición de FPS de versiones anteriores los necesitaba y se eliminó en la 2.11.)
+
 **¿Dónde está mi configuración?**
 Junto a `NoFences.exe`, ordenada en carpetas: `config` (fences.json, tiempo de juego), `backups`, `themes`, `media`
 (imágenes y notas de voz, bandeja), `cache`, `logs` y `lang` (traducciones propias). Si no se puede escribir en la carpeta
@@ -323,5 +323,5 @@ del programa (p. ej. Archivos de programa), está en `%LocalAppData%\NoFences`. 
 estilos están allí. Los datos de versiones anteriores se mueven automáticamente.
 
 **¿Cómo desinstalo NoFences?**
-Configuración → General: desmarca «Iniciar con Windows»; desactiva la medición de FPS si la usas; bandeja → Salir; elimina
+Configuración → General: desmarca «Iniciar con Windows»; bandeja → Salir; elimina
 `NoFences.exe` y sus carpetas de datos (ver arriba). Los archivos de las vallas de carpeta se quedan en sus carpetas.

@@ -133,8 +133,7 @@ cambia in Impostazioni → Desktop.
 Menu della barra o del recinto → **Nuovo widget**. I widget con un elenco scorrono con la rotellina del mouse.
 
 - **Orologio e calendario**; i giorni con appuntamenti di un widget Appuntamenti hanno un punto.
-- **Monitor di sistema**: CPU, RAM, carico e temperatura della GPU (NVIDIA), un grafico degli ultimi due minuti e **FPS**,
-  se attivati (vedi sotto). Se la scheda grafica resta troppo calda, NoFences avvisa (limite nel menu: 75–90 °C o spento).
+- **Monitor di sistema**: CPU, RAM, carico e temperatura della GPU (NVIDIA), e un grafico degli ultimi due minuti. Se la scheda grafica resta troppo calda, NoFences avvisa (limite nel menu: 75–90 °C o spento).
 - **Unità**: livello di riempimento e spazio libero; un clic apre l'unità.
 - **Cestino**: trascinaci i file per eliminarli, doppio clic lo apre, dal menu lo svuoti.
 - **Tempo di gioco**: oggi / questa settimana / questo mese / totale per qualsiasi gioco. Doppio clic e scegli
@@ -261,13 +260,6 @@ personali si trovano poi lì, e ogni PC che usa la stessa cartella mostra gli st
 ogni disposizione dei monitor, quindi portatile e PC fisso possono disporli in modo diverso. Quando un altro PC salva,
 NoFences ricarica dopo pochi secondi. "Smetti di condividere" copia tutto di nuovo su questo PC.
 
-## Misurazione FPS (facoltativa)
-
-Windows fornisce gli eventi della frequenza dei fotogrammi solo ai programmi con diritti di amministratore. NoFences usa
-quindi un piccolo processo di supporto che gira come amministratore – NoFences stesso no. Conta solo i fotogrammi, nessun
-contenuto e nessun input. Attivala in **Impostazioni → Misurazione FPS**; Windows lo chiede una volta, poi un'attività
-dell'Utilità di pianificazione avvia il supporto senza chiedere. Disattivandola, l'attività viene rimossa.
-
 ## Ordina dal desktop
 
 Nelle impostazioni di un recinto, sotto "Ordina dal desktop", inserisci degli schemi, ad es. `*.pdf; *.docx`, o aggiungi
@@ -298,7 +290,6 @@ modificare a mano (`#RRGGBB` o `#RRGGBBAA`) e condividere. Gli stili personali h
 - **Automazione**: regole dei profili, promemoria pausa, schermo intero, stile chiaro e scuro, sfondo in base all'ora
   (vedi sopra).
 - **Aggiornamenti**: NoFences controlla GitHub e installa le nuove versioni con un clic; donazioni.
-- **Misurazione FPS**: vedi sopra.
 - **Dati e stili**: esporta/importa recinti, ripristina un backup (ogni 12 ore), cartella condivisa, cartelle.
 
 ## Domande frequenti
@@ -315,6 +306,13 @@ Solo ciò che imposti tu: il controllo degli aggiornamenti (GitHub), il meteo (O
 feed di notizie, le quotazioni (Yahoo Finance), offerte e notizie di Steam (Steam), lo stato di Twitch (decapi.me), lo
 speed test (Cloudflare) e le pagine del widget Pagina web, oltre all'indirizzo pubblico in Strumenti ▸ Informazioni di rete (ipify.org). Nient'altro viene inviato.
 
+**A volte i recinti si bloccano per un attimo.**
+NoFences se ne accorge da solo e scrive una riga come `Freeze: UI blocked 1830 ms during: Clipboard` in `logs\log.txt`
+(Impostazioni → Dati e stili → "Apri cartella dati"). La riga mostra cosa era in corso – utile quando lo segnali.
+
+**NoFences ha bisogno dei diritti di amministratore?**
+No, mai. (La misurazione FPS delle versioni precedenti ne aveva bisogno ed è stata rimossa nella 2.11.)
+
 **Dove sono le mie impostazioni?**
 Accanto a `NoFences.exe`, ordinate in cartelle: `config` (fences.json, tempo di gioco), `backups`, `themes`, `media`
 (immagini e note vocali delle note, ripiano), `cache`, `logs` e `lang` (traduzioni proprie). Se nella cartella del
@@ -322,5 +320,5 @@ programma non si può scrivere (ad es. Programmi), si trovano invece in `%LocalA
 condivisa, recinti e stili sono lì. I dati delle versioni precedenti vengono spostati automaticamente.
 
 **Come si disinstalla?**
-Impostazioni → Generale: togli "Avvia con Windows"; disattiva la misurazione FPS se usata; barra → Esci; elimina
+Impostazioni → Generale: togli "Avvia con Windows"; barra → Esci; elimina
 `NoFences.exe` e le sue cartelle dati (vedi sopra). I file nei recinti cartella restano nelle loro cartelle.

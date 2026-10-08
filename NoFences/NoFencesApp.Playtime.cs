@@ -20,7 +20,7 @@ namespace NoFences
 
         private void InitPlaytime()
         {
-            playtimeTimer.Tick += (_, _) => TrackPlaytime();
+            playtimeTimer.Tick += Util.UiWatchdog.Named("Playtime", (_, _) => TrackPlaytime());
             playtimeTimer.Start();
         }
 

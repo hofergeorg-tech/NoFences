@@ -48,7 +48,7 @@ namespace NoFences.Model
             Directory.CreateDirectory(LocalDirectory);
             SyncFolder = ReadSyncPointer(LocalDirectory);
             DataDirectory = SyncFolder ?? LocalDirectory;
-            saveTimer.Tick += (_, _) => SaveNow();
+            saveTimer.Tick += Util.UiWatchdog.Named("Save", (_, _) => SaveNow());
         }
 
         /// <summary>Store in a given folder (tests).</summary>

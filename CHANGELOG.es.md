@@ -4,7 +4,18 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
-## [2.10.0] - sin publicar
+## [2.11.0] - sin publicar
+
+### Correcciones
+- **Bloqueos breves**: el doble clic en el escritorio ya no hace que todo el ratón vaya a tirones cuando NoFences está ocupado (su gancho de ratón tiene ahora su propio hilo; antes Windows también podía desactivarlo en silencio). Leer el portapapeles, copiar/mover archivos soltados en una valla y abrir elementos ya no hacen esperar a las vallas: las copias grandes ya no congelan NoFences ni la ventana del Explorador de la que vienen.
+
+### Novedades
+- NoFences nota cuando se congela y escribe en logs\log.txt qué se estaba ejecutando (línea Freeze: …), también los cierres inesperados.
+
+### Cambios
+- **Medición de FPS eliminada**: necesitaba un asistente con permisos de administrador. NoFences ya nunca los necesita. Si estaba activada, NoFences ofrece una vez eliminar la tarea programada que quedó.
+
+## [2.10.0] - 2026-10-05
 
 ### Novedades
 - **Notas**: progreso de la lista en el título, lo hecho al final u oculto, listas que se desmarcan cada día/semana/mes, subelementos con flechas, contadores `[3/8]`, cálculos (`650 + 80 =` → 730), `#etiquetas` de color (un clic busca), tablas, tamaño del texto con Ctrl+rueda, **plantillas** (también propias), las últimas 20 **versiones** para restaurar, **exportar** a Markdown o PDF e imprimir.

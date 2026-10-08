@@ -15,7 +15,7 @@ namespace NoFences
         {
             if (Store.SyncFolder == null)
                 return;
-            syncTimer.Tick += (_, _) => CheckSyncedChanges();
+            syncTimer.Tick += Util.UiWatchdog.Named("Sync check", (_, _) => CheckSyncedChanges());
             syncTimer.Start();
         }
 

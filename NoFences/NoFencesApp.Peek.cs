@@ -18,7 +18,7 @@ namespace NoFences
 
         private void InitPeek()
         {
-            peekTimer.Tick += (_, _) => WatchPeek();
+            peekTimer.Tick += Util.UiWatchdog.Named("Peek", (_, _) => WatchPeek());
             UpdateHotkey(notifyIfTaken: true);
         }
 

@@ -43,7 +43,7 @@ namespace NoFences.Model
             this.config = config;
             this.sorted = sorted;
             ui = SynchronizationContext.Current ?? new WindowsFormsSynchronizationContext();
-            timer.Tick += (_, _) => ProcessPending();
+            timer.Tick += Util.UiWatchdog.Named("Auto-sort", (_, _) => ProcessPending());
 
             if (!Directory.Exists(DesktopPath))
                 return;

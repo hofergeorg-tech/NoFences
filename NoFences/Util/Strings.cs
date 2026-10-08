@@ -721,7 +721,6 @@ namespace NoFences.Util
         public static string SectionAutoSort => L("SectionAutoSort");
         public static string SectionDesktop => L("SectionDesktop");
         public static string SectionUpdates => L("SectionUpdates");
-        public static string SectionFps => L("SectionFps");
         public static string SectionData => L("SectionData");
         public static string SettingsTitle => L("SettingsTitle");
         public static string LanguageLabel => L("LanguageLabel");
@@ -729,8 +728,6 @@ namespace NoFences.Util
         public static string LanguageFileErrors(string errors) => L("LanguageFileErrors", errors);
         public static string LanguageFolderReadme(string template) => L("LanguageFolderReadme", template);
         public static string VersionLabel(Version v) => L("VersionLabel", v);
-        public static string FpsShortHint => L("FpsShortHint");
-        public static string FpsEnabledLabel => L("FpsEnabledLabel");
 
         public static string AutoSort => L("AutoSort");
         public static string AutoSortHint => L("AutoSortHint");
@@ -878,11 +875,7 @@ namespace NoFences.Util
         public static string RecycleDropHint => L("RecycleDropHint");
         public static string RecycleEmptyAction => L("RecycleEmptyAction");
         public static string GpuTemperature => L("GpuTemperature");
-        public static string FpsWaiting => L("FpsWaiting");
-        public static string FpsMenu => L("FpsMenu");
-        public static string FpsTitle => L("FpsTitle");
-        public static string FpsExplanation => L("FpsExplanation");
-        public static string FpsDeclined => L("FpsDeclined");
+        public static string FpsRemoved => L("FpsRemoved");
 
         #endregion
 

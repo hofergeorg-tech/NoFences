@@ -72,7 +72,7 @@ namespace NoFences.Widgets
             return info.WidgetType switch
             {
                 "clock" => new ClockWidget(),
-                "system" => new SystemWidget(() => host.FpsEnabled, host.ToggleFps, () => info.WidgetOption, Set, host.Notify),
+                "system" => new SystemWidget(() => info.WidgetOption, Set, host.Notify),
                 "drives" => new DrivesWidget(),
                 "recyclebin" => new RecycleBinWidget(),
                 "playtime" => new PlaytimeWidget(() => info.WidgetOption, exe =>
