@@ -50,7 +50,8 @@ namespace NoFences
             if (index < 0 || index >= itemRects.Count || MouseButtons != MouseButtons.None || appMenuOpen || Editing || !Visible)
                 return;
             var entry = entries[index];
-            if (!entry.IsFolder && !HoverPopup.HasPreview(entry.Path))
+            // Previews of network items would log on to that server just because the mouse rested there
+            if (NetworkPath.IsNetworkPath(entry.Path) || (!entry.IsFolder && !HoverPopup.HasPreview(entry.Path)))
                 return;
             var itemOnScreen = RectangleToScreen(ToClient(itemRects[index]));
             hoverPopup = new HoverPopup(entry, scale);

@@ -5,6 +5,12 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.12.0] - unreleased
+
+### Changed
+- **Safer import**: if an imported fence file points to other computers (`\\server\…`), NoFences lists them and by default imports without them – showing them would make Windows log on to those computers with your sign-in. Only style files (`.json`) are taken from an import.
+- Items on network paths are no longer touched until you open them: a type icon instead of a thumbnail, no hover preview. Unreachable network drives no longer slow the fences down.
+
 ## [2.11.0] - 2026-10-08
 
 ### Fixed

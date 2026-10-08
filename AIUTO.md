@@ -290,7 +290,7 @@ modificare a mano (`#RRGGBB` o `#RRGGBBAA`) e condividere. Gli stili personali h
 - **Automazione**: regole dei profili, promemoria pausa, schermo intero, stile chiaro e scuro, sfondo in base all'ora
   (vedi sopra).
 - **Aggiornamenti**: NoFences controlla GitHub e installa le nuove versioni con un clic; donazioni.
-- **Dati e stili**: esporta/importa recinti, ripristina un backup (ogni 12 ore), cartella condivisa, cartelle.
+- **Dati e stili**: esporta/importa recinti, ripristina un backup (ogni 12 ore), cartella condivisa, cartelle. Se un file importato rimanda ad altri computer (`\\server\…`), NoFences chiede prima e per impostazione predefinita importa senza quelle voci. Le voci su percorsi di rete vengono contattate solo quando le apri (icona del tipo, nessuna anteprima).
 
 ## Domande frequenti
 

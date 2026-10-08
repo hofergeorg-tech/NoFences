@@ -295,7 +295,7 @@ von Hand bearbeiten (`#RRGGBB` oder `#RRGGBBAA`) und weitergeben. Eigene Styles 
   Einsortieren.
 - **Automatik**: Profilregeln, Pausen-Erinnerung, Vollbild, heller und dunkler Style, Hintergrund nach Tageszeit (siehe oben).
 - **Updates**: NoFences prüft GitHub und installiert neue Versionen mit einem Klick; Spenden.
-- **Daten & Styles**: Fences exportieren/importieren, Sicherung wiederherstellen (alle 12 Stunden), gemeinsamer Ordner, Ordner.
+- **Daten & Styles**: Fences exportieren/importieren, Sicherung wiederherstellen (alle 12 Stunden), gemeinsamer Ordner, Ordner. Verweist eine importierte Datei auf andere Computer (`\\server\…`), fragt NoFences vorher und importiert standardmäßig ohne diese Einträge. Einträge auf Netzwerkpfaden werden erst beim Öffnen kontaktiert (Typ-Symbol, keine Vorschau).
 
 ## Häufige Fragen
 

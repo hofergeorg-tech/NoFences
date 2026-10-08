@@ -309,7 +309,9 @@ styles personnels portent une ★.
   (voir plus haut).
 - **Mises à jour** : NoFences vérifie GitHub et installe les nouvelles versions en un clic ; dons.
 - **Données et styles** : exporter/importer des barrières, restaurer une sauvegarde (toutes les 12 heures), dossier
-  partagé, dossiers.
+  partagé, dossiers. Si un fichier importé renvoie vers d'autres ordinateurs (`\\server\…`), NoFences demande d'abord
+  et, par défaut, l'importe sans ces éléments. Les éléments sur des chemins réseau ne sont contactés qu'à l'ouverture
+  (icône du type, pas d'aperçu).
 
 ## Questions fréquentes
 

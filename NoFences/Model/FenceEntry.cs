@@ -18,6 +18,10 @@ namespace NoFences.Model
 
         public static FenceEntry? FromPath(string path)
         {
+            // Network paths aren't touched until opened: every check would log on to that server (and an
+            // unreachable one blocks for seconds). Folder or file is guessed from the name.
+            if (NetworkPath.IsNetworkPath(path))
+                return new FenceEntry(path, isFolder: path.EndsWith('\\') || !System.IO.Path.HasExtension(path));
             if (File.Exists(path))
                 return new FenceEntry(path, false);
             if (Directory.Exists(path))
@@ -65,6 +69,8 @@ namespace NoFences.Model
 
         private static FileSystemInfo? SafeInfo(FenceEntry e)
         {
+            if (NetworkPath.IsNetworkPath(e.Path))
+                return null;
             try
             {
                 return e.IsFolder ? new DirectoryInfo(e.Path) : new FileInfo(e.Path);

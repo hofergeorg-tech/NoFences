@@ -292,7 +292,7 @@ también se pueden editar a mano (`#RRGGBB` o `#RRGGBBAA`) y compartir. Los esti
 - **Automatización**: reglas de perfil, recordatorio de descanso, pantalla completa, estilo claro y oscuro, fondo según la
   hora del día (ver arriba).
 - **Actualizaciones**: NoFences comprueba GitHub e instala las versiones nuevas con un clic; donaciones.
-- **Datos y estilos**: exportar/importar vallas, restaurar una copia de seguridad (cada 12 horas), carpeta compartida, carpetas.
+- **Datos y estilos**: exportar/importar vallas, restaurar una copia de seguridad (cada 12 horas), carpeta compartida, carpetas. Si un archivo importado apunta a otros equipos (`\\server\…`), NoFences pregunta antes y, por defecto, importa sin esas entradas. Las entradas en rutas de red solo se contactan al abrirlas (icono del tipo, sin vista previa).
 
 ## Preguntas frecuentes
 

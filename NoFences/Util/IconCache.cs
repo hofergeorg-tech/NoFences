@@ -57,7 +57,11 @@ namespace NoFences.Util
         private static string MakeKey(string path, int size)
         {
             long stamp = 0;
-            try { stamp = File.GetLastWriteTimeUtc(path).Ticks; } catch { }
+            // Network paths: no file access (it would log on to that server), see TypeIcon
+            if (!Model.NetworkPath.IsNetworkPath(path))
+            {
+                try { stamp = File.GetLastWriteTimeUtc(path).Ticks; } catch { }
+            }
             return $"{path}|{size}|{stamp}";
         }
 
@@ -105,8 +109,61 @@ namespace NoFences.Util
 
         private const int SIIGBF_RESIZETOFIT = 0x0;
 
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        private struct SHFILEINFO
+        {
+            public IntPtr hIcon;
+            public int iIcon;
+            public uint dwAttributes;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)] public string szDisplayName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)] public string szTypeName;
+        }
+
+        [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
+        private static extern IntPtr SHGetFileInfo(string path, uint attributes, ref SHFILEINFO info, uint size, uint flags);
+
+        [DllImport("user32.dll")]
+        private static extern bool DestroyIcon(IntPtr icon);
+
+        private const uint SHGFI_ICON = 0x100, SHGFI_LARGEICON = 0x0, SHGFI_USEFILEATTRIBUTES = 0x10;
+        private const uint FILE_ATTRIBUTE_DIRECTORY = 0x10, FILE_ATTRIBUTE_NORMAL = 0x80;
+
+        /// <summary>
+        /// The icon for the item's type (folder, .pdf …) without opening it: for network paths, where any
+        /// access would make Windows log on to that server.
+        /// </summary>
+        internal static Bitmap? TypeIcon(string path, int size)
+        {
+            var isFolder = path.EndsWith('\\') || !Path.HasExtension(path);
+            var info = new SHFILEINFO();
+            // Only the name matters with USEFILEATTRIBUTES; a neutral one keeps the shell from looking at the server
+            var name = isFolder ? "folder" : "file" + Path.GetExtension(path);
+            if (SHGetFileInfo(name, isFolder ? FILE_ATTRIBUTE_DIRECTORY : FILE_ATTRIBUTE_NORMAL, ref info,
+                    (uint)Marshal.SizeOf<SHFILEINFO>(), SHGFI_ICON | SHGFI_LARGEICON | SHGFI_USEFILEATTRIBUTES) == IntPtr.Zero
+                || info.hIcon == IntPtr.Zero)
+                return null;
+            try
+            {
+                using var icon = Icon.FromHandle(info.hIcon);
+                using var bmp = icon.ToBitmap();
+                var result = new Bitmap(size, size, PixelFormat.Format32bppPArgb);
+                using (var g = Graphics.FromImage(result))
+                {
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.DrawImage(bmp, 0, 0, size, size);
+                }
+                return result;
+            }
+            finally
+            {
+                DestroyIcon(info.hIcon);
+            }
+        }
+
         private static Bitmap? LoadShellImage(string path, int size)
         {
+            if (Model.NetworkPath.IsNetworkPath(path))
+                return TypeIcon(path, size);
             SHCreateItemFromParsingName(path, IntPtr.Zero, typeof(IShellItemImageFactory).GUID, out var factory);
             try
             {

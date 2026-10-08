@@ -788,6 +788,11 @@ namespace NoFences.Util
         public static string ExportDone(int n) => L("ExportDone", n);
         public static string ImportDone(int n) => L("ImportDone", n);
         public static string ImportFailed(string reason) => L("ImportFailed", reason);
+        public static string ImportNetworkHeading(int count) => L("ImportNetworkHeading", count);
+        public static string ImportNetworkText => L("ImportNetworkText");
+        public static string ImportNetworkMore(int count) => L("ImportNetworkMore", count);
+        public static string ImportWithoutNetwork => L("ImportWithoutNetwork");
+        public static string ImportAnyway => L("ImportAnyway");
 
         #endregion
 

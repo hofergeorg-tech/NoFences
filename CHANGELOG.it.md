@@ -4,6 +4,12 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.12.0] - non pubblicata
+
+### Modifiche
+- **Importazione più sicura**: se un file di recinti importato rimanda ad altri computer (`\\server\…`), NoFences li elenca e per impostazione predefinita importa senza di essi – mostrandoli, Windows accederebbe a quei computer con il tuo account. Da un'importazione vengono presi solo i file di stile (`.json`).
+- Le voci su percorsi di rete non vengono toccate finché non le apri: icona del tipo invece della miniatura, nessuna anteprima al passaggio del mouse. Le unità di rete irraggiungibili non rallentano più i recinti.
+
 ## [2.11.0] - 2026-10-08
 
 ### Correzioni

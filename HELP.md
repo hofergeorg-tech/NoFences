@@ -277,7 +277,7 @@ fence" applies it right away. It is saved as JSON in the styles folder, where st
   fading far from the mouse; preview on hover; profiles; search shortcut (Ctrl+Alt+F); auto-sort.
 - **Automation**: profile rules, break reminder, full screen, light and dark style, wallpaper by time of day (see above).
 - **Updates**: NoFences checks GitHub and installs new versions with one click; donate.
-- **Data & styles**: export/import fences, restore a backup (made every 12 hours), shared folder, folders.
+- **Data & styles**: export/import fences, restore a backup (made every 12 hours), shared folder, folders. If an imported file points to other computers (`\\server\…`), NoFences asks first and by default imports it without those entries. Items on network paths are only contacted when you open them (type icon, no preview).
 
 ## FAQ
 

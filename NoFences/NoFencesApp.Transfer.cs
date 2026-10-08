@@ -36,6 +36,18 @@ namespace NoFences
             try
             {
                 var export = FenceExport.FromJson(File.ReadAllText(dialog.FileName));
+                var network = export.NetworkPaths();
+                if (network.Count > 0)
+                {
+                    switch (AskAboutNetworkPaths(network))
+                    {
+                        case null:
+                            return;
+                        case false:
+                            export.RemoveNetworkPaths();
+                            break;
+                    }
+                }
                 if (export.WriteThemes(ThemesFolder) > 0)
                 {
                     LoadCustomThemes(report: false);
@@ -60,6 +72,31 @@ namespace NoFences
             {
                 MessageBox.Show(Strings.ImportFailed(e.Message), "NoFences", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        /// <summary>
+        /// The file points to other computers: take it without those entries (default), as it is, or not at
+        /// all (null). Showing them would make Windows log on to those servers with the user's credentials.
+        /// </summary>
+        private static bool? AskAboutNetworkPaths(List<(string Fence, string Path)> found)
+        {
+            const int shown = 8;
+            var list = string.Join("\n", found.Take(shown).Select(f => $"• {f.Fence}: {f.Path}"));
+            if (found.Count > shown)
+                list += "\n" + Strings.ImportNetworkMore(found.Count - shown);
+            var without = new TaskDialogButton(Strings.ImportWithoutNetwork);
+            var anyway = new TaskDialogButton(Strings.ImportAnyway);
+            var page = new TaskDialogPage
+            {
+                Caption = "NoFences",
+                Heading = Strings.ImportNetworkHeading(found.Count),
+                Text = Strings.ImportNetworkText + "\n\n" + list,
+                Icon = TaskDialogIcon.Warning,
+                Buttons = { without, anyway, TaskDialogButton.Cancel },
+                DefaultButton = without
+            };
+            var result = TaskDialog.ShowDialog(page);
+            return result == without ? false : result == anyway ? true : null;
         }
     }
 }

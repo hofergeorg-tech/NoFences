@@ -4,6 +4,12 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
+## [2.12.0] - sin publicar
+
+### Cambios
+- **Importación más segura**: si un archivo de vallas importado apunta a otros equipos (`\\server\…`), NoFences los muestra y, por defecto, importa sin ellos; al mostrarlos, Windows iniciaría sesión en esos equipos con tu cuenta. De una importación solo se toman los archivos de estilo (`.json`).
+- Las entradas en rutas de red ya no se tocan hasta que las abres: icono del tipo en lugar de miniatura, sin vista previa al pasar el ratón. Las unidades de red inaccesibles ya no ralentizan las vallas.
+
 ## [2.11.0] - 2026-10-08
 
 ### Correcciones
