@@ -4,7 +4,7 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.12.0] - non pubblicata
+## [2.12.0] - 2026-10-08
 
 ### Modifiche
 - **Importazione più sicura**: se un file di recinti importato rimanda ad altri computer (`\\server\…`), NoFences li elenca e per impostazione predefinita importa senza di essi – mostrandoli, Windows accederebbe a quei computer con il tuo account. Da un'importazione vengono presi solo i file di stile (`.json`).

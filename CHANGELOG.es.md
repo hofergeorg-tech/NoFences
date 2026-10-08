@@ -4,7 +4,7 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
-## [2.12.0] - sin publicar
+## [2.12.0] - 2026-10-08
 
 ### Cambios
 - **Importación más segura**: si un archivo de vallas importado apunta a otros equipos (`\\server\…`), NoFences los muestra y, por defecto, importa sin ellos; al mostrarlos, Windows iniciaría sesión en esos equipos con tu cuenta. De una importación solo se toman los archivos de estilo (`.json`).

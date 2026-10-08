@@ -4,7 +4,7 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.12.0] - unveröffentlicht
+## [2.12.0] - 2026-10-08
 
 ### Geändert
 - **Sichererer Import**: Verweist eine importierte Fence-Datei auf andere Computer (`\\server\…`), listet NoFences sie auf und importiert standardmäßig ohne sie – beim Anzeigen würde sich Windows sonst mit deiner Anmeldung bei diesen Computern anmelden. Aus einem Import werden nur Style-Dateien (`.json`) übernommen.

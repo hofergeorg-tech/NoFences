@@ -4,7 +4,7 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.12.0] - non publiée
+## [2.12.0] - 2026-10-08
 
 ### Modifications
 - **Importation plus sûre** : si un fichier de barrières importé renvoie vers d'autres ordinateurs (`\\server\…`), NoFences les liste et, par défaut, importe sans eux – les afficher ferait se connecter Windows à ces ordinateurs avec votre compte. Seuls les fichiers de style (`.json`) sont repris d'une importation.
