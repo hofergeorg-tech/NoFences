@@ -4,7 +4,7 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.11.0] - non publiée
+## [2.11.0] - 2026-10-08
 
 ### Corrections
 - **Petits blocages** : le double-clic sur le bureau ne fait plus saccader toute la souris quand NoFences est occupé (son crochet souris a maintenant son propre thread ; avant, Windows pouvait aussi le désactiver en silence). La lecture du presse-papiers, la copie/le déplacement des fichiers déposés sur une barrière et l'ouverture des éléments ne font plus attendre les barrières – les grosses copies ne figent plus NoFences ni la fenêtre de l'Explorateur d'où elles viennent.

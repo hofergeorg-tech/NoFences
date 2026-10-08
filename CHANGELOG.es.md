@@ -4,7 +4,7 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
-## [2.11.0] - sin publicar
+## [2.11.0] - 2026-10-08
 
 ### Correcciones
 - **Bloqueos breves**: el doble clic en el escritorio ya no hace que todo el ratón vaya a tirones cuando NoFences está ocupado (su gancho de ratón tiene ahora su propio hilo; antes Windows también podía desactivarlo en silencio). Leer el portapapeles, copiar/mover archivos soltados en una valla y abrir elementos ya no hacen esperar a las vallas: las copias grandes ya no congelan NoFences ni la ventana del Explorador de la que vienen.

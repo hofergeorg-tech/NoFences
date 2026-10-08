@@ -4,7 +4,7 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.11.0] - non pubblicata
+## [2.11.0] - 2026-10-08
 
 ### Correzioni
 - **Brevi blocchi**: il doppio clic sul desktop non fa più scattare tutto il mouse quando NoFences è occupato (l'hook del mouse ha ora un thread proprio; prima Windows poteva anche disattivarlo in silenzio). La lettura degli appunti, la copia/lo spostamento dei file trascinati su un recinto e l'apertura degli elementi non fanno più attendere i recinti – le copie grandi non bloccano più NoFences né la finestra di Esplora file da cui provengono.

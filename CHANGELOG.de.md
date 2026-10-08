@@ -4,7 +4,7 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.11.0] - unveröffentlicht
+## [2.11.0] - 2026-10-08
 
 ### Behoben
 - **Kurze Hänger**: Doppelklick-auf-Desktop lässt nicht mehr die ganze Maus ruckeln, wenn NoFences gerade beschäftigt ist (der Maus-Hook hat jetzt einen eigenen Thread; vorher konnte Windows ihn auch still abschalten). Zwischenablage lesen, auf einen Fence gezogene Dateien kopieren/verschieben und Einträge öffnen warten nicht mehr auf die Fences – große Kopien frieren weder NoFences noch das Explorer-Fenster ein, aus dem sie kommen.

@@ -5,7 +5,7 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.11.0] - unreleased
+## [2.11.0] - 2026-10-08
 
 ### Fixed
 - **Short freezes**: the double-click-on-desktop feature no longer makes the whole mouse stutter when NoFences is busy (its mouse hook now has its own thread; Windows could also switch it off silently before). Reading the clipboard, copying/moving files dropped onto a fence and opening items no longer wait on the fences – big copies don't freeze NoFences or the Explorer window they come from.
