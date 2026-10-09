@@ -4,10 +4,11 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.13.0] - non pubblicata
+## [2.13.0] - 2026-10-09
 
 ### Modifiche
 - **Meno widget, più veloci**: monitor di sistema, unità, cestino, giochi, tempo di gioco, offerte Steam, Twitch e pagina web sono stati rimossi. Rallentavano NoFences (elenchi dei processi, contatori hardware, dischi in sospensione) o dipendevano da servizi non ufficiali; il widget pagina web usava inoltre un browser nascosto. I loro recinti vengono tolti al primo avvio (un avviso li elenca; l'ultimo backup li contiene ancora). Anche l'eseguibile è più piccolo.
+- **La cronologia degli appunti maschera le password**: ciò che ne ha l'aspetto (una riga, senza spazi, 8–64 caratteri misti) appare come puntini, senza tooltip e non si può fissare (quindi non viene mai salvato in chiaro); un clic lo copia comunque. Si disattiva nel menu del widget.
 - L'ordinamento dal desktop sposta i file grandi in background invece di bloccare i recinti.
 - Gli aggiornamenti vengono installati solo se il download corrisponde al checksum che GitHub indica per la release.
 - Gli errori dei widget finiscono in `logs\log.txt`; le icone superate vengono tolte dalla memoria.

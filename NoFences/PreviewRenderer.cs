@@ -424,7 +424,7 @@ namespace NoFences
                     });
                     break;
                 case Widgets.ClipboardWidget clipboard:
-                    foreach (var text in new[] { "https://github.com/hofergeorg-tech/NoFences", "Meeting moved to 3 pm", "C:\\Projects\\report-2026.docx", "Thanks for the update!\nSee you tomorrow" }.Reverse())
+                    foreach (var text in new[] { "https://github.com/hofergeorg-tech/NoFences", "Meeting moved to 3 pm", "k9#Lmq2!xZ", "C:\\Projects\\report-2026.docx", "Thanks for the update!\nSee you tomorrow" }.Reverse())
                         clipboard.History.Add(text);
                     clipboard.History.AddPinned(new Widgets.ClipItem { Text = "IBAN DE00 1234 5678 9000 0000 00" });
                     using (var demo = new Bitmap(320, 180))

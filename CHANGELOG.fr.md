@@ -4,10 +4,11 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.13.0] - non publiée
+## [2.13.0] - 2026-10-09
 
 ### Modifications
 - **Moins de widgets, plus rapides** : moniteur système, lecteurs, corbeille, jeux, temps de jeu, promos Steam, Twitch et page web ont été supprimés. Ils ralentissaient NoFences (listes de processus, compteurs matériels, disques en veille) ou dépendaient de services non officiels ; le widget page web faisait en plus tourner un navigateur caché. Leurs barrières sont retirées au premier démarrage (une notification les liste ; la dernière sauvegarde les contient encore). L'exe est aussi plus petit.
+- **L'historique du presse-papiers masque les mots de passe** : ce qui y ressemble (une ligne, sans espaces, 8 à 64 caractères mélangés) s'affiche en points, sans info-bulle et sans épinglage (donc jamais enregistré en clair) ; un clic le copie quand même. À désactiver dans le menu du widget.
 - Le rangement depuis le bureau déplace les gros fichiers en arrière-plan au lieu de figer les barrières.
 - Les mises à jour ne sont installées que si le téléchargement correspond à la somme de contrôle indiquée par GitHub pour la version.
 - Les erreurs des widgets vont dans `logs\log.txt` ; les icônes périmées sont retirées de la mémoire.

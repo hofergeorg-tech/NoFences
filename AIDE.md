@@ -154,7 +154,10 @@ Menu de la zone de notification ou d'une barrière → **Nouveau widget**. Les w
   débit** d'un clic (mesure environ 12 secondes via speed.cloudflare.com).
 - **Historique du presse-papiers** : les 15 derniers textes et **images** copiés ; un clic les copie à nouveau. Clic droit
   sur une entrée → **épingler** : les entrées épinglées restent en haut, même après un redémarrage. Le reste n'est
-  conservé que tant que NoFences tourne ; les mots de passe des gestionnaires de mots de passe sont ignorés.
+  conservé que tant que NoFences tourne ; les mots de passe des gestionnaires de mots de passe sont ignorés. Ce qui
+  ressemble à un mot de passe (une ligne sans espaces, 8 à 64 caractères, mélange de majuscules/minuscules, chiffres et
+  symboles) s'affiche en `••••••••`, sans info-bulle et sans épinglage ; un clic le copie quand même. À désactiver dans
+  le menu du widget (« Masquer les mots de passe »).
 - **Batterie** : charge, en charge ou non, autonomie restante (portables), plus la batterie des **manettes** (Xbox/XInput)
   et des **appareils Bluetooth** qui la transmettent à Windows (casques, beaucoup de souris et claviers).
 - **Rendez-vous** : les deux prochaines semaines depuis des liens d'agenda (.ics). Google : paramètres de l'agenda →

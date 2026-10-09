@@ -542,6 +542,7 @@
   "RecycleItems.Alt": "{0} items · {1}",
   "FpsRemoved": "The FPS measurement has been removed: its helper needed administrator rights, and NoFences now works entirely without them.\n\nIt was switched on here. Remove its leftover scheduled task now? (Windows asks for permission one last time.)",
   "WidgetsRetired": "Widgets that slowed NoFences down or relied on unofficial services were removed (system monitor, drives, recycle bin, games, playtime, Steam sales, Twitch, web page). Taken out: {0}. The last backup still has them.",
+  "ClipboardMaskPasswords": "Mask passwords",
   "WidgetTimer": "Timer & alarm",
   "TimerHint": "Start a timer with the buttons above; double-click for an alarm.",
   "TimerDone": "Done!",

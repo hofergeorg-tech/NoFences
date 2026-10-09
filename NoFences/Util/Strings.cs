@@ -828,6 +828,7 @@ namespace NoFences.Util
             ? L("RecycleItems", size)
             : L("RecycleItems.Alt", n, size);
         public static string FpsRemoved => L("FpsRemoved");
+        public static string ClipboardMaskPasswords => L("ClipboardMaskPasswords");
         public static string WidgetsRetired(string names) => L("WidgetsRetired", names);
 
         #endregion

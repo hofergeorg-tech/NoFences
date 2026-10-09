@@ -4,10 +4,13 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.13.0] - unveröffentlicht
+## [2.13.0] - 2026-10-09
 
 ### Entfernt
 - **Weniger, schnellere Widgets**: System-Monitor, Laufwerke, Papierkorb, Spiele, Spielzeit, Steam-Angebote, Twitch und Webseite sind weg. Sie haben NoFences gebremst (Prozesslisten, Hardware-Zähler, schlafende Festplatten) oder hingen an inoffiziellen Diensten; das Webseiten-Widget lief zudem mit einem versteckten Browser. Ihre Fences werden beim ersten Start herausgenommen (ein Hinweis nennt sie; die letzte Sicherung enthält sie noch). Die EXE ist dadurch auch kleiner.
+
+### Neu
+- **Zwischenablage-Verlauf maskiert Passwörter**: Was wie eins aussieht (eine Zeile, keine Leerzeichen, 8–64 gemischte Zeichen), erscheint als Punkte, ohne Tooltip und nicht anheftbar (wird also nie im Klartext gespeichert); ein Klick kopiert es trotzdem. Abschaltbar im Widget-Menü.
 
 ### Geändert
 - Einsortieren verschiebt große Dateien vom Desktop im Hintergrund, statt die Fences einzufrieren.

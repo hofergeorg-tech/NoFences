@@ -137,7 +137,9 @@ Tray or fence menu → **New widget**. Widgets with a list scroll with the mouse
   about 12 seconds via speed.cloudflare.com).
 - **Clipboard history**: the last 15 copied texts and **pictures**; click one to copy it again. Right-click an entry →
   **pin**: pinned entries stay on top, even after a restart. The rest is kept only while NoFences runs; passwords from
-  password managers are skipped.
+  password managers are skipped. What looks like a password (one line without spaces, 8–64 characters, a mix of upper
+  and lower case, digits and symbols) shows as `••••••••`, without tooltip and can't be pinned; a click still copies it.
+  Switch it off in the widget menu ("Mask passwords").
 - **Battery**: charge, charging or not, time left (laptops), plus the battery of **controllers** (Xbox/XInput) and
   **Bluetooth devices** that report it to Windows (headsets, many mice and keyboards).
 - **Appointments**: the next two weeks from calendar links (.ics). Google: calendar settings → "Secret address in iCal

@@ -141,7 +141,12 @@ namespace NoFences.Widgets
                 return;
             try
             {
-                foreach (var p in JsonSerializer.Deserialize<List<PinnedEntry>>(json) ?? new())
+                // Up to 2.12 the option was just the list of pinned entries
+                var options = json.TrimStart().StartsWith('[')
+                    ? new Options { Pinned = JsonSerializer.Deserialize<List<PinnedEntry>>(json) ?? new() }
+                    : JsonSerializer.Deserialize<Options>(json) ?? new Options();
+                showPasswords = options.ShowPasswords;
+                foreach (var p in options.Pinned)
                 {
                     if (p.Text != null)
                         history.AddPinned(new ClipItem { Text = p.Text });
@@ -183,7 +188,28 @@ namespace NoFences.Widgets
                         pinned.Add(new PinnedEntry(null, item.File));
                 }
             }
-            setOption(pinned.Count == 0 ? null : JsonSerializer.Serialize(pinned));
+            setOption(pinned.Count == 0 && !showPasswords ? null : JsonSerializer.Serialize(new Options { Pinned = pinned, ShowPasswords = showPasswords }));
+        }
+
+        /// <summary>What the widget keeps in its fence's option.</summary>
+        private sealed class Options
+        {
+            public List<PinnedEntry> Pinned { get; set; } = new();
+
+            /// <summary>Off by default: entries that look like passwords show as dots.</summary>
+            public bool ShowPasswords { get; set; }
+        }
+
+        private bool showPasswords;
+
+        /// <summary>Shown as dots, no tooltip, can't be pinned (it would be saved as plain text).</summary>
+        private bool Masked(ClipItem item) => !showPasswords && item.Text != null && ClipboardHistory.LooksLikePassword(item.Text);
+
+        private void ToggleShowPasswords()
+        {
+            showPasswords = !showPasswords;
+            SavePinned();
+            RequestRedraw();
         }
 
         private void TogglePin(ClipItem item)
@@ -239,7 +265,8 @@ namespace NoFences.Widgets
                 }
                 else
                 {
-                    c.Text(ClipboardHistory.OneLine(item.Text ?? ""), new RectangleF(rect.X + c.Px(2), y + c.Px(2), textWidth, line));
+                    var shown = Masked(item) ? MaskedText : ClipboardHistory.OneLine(item.Text ?? "");
+                    c.Text(shown, new RectangleF(rect.X + c.Px(2), y + c.Px(2), textWidth, line));
                 }
                 if (item.Pinned)
                     DrawPin(c, rect.Right - c.Px(12), y + height / 2);
@@ -268,7 +295,10 @@ namespace NoFences.Widgets
             return hovered != null;
         }
 
-        public override string? TooltipAt(Point p) => ItemAt(p) is { Text: { } text } ? (text.Length > 400 ? text[..400] + " …" : text) : null;
+        private const string MaskedText = "••••••••";
+
+        public override string? TooltipAt(Point p) =>
+            ItemAt(p) is { Text: { } text } item && !Masked(item) ? (text.Length > 400 ? text[..400] + " …" : text) : null;
 
         public override bool Click(Point p)
         {
@@ -296,9 +326,10 @@ namespace NoFences.Widgets
         public override void AddMenuItems(ToolStripItemCollection menu, IWin32Window owner)
         {
             // The entry under the mouse when the menu opened
-            if (hovered is { } item && history.Items.Contains(item))
+            if (hovered is { } item && history.Items.Contains(item) && (item.Pinned || !Masked(item)))
                 menu.Add(item.Pinned ? Strings.ClipboardUnpin : Strings.ClipboardPin, null, (_, _) => TogglePin(item));
             menu.Add(Strings.ClipboardClear, null, (_, _) => history.Clear());
+            menu.Add(new ToolStripMenuItem(Strings.ClipboardMaskPasswords, null, (_, _) => ToggleShowPasswords()) { Checked = !showPasswords });
         }
 
         public override void Dispose()
@@ -469,6 +500,27 @@ namespace NoFences.Widgets
                 return false;
             return data.GetData("CanIncludeInClipboardHistory") is MemoryStream { Length: >= 4 } stream
                 && BitConverter.ToInt32(stream.ToArray(), 0) == 0;
+        }
+
+        /// <summary>
+        /// Guesses whether a copied text is a password (Windows has no marker for that; password managers set
+        /// one, and those copies aren't recorded at all): one line without spaces, 8–64 characters, at least
+        /// three of upper case, lower case, digits and symbols, and not a link, path or e-mail address.
+        /// </summary>
+        public static bool LooksLikePassword(string text)
+        {
+            var t = text.Trim();
+            if (t.Length is < 8 or > 64 || t.Any(char.IsWhiteSpace))
+                return false;
+            if (t.Contains("://") || t.StartsWith("www.", StringComparison.OrdinalIgnoreCase) || t.Contains('\\')
+                || t.Contains('/') || (t.Length > 2 && t[1] == ':'))
+                return false;
+            var at = t.IndexOf('@');
+            if (at > 0 && t.IndexOf('.', at) > at + 1)
+                return false; // e-mail address
+            var kinds = (t.Any(char.IsUpper) ? 1 : 0) + (t.Any(char.IsLower) ? 1 : 0) + (t.Any(char.IsDigit) ? 1 : 0)
+                        + (t.Any(c => !char.IsLetterOrDigit(c)) ? 1 : 0);
+            return kinds >= 3;
         }
 
         /// <summary>First line, whitespace collapsed, with "…" if there was more.</summary>

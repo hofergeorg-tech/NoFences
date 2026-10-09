@@ -145,7 +145,10 @@ Menú de la bandeja o de una valla → **Nuevo widget**. Los widgets con listas 
   clic (mide unos 12 segundos con speed.cloudflare.com).
 - **Historial del portapapeles**: los 15 últimos textos e **imágenes** copiados; un clic los copia de nuevo. Clic derecho
   en una entrada → **fijar**: las fijadas quedan arriba, incluso tras reiniciar. Lo demás solo se guarda mientras
-  NoFences está abierto; las contraseñas de los gestores de contraseñas se omiten.
+  NoFences está abierto; las contraseñas de los gestores de contraseñas se omiten. Lo que parece una contraseña (una
+  línea sin espacios, 8–64 caracteres, mezcla de mayúsculas/minúsculas, cifras y símbolos) aparece como `••••••••`, sin
+  información emergente y sin poder anclarse; un clic la copia igualmente. Se desactiva en el menú del widget («Ocultar
+  contraseñas»).
 - **Batería**: carga, si se está cargando, tiempo restante (portátiles), además de la batería de **mandos** (Xbox/XInput)
   y **dispositivos Bluetooth** que la informan a Windows (auriculares, muchos ratones y teclados).
 - **Citas**: las próximas dos semanas desde enlaces de calendario (.ics). Google: configuración del calendario →

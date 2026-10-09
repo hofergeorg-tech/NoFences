@@ -147,7 +147,9 @@ Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem
   12 Sekunden über speed.cloudflare.com).
 - **Zwischenablage-Verlauf**: die letzten 15 kopierten Texte und **Bilder**; anklicken kopiert sie erneut. Rechtsklick auf
   einen Eintrag → **anheften**: Angeheftete bleiben oben, auch nach einem Neustart. Der Rest gilt nur, solange NoFences
-  läuft; Passwörter aus Passwort-Managern werden übersprungen.
+  läuft; Passwörter aus Passwort-Managern werden übersprungen. Was wie ein Passwort aussieht (eine Zeile ohne Leerzeichen,
+  8–64 Zeichen, gemischt aus Groß-/Kleinbuchstaben, Ziffern, Sonderzeichen), erscheint als `••••••••`, ohne Tooltip und
+  nicht anheftbar; ein Klick kopiert es trotzdem. Abschalten im Widget-Menü („Passwörter maskieren“).
 - **Akku**: Ladestand, ob geladen wird, Restzeit (Laptops), dazu der Akku von **Controllern** (Xbox/XInput) und
   **Bluetooth-Geräten**, die ihn an Windows melden (Headsets, viele Mäuse und Tastaturen).
 - **Termine**: die nächsten zwei Wochen aus Kalender-Links (.ics). Google: Kalendereinstellungen → „Privatadresse im

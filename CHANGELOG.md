@@ -5,10 +5,13 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [2.13.0] - unreleased
+## [2.13.0] - 2026-10-09
 
 ### Removed
 - **Fewer, faster widgets**: system monitor, drives, recycle bin, games, playtime, Steam sales, Twitch and web page are gone. They slowed NoFences down (process scans, hardware counters, sleeping disks) or relied on unofficial services; the web page widget also ran a hidden browser. Their fences are taken out on the first start (a notification lists them; the last backup still has them). The exe is smaller, too.
+
+### Added
+- **Clipboard history masks passwords**: what looks like one (one line, no spaces, 8–64 characters of mixed kinds) shows as dots, has no tooltip and can't be pinned (so it is never saved as plain text); a click still copies it. Switch it off in the widget menu.
 
 ### Changed
 - Auto-sort moves big files from the desktop in the background instead of freezing the fences.

@@ -143,7 +143,9 @@ Menu della barra o del recinto → **Nuovo widget**. I widget con un elenco scor
   (misura circa 12 secondi tramite speed.cloudflare.com).
 - **Cronologia appunti**: gli ultimi 15 testi e **immagini** copiati; un clic li copia di nuovo. Clic destro su una voce →
   **fissa**: le voci fissate restano in alto, anche dopo un riavvio. Il resto è conservato solo finché NoFences è
-  aperto; le password dei gestori di password vengono ignorate.
+  aperto; le password dei gestori di password vengono ignorate. Ciò che sembra una password (una riga senza spazi,
+  8–64 caratteri, mix di maiuscole/minuscole, cifre e simboli) appare come `••••••••`, senza tooltip e non si può
+  fissare; un clic la copia comunque. Si disattiva nel menu del widget ("Maschera le password").
 - **Batteria**: carica, se è in carica, tempo rimanente (portatili), più la batteria dei **controller** (Xbox/XInput) e
   dei **dispositivi Bluetooth** che la comunicano a Windows (cuffie, molti mouse e tastiere).
 - **Appuntamenti**: le prossime due settimane dai link dei calendari (.ics). Google: impostazioni del calendario →

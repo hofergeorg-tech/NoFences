@@ -4,10 +4,11 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
-## [2.13.0] - sin publicar
+## [2.13.0] - 2026-10-09
 
 ### Cambios
 - **Menos widgets, más rápidos**: se eliminaron monitor del sistema, unidades, papelera, juegos, tiempo de juego, ofertas de Steam, Twitch y página web. Ralentizaban NoFences (listas de procesos, contadores de hardware, discos en reposo) o dependían de servicios no oficiales; el widget de página web además ejecutaba un navegador oculto. Sus vallas se quitan en el primer inicio (un aviso las enumera; la última copia de seguridad todavía las tiene). El exe también es más pequeño.
+- **El historial del portapapeles oculta las contraseñas**: lo que lo parece (una línea, sin espacios, 8–64 caracteres mezclados) aparece como puntos, sin información emergente y sin poder anclarse (así nunca se guarda en texto claro); un clic lo copia igualmente. Se desactiva en el menú del widget.
 - Ordenar desde el escritorio mueve los archivos grandes en segundo plano en lugar de congelar las vallas.
 - Las actualizaciones solo se instalan si la descarga coincide con la suma de comprobación que GitHub indica para la versión.
 - Los errores de los widgets van a `logs\log.txt`; los iconos desactualizados se quitan de la memoria.
