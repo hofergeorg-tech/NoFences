@@ -239,7 +239,7 @@ namespace NoFences
             {
                 var item = new ListViewItem((e.IsFolder ? "📁 " : "") + e.Name) { Tag = e };
                 item.SubItems.Add(Path.GetFileName(Path.GetDirectoryName(e.Path)) ?? "");
-                item.SubItems.Add(DrivesWidget.FormatSize(e.Size));
+                item.SubItems.Add(Util.ByteSize.Format(e.Size));
                 item.SubItems.Add(Strings.CountdownDays((int)(now - e.Modified).TotalDays));
                 list.Items.Add(item);
             }
@@ -252,7 +252,7 @@ namespace NoFences
             var chosen = list.CheckedItems.Cast<ListViewItem>().Select(i => (Entry)i.Tag!).ToList();
             total.Text = list.Items.Count == 0
                 ? Strings.DownloadsNothing
-                : Strings.DownloadsSelected(chosen.Count, DrivesWidget.FormatSize(chosen.Sum(e => e.Size)), list.Items.Count);
+                : Strings.DownloadsSelected(chosen.Count, Util.ByteSize.Format(chosen.Sum(e => e.Size)), list.Items.Count);
             recycle.Enabled = chosen.Count > 0;
         }
 
@@ -261,7 +261,7 @@ namespace NoFences
             var chosen = list.CheckedItems.Cast<ListViewItem>().Select(i => (Entry)i.Tag!).ToList();
             if (chosen.Count == 0)
                 return;
-            if (MessageBox.Show(this, Strings.DownloadsConfirm(chosen.Count, DrivesWidget.FormatSize(chosen.Sum(e => e.Size))), Text,
+            if (MessageBox.Show(this, Strings.DownloadsConfirm(chosen.Count, Util.ByteSize.Format(chosen.Sum(e => e.Size))), Text,
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
             foreach (var e in chosen)
@@ -295,7 +295,7 @@ namespace NoFences
             var now = DateTime.Now;
             foreach (var group in duplicates ?? new())
             {
-                var header = new ListViewGroup(Strings.DuplicatesGroup(Path.GetFileName(group[0].Path), group.Count, DrivesWidget.FormatSize(group[0].Size)));
+                var header = new ListViewGroup(Strings.DuplicatesGroup(Path.GetFileName(group[0].Path), group.Count, Util.ByteSize.Format(group[0].Size)));
                 list.Groups.Add(header);
                 for (var i = 0; i < group.Count; i++)
                 {
@@ -303,7 +303,7 @@ namespace NoFences
                     var e = new Entry(d.Path, Path.GetFileName(d.Path), d.Size, d.Modified, false);
                     var item = new ListViewItem((i == 0 ? Strings.DuplicatesOriginal + " " : "") + e.Name, header) { Tag = e, Checked = i > 0 };
                     item.SubItems.Add(Path.GetFileName(Path.GetDirectoryName(e.Path)) ?? "");
-                    item.SubItems.Add(DrivesWidget.FormatSize(e.Size));
+                    item.SubItems.Add(Util.ByteSize.Format(e.Size));
                     item.SubItems.Add(Strings.CountdownDays((int)(now - e.Modified).TotalDays));
                     list.Items.Add(item);
                 }

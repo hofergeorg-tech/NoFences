@@ -18,7 +18,7 @@ Deutsch: [HILFE.md](HILFE.md) · Italiano: [AIUTO.md](AIUTO.md) · Français : [
 - **Folder fence**: shows the contents of a folder. Dropping files onto it **moves** them into that folder
   (hold Ctrl to copy), so they really leave the desktop.
 - **Note**: a sticky note with text, see below.
-- **Widget**: live content – clock, weather, games, appointments and more, see below.
+- **Widget**: live content – clock, weather, news, appointments and more, see below.
 - **Recent files**: the 20 files you opened last (read-only).
 - **Quick-launch bar**: a slim link fence with icons only; names show as tooltips.
 - **More fences** (menu → More fences):
@@ -127,11 +127,6 @@ settings pages ("bluetooth", "sound"). Type a calculation like `12*7` or `200*15
 Tray or fence menu → **New widget**. Widgets with a list scroll with the mouse wheel.
 
 - **Clock & calendar**; days with appointments from an appointments widget carry a dot.
-- **System monitor**: CPU, RAM, GPU load and temperature (NVIDIA), and a graph of the last two minutes. If the graphics card stays too hot, NoFences warns you (limit in the menu: 75–90 °C or off).
-- **Drives**: fill level and free space; click opens the drive.
-- **Recycle bin**: drop files on it to delete them, double-click opens it, the menu empties it.
-- **Playtime**: today / this week / this month / total for any game. Double-click and pick the game's exe; NoFences
-  records how long it runs.
 - **Countdown**: days and hours until a date; double-click to set it.
 - **Weather**: current weather and three days ahead for a place you search for (data: Open-Meteo, no account needed),
   plus a **rain hint** for the next two hours ("Rain in about 20 min"), sunrise and sunset and the **moon phase**
@@ -145,9 +140,6 @@ Tray or fence menu → **New widget**. Widgets with a list scroll with the mouse
   password managers are skipped.
 - **Battery**: charge, charging or not, time left (laptops), plus the battery of **controllers** (Xbox/XInput) and
   **Bluetooth devices** that report it to Windows (headsets, many mice and keyboards).
-- **Games**: your installed games from Steam (with covers), Epic, GOG and the Xbox app; recently played first. Under
-  each cover is the **playtime** NoFences counts automatically. Click starts a game. The menu hides games, sorts by name
-  or playtime, or searches again.
 - **Appointments**: the next two weeks from calendar links (.ics). Google: calendar settings → "Secret address in iCal
   format"; Outlook: Settings → Calendar → Shared calendars → Publish → ICS; iCloud: share the calendar publicly.
   Several calendars: one link per line. Recurring events are supported.
@@ -169,12 +161,7 @@ Tray or fence menu → **New widget**. Widgets with a list scroll with the mouse
   off (repeating ones move to their next date). Due to-dos are announced even while the widget is hidden.
 - **World clock**: the time in other places, with the difference to yours; double-click to choose time zones.
 - **Power plan**: switch between Balanced, High performance and others with one click.
-- **Steam sales**: all current sales, top sellers or popular new releases (more load when scrolling); every discounted
-  game on your **wishlist** comes first. Menu → Settings: list, minimum discount, highest price, games per page and the
-  account (empty = the one signed in on this PC). If the wishlist isn't public, paste its **share link** (Steam:
-  wishlist → Share). Click opens the store page in Steam.
 - **Game news**: announcements and patch notes of your installed Steam games.
-- **Twitch live**: which of your streamers are live, with game and title; a notification when someone goes live.
 - **Timer & alarm**: quick timers (buttons +1, +5, +10, +15, +30 minutes) and alarms on chosen days; they ring even
   while the widget is hidden.
   When one rings, a small window offers **Stop**, **5 min later** and **10 min later**.
@@ -182,8 +169,6 @@ Tray or fence menu → **New widget**. Widgets with a list scroll with the mouse
 - **Time progress**: how much of the day, week, month and year has passed.
 - **Autostart**: programs that start with Windows, each with a switch (like Task Manager). Entries for all users are
   dimmed, they need admin rights.
-- **Web page**: a small page (dashboard, status page …) right in a fence, refreshed every 10 seconds to 15 minutes.
-  Click opens it in the browser, the wheel scrolls; address, interval and zoom in the menu.
 
 Every widget's menu has its own settings. The focus timer's menu also has **focus mode**: it switches to a profile you
 choose (e.g. "Focus" with only work fences) while a focus round runs, and back in breaks.
@@ -244,7 +229,7 @@ again on the next switch – but only if it started them itself.
 
 ## Several PCs
 
-Settings → Data & styles → **Choose shared folder…**, e.g. in OneDrive. Fences, notes, playtime and own styles then
+Settings → Data & styles → **Choose shared folder…**, e.g. in OneDrive. Fences, notes and own styles then
 live there, and every PC pointed at the same folder shows the same fences. Positions are kept per monitor setup, so a
 laptop and a desktop PC can arrange them differently. When another PC saves, NoFences reloads after a few seconds.
 "Stop sharing" copies everything back to this PC.
@@ -289,8 +274,7 @@ The exe is not code-signed yet. Click "More info" → "Run anyway".
 
 **What goes online?**
 Only what you set up: update checks (GitHub), weather (Open-Meteo), your calendar links, news feeds, prices (Yahoo
-Finance), Steam sales and news (Steam), Twitch status (decapi.me), the speed test (Cloudflare) and pages in the web page
-widget, and the public address in Tools ▸ Network info (ipify.org). Nothing else is sent anywhere.
+Finance), game news (Steam), the speed test (Cloudflare) and the public address in Tools ▸ Network info (ipify.org). Nothing else is sent anywhere.
 
 **The fences sometimes freeze for a moment.**
 NoFences notices that itself and writes a line like `Freeze: UI blocked 1830 ms during: Clipboard` into `logs\log.txt`
@@ -300,7 +284,7 @@ NoFences notices that itself and writes a line like `Freeze: UI blocked 1830 ms 
 No, never. (The FPS measurement of older versions needed them and was removed in 2.11.)
 
 **Where are my settings?**
-Next to `NoFences.exe`, sorted into folders: `config` (fences.json, playtime), `backups`, `themes`, `media` (note
+Next to `NoFences.exe`, sorted into folders: `config` (fences.json, screen time), `backups`, `themes`, `media` (note
 pictures, voice notes, shelf), `cache`, `logs` and `lang` (own translations). If the program folder can't be written to
 (e.g. Program Files), they are in `%LocalAppData%\NoFences` instead. With a shared folder, fences and styles are there.
 Settings → Data & styles → "Open data folder" shows the folder. Data of older versions is moved automatically.

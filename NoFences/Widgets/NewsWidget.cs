@@ -54,14 +54,12 @@ namespace NoFences.Widgets
         private static async Task<List<NewsItem>> LoadGameNewsAsync()
         {
             var library = await GameLibrary.CachedAsync();
-            var steam = library.Where(g => g.Source == GameSource.Steam)
-                .OrderByDescending(g => g.LastPlayed).Take(10).ToList();
+            var steam = library.OrderByDescending(g => g.LastPlayed).Take(10).ToList();
             var tasks = steam.Select(async game =>
             {
                 try
                 {
-                    var appId = game.Id["steam:".Length..];
-                    var json = await Web.Http.GetStringAsync($"https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid={appId}&count=4&maxlength=1&feeds=steam_community_announcements");
+                    var json = await Web.Http.GetStringAsync($"https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid={game.AppId}&count=4&maxlength=1&feeds=steam_community_announcements");
                     return ParseSteamNews(json, game.Name);
                 }
                 catch (Exception e)

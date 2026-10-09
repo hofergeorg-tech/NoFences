@@ -249,9 +249,8 @@ namespace NoFences.Model
                 "gaming" => new List<FenceInfo>
                 {
                     new() { Name = Strings.TemplateGamesFence, Kind = FenceKind.Links, Compact = true, IconSize = 48, Theme = "gaming", Width = 440, Height = 120 },
-                    Widget("games", "gaming"),
-                    Widget("system", "gaming"),
-                    Widget("steamdeals", "gaming"),
+                    Widget("gamenews", "gaming"),
+                    Widget("media", "gaming"),
                 },
                 "office" => new List<FenceInfo>
                 {

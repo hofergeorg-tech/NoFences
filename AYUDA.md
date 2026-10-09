@@ -19,7 +19,7 @@ English: [HELP.md](HELP.md) · Deutsch: [HILFE.md](HILFE.md) · Italiano: [AIUTO
 - **Valla de carpeta**: muestra el contenido de una carpeta. Los archivos que sueltas se **mueven** a esa carpeta (con
   Ctrl se copian), así que salen de verdad del escritorio.
 - **Nota**: un pósit con texto, ver más abajo.
-- **Widget**: contenido en directo – reloj, tiempo, juegos, citas y más, ver más abajo.
+- **Widget**: contenido en directo – reloj, tiempo, noticias, citas y más, ver más abajo.
 - **Archivos recientes**: los 20 últimos archivos abiertos (solo lectura).
 - **Barra de inicio rápido**: una valla de accesos directos estrecha, solo con iconos; los nombres aparecen como información sobre herramientas.
 - **Más vallas** (menú → Más vallas):
@@ -135,13 +135,6 @@ atajo se cambia en Configuración → Escritorio.
 Menú de la bandeja o de una valla → **Nuevo widget**. Los widgets con listas se desplazan con la rueda del ratón.
 
 - **Reloj y calendario**; los días con citas de un widget Citas llevan un punto.
-- **Monitor del sistema**: CPU, RAM, carga y temperatura de la GPU (NVIDIA), y un gráfico de los dos últimos minutos. Si
-  la tarjeta gráfica sigue demasiado caliente, NoFences avisa (límite en el
-  menú: 75–90 °C o desactivado).
-- **Unidades**: nivel de llenado y espacio libre; un clic abre la unidad.
-- **Papelera**: suelta archivos en ella para eliminarlos, doble clic la abre, el menú la vacía.
-- **Tiempo de juego**: hoy / esta semana / este mes / total para cualquier juego. Haz doble clic y elige el exe del juego;
-  NoFences registra cuánto tiempo se ejecuta.
 - **Cuenta atrás**: días y horas hasta una fecha; doble clic para configurarla.
 - **Tiempo**: el tiempo actual y la previsión de tres días para un lugar que busques (datos: Open-Meteo, sin cuenta), además
   de un **aviso de lluvia** para las próximas dos horas («Lluvia en unos 20 min»), la salida y puesta del sol y la **fase
@@ -155,9 +148,6 @@ Menú de la bandeja o de una valla → **Nuevo widget**. Los widgets con listas 
   NoFences está abierto; las contraseñas de los gestores de contraseñas se omiten.
 - **Batería**: carga, si se está cargando, tiempo restante (portátiles), además de la batería de **mandos** (Xbox/XInput)
   y **dispositivos Bluetooth** que la informan a Windows (auriculares, muchos ratones y teclados).
-- **Juegos**: tus juegos instalados de Steam (con carátulas), Epic, GOG y la app de Xbox; primero los jugados
-  recientemente. Bajo cada carátula aparece el **tiempo de juego** que NoFences cuenta solo. Un clic inicia el juego. El
-  menú permite ocultar juegos, ordenar por nombre o tiempo de juego, o buscar de nuevo.
 - **Citas**: las próximas dos semanas desde enlaces de calendario (.ics). Google: configuración del calendario →
   «Dirección secreta en formato iCal»; Outlook: Configuración → Calendario → Calendarios compartidos → Publicar → ICS;
   iCloud: comparte el calendario públicamente. Varios calendarios: un enlace por línea. Se admiten citas periódicas.
@@ -178,12 +168,7 @@ Menú de la bandeja o de una valla → **Nuevo widget**. Los widgets con listas 
   marca (las periódicas pasan a su siguiente fecha). Las tareas pendientes se avisan aunque el widget esté oculto.
 - **Reloj mundial**: la hora en otros lugares con la diferencia respecto a la tuya; doble clic para elegir zonas horarias.
 - **Plan de energía**: cambia con un clic entre Equilibrado, Alto rendimiento y otros.
-- **Ofertas de Steam**: todas las ofertas actuales, los más vendidos o las novedades populares (al desplazar se cargan
-  más); cada juego rebajado de tu **lista de deseos** va primero. Menú → Configuración: lista, descuento mínimo, precio
-  máximo, juegos por página y cuenta (vacío = la iniciada en este PC). Si la lista de deseos no es pública, pega su
-  **enlace para compartir** (Steam: lista de deseos → Compartir). Un clic abre la página en Steam.
 - **Noticias de juegos**: anuncios y notas de parches de tus juegos de Steam instalados.
-- **Twitch en directo**: cuáles de tus streamers están en directo, con juego y título; una notificación cuando alguien empieza.
 - **Temporizador y alarma**: temporizadores rápidos (botones +1, +5, +10, +15, +30 minutos) y alarmas en los días
   elegidos; suenan aunque el widget esté oculto.
   Cuando suena, una pequeña ventana ofrece **Detener**, **En 5 min** y **En 10 min**.
@@ -191,9 +176,6 @@ Menú de la bandeja o de una valla → **Nuevo widget**. Los widgets con listas 
 - **Progreso del tiempo**: cuánto ha pasado ya del día, la semana, el mes y el año.
 - **Inicio automático**: los programas que arrancan con Windows, cada uno con un interruptor (como el Administrador de
   tareas). Las entradas para todos los usuarios aparecen en gris: necesitan permisos de administrador.
-- **Página web**: una página pequeña (panel, página de estado …) directamente en la valla, actualizada desde cada 10
-  segundos hasta cada 15 minutos. Un clic la abre en el navegador, la rueda la desplaza; dirección, intervalo y zoom en
-  el menú.
 
 Cada widget tiene sus propios ajustes en su menú. El menú del temporizador de concentración incluye además el **modo
 concentración**: durante una ronda cambia a un perfil que elijas (p. ej. «Concentración» solo con vallas de trabajo) y
@@ -258,7 +240,7 @@ del perfil», NoFences los cierra en el siguiente cambio, pero solo si los inici
 
 ## Varios PC
 
-Configuración → Datos y estilos → **Elegir carpeta compartida…**, p. ej. en OneDrive. Las vallas, notas, tiempo de juego
+Configuración → Datos y estilos → **Elegir carpeta compartida…**, p. ej. en OneDrive. Las vallas, notas
 y estilos propios se guardan entonces allí, y cada PC que use la misma carpeta muestra las mismas vallas. Las posiciones
 se guardan por configuración de monitores, así que un portátil y un PC de sobremesa pueden colocarlas de forma distinta.
 Cuando otro PC guarda, NoFences recarga en pocos segundos. «Dejar de compartir» vuelve a copiar todo a este PC.
@@ -305,8 +287,7 @@ El exe aún no está firmado. Haz clic en «Más información» → «Ejecutar d
 
 **¿Qué se conecta a Internet?**
 Solo lo que configures: la búsqueda de actualizaciones (GitHub), el tiempo (Open-Meteo), tus enlaces de calendario, las
-fuentes de noticias, las cotizaciones (Yahoo Finance), ofertas y noticias de Steam (Steam), el estado de Twitch
-(decapi.me), el test de velocidad (Cloudflare) y las páginas del widget Página web, además de la dirección pública en Herramientas ▸ Información de red (ipify.org). No se envía nada más.
+fuentes de noticias, las cotizaciones (Yahoo Finance), las noticias de juegos (Steam), el test de velocidad (Cloudflare), además de la dirección pública en Herramientas ▸ Información de red (ipify.org). No se envía nada más.
 
 **A veces las vallas se quedan congeladas un momento.**
 NoFences lo nota por sí mismo y escribe una línea como `Freeze: UI blocked 1830 ms during: Clipboard` en
@@ -317,7 +298,7 @@ lo comunicas.
 No, nunca. (La medición de FPS de versiones anteriores los necesitaba y se eliminó en la 2.11.)
 
 **¿Dónde está mi configuración?**
-Junto a `NoFences.exe`, ordenada en carpetas: `config` (fences.json, tiempo de juego), `backups`, `themes`, `media`
+Junto a `NoFences.exe`, ordenada en carpetas: `config` (fences.json, tiempo de pantalla), `backups`, `themes`, `media`
 (imágenes y notas de voz, bandeja), `cache`, `logs` y `lang` (traducciones propias). Si no se puede escribir en la carpeta
 del programa (p. ej. Archivos de programa), está en `%LocalAppData%\NoFences`. Con una carpeta compartida, vallas y
 estilos están allí. Los datos de versiones anteriores se mueven automáticamente.

@@ -82,6 +82,13 @@ namespace NoFences.Util
                 ui.Post(_ =>
                 {
                     pending.Remove(key);
+                    // The same file at this size with an older timestamp: that image is outdated now
+                    var stale = key[..(key.LastIndexOf('|') + 1)];
+                    foreach (var old in cache.Keys.Where(k => k != key && k.StartsWith(stale, StringComparison.OrdinalIgnoreCase)).ToList())
+                    {
+                        cache[old]?.Dispose();
+                        cache.Remove(old);
+                    }
                     cache[key] = bmp;
                     ImageLoaded?.Invoke(this, EventArgs.Empty);
                 }, null);

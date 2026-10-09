@@ -53,22 +53,6 @@ namespace NoFences.Tests
         }
 
         [Fact]
-        public void TemperatureWatch_WarnsOnceAfterStayingHot()
-        {
-            var watch = new TemperatureWatch();
-            var t0 = new DateTime(2026, 10, 4, 20, 0, 0);
-            Assert.Null(watch.Update(90, 85, t0));
-            Assert.Null(watch.Update(90, 85, t0.AddSeconds(5)));
-            Assert.Equal(91, watch.Update(91, 85, t0.AddSeconds(11)));
-            // Quiet afterwards, even if it stays hot
-            Assert.Null(watch.Update(92, 85, t0.AddMinutes(5)));
-            Assert.Equal(92, watch.Update(92, 85, t0.AddMinutes(16)));
-            // Cooling down resets; off never warns
-            Assert.Null(watch.Update(60, 85, t0.AddMinutes(40)));
-            Assert.Null(new TemperatureWatch().Update(99, 0, t0.AddMinutes(1)));
-        }
-
-        [Fact]
         public void SpeedTest_Mbit()
         {
             Assert.Equal(8, SpeedTest.Mbit(1_000_000, TimeSpan.FromSeconds(1)));

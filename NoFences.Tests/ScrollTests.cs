@@ -19,23 +19,5 @@ namespace NoFences.Tests
             (float)widget.GetType().GetField("scroll", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(widget)!;
 
         // Regression: after scrolling down and making the fence bigger, the list stayed shifted and the wheel did nothing.
-        [Fact]
-        public void SteamDeals_ScrollResetsWhenTheFenceGrows()
-        {
-            var widget = new SteamDealsWidget(() => null, _ => { });
-            widget.SetPreview(Enumerable.Range(1, 10).Select(i => (new SteamDeal(i, $"Game {i}", 50, 999, 1999, "EUR", null, false), (Image?)null)));
-
-            Draw(widget, 200);
-            Assert.True(widget.Wheel(-120));
-            Assert.True(widget.Wheel(-120));
-            Draw(widget, 200);
-            Assert.True(Scroll(widget) > 0);
-
-            Draw(widget, 1200);  // now everything fits
-            Assert.Equal(0, Scroll(widget));
-
-            Draw(widget, 200);   // smaller again: scrolling works again
-            Assert.True(widget.Wheel(-120));
-        }
     }
 }

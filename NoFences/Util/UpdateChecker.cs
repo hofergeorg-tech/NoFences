@@ -4,7 +4,8 @@ using System.Text.Json;
 
 namespace NoFences.Util
 {
-    public sealed record ReleaseInfo(Version Version, string Tag, string PageUrl, string? ExeUrl, long ExeSize);
+    /// <param name="ExeSha256">The exe's SHA-256 as GitHub reports it (hex), null for releases from before GitHub had it.</param>
+    public sealed record ReleaseInfo(Version Version, string Tag, string PageUrl, string? ExeUrl, long ExeSize, string? ExeSha256 = null);
 
     /// <summary>
     /// Checks GitHub for a newer release and replaces the running single-file exe with it.
@@ -44,13 +45,19 @@ namespace NoFences.Util
             if (!response.IsSuccessStatusCode)
                 return null;
 
-            using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+            return ParseRelease(await response.Content.ReadAsStringAsync());
+        }
+
+        /// <summary>The release from GitHub's JSON, or null if it isn't parseable.</summary>
+        public static ReleaseInfo? ParseRelease(string json)
+        {
+            using var doc = JsonDocument.Parse(json);
             var root = doc.RootElement;
             var tag = root.GetProperty("tag_name").GetString() ?? "";
             if (!Version.TryParse(tag.TrimStart('v', 'V'), out var version))
                 return null;
 
-            string? exeUrl = null;
+            string? exeUrl = null, sha256 = null;
             long size = 0;
             foreach (var asset in root.GetProperty("assets").EnumerateArray())
             {
@@ -58,9 +65,22 @@ namespace NoFences.Util
                 {
                     exeUrl = asset.GetProperty("browser_download_url").GetString();
                     size = asset.GetProperty("size").GetInt64();
+                    // "sha256:<hex>", computed by GitHub when the file was uploaded
+                    if (asset.TryGetProperty("digest", out var digest) && digest.GetString() is { } d
+                        && d.StartsWith("sha256:", StringComparison.OrdinalIgnoreCase))
+                        sha256 = d["sha256:".Length..].ToLowerInvariant();
                 }
             }
-            return new ReleaseInfo(Normalize(version), tag, root.GetProperty("html_url").GetString() ?? "", exeUrl, size);
+            return new ReleaseInfo(Normalize(version), tag, root.GetProperty("html_url").GetString() ?? "", exeUrl, size, sha256);
+        }
+
+        /// <summary>Whether the downloaded file is exactly the one GitHub has (when GitHub reports a checksum).</summary>
+        public static bool MatchesChecksum(string file, string? expectedSha256)
+        {
+            if (expectedSha256 == null)
+                return true;
+            using var stream = File.OpenRead(file);
+            return Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(stream)).Equals(expectedSha256, StringComparison.OrdinalIgnoreCase);
         }
 
         public static bool IsNewer(ReleaseInfo release) => release.Version > CurrentVersion;
@@ -85,6 +105,11 @@ namespace NoFences.Util
             {
                 File.Delete(download);
                 throw new IOException("Download incomplete.");
+            }
+            if (!MatchesChecksum(download, release.ExeSha256))
+            {
+                File.Delete(download);
+                throw new IOException("The download doesn't match the release's checksum.");
             }
 
             if (File.Exists(old))

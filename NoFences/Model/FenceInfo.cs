@@ -11,7 +11,7 @@ namespace NoFences.Model
         /// <summary>A sticky note: free text, lines starting with "[ ]" become checkboxes.</summary>
         Note,
 
-        /// <summary>Live content instead of files: clock, system monitor, weather, media, playtime and more (see WidgetRegistry).</summary>
+        /// <summary>Live content instead of files: clock, weather, media, news and more (see WidgetRegistry).</summary>
         Widget
     }
 
@@ -96,7 +96,7 @@ namespace NoFences.Model
         /// <summary>Widget fences: which widget ("clock", "system", "drives", "recyclebin", "starcitizen").</summary>
         public string? WidgetType { get; set; }
 
-        /// <summary>Widget-specific choice, e.g. the game shown by the playtime widget (null = default).</summary>
+        /// <summary>Widget-specific choice, e.g. the weather widget's place (null = default).</summary>
         public string? WidgetOption { get; set; }
 
         /// <summary>Icons only, no names (quick-launch bar); names show as tooltips.</summary>

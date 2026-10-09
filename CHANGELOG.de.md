@@ -4,6 +4,17 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.13.0] - unveröffentlicht
+
+### Entfernt
+- **Weniger, schnellere Widgets**: System-Monitor, Laufwerke, Papierkorb, Spiele, Spielzeit, Steam-Angebote, Twitch und Webseite sind weg. Sie haben NoFences gebremst (Prozesslisten, Hardware-Zähler, schlafende Festplatten) oder hingen an inoffiziellen Diensten; das Webseiten-Widget lief zudem mit einem versteckten Browser. Ihre Fences werden beim ersten Start herausgenommen (ein Hinweis nennt sie; die letzte Sicherung enthält sie noch). Die EXE ist dadurch auch kleiner.
+
+### Geändert
+- Einsortieren verschiebt große Dateien vom Desktop im Hintergrund, statt die Fences einzufrieren.
+- Updates werden nur installiert, wenn der Download zur Prüfsumme passt, die GitHub für das Release angibt.
+- Fehler von Widgets landen in `logs\log.txt`; veraltete Symbole werden aus dem Speicher entfernt.
+- Die Spiele-News schauen nur noch auf Steam (Epic, GOG und Xbox haben sie nie genutzt).
+
 ## [2.12.0] - 2026-10-08
 
 ### Geändert

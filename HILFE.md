@@ -20,7 +20,7 @@ English: [HELP.md](HELP.md) · Italiano: [AIUTO.md](AIUTO.md) · Français : [AI
 - **Ordner-Fence**: zeigt den Inhalt eines Ordners. Reingezogene Dateien werden dorthin **verschoben** (mit Strg kopiert),
   sie verschwinden also wirklich vom Desktop.
 - **Notiz**: ein Post-it mit Text, siehe unten.
-- **Widget**: Live-Inhalt – Uhr, Wetter, Spiele, Termine und mehr, siehe unten.
+- **Widget**: Live-Inhalt – Uhr, Wetter, News, Termine und mehr, siehe unten.
 - **Zuletzt verwendet**: die 20 zuletzt geöffneten Dateien (nur lesen).
 - **Schnellstart-Leiste**: ein schmaler Verknüpfungs-Fence nur mit Icons; die Namen erscheinen als Tooltip.
 - **Weitere Fences** (Menü → Weitere Fences):
@@ -137,11 +137,6 @@ du unter Einstellungen → Desktop.
 Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem Mausrad.
 
 - **Uhr & Kalender**; Tage mit Terminen aus einem Termine-Widget tragen einen Punkt.
-- **System-Monitor**: CPU, RAM, GPU-Last und -Temperatur (NVIDIA), eine Kurve der letzten zwei Minuten. Bleibt die Grafikkarte zu heiß, warnt NoFences (Grenze im Menü: 75–90 °C oder aus).
-- **Laufwerke**: Füllstand und freier Platz; Klick öffnet das Laufwerk.
-- **Papierkorb**: Dateien darauf ziehen löscht sie, Doppelklick öffnet ihn, im Menü leeren.
-- **Spielzeit**: heute / diese Woche / diesen Monat / gesamt für ein beliebiges Spiel. Doppelklick und die EXE des Spiels
-  auswählen; NoFences zeichnet auf, wie lange es läuft.
 - **Countdown**: Tage und Stunden bis zu einem Datum; Doppelklick zum Festlegen.
 - **Wetter**: aktuelles Wetter und drei Tage Vorschau für einen gesuchten Ort (Daten: Open-Meteo, ohne Konto), dazu
   ein **Regen-Hinweis** für die nächsten zwei Stunden („Regen in ca. 20 Min.“), Sonnenauf- und -untergang und die
@@ -155,9 +150,6 @@ Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem
   läuft; Passwörter aus Passwort-Managern werden übersprungen.
 - **Akku**: Ladestand, ob geladen wird, Restzeit (Laptops), dazu der Akku von **Controllern** (Xbox/XInput) und
   **Bluetooth-Geräten**, die ihn an Windows melden (Headsets, viele Mäuse und Tastaturen).
-- **Spiele**: deine installierten Spiele aus Steam (mit Cover), Epic, GOG und der Xbox-App; zuletzt gespielte zuerst.
-  Unter jedem Cover steht die **Spielzeit**, die NoFences automatisch mitzählt. Klick startet ein Spiel. Im Menü Spiele
-  ausblenden, nach Name oder Spielzeit sortieren oder erneut suchen.
 - **Termine**: die nächsten zwei Wochen aus Kalender-Links (.ics). Google: Kalendereinstellungen → „Privatadresse im
   iCal-Format“; Outlook: Einstellungen → Kalender → Freigegebene Kalender → Veröffentlichen → ICS; iCloud: Kalender
   öffentlich freigeben. Mehrere Kalender: ein Link pro Zeile. Wiederkehrende Termine werden unterstützt.
@@ -180,12 +172,7 @@ Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem
   ausgeblendet ist.
 - **Weltzeituhr**: die Uhrzeit an anderen Orten mit dem Unterschied zu deiner; Doppelklick wählt die Zeitzonen.
 - **Energiesparplan**: mit einem Klick zwischen Ausbalanciert, Höchstleistung und anderen wechseln.
-- **Steam-Angebote**: alle aktuellen Angebote, Topseller oder beliebte Neuerscheinungen (beim Scrollen lädt mehr nach);
-  jedes reduzierte Spiel deiner **Wunschliste** steht oben. Im Menü → Einstellungen: Liste, Mindestrabatt, Höchstpreis,
-  Spiele pro Seite und das Konto (leer = das auf diesem PC angemeldete). Ist die Wunschliste nicht öffentlich, füge ihren
-  **Freigabelink** ein (Steam: Wunschliste → Teilen). Klick öffnet die Shop-Seite in Steam.
 - **Spiele-News**: Ankündigungen und Patchnotes deiner installierten Steam-Spiele.
-- **Twitch live**: welche deiner Streamer gerade live sind, mit Spiel und Titel; Benachrichtigung, wenn jemand startet.
 - **Timer & Wecker**: Schnell-Timer (Knöpfe +1, +5, +10, +15, +30 Minuten) und Wecker an gewählten Tagen; sie klingeln auch,
   wenn das Widget ausgeblendet ist.
   Klingelt er, bietet ein kleines Fenster **Aus**, **In 5 Min. nochmal** und **In 10 Min. nochmal**.
@@ -193,8 +180,6 @@ Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem
 - **Zeit-Fortschritt**: wie viel von Tag, Woche, Monat und Jahr schon vorbei ist.
 - **Autostart**: Programme, die mit Windows starten, mit Schalter (wie im Task-Manager). Einträge für alle Benutzer sind
   ausgegraut, sie brauchen Administratorrechte.
-- **Webseite**: eine kleine Seite (Dashboard, Statusseite …) direkt im Fence, alle 10 Sekunden bis 15 Minuten
-  aktualisiert. Klick öffnet sie im Browser, das Mausrad scrollt, im Menü Adresse, Intervall und Zoom.
 
 Jedes Widget hat im Menü eigene Einstellungen. Im Menü des Fokus-Timers gibt es außerdem den **Fokus-Modus**: Er
 wechselt während einer Fokus-Runde zu einem Profil deiner Wahl (z. B. „Fokus“ nur mit Arbeits-Fences) und in den
@@ -261,7 +246,7 @@ schließt NoFences sie beim Wechsel wieder – aber nur, wenn es sie selbst gest
 
 ## Mehrere PCs
 
-Einstellungen → Daten & Styles → **Gemeinsamen Ordner wählen…**, z. B. in OneDrive. Fences, Notizen, Spielzeit und
+Einstellungen → Daten & Styles → **Gemeinsamen Ordner wählen…**, z. B. in OneDrive. Fences, Notizen und
 eigene Styles liegen dann dort, und jeder PC, der auf denselben Ordner zeigt, hat dieselben Fences. Positionen gelten
 pro Monitor-Anordnung, Laptop und Desktop-PC können sie also verschieden anordnen. Speichert ein anderer PC, lädt
 NoFences nach ein paar Sekunden neu. „Nicht mehr teilen“ kopiert alles zurück auf diesen PC.
@@ -307,8 +292,7 @@ Die EXE ist noch nicht signiert. Auf „Weitere Informationen“ → „Trotzdem
 
 **Was geht ins Internet?**
 Nur, was du einrichtest: die Update-Prüfung (GitHub), Wetter (Open-Meteo), deine Kalender-Links, News-Feeds, Kurse
-(Yahoo Finance), Steam-Angebote und -News (Steam), Twitch-Status (decapi.me), der Speedtest (Cloudflare) und Seiten im
-Webseiten-Widget sowie die öffentliche Adresse in Werkzeuge ▸ Netzwerk-Infos (ipify.org). Sonst wird nichts gesendet.
+(Yahoo Finance), Spiele-News (Steam), der Speedtest (Cloudflare) sowie die öffentliche Adresse in Werkzeuge ▸ Netzwerk-Infos (ipify.org). Sonst wird nichts gesendet.
 
 **Die Fences hängen manchmal kurz.**
 NoFences merkt das selbst und schreibt eine Zeile wie `Freeze: UI blocked 1830 ms during: Clipboard` in `logs\log.txt`
@@ -318,7 +302,7 @@ NoFences merkt das selbst und schreibt eine Zeile wie `Freeze: UI blocked 1830 m
 Nein, nie. (Die FPS-Messung älterer Versionen brauchte sie und wurde in 2.11 entfernt.)
 
 **Wo liegen meine Einstellungen?**
-Neben der `NoFences.exe`, sortiert in Ordner: `config` (fences.json, Spielzeit), `backups`, `themes`, `media`
+Neben der `NoFences.exe`, sortiert in Ordner: `config` (fences.json, Bildschirmzeit), `backups`, `themes`, `media`
 (Notiz-Bilder, Sprachnotizen, Ablage), `cache`, `logs` und `lang` (eigene Übersetzungen). Ist der Programmordner nicht
 beschreibbar (z. B. „Programme“), liegen sie stattdessen in `%LocalAppData%\NoFences`. Mit gemeinsamem Ordner liegen
 Fences und Styles dort. Einstellungen → Daten & Styles → „Datenordner öffnen“ zeigt den Ordner. Daten älterer Versionen

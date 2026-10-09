@@ -133,9 +133,27 @@ namespace NoFences.Model
             {
                 if (fence.Kind == FenceKind.Folder)
                 {
+                    // Desktop and fence folder are often on different drives: then this is a copy, which
+                    // must not freeze the fences for a big download. Counted as sorted right away.
                     var target = UniquePath(fence.FolderPath!, Path.GetFileName(path));
-                    File.Move(path, target);
-                    fence.Files.Add(target);
+                    Task.Run(() =>
+                    {
+                        try
+                        {
+                            File.Move(path, target);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.WriteLine($"Auto-sort of {path} failed: {e.Message}");
+                            return;
+                        }
+                        ui.Post(_ =>
+                        {
+                            fence.Files.Add(target);
+                            sorted(fence);
+                        }, null);
+                    });
+                    return true;
                 }
                 else
                 {

@@ -38,7 +38,13 @@ namespace NoFences.Widgets
         }
 
         /// <summary>"3h 05m" or "42m".</summary>
-        public static string Format(int seconds) => PlaytimeSummary.Format(TimeSpan.FromSeconds(seconds));
+        /// <summary>"0m", "45m", "3h 07m", "128h 15m".</summary>
+        public static string Format(int seconds)
+        {
+            var t = TimeSpan.FromSeconds(seconds);
+            var hours = (int)t.TotalHours;
+            return hours == 0 ? $"{t.Minutes}m" : $"{hours}h {t.Minutes:00}m";
+        }
 
         public override void Draw(WidgetCanvas c)
         {

@@ -17,7 +17,6 @@ namespace NoFences
         {
             public bool ShowExtensions => false;
             public bool Animations => false;
-            public PlaytimeLog Playtime { get; } = DemoPlaytime();
             public UsageLog ScreenTime { get; } = DemoUsage();
             /// <summary>Style designer: draws with a style that isn't registered (yet).</summary>
             public Func<FenceInfo, FenceTheme>? ThemeOverride { get; init; }
@@ -54,7 +53,6 @@ namespace NoFences
             public void OpenStyleDesigner(FenceInfo? info) { }
         }
 
-        internal const string DemoGame = @"C:\Games\Space Game.exe";
 
         /// <summary>Made-up screen time (programs that don't exist here, so no real icons or data show).</summary>
         private static UsageLog DemoUsage()
@@ -63,22 +61,6 @@ namespace NoFences
             foreach (var (exe, name, minutes) in new[] { (@"C:\Demo\browser.exe", "Web Browser", 142), (@"C:\Demo\code.exe", "Code Editor", 96),
                          (@"C:\Demo\game.exe", "Space Game", 75), (@"C:\Demo\mail.exe", "Mail", 31), (@"C:\Demo\music.exe", "Music Player", 18) })
                 log.Add(DateTime.Now, exe, name, minutes * 60);
-            return log;
-        }
-
-        /// <summary>Some made-up sessions for "Space Game.exe" so the playtime widget has something to show.</summary>
-        private static PlaytimeLog DemoPlaytime()
-        {
-            var log = new PlaytimeLog();
-            var today = DateTime.Today;
-            // Oldest first, as they would have been recorded
-            foreach (var (daysAgo, hour, minutes) in new[] { (20, 18, 240), (9, 21, 180), (3, 19, 60), (1, 20, 140), (0, 15, 95) })
-            {
-                var start = today.AddDays(-daysAgo).AddHours(hour);
-                log.Running(DemoGame, start, null);
-                var list = log.Games[PlaytimeLog.Key(DemoGame)];
-                list[^1] = list[^1] with { End = new DateTimeOffset(start.AddMinutes(minutes)).ToUnixTimeSeconds() };
-            }
             return log;
         }
 
@@ -244,18 +226,14 @@ namespace NoFences
             RenderWidgetSheet(outDir, host, "widgets.png", new (string, string, Size)[]
             {
                 ("clock", "default", new Size(280, 320)),
-                ("system", "gaming", new Size(260, 300)),
-                ("drives", "hardware", new Size(300, 240)),
-                ("recyclebin", "nerd", new Size(220, 210)),
-                ("playtime", "gaming", new Size(270, 260)),
                 ("countdown", "family", new Size(280, 200)),
+                ("weather", "default", new Size(270, 300)),
             });
             RenderWidgetSheet(outDir, host, "widgets-docs.png", new (string, string, Size)[]
             {
                 ("clock", "default", new Size(280, 320)),
-                ("playtime", "nerd", new Size(270, 260)),
                 ("countdown", "postit", new Size(280, 220)),
-                ("system", "gaming", new Size(260, 230)),
+                ("network", "gaming", new Size(260, 230)),
             });
             RenderWidgetSheet(outDir, host, "widgets-more-docs.png", new (string, string, Size)[]
             {
@@ -267,7 +245,6 @@ namespace NoFences
             });
             RenderWidgetSheet(outDir, host, "widgets-extra-docs.png", new (string, string, Size)[]
             {
-                ("games", "gaming", new Size(420, 330)),
                 ("agenda", "windows", new Size(290, 330)),
                 ("focus", "hobby", new Size(230, 280)),
                 ("news", "documents", new Size(330, 330)),
@@ -285,25 +262,22 @@ namespace NoFences
                 ("todo", "work", new Size(300, 300)),
                 ("worldclock", "default", new Size(290, 260)),
                 ("power", "hardware", new Size(280, 170)),
-                ("steamdeals", "gaming", new Size(360, 330)),
             });
             RenderWidgetSheet(outDir, host, "widgets-time-docs.png", new (string, string, Size)[]
             {
                 ("timer", "default", new Size(280, 280)),
                 ("habits", "nature", new Size(330, 230)),
                 ("progress", "windows", new Size(260, 240)),
-                ("twitch", "gaming", new Size(300, 260)),
             });
             RenderWidgetSheet(outDir, host, "widgets-system-docs.png", new (string, string, Size)[]
             {
-                ("system", "gaming", new Size(260, 330)),
                 ("network", "hardware", new Size(270, 270)),
                 ("battery", "nature", new Size(240, 230)),
                 ("autostart", "windows", new Size(300, 300)),
             });
             RenderWidgetSheet(outDir, host, "widgets-look-docs.png", new (string, string, Size)[]
             {
-                ("webpage", "default", new Size(420, 320)),
+                ("weather", "contrast", new Size(280, 320)),
                 ("clock", "contrast", new Size(280, 320)),
             });
             // Checking: news in a wide dark style, as people actually use it
@@ -312,51 +286,6 @@ namespace NoFences
                 ("news", "multimedia", new Size(685, 344)),
                 ("news", "postit", new Size(330, 330)),
             });
-        }
-
-        /// <summary>A made-up web dashboard for the web page widget.</summary>
-        private static Bitmap DemoDashboard()
-        {
-            var bitmap = new Bitmap(400, 280);
-            using var g = Graphics.FromImage(bitmap);
-            g.Clear(Color.FromArgb(245, 247, 250));
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            using (var bar = new SolidBrush(Color.FromArgb(36, 41, 56)))
-                g.FillRectangle(bar, 0, 0, 400, 40);
-            using var title = new Font("Segoe UI Semibold", 15, GraphicsUnit.Pixel);
-            g.DrawString("Home Dashboard", title, Brushes.White, 14, 10);
-            using var small = new Font("Segoe UI", 12, GraphicsUnit.Pixel);
-            using var big = new Font("Segoe UI Semibold", 26, GraphicsUnit.Pixel);
-            var cards = new[] { ("Solar", "4.2 kW", Color.FromArgb(255, 184, 0)), ("Inside", "21.5 °C", Color.FromArgb(0, 150, 136)), ("Battery", "86 %", Color.FromArgb(76, 175, 80)) };
-            for (var i = 0; i < cards.Length; i++)
-            {
-                var r = new Rectangle(14 + i * 126, 54, 116, 80);
-                g.FillRectangle(Brushes.White, r);
-                using (var accent = new SolidBrush(cards[i].Item3))
-                    g.FillRectangle(accent, r.X, r.Y, 4, r.Height);
-                g.DrawString(cards[i].Item1, small, Brushes.DimGray, r.X + 12, r.Y + 10);
-                g.DrawString(cards[i].Item2, big, Brushes.Black, r.X + 10, r.Y + 32);
-            }
-            g.FillRectangle(Brushes.White, 14, 146, 372, 120);
-            using var line = new Pen(Color.FromArgb(0, 120, 212), 2.5f);
-            var points = Enumerable.Range(0, 30).Select(i => new PointF(24 + i * 12.2f, 240 - 70 * (float)Math.Pow(Math.Sin(i / 9.5), 2) - (i % 4) * 3)).ToArray();
-            g.DrawLines(line, points);
-            g.DrawString("Power today", small, Brushes.DimGray, 24, 152);
-            return bitmap;
-        }
-
-        /// <summary>A made-up game cover: gradient with the title.</summary>
-        private static Bitmap DemoCover(string title, Color a, Color b)
-        {
-            var bitmap = new Bitmap(240, 360);
-            using var g = Graphics.FromImage(bitmap);
-            using var brush = new LinearGradientBrush(new Rectangle(0, 0, 240, 360), a, b, 70f);
-            g.FillRectangle(brush, 0, 0, 240, 360);
-            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-            using var font = new Font("Segoe UI Black", 26, FontStyle.Bold, GraphicsUnit.Pixel);
-            using var format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far };
-            g.DrawString(title, font, Brushes.White, new RectangleF(10, 0, 220, 330), format);
-            return bitmap;
         }
 
         /// <summary>The language flags at menu size and enlarged (flags.png).</summary>
@@ -395,21 +324,6 @@ namespace NoFences
                     break;
                 case Widgets.MediaWidget media:
                     media.SetPreview("Midnight Drive", "The Synthwave Band", "Spotify", null, TimeSpan.FromSeconds(83), TimeSpan.FromSeconds(214));
-                    break;
-                case Widgets.GamesWidget games:
-                    var palette = new (string, Color, Color)[]
-                    {
-                        ("STAR VOYAGE", Color.FromArgb(20, 30, 80), Color.FromArgb(120, 60, 200)),
-                        ("KART RUSH", Color.FromArgb(220, 60, 40), Color.FromArgb(250, 190, 40)),
-                        ("DEEP FOREST", Color.FromArgb(20, 70, 40), Color.FromArgb(120, 190, 90)),
-                        ("NEON CITY", Color.FromArgb(40, 10, 60), Color.FromArgb(230, 40, 160)),
-                        ("ICE PEAK", Color.FromArgb(40, 90, 150), Color.FromArgb(220, 240, 255)),
-                        ("DUNE RIDERS", Color.FromArgb(150, 80, 30), Color.FromArgb(240, 200, 120)),
-                        ("ROBO LAB", Color.FromArgb(40, 40, 50), Color.FromArgb(90, 200, 220)),
-                        ("PIXEL QUEST", Color.FromArgb(30, 120, 90), Color.FromArgb(250, 230, 90)),
-                    };
-                    games.SetPreview(palette.Select((p, i) => (new Widgets.GameInfo($"demo:{i}", p.Item1, Widgets.GameSource.Steam, "", null, null, DateTime.Now.AddDays(-i)),
-                        (Bitmap?)DemoCover(p.Item1, p.Item2, p.Item3))));
                     break;
                 case Widgets.AgendaWidget agenda:
                     var d = DateTime.Today;
@@ -468,14 +382,6 @@ namespace NoFences
                     }
                     photo.SetPreview(picture);
                     break;
-                case Widgets.TwitchWidget twitch:
-                    twitch.SetPreview(new[]
-                    {
-                        new Widgets.TwitchChannel("streamer_one", true, "2 h 14 min", "Space Game", "Exploring the new star system – chill stream"),
-                        new Widgets.TwitchChannel("streamer_two", true, "35 min", "Kart Rush", "Ranked races until midnight"),
-                        new Widgets.TwitchChannel("streamer_three", false, "", "", ""),
-                    });
-                    break;
                 case Widgets.PowerWidget power:
                     power.SetPreview(new List<Win32.PowerPlan>
                     {
@@ -483,12 +389,6 @@ namespace NoFences
                         new(Guid.NewGuid(), "High performance", true),
                         new(Guid.NewGuid(), "Power saver", false),
                     });
-                    break;
-                case Widgets.SteamDealsWidget steam:
-                    var colors = new[] { (Color.FromArgb(30, 40, 90), Color.FromArgb(200, 60, 160)), (Color.FromArgb(20, 90, 60), Color.FromArgb(220, 200, 60)), (Color.FromArgb(90, 30, 20), Color.FromArgb(240, 150, 40)), (Color.FromArgb(20, 60, 110), Color.FromArgb(120, 200, 240)) };
-                    var names = new[] { "Star Voyage", "Kart Rush", "Dune Riders", "Ice Peak" };
-                    steam.SetPreview(names.Select((n, i) => (new Widgets.SteamDeal(i + 1, n, new[] { 75, 50, 33, 60 }[i], new[] { 1499, 999, 2679, 799 }[i], new[] { 5999, 1999, 3999, 1999 }[i], "EUR", null, i == 0),
-                        (Image?)DemoCover(n.ToUpperInvariant(), colors[i].Item1, colors[i].Item2))));
                     break;
                 case Widgets.AudioWidget audio:
                     audio.SetPreview(new List<Win32.AudioDevice>
@@ -506,17 +406,11 @@ namespace NoFences
                         new Widgets.ServiceStatus("Store", Widgets.ServiceLevel.Notice, "Maintenance", new[] { "Payments" }, "https://example.com"),
                     });
                     break;
-                case Widgets.SystemWidget system:
-                    system.SetPreview(Enumerable.Range(0, 120).Select(i => (0.25 + 0.2 * Math.Sin(i / 9.0) + (i % 7) * 0.02, (double?)(0.5 + 0.35 * Math.Sin(i / 14.0)))));
-                    break;
                 case Widgets.NetworkWidget network:
                     network.SetPreview(new Widgets.SpeedTest.Result(248, 41, DateTime.Now));
                     break;
                 case Widgets.BatteryWidget battery:
                     battery.SetPreview(new List<Widgets.DeviceBattery> { new("Controller 1", 0.65), new("Headset", 0.8), new("Maus", 0.3) });
-                    break;
-                case Widgets.WebPageWidget web:
-                    web.SetPreview(DemoDashboard());
                     break;
                 case Widgets.AutostartWidget autostart:
                     autostart.SetPreview(new List<AutostartEntry>
@@ -558,7 +452,6 @@ namespace NoFences
                     WidgetOption = type switch
                     {
                         "countdown" => Widgets.CountdownWidget.Format(new DateTime(DateTime.Now.Year, 12, 24, 18, 0, 0), "Weihnachten"),
-                        "playtime" => DemoGame,
                         "weather" => new Widgets.WeatherPlace("Wien", 48.2085, 16.3721).ToOption(),
                         "agenda" => "https://example.com/calendar.ics",
                         "news" => "https://example.com/feed.xml",
@@ -582,7 +475,6 @@ namespace NoFences
                             new() { Name = "Drink water", Done = new[] { 1, 2, 4, 6 }.Select(i => Widgets.Habit.Key(DateTime.Today.AddDays(-i))).ToList() },
                             new() { Name = "Read 20 pages", Done = new[] { 0, 1 }.Select(i => Widgets.Habit.Key(DateTime.Today.AddDays(-i))).ToList() },
                         }, FenceStore.JsonOptions),
-                        "twitch" => "streamer_one\nstreamer_two\nstreamer_three",
                         "worldclock" =>"Pacific Standard Time|Los Angeles\nEastern Standard Time|New York\nTokyo Standard Time|Tokyo",
                         _ => null
                     }

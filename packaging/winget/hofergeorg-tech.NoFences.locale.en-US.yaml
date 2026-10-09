@@ -12,8 +12,8 @@ Copyright: Copyright (c) 2024 Twometer, (c) 2026 Georg Hofer
 ShortDescription: Free desktop fences, folder fences, sticky notes and widgets for Windows.
 Description: |-
   NoFences organizes your desktop with fences: boxes that hold links, mirror a folder or contain
-  sticky notes, plus widgets (clock, weather, games, appointments, system monitor, media,
-  news, prices, playtime, focus timer and more). Search across all fences, profiles that switch
+  sticky notes, plus widgets (clock, weather, appointments, media, network, news, prices,
+  to-do list, focus timer and more). Search across all fences, profiles that switch
   automatically, auto-sort of new desktop files, sync via a shared folder, 25 styles plus your own,
   five languages (English, German, Italian, French, Spanish), built-in updates.
   Fork of Twometer/NoFences.

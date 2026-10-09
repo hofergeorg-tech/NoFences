@@ -310,27 +310,6 @@ namespace NoFences.Util
         public static string DownloadsNothing => L("DownloadsNothing");
         public static string DownloadsSelected(int n, string size, int all) => L("DownloadsSelected", n, all, size);
         public static string DownloadsConfirm(int n, string size) => L("DownloadsConfirm", n, size);
-        public static string WidgetSteamDeals => L("WidgetSteamDeals");
-        public static string SteamWishlist => L("SteamWishlist");
-        public static string SteamSpecials => L("SteamSpecials");
-        public static string SteamSettingsMenu => L("SteamSettingsMenu");
-        public static string SteamSourceLabel => L("SteamSourceLabel");
-        public static string SteamSourceName(Widgets.SteamDealsWidget.DealSource source) => source switch
-        {
-            Widgets.SteamDealsWidget.DealSource.TopSellers => L("SteamSourceName.TopSellers"),
-            Widgets.SteamDealsWidget.DealSource.NewReleases => L("SteamSourceName.NewReleases"),
-            Widgets.SteamDealsWidget.DealSource.Wishlist => L("SteamSourceName.Wishlist"),
-            _ => L("SteamSourceName.Other")
-        };
-        public static string SteamWishlistFirst => L("SteamWishlistFirst");
-        public static string SteamMinDiscount => L("SteamMinDiscount");
-        public static string SteamMaxPrice => L("SteamMaxPrice");
-        public static string SteamCount => L("SteamCount");
-        public static string SteamAccount => L("SteamAccount");
-        public static string SteamIdAuto => L("SteamIdAuto");
-        public static string SteamFree => L("SteamFree");
-        public static string SteamIdMenu =>L("SteamIdMenu");
-        public static string SteamIdPrompt => L("SteamIdPrompt");
         public static string WidgetPower =>L("WidgetPower");
         public static string PowerNone => L("PowerNone");
         public static string PowerSettings => L("PowerSettings");
@@ -382,7 +361,7 @@ namespace NoFences.Util
         public static string FolderMissing(string path) => L("FolderMissing", path);
         public static string FirstStartHint => L("FirstStartHint");
 
-        // Appearance: style designer, web page widget
+        // Appearance: style designer
         public static string DesignerMenu => L("DesignerMenu");
         public static string DesignerTitle => L("DesignerTitle");
         public static string DesignerStart => L("DesignerStart");
@@ -403,15 +382,6 @@ namespace NoFences.Util
         public static string DesignerSaveApply => L("DesignerSaveApply");
         public static string DesignerFolder => L("DesignerFolder");
         public static string DesignerSaved(string name) => L("DesignerSaved", name);
-        public static string WidgetWebPage => L("WidgetWebPage");
-        public static string WebPagePrompt => L("WebPagePrompt");
-        public static string WebPageInvalid => L("WebPageInvalid");
-        public static string WebPageHint => L("WebPageHint");
-        public static string WebPageNoRuntime => L("WebPageNoRuntime");
-        public static string WebPageTooltip(string url) => L("WebPageTooltip", url);
-        public static string WebPageChange => L("WebPageChange");
-        public static string WebPageEvery => L("WebPageEvery");
-        public static string WebPageZoom => L("WebPageZoom");
         public static string Interval(int seconds) => seconds < 60
             ? L("Interval", seconds)
             : L("Interval.Alt", seconds / 60);
@@ -463,8 +433,6 @@ namespace NoFences.Util
         public static string MagnifierMenu => L("MagnifierMenu");
         public static string ControllerName(int n) => L("ControllerName", n);
         public static string ControllerWired => L("ControllerWired");
-        public static string TemperatureWarning(int t) => L("TemperatureWarning", t);
-        public static string TemperatureWarnMenu => L("TemperatureWarnMenu");
         public static string SpeedTest => L("SpeedTest");
         public static string SpeedTestStart => L("SpeedTestStart");
         public static string SpeedTestRunning(string phase) => L("SpeedTestRunning", phase);
@@ -811,9 +779,6 @@ namespace NoFences.Util
         #region Widgets
 
         public static string WidgetClock => L("WidgetClock");
-        public static string WidgetSystem => L("WidgetSystem");
-        public static string WidgetDrives => L("WidgetDrives");
-        public static string WidgetRecycleBin => L("WidgetRecycleBin");
         public static string WidgetCountdown => L("WidgetCountdown");
         public static string CountdownSet => L("CountdownSet");
         public static string CountdownHint => L("CountdownHint");
@@ -823,15 +788,8 @@ namespace NoFences.Util
         public static string CountdownReached => L("CountdownReached");
         public static string CountdownTitleLabel => L("CountdownTitleLabel");
         public static string CountdownDateLabel => L("CountdownDateLabel");
-        public static string WidgetPlaytime => L("WidgetPlaytime");
-        public static string PlaytimeChoose => L("PlaytimeChoose");
-        public static string PlaytimeChooseHint => L("PlaytimeChooseHint");
         public static string PlaytimeExeFilter => L("PlaytimeExeFilter");
-        public static string PlaytimeRunning => L("PlaytimeRunning");
         public static string PlaytimeToday => L("PlaytimeToday");
-        public static string PlaytimeWeek => L("PlaytimeWeek");
-        public static string PlaytimeMonth => L("PlaytimeMonth");
-        public static string PlaytimeTotal => L("PlaytimeTotal");
         public static string WidgetWeather => L("WidgetWeather");
         public static string WeatherHint => L("WeatherHint");
         public static string WeatherChoose => L("WeatherChoose");
@@ -866,32 +824,16 @@ namespace NoFences.Util
         public static string BatteryPlugged => L("BatteryPlugged");
         public static string BatteryOnBattery => L("BatteryOnBattery");
         public static string BatteryLeft(string time) => L("BatteryLeft", time);
-        public static string DriveDefaultName(DriveType type) => type switch
-        {
-            DriveType.Removable => L("DriveDefaultName.Removable"),
-            DriveType.Network => L("DriveDefaultName.Network"),
-            _ => L("DriveDefaultName.Other")
-        };
-        public static string FreeSpace(string size) => L("FreeSpace", size);
-        public static string RecycleEmptyState => L("RecycleEmptyState");
         public static string RecycleItems(long n, string size) => n == 1
             ? L("RecycleItems", size)
             : L("RecycleItems.Alt", n, size);
-        public static string RecycleDropHint => L("RecycleDropHint");
-        public static string RecycleEmptyAction => L("RecycleEmptyAction");
-        public static string GpuTemperature => L("GpuTemperature");
         public static string FpsRemoved => L("FpsRemoved");
+        public static string WidgetsRetired(string names) => L("WidgetsRetired", names);
 
         #endregion
 
         #region More widgets
 
-        public static string WidgetGames => L("WidgetGames");
-        public static string GamesSearching => L("GamesSearching");
-        public static string GamesNone => L("GamesNone");
-        public static string GamesHide(string name) => L("GamesHide", name);
-        public static string GamesShowHidden(int n) => L("GamesShowHidden", n);
-        public static string GamesSortByName => L("GamesSortByName");
         public static string WidgetTimer => L("WidgetTimer");
         public static string TimerHint => L("TimerHint");
         public static string TimerDone => L("TimerDone");
@@ -919,16 +861,8 @@ namespace NoFences.Util
         public static string BreakDefaultText => L("BreakDefaultText");
         public static string BreakHint => L("BreakHint");
         public static string BreakReminder(int minutes, string text) => L("BreakReminder", minutes, text);
-        public static string WidgetTwitch =>L("WidgetTwitch");
-        public static string TwitchHint => L("TwitchHint");
-        public static string TwitchPrompt => L("TwitchPrompt");
-        public static string TwitchSet => L("TwitchSet");
-        public static string TwitchOffline => L("TwitchOffline");
-        public static string TwitchWentLive(string name, string game) => L("TwitchWentLive", name, game);
         public static string WidgetGameNews =>L("WidgetGameNews");
         public static string GameNewsNone => L("GameNewsNone");
-        public static string GamesSortByPlaytime =>L("GamesSortByPlaytime");
-        public static string GamesRescan =>L("GamesRescan");
 
         public static string WidgetAgenda => L("WidgetAgenda");
         public static string AgendaHint => L("AgendaHint");

@@ -9,17 +9,12 @@ namespace NoFences.Widgets
         public static IReadOnlyList<(string Type, Func<string> Name, Size DefaultSize)> Types { get; } = new (string, Func<string>, Size)[]
         {
             ("clock", () => Strings.WidgetClock, new Size(280, 320)),
-            ("system", () => Strings.WidgetSystem, new Size(260, 300)),
-            ("drives", () => Strings.WidgetDrives, new Size(280, 220)),
-            ("recyclebin", () => Strings.WidgetRecycleBin, new Size(200, 190)),
-            ("playtime", () => Strings.WidgetPlaytime, new Size(270, 260)),
             ("countdown", () => Strings.WidgetCountdown, new Size(280, 200)),
             ("weather", () => Strings.WidgetWeather, new Size(270, 300)),
             ("media", () => Strings.WidgetMedia, new Size(330, 200)),
             ("network", () => Strings.WidgetNetwork, new Size(260, 230)),
             ("clipboard", () => Strings.WidgetClipboard, new Size(280, 300)),
             ("battery", () => Strings.WidgetBattery, new Size(220, 170)),
-            ("games", () => Strings.WidgetGames, new Size(480, 330)),
             ("agenda", () => Strings.WidgetAgenda, new Size(300, 320)),
             ("photos", () => Strings.WidgetPhotos, new Size(360, 260)),
             ("focus", () => Strings.WidgetFocus, new Size(230, 280)),
@@ -31,15 +26,26 @@ namespace NoFences.Widgets
             ("todo", () => Strings.WidgetTodo, new Size(300, 320)),
             ("worldclock", () => Strings.WidgetWorldClock, new Size(290, 260)),
             ("power", () => Strings.WidgetPower, new Size(280, 170)),
-            ("steamdeals", () => Strings.WidgetSteamDeals, new Size(340, 360)),
             ("gamenews", () => Strings.WidgetGameNews, new Size(340, 360)),
             ("timer", () => Strings.WidgetTimer, new Size(280, 260)),
             ("habits", () => Strings.WidgetHabits, new Size(330, 230)),
             ("progress", () => Strings.WidgetProgress, new Size(260, 230)),
-            ("twitch", () => Strings.WidgetTwitch, new Size(300, 260)),
             ("autostart", () => Strings.WidgetAutostart, new Size(300, 320)),
-            ("webpage", () => Strings.WidgetWebPage, new Size(420, 340)),
         };
+
+        /// <summary>
+        /// Widgets that were removed in 2.13 (they slowed NoFences down or relied on unofficial services).
+        /// Fences of these types are taken out when the config is loaded.
+        /// </summary>
+        public static readonly string[] Removed = { "system", "drives", "recyclebin", "playtime", "starcitizen", "games", "steamdeals", "twitch", "webpage" };
+
+        /// <summary>Takes fences of removed widgets out of <paramref name="fences"/> and returns them.</summary>
+        public static List<FenceInfo> TakeOutRemoved(List<FenceInfo> fences)
+        {
+            var removed = fences.Where(f => f.Kind == FenceKind.Widget && Removed.Contains(f.WidgetType)).ToList();
+            fences.RemoveAll(removed.Contains);
+            return removed;
+        }
 
         public enum Group { Time, Info, System, GamesMedia }
 
@@ -47,22 +53,13 @@ namespace NoFences.Widgets
         public static IReadOnlyList<(Group Group, string[] Types)> Groups { get; } = new (Group, string[])[]
         {
             (Group.Time, new[] { "clock", "worldclock", "timer", "todo", "habits", "countdown", "agenda", "focus", "progress", "screentime" }),
-            (Group.Info, new[] { "weather", "news", "ticker", "status", "webpage" }),
-            (Group.System, new[] { "system", "audio", "power", "network", "drives", "battery", "recyclebin", "clipboard", "autostart" }),
-            (Group.GamesMedia, new[] { "games", "steamdeals", "gamenews", "twitch", "playtime", "media", "photos" }),
+            (Group.Info, new[] { "weather", "news", "ticker", "status" }),
+            (Group.System, new[] { "audio", "power", "network", "battery", "clipboard", "autostart" }),
+            (Group.GamesMedia, new[] { "gamenews", "media", "photos" }),
         };
 
         public static FenceWidget? Create(FenceInfo info, IFenceHost host)
         {
-            // Fences created as "Star Citizen playtime" before the widget became generic
-            if (info.WidgetType == "starcitizen")
-            {
-                info.WidgetType = "playtime";
-                // The old widget stored a game name, the new one needs the game's exe
-                info.WidgetOption = null;
-                host.RequestSave();
-            }
-
             void Set(string? option)
             {
                 info.WidgetOption = option;
@@ -72,14 +69,6 @@ namespace NoFences.Widgets
             return info.WidgetType switch
             {
                 "clock" => new ClockWidget(),
-                "system" => new SystemWidget(() => info.WidgetOption, Set, host.Notify),
-                "drives" => new DrivesWidget(),
-                "recyclebin" => new RecycleBinWidget(),
-                "playtime" => new PlaytimeWidget(() => info.WidgetOption, exe =>
-                {
-                    info.WidgetOption = exe;
-                    host.RequestSave();
-                }, () => host.Playtime),
                 "countdown" => new CountdownWidget(() => info.WidgetOption, option =>
                 {
                     info.WidgetOption = option;
@@ -97,7 +86,6 @@ namespace NoFences.Widgets
                 "network" => new NetworkWidget(),
                 "clipboard" => new ClipboardWidget(() => info.WidgetOption, Set),
                 "battery" => new BatteryWidget(),
-                "games" => new GamesWidget(() => info.WidgetOption, Set, () => host.Playtime),
                 "agenda" => new AgendaWidget(() => info.WidgetOption, Set),
                 "photos" => new PhotoWidget(() => info.WidgetOption, Set),
                 "focus" => new FocusWidget(() => info.WidgetOption, Set, host.Notify, host),
@@ -108,14 +96,11 @@ namespace NoFences.Widgets
                 "todo" => new TodoWidget(() => info.WidgetOption, Set),
                 "worldclock" => new WorldClockWidget(() => info.WidgetOption, Set),
                 "power" => new PowerWidget(),
-                "steamdeals" => new SteamDealsWidget(() => info.WidgetOption, Set),
                 "timer" => new TimerWidget(() => info.WidgetOption, Set, host.StopAlarmSound),
                 "habits" => new HabitsWidget(() => info.WidgetOption, Set),
                 "progress" => new ProgressWidget(),
                 "autostart" => new AutostartWidget(),
-                "webpage" => new WebPageWidget(() => info.WidgetOption, Set),
                 "gamenews" =>new NewsWidget(() => info.WidgetOption, Set, gameNews: true),
-                "twitch" => new TwitchWidget(() => info.WidgetOption, Set, host.Notify),
                 "screentime" =>new ScreenTimeWidget(() => info.WidgetOption, Set, () => host.ScreenTime),
                 _ => null
             };

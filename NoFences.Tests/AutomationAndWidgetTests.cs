@@ -84,45 +84,20 @@ namespace NoFences.Tests
             Assert.Equal(new[] { @"C:\Program Files (x86)\Steam", @"D:\SteamLibrary" }, GameLibrary.ParseLibraryFolders(vdf));
 
             var acf = "\"AppState\"\n{\n\t\"appid\"\t\t\"1245620\"\n\t\"name\"\t\t\"ELDEN RING\"\n\t\"StateFlags\"\t\t\"4\"\n\t\"LastPlayed\"\t\t\"1790000000\"\n}";
-            var game = GameLibrary.ParseAppManifest(acf, @"C:\nowhere");
+            var game = GameLibrary.ParseAppManifest(acf);
             Assert.NotNull(game);
             Assert.Equal("ELDEN RING", game!.Name);
-            Assert.Equal("steam://rungameid/1245620", game.Launch);
+            Assert.Equal("1245620", game.AppId);
             Assert.True(game.LastPlayed > new DateTime(2026, 1, 1));
         }
 
         [Fact]
         public void Steam_SkipsToolsAndUnfinishedInstalls()
         {
-            Assert.Null(GameLibrary.ParseAppManifest("\"appid\" \"228980\"\n\"name\" \"Steamworks Common Redistributables\"\n\"StateFlags\" \"4\"", ""));
-            Assert.Null(GameLibrary.ParseAppManifest("\"appid\" \"10\"\n\"name\" \"Half-Done\"\n\"StateFlags\" \"1026\"", ""));
+            Assert.Null(GameLibrary.ParseAppManifest("\"appid\" \"228980\"\n\"name\" \"Steamworks Common Redistributables\"\n\"StateFlags\" \"4\""));
+            Assert.Null(GameLibrary.ParseAppManifest("\"appid\" \"10\"\n\"name\" \"Half-Done\"\n\"StateFlags\" \"1026\""));
         }
 
-        [Fact]
-        public void Epic_Manifest()
-        {
-            var json = """
-                {"DisplayName":"Rocket League","AppName":"Sugar","CatalogNamespace":"ns1","CatalogItemId":"item1",
-                 "InstallLocation":"C:\\Nowhere","LaunchExecutable":"rl.exe","bIsIncompleteInstall":false,"AppCategories":["public","games"]}
-                """;
-            var game = GameLibrary.ParseEpicManifest(json);
-            Assert.Equal("Rocket League", game!.Name);
-            Assert.Equal("com.epicgames.launcher://apps/ns1%3Aitem1%3ASugar?action=launch&silent=true", game.Launch);
-            Assert.Null(GameLibrary.ParseEpicManifest(json.Replace("\"games\"", "\"addons\"")));
-        }
-
-        [Fact]
-        public void Arrange_RecentFirstAndHidesHidden()
-        {
-            var games = new[]
-            {
-                new GameInfo("a", "Alpha", GameSource.Gog, "", null, null),
-                new GameInfo("b", "Beta", GameSource.Steam, "", null, null, new DateTime(2026, 9, 1)),
-                new GameInfo("c", "Gamma", GameSource.Steam, "", null, null, new DateTime(2026, 10, 1)),
-            };
-            Assert.Equal(new[] { "Gamma", "Beta", "Alpha" }, GamesWidget.Arrange(games, new()).Select(g => g.Name));
-            Assert.Equal(new[] { "Alpha", "Gamma" }, GamesWidget.Arrange(games, new() { SortByName = true, Hidden = { "b" } }).Select(g => g.Name));
-        }
     }
 
     public class IcsTests

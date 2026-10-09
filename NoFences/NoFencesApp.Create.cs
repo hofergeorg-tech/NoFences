@@ -32,16 +32,10 @@ namespace NoFences
         public void CreateWidget(string type)
         {
             var (_, name, size) = WidgetRegistry.Types.First(t => t.Type == type);
-            // Playtime needs the game first; its name becomes the fence title.
+            // Some widgets ask for their settings first; the weather's place becomes the fence title.
             string? option = null;
             var title = name();
-            if (type == "playtime")
-            {
-                option = PlaytimeWidget.ChooseExe(null, null);
-                if (option != null)
-                    title = PlaytimeWidget.GameName(option);
-            }
-            else if (type == "weather" && WeatherPlaceDialog.Choose(null, null) is { } place)
+            if (type == "weather" && WeatherPlaceDialog.Choose(null, null) is { } place)
             {
                 option = place.ToOption();
                 title = $"{name()} {place.Name}";
@@ -53,13 +47,6 @@ namespace NoFences
             else if (type == "news")
             {
                 option = NewsWidget.AskFeeds(null, null);
-            }
-            else if (type == "webpage")
-            {
-                option = WebPageWidget.AskUrl(null, null);
-                if (option == null)
-                    return;
-                title = new Uri(WebPageWidget.Parse(option).Url).Host;
             }
             else if (type == "ticker")
             {

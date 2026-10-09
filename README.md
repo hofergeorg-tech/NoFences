@@ -33,10 +33,8 @@ pasted **pictures**, **voice notes** and **password-protected** (encrypted) note
 ![Sticky notes](docs/notes.png)
 ![Pictures, voice notes and a protected note](docs/notes-media.png)
 
-**Widgets** – clock & calendar, system monitor (CPU, RAM, GPU), drives, recycle bin,
-**playtime** of any game (pick its exe, NoFences records how long it runs), a **countdown**, **weather**
-(Open-Meteo, no account), **now playing** with media controls, **network** rate and ping, **clipboard history** and
-**battery**, your installed **games** (Steam with covers, Epic, GOG, Xbox), **appointments** from calendar links
+**Widgets** – clock & calendar, a **countdown**, **weather** (Open-Meteo, no account), **now playing** with media
+controls, **network** rate and ping, **clipboard history** and **battery**, **appointments** from calendar links
 (.ics), a **photo frame**, a **focus timer** (Pomodoro), **news** (RSS/Atom) and **prices** (stocks, crypto).
 
 ![Widgets](docs/widgets-docs.png)
@@ -50,22 +48,20 @@ Also **screen time**, **sound** (volume, mute, switch playback device) and **ser
 **Search** – Ctrl+Alt+F searches everything in all fences (links, folder contents, tabs, notes), Start menu apps and
 Windows settings, and calculates (`12*7`).
 
-Plus a **to-do list** with due times and repetition, a **world clock**, **power plans** and **Steam sales** (all sales,
-your whole wishlist – also private ones via the share link):
+Plus a **to-do list** with due times and repetition, a **world clock** and **power plans**:
 
 ![Planning widgets](docs/widgets-planning-docs.png)
 
-**Timer & alarm**, **habits**, **time progress**, **Twitch live** and **game news**; the games widget shows the playtime
-of every game:
+**Timer & alarm**, **habits**, **time progress** and **game news** (patch notes of your installed Steam games):
 
 ![Time widgets](docs/widgets-time-docs.png)
 
-The system monitor has a graph and a **temperature warning**, the network widget a **speed test**, the battery widget
-shows **controllers and Bluetooth devices**, and there is an **autostart** manager. The weather adds a **rain hint**,
-sunrise/sunset and the moon phase. A **web page** widget shows a dashboard or status page:
+The network widget has a **speed test**, the battery widget shows **controllers and Bluetooth devices**, and there is an
+**autostart** manager. The weather adds a **rain hint**, sunrise/sunset and the moon phase. Widgets also come in the
+high contrast style:
 
 ![System widgets](docs/widgets-system-docs.png)
-![Web page widget and high contrast style](docs/widgets-look-docs.png)
+![High contrast style](docs/widgets-look-docs.png)
 
 **Notes** understand simple formatting – `# headings`, `- bullets`, `> quotes`, `**bold**`, `*italic*` – and Ctrl+Alt+N
 creates one from anywhere. Reminders can repeat.
@@ -127,11 +123,11 @@ dotnet test NoFences.Tests/NoFences.Tests.csproj
 
 ## Configuration
 
-Stored next to `NoFences.exe`, sorted into `config\` (`fences.json`, `playtime.json`, `usage.json`), `backups\`,
+Stored next to `NoFences.exe`, sorted into `config\` (`fences.json`, `usage.json`), `backups\`,
 `themes\`, `media\`, `cache\`, `logs\` and `lang\`. If the exe's folder isn't writable (Program Files, a WinGet package
 folder), the same layout is used in `%LocalAppData%\NoFences\`. Data of 2.5 and older (flat in `%LocalAppData%\NoFences\`)
 is copied over once; the old folder gets a `moved.txt`. Fences from NoFences 1.x are migrated automatically. With a
-shared folder (Settings → Data & styles), fences, playtime and styles live there and `config\sync-folder.txt` points to it.
+shared folder (Settings → Data & styles), fences and styles live there and `config\sync-folder.txt` points to it.
 
 ## Credits
 

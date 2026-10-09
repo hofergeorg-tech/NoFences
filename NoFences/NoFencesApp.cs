@@ -34,7 +34,11 @@ namespace NoFences
             Strings.Language = Store.Config.Language;
             appliedTheme = DefaultThemeId;
             var themeErrors = LoadCustomThemesQuiet().Errors;
-            var firstStart = Store.Config.Fences.Count == 0;
+            // Widgets removed in 2.13: their fences go (the backup still has them)
+            var retired = Widgets.WidgetRegistry.TakeOutRemoved(Store.Config.Fences);
+            if (retired.Count > 0)
+                Store.RequestSave();
+            var firstStart = Store.Config.Fences.Count == 0 && retired.Count == 0;
             foreach (var info in Store.Config.Fences)
                 OpenWindow(info);
             if (windows.Count == 0)
@@ -60,7 +64,6 @@ namespace NoFences
             InitBackupsAndScreens();
             RemoveLegacyFpsHelper();
             InitVirtualDesktops();
-            InitPlaytime();
             InitAutomation();
             InitSearch();
             InitSync();
@@ -69,7 +72,9 @@ namespace NoFences
             InitDocks();
             UpdateProfileHotkeys();
             UpdateQuickNoteHotkey();
-            if (languageErrors.Count > 0)
+            if (retired.Count > 0)
+                ShowBalloon(Strings.WidgetsRetired(string.Join(", ", retired.Select(f => f.Name))), timeout: 15_000);
+            else if (languageErrors.Count > 0)
                 ShowBalloon(Strings.LanguageFileErrors(string.Join("\n", languageErrors)), timeout: 10_000);
             else if (themeErrors.Count > 0)
                 ShowBalloon(Strings.ThemeErrors(string.Join("\n", themeErrors)), timeout: 10_000);
@@ -338,7 +343,6 @@ namespace NoFences
             DisposeReminders();
             DisposeBackupsAndScreens();
             virtualDesktopTimer.Dispose();
-            DisposePlaytime();
             DisposeAutomation();
             DisposeSearch();
             DisposeSync();

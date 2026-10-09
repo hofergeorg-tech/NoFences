@@ -36,13 +36,6 @@ namespace NoFences
                 PreviewRenderer.Run(args[1]);
                 return;
             }
-            if (args.Length == 3 && args[0] == "--webshot")
-            {
-                // Checks the web page widget's capture without the full app: --webshot <url> <file.png>
-                ApplicationConfiguration.Initialize();
-                Widgets.WebPageWidget.Webshot(args[1], args[2]);
-                return;
-            }
             if (args.Length == 2 && args[0] == "--show")
             {
                 // Opens an embedded document (e.g. HILFE.md) on its own; used to check the help texts.

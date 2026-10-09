@@ -4,6 +4,15 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.13.0] - non publiée
+
+### Modifications
+- **Moins de widgets, plus rapides** : moniteur système, lecteurs, corbeille, jeux, temps de jeu, promos Steam, Twitch et page web ont été supprimés. Ils ralentissaient NoFences (listes de processus, compteurs matériels, disques en veille) ou dépendaient de services non officiels ; le widget page web faisait en plus tourner un navigateur caché. Leurs barrières sont retirées au premier démarrage (une notification les liste ; la dernière sauvegarde les contient encore). L'exe est aussi plus petit.
+- Le rangement depuis le bureau déplace les gros fichiers en arrière-plan au lieu de figer les barrières.
+- Les mises à jour ne sont installées que si le téléchargement correspond à la somme de contrôle indiquée par GitHub pour la version.
+- Les erreurs des widgets vont dans `logs\log.txt` ; les icônes périmées sont retirées de la mémoire.
+- Les actus des jeux ne regardent plus que Steam (Epic, GOG et Xbox n'ont jamais servi).
+
 ## [2.12.0] - 2026-10-08
 
 ### Modifications

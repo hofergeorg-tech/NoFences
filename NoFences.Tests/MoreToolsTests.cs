@@ -129,21 +129,5 @@ namespace NoFences.Tests
             Assert.Equal("rgb(10, 123, 255)", ColorPicker.Rgb(Color.FromArgb(10, 123, 255)));
         }
 
-        [Fact]
-        public void Steam_SpecialsAndPrices()
-        {
-            var specials = SteamDealsWidget.ParseSpecials("""
-                {"specials":{"items":[{"id":1091500,"name":"Cyberpunk 2077","discount_percent":70,"original_price":5999,"final_price":1799,"currency":"EUR","small_capsule_image":"https://x/y.jpg"},
-                                      {"id":1,"name":"Full price","discount_percent":0,"original_price":100,"final_price":100,"currency":"EUR"}]}}
-                """);
-            var deal = Assert.Single(specials);
-            Assert.Equal(70, deal.DiscountPercent);
-            Assert.Equal(1799, deal.FinalCents);
-
-            var prices = SteamDealsWidget.ParsePrices("""
-                {"292030":{"success":true,"data":{"price_overview":{"currency":"EUR","initial":4999,"final":2499,"discount_percent":50}}},"5":{"success":true,"data":[]}}
-                """);
-            Assert.Equal((292030, (50, 2499, 4999, "EUR")), Assert.Single(prices));
-        }
     }
 }

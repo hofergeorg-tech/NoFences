@@ -87,7 +87,7 @@ namespace NoFences.Widgets
             return (received, sent);
         }
 
-        public static string FormatRate(double bytesPerSecond) => DrivesWidget.FormatSize((long)bytesPerSecond) + "/s";
+        public static string FormatRate(double bytesPerSecond) => Util.ByteSize.Format((long)bytesPerSecond) + "/s";
 
         public override void Draw(WidgetCanvas c)
         {

@@ -20,7 +20,7 @@ English: [HELP.md](HELP.md) · Deutsch: [HILFE.md](HILFE.md) · Italiano: [AIUTO
 - **Barrière de dossier** : affiche le contenu d'un dossier. Les fichiers déposés y sont **déplacés** (Ctrl pour
   copier), ils quittent donc vraiment le bureau.
 - **Note** : un post-it avec du texte, voir plus bas.
-- **Widget** : du contenu en direct – horloge, météo, jeux, rendez-vous et plus, voir plus bas.
+- **Widget** : du contenu en direct – horloge, météo, actualités, rendez-vous et plus, voir plus bas.
 - **Fichiers récents** : les 20 derniers fichiers ouverts (lecture seule).
 - **Barre de lancement rapide** : une barrière de raccourcis étroite, icônes seules ; les noms s'affichent en info-bulle.
 - **Autres barrières** (menu → Autres barrières) :
@@ -144,13 +144,6 @@ résultat, **↑↓** pour choisir, **Échap** ferme. Le raccourci se change dan
 Menu de la zone de notification ou d'une barrière → **Nouveau widget**. Les widgets avec une liste défilent à la molette.
 
 - **Horloge et calendrier** ; les jours avec des rendez-vous d'un widget Rendez-vous portent un point.
-- **Moniteur système** : CPU, RAM, charge et température du GPU (NVIDIA), et une courbe des deux dernières minutes.
-  Si la carte graphique reste trop chaude, NoFences vous prévient (seuil dans le menu :
-  75–90 °C ou désactivé).
-- **Lecteurs** : niveau de remplissage et espace libre ; un clic ouvre le lecteur.
-- **Corbeille** : déposez-y des fichiers pour les supprimer, double-clic l'ouvre, le menu la vide.
-- **Temps de jeu** : aujourd'hui / cette semaine / ce mois-ci / total pour n'importe quel jeu. Double-cliquez et
-  choisissez l'exe du jeu ; NoFences enregistre combien de temps il tourne.
 - **Compte à rebours** : jours et heures jusqu'à une date ; double-clic pour la définir.
 - **Météo** : temps actuel et prévisions sur trois jours pour un lieu recherché (données : Open-Meteo, sans compte), plus
   une **alerte pluie** pour les deux prochaines heures (« Pluie dans env. 20 min »), le lever et le coucher du soleil et
@@ -164,9 +157,6 @@ Menu de la zone de notification ou d'une barrière → **Nouveau widget**. Les w
   conservé que tant que NoFences tourne ; les mots de passe des gestionnaires de mots de passe sont ignorés.
 - **Batterie** : charge, en charge ou non, autonomie restante (portables), plus la batterie des **manettes** (Xbox/XInput)
   et des **appareils Bluetooth** qui la transmettent à Windows (casques, beaucoup de souris et claviers).
-- **Jeux** : vos jeux installés depuis Steam (avec jaquettes), Epic, GOG et l'application Xbox ; les plus récemment
-  joués d'abord. Sous chaque jaquette figure le **temps de jeu** que NoFences compte tout seul. Un clic lance le jeu. Le
-  menu permet de masquer des jeux, trier par nom ou par temps de jeu, ou relancer la recherche.
 - **Rendez-vous** : les deux prochaines semaines depuis des liens d'agenda (.ics). Google : paramètres de l'agenda →
   « Adresse secrète au format iCal » ; Outlook : Paramètres → Calendrier → Calendriers partagés → Publier → ICS ;
   iCloud : partager l'agenda publiquement. Plusieurs agendas : un lien par ligne. Les événements récurrents sont pris en charge.
@@ -191,13 +181,7 @@ Menu de la zone de notification ou d'une barrière → **Nouveau widget**. Les w
 - **Horloge mondiale** : l'heure ailleurs avec le décalage par rapport à la vôtre ; double-cliquez pour choisir les
   fuseaux horaires.
 - **Mode d'alimentation** : passez d'un clic entre Utilisation normale, Performances élevées et les autres.
-- **Promos Steam** : toutes les promotions en cours, les meilleures ventes ou les nouveautés populaires (d'autres se
-  chargent en défilant) ; chaque jeu en promo de votre **liste de souhaits** passe en premier. Menu → Paramètres : liste,
-  remise minimale, prix maximal, jeux par page et compte (vide = celui connecté sur ce PC). Si la liste de souhaits n'est
-  pas publique, collez son **lien de partage** (Steam : liste de souhaits → Partager). Un clic ouvre la page dans Steam.
 - **Actus des jeux** : annonces et notes de mise à jour de vos jeux Steam installés.
-- **Twitch en direct** : lesquels de vos streamers sont en direct, avec jeu et titre ; une notification quand quelqu'un
-  commence.
 - **Minuteur et réveil** : minuteurs rapides (boutons +1, +5, +10, +15, +30 minutes) et réveils les jours choisis ; ils
   sonnent même si le widget est masqué.
   Quand il sonne, une petite fenêtre propose **Arrêter**, **Dans 5 min** et **Dans 10 min**.
@@ -205,9 +189,6 @@ Menu de la zone de notification ou d'une barrière → **Nouveau widget**. Les w
 - **Progression du temps** : quelle part du jour, de la semaine, du mois et de l'année est déjà passée.
 - **Démarrage auto** : les programmes qui démarrent avec Windows, chacun avec un interrupteur (comme le Gestionnaire des
   tâches). Les entrées pour tous les utilisateurs sont grisées : elles demandent des droits d'administrateur.
-- **Page web** : une petite page (tableau de bord, page d'état …) directement dans la barrière, actualisée de toutes les
-  10 secondes à toutes les 15 minutes. Un clic l'ouvre dans le navigateur, la molette la fait défiler ; adresse,
-  intervalle et zoom dans le menu.
 
 Chaque widget a ses propres réglages dans son menu. Le menu du minuteur de concentration propose aussi le **mode
 concentration** : pendant un tour, il passe à un profil de votre choix (par ex. « Concentration » avec seulement les
@@ -273,7 +254,7 @@ profil », NoFences les ferme au changement suivant – mais seulement s'il les 
 
 ## Plusieurs PC
 
-Paramètres → Données et styles → **Choisir le dossier partagé…**, par ex. dans OneDrive. Barrières, notes, temps de jeu
+Paramètres → Données et styles → **Choisir le dossier partagé…**, par ex. dans OneDrive. Barrières, notes
 et styles personnels y sont alors stockés, et chaque PC qui utilise le même dossier affiche les mêmes barrières. Les
 positions sont gardées par configuration d'écrans : un portable et un PC fixe peuvent donc les disposer différemment.
 Quand un autre PC enregistre, NoFences recharge au bout de quelques secondes. « Arrêter le partage » recopie tout sur ce PC.
@@ -324,8 +305,8 @@ L'exe n'est pas encore signé. Cliquez sur « Informations complémentaires » �
 
 **Qu'est-ce qui passe par Internet ?**
 Seulement ce que vous configurez : la vérification des mises à jour (GitHub), la météo (Open-Meteo), vos liens d'agenda,
-les flux d'actualités, les cours (Yahoo Finance), les promos et actus Steam (Steam), l'état Twitch (decapi.me), le test
-de débit (Cloudflare) et les pages du widget Page web, ainsi que l'adresse publique dans Outils ▸ Infos réseau (ipify.org). Rien d'autre n'est envoyé.
+les flux d'actualités, les cours (Yahoo Finance), les actus des jeux (Steam), le test
+de débit (Cloudflare), ainsi que l'adresse publique dans Outils ▸ Infos réseau (ipify.org). Rien d'autre n'est envoyé.
 
 **Les barrières se figent parfois un instant.**
 NoFences le remarque lui-même et écrit une ligne comme `Freeze: UI blocked 1830 ms during: Clipboard` dans
@@ -336,7 +317,7 @@ utile pour le signaler.
 Non, jamais. (La mesure des FPS des anciennes versions en avait besoin et a été supprimée dans la 2.11.)
 
 **Où sont mes réglages ?**
-À côté de `NoFences.exe`, rangés en dossiers : `config` (fences.json, temps de jeu), `backups`, `themes`, `media`
+À côté de `NoFences.exe`, rangés en dossiers : `config` (fences.json, temps d'écran), `backups`, `themes`, `media`
 (images et notes vocales des notes, étagère), `cache`, `logs` et `lang` (traductions personnelles). Si le dossier du
 programme n'est pas accessible en écriture (p. ex. Program Files), ils sont dans `%LocalAppData%\NoFences`. Avec un
 dossier partagé, barrières et styles y sont. Les données des versions précédentes sont déplacées automatiquement.

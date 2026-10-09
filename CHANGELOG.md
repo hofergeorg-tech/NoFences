@@ -5,6 +5,17 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.13.0] - unreleased
+
+### Removed
+- **Fewer, faster widgets**: system monitor, drives, recycle bin, games, playtime, Steam sales, Twitch and web page are gone. They slowed NoFences down (process scans, hardware counters, sleeping disks) or relied on unofficial services; the web page widget also ran a hidden browser. Their fences are taken out on the first start (a notification lists them; the last backup still has them). The exe is smaller, too.
+
+### Changed
+- Auto-sort moves big files from the desktop in the background instead of freezing the fences.
+- Updates are only installed if the download matches the checksum GitHub reports for the release.
+- Widget errors are written to `logs\log.txt`; outdated icons are dropped from memory.
+- The game news only look at Steam (they never used Epic, GOG or Xbox).
+
 ## [2.12.0] - 2026-10-08
 
 ### Changed

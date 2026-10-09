@@ -19,7 +19,7 @@ English: [HELP.md](HELP.md) · Deutsch: [HILFE.md](HILFE.md) · Français : [AID
 - **Recinto cartella**: mostra il contenuto di una cartella. I file trascinati vengono **spostati** in quella cartella
   (con Ctrl copiati), quindi lasciano davvero il desktop.
 - **Nota**: un post-it con testo, vedi sotto.
-- **Widget**: contenuto dal vivo – orologio, meteo, giochi, appuntamenti e altro, vedi sotto.
+- **Widget**: contenuto dal vivo – orologio, meteo, notizie, appuntamenti e altro, vedi sotto.
 - **File recenti**: gli ultimi 20 file aperti (sola lettura).
 - **Barra di avvio rapido**: un recinto collegamenti sottile con sole icone; i nomi appaiono come suggerimento.
 - **Altri recinti** (menu → Altri recinti):
@@ -133,11 +133,6 @@ cambia in Impostazioni → Desktop.
 Menu della barra o del recinto → **Nuovo widget**. I widget con un elenco scorrono con la rotellina del mouse.
 
 - **Orologio e calendario**; i giorni con appuntamenti di un widget Appuntamenti hanno un punto.
-- **Monitor di sistema**: CPU, RAM, carico e temperatura della GPU (NVIDIA), e un grafico degli ultimi due minuti. Se la scheda grafica resta troppo calda, NoFences avvisa (limite nel menu: 75–90 °C o spento).
-- **Unità**: livello di riempimento e spazio libero; un clic apre l'unità.
-- **Cestino**: trascinaci i file per eliminarli, doppio clic lo apre, dal menu lo svuoti.
-- **Tempo di gioco**: oggi / questa settimana / questo mese / totale per qualsiasi gioco. Doppio clic e scegli
-  l'eseguibile del gioco; NoFences registra per quanto tempo è in esecuzione.
 - **Conto alla rovescia**: giorni e ore fino a una data; doppio clic per impostarla.
 - **Meteo**: tempo attuale e previsioni per tre giorni per una località cercata (dati: Open-Meteo, senza account), più un
   **avviso di pioggia** per le prossime due ore ("Pioggia tra circa 20 min"), alba e tramonto e la **fase lunare**
@@ -151,9 +146,6 @@ Menu della barra o del recinto → **Nuovo widget**. I widget con un elenco scor
   aperto; le password dei gestori di password vengono ignorate.
 - **Batteria**: carica, se è in carica, tempo rimanente (portatili), più la batteria dei **controller** (Xbox/XInput) e
   dei **dispositivi Bluetooth** che la comunicano a Windows (cuffie, molti mouse e tastiere).
-- **Giochi**: i giochi installati da Steam (con copertina), Epic, GOG e dall'app Xbox; prima quelli giocati di recente.
-  Sotto ogni copertina c'è il **tempo di gioco** che NoFences conta da solo. Un clic avvia il gioco. Dal menu puoi
-  nascondere giochi, ordinarli per nome o tempo di gioco o cercare di nuovo.
 - **Appuntamenti**: le prossime due settimane dai link dei calendari (.ics). Google: impostazioni del calendario →
   "Indirizzo segreto in formato iCal"; Outlook: Impostazioni → Calendario → Calendari condivisi → Pubblica → ICS; iCloud:
   condividi il calendario pubblicamente. Più calendari: un link per riga. Gli eventi ricorrenti sono supportati.
@@ -175,12 +167,7 @@ Menu della barra o del recinto → **Nuovo widget**. I widget con un elenco scor
   nascosto.
 - **Orologio mondiale**: l'ora in altri luoghi con la differenza rispetto alla tua; doppio clic per scegliere i fusi orari.
 - **Risparmio energia**: passa con un clic tra Bilanciato, Prestazioni elevate e gli altri.
-- **Offerte Steam**: tutte le offerte attuali, i più venduti o le novità popolari (scorrendo se ne caricano altre); ogni
-  gioco scontato della tua **lista dei desideri** viene prima. Menu → Impostazioni: elenco, sconto minimo, prezzo
-  massimo, giochi per pagina e account (vuoto = quello collegato su questo PC). Se la lista dei desideri non è pubblica,
-  incolla il suo **link di condivisione** (Steam: lista dei desideri → Condividi). Un clic apre la pagina in Steam.
 - **Notizie giochi**: annunci e note delle patch dei tuoi giochi Steam installati.
-- **Twitch live**: quali dei tuoi streamer sono in diretta, con gioco e titolo; una notifica quando qualcuno inizia.
 - **Timer e sveglia**: timer rapidi (pulsanti +1, +5, +10, +15, +30 minuti) e sveglie nei giorni scelti; suonano anche
   se il widget è nascosto.
   Quando suona, una piccola finestra offre **Stop**, **Tra 5 min** e **Tra 10 min**.
@@ -188,8 +175,6 @@ Menu della barra o del recinto → **Nuovo widget**. I widget con un elenco scor
 - **Avanzamento del tempo**: quanto è già passato di giorno, settimana, mese e anno.
 - **Avvio automatico**: i programmi che partono con Windows, ognuno con un interruttore (come in Gestione attività). Le
   voci per tutti gli utenti sono in grigio: servono diritti di amministratore.
-- **Pagina web**: una piccola pagina (dashboard, pagina di stato …) direttamente nel recinto, aggiornata da ogni 10
-  secondi a ogni 15 minuti. Un clic la apre nel browser, la rotellina scorre; indirizzo, intervallo e zoom nel menu.
 
 Ogni widget ha le sue impostazioni nel menu. Nel menu del timer di concentrazione c'è anche la **modalità
 concentrazione**: durante un giro passa a un profilo a tua scelta (ad es. "Concentrazione" con soli recinti di lavoro)
@@ -255,7 +240,7 @@ NoFences li chiude al cambio successivo – ma solo se li ha avviati lui.
 
 ## Più PC
 
-Impostazioni → Dati e stili → **Scegli cartella condivisa…**, ad es. in OneDrive. Recinti, note, tempo di gioco e stili
+Impostazioni → Dati e stili → **Scegli cartella condivisa…**, ad es. in OneDrive. Recinti, note e stili
 personali si trovano poi lì, e ogni PC che usa la stessa cartella mostra gli stessi recinti. Le posizioni valgono per
 ogni disposizione dei monitor, quindi portatile e PC fisso possono disporli in modo diverso. Quando un altro PC salva,
 NoFences ricarica dopo pochi secondi. "Smetti di condividere" copia tutto di nuovo su questo PC.
@@ -303,8 +288,8 @@ L'eseguibile non è ancora firmato. Fai clic su "Ulteriori informazioni" → "Es
 
 **Cosa va su Internet?**
 Solo ciò che imposti tu: il controllo degli aggiornamenti (GitHub), il meteo (Open-Meteo), i link dei tuoi calendari, i
-feed di notizie, le quotazioni (Yahoo Finance), offerte e notizie di Steam (Steam), lo stato di Twitch (decapi.me), lo
-speed test (Cloudflare) e le pagine del widget Pagina web, oltre all'indirizzo pubblico in Strumenti ▸ Informazioni di rete (ipify.org). Nient'altro viene inviato.
+feed di notizie, le quotazioni (Yahoo Finance), le notizie dei giochi (Steam), lo
+speed test (Cloudflare), oltre all'indirizzo pubblico in Strumenti ▸ Informazioni di rete (ipify.org). Nient'altro viene inviato.
 
 **A volte i recinti si bloccano per un attimo.**
 NoFences se ne accorge da solo e scrive una riga come `Freeze: UI blocked 1830 ms during: Clipboard` in `logs\log.txt`
@@ -314,7 +299,7 @@ NoFences se ne accorge da solo e scrive una riga come `Freeze: UI blocked 1830 m
 No, mai. (La misurazione FPS delle versioni precedenti ne aveva bisogno ed è stata rimossa nella 2.11.)
 
 **Dove sono le mie impostazioni?**
-Accanto a `NoFences.exe`, ordinate in cartelle: `config` (fences.json, tempo di gioco), `backups`, `themes`, `media`
+Accanto a `NoFences.exe`, ordinate in cartelle: `config` (fences.json, tempo davanti allo schermo), `backups`, `themes`, `media`
 (immagini e note vocali delle note, ripiano), `cache`, `logs` e `lang` (traduzioni proprie). Se nella cartella del
 programma non si può scrivere (ad es. Programmi), si trovano invece in `%LocalAppData%\NoFences`. Con una cartella
 condivisa, recinti e stili sono lì. I dati delle versioni precedenti vengono spostati automaticamente.

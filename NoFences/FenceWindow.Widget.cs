@@ -49,12 +49,24 @@ namespace NoFences
             try
             {
                 widget.Refresh();
+                lastWidgetError = null;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Widget {widget.Type}: {ex.Message}");
+                LogWidgetError(Log.Describe(ex));
             }
             Invalidate();
+        }
+
+        private string? lastWidgetError;
+
+        /// <summary>Into the log once per new error (a widget refreshing every second would flood it otherwise).</summary>
+        private void LogWidgetError(string error)
+        {
+            if (error == lastWidgetError)
+                return;
+            lastWidgetError = error;
+            Log.Write($"Widget {widget?.Type} \"{Info.Name}\"", error);
         }
 
         protected override void OnVisibleChanged(EventArgs e)
@@ -78,7 +90,7 @@ namespace NoFences
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Widget draw: {ex.Message}");
+                LogWidgetError("Draw: " + Log.Describe(ex));
             }
         }
 

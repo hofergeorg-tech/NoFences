@@ -23,8 +23,6 @@ namespace NoFences
         /// <summary>Stops a ringing timer or alarm.</summary>
         void StopAlarmSound();
 
-        /// <summary>Playtime recorded by NoFences for the playtime widgets.</summary>
-        PlaytimeLog Playtime { get; }
 
         /// <summary>Screen time per program, recorded by NoFences for the screen time widget.</summary>
         UsageLog ScreenTime { get; }

@@ -22,7 +22,7 @@ namespace NoFences.Model
 
         private readonly System.Windows.Forms.Timer saveTimer = new() { Interval = 750 };
 
-        /// <summary>Where fences.json, playtime.json and usage.json are: the sync folder or the local config folder.</summary>
+        /// <summary>Where fences.json and usage.json are: the sync folder or the local config folder.</summary>
         public string DataDirectory { get; }
 
         /// <summary>The local data folder with its subfolders.</summary>

@@ -2,9 +2,9 @@ namespace NoFences.Model
 {
     /// <summary>
     /// Where NoFences keeps its files, sorted into subfolders:
-    /// <c>config</c> (fences.json, playtime, screen time), <c>backups</c>, <c>themes</c>,
+    /// <c>config</c> (fences.json, screen time), <c>backups</c>, <c>themes</c>,
     /// <c>media</c> (note pictures, voice notes, pinned clipboard pictures, shelf, bookmarks),
-    /// <c>cache</c> (web page widget), <c>logs</c> and <c>lang</c> (own translations).
+    /// <c>cache</c>, <c>logs</c> and <c>lang</c> (own translations).
     /// Normally next to NoFences.exe; in %LocalAppData%\NoFences when the program folder can't be
     /// written to (Program Files, a WinGet package folder). Older versions kept everything flat in
     /// %LocalAppData%\NoFences (or next to the exe in portable mode); that is moved once.
