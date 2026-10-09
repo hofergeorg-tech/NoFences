@@ -4,7 +4,7 @@ PackageVersion: {VERSION}
 InstallerType: portable
 Commands:
   - nofences
-MinimumOSVersion: 10.0.17763.0
+MinimumOSVersion: 10.0.19041.0
 Installers:
   - Architecture: x64
     InstallerUrl: https://github.com/hofergeorg-tech/NoFences/releases/download/v{VERSION}/NoFences.exe
