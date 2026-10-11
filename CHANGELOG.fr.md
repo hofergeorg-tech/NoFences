@@ -4,6 +4,11 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [Non publié]
+
+### Corrections
+- Un clic dans une barrière qui en chevauche une autre ne la fait plus passer derrière l'autre ; elle passe devant les autres barrières (toujours sous les fenêtres normales) et les autres gardent leur ordre.
+
 ## [2.13.0] - 2026-10-09
 
 ### Modifications

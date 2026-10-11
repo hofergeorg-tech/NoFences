@@ -561,11 +561,19 @@ namespace NoFences
 
                 case Native.WM_SETFOCUS:
                     // A clicked fence takes keyboard focus (selection, search, shortcuts) like the desktop
-                    // does, but must not come in front of other windows.
+                    // does, but must not come in front of other windows – only in front of the other fences.
                     base.WndProc(ref m);
                     if (!OnTop)
+                    {
                         Native.SendToBottom(Handle);
+                        app.RaiseAboveOtherFences(this);
+                    }
                     return;
+
+                case Native.WM_MOUSEACTIVATE when !OnTop && ContainsFocus:
+                    // Already focused, so no WM_SETFOCUS follows: come in front of the other fences here.
+                    app.RaiseAboveOtherFences(this);
+                    break;
 
                 case Native.WM_WINDOWPOSCHANGING:
                     if (!OnTop)

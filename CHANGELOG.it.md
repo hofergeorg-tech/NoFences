@@ -4,6 +4,11 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [Non rilasciato]
+
+### Correzioni
+- Un clic in un recinto che ne sovrappone un altro non lo manda più dietro l'altro; passa davanti agli altri recinti (sempre sotto le finestre normali) e gli altri mantengono il loro ordine.
+
 ## [2.13.0] - 2026-10-09
 
 ### Modifiche

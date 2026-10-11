@@ -4,6 +4,11 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
+## [Sin publicar]
+
+### Correcciones
+- Un clic en una valla que se superpone a otra ya no la manda detrás de la otra; pasa delante de las demás vallas (siempre debajo de las ventanas normales) y las demás conservan su orden.
+
 ## [2.13.0] - 2026-10-09
 
 ### Cambios

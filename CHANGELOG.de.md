@@ -4,6 +4,11 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [Unveröffentlicht]
+
+### Behoben
+- Ein Klick in einen Fence, der einen anderen überlappt, schiebt ihn nicht mehr hinter den anderen; er kommt vor die übrigen Fences (bleibt aber unter normalen Fenstern), und die anderen behalten ihre Reihenfolge.
+
 ## [2.13.0] - 2026-10-09
 
 ### Entfernt

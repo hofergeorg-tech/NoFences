@@ -203,15 +203,26 @@ namespace NoFences
 
         /// <summary>
         /// Fences keep themselves at the bottom of the window order, so the one that went down last lies
-        /// lowest. Sending the others down again leaves this one on top of them.
+        /// lowest. Sending the others down again leaves this one on top of them. They go down from the
+        /// highest to the lowest, so their order among each other stays the same.
         /// </summary>
         public void RaiseAboveOtherFences(FenceWindow window)
         {
-            foreach (var w in windows)
+            var others = windows
+                .Where(w => w != window && w.Visible && w.IsHandleCreated && !w.Peeking && !w.DockRaised && !w.Info.AlwaysOnTop)
+                .ToDictionary(w => w.Handle);
+            if (others.Count == 0)
+                return;
+            var ordered = new List<IntPtr>();
+            var first = Win32.Native.GetWindow(window.Handle, Win32.Native.GW_HWNDFIRST);
+            for (var h = first; h != IntPtr.Zero && ordered.Count < others.Count; h = Win32.Native.GetWindow(h, Win32.Native.GW_HWNDNEXT))
             {
-                if (w != window && w.Visible && w.IsHandleCreated && !w.Peeking && !w.DockRaised && !w.Info.AlwaysOnTop)
-                    Win32.Native.SendToBottom(w.Handle);
+                if (others.ContainsKey(h))
+                    ordered.Add(h);
             }
+            // Not found in the walk (shouldn't happen): still send down, last
+            foreach (var h in ordered.Concat(others.Keys.Except(ordered)))
+                Win32.Native.SendToBottom(h);
         }
 
         public IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except) =>

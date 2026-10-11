@@ -5,6 +5,11 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [Unreleased]
+
+### Fixed
+- Clicking into a fence that overlaps another one no longer sends it behind the other fence; it comes in front of the other fences (still below normal windows), and the other fences keep their order.
+
 ## [2.13.0] - 2026-10-09
 
 ### Removed
