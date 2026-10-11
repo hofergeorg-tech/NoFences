@@ -570,9 +570,14 @@ namespace NoFences
                     }
                     return;
 
-                case Native.WM_MOUSEACTIVATE when !OnTop && ContainsFocus:
-                    // Already focused, so no WM_SETFOCUS follows: come in front of the other fences here.
-                    app.RaiseAboveOtherFences(this);
+                case Native.WM_MOUSEACTIVATE when !OnTop:
+                    // Windows sends the clicked fence down while activating it (KeepAtBottom), and the focus
+                    // may go to a child instead of the form: come in front of the other fences once that's done.
+                    BeginInvoke(() =>
+                    {
+                        if (!OnTop && !IsDisposed)
+                            app.RaiseAboveOtherFences(this);
+                    });
                     break;
 
                 case Native.WM_WINDOWPOSCHANGING:
