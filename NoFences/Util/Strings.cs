@@ -738,6 +738,7 @@ namespace NoFences.Util
         public static string UpdateAvailable(Version v) => L("UpdateAvailable", v);
         public static string UpdateAvailableManual(Version v) => L("UpdateAvailableManual", v);
         public static string UpToDate(Version v) => L("UpToDate", v);
+        public static string UpdateAsk(Version v) => L("UpdateAsk", v);
         public static string UpdateDownloading => L("UpdateDownloading");
         public static string UpdateFailed(string reason) => L("UpdateFailed", reason);
         public static string UpdateCheckFailed => L("UpdateCheckFailed");

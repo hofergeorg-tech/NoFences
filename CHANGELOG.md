@@ -5,6 +5,11 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [Unreleased]
+
+### Fixed
+- "Check for updates now" answers with a dialog instead of a notification (Windows hides those in game mode or "do not disturb", so the button seemed to do nothing); a new version can be installed right from it.
+
 ## [2.13.1] - 2026-10-16
 
 ### Added

@@ -396,7 +396,7 @@ namespace NoFences
                 Config.CheckForUpdates = v;
                 app.Store.RequestSave();
             }));
-            Wide(grid, Action(Strings.CheckForUpdatesNow, async () => await app.CheckForUpdatesAsync(manual: true)));
+            Wide(grid, Action(Strings.CheckForUpdatesNow, async () => await app.CheckForUpdatesAsync(manual: true, this)));
             Wide(grid, Action(Strings.WhatsNew, () => DocumentViewer.ShowDocument(Strings.ChangelogDocument, Strings.WhatsNew)));
             if (AboutDialog.CanDonate)
             {

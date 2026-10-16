@@ -466,6 +466,7 @@
   "UpdateAvailable": "NoFences {0} ist verfügbar. Hier klicken zum Installieren.",
   "UpdateAvailableManual": "NoFences {0} ist verfügbar. Hier klicken, um die Download-Seite zu öffnen.",
   "UpToDate": "Du hast die neueste Version ({0}).",
+  "UpdateAsk": "NoFences {0} ist verfügbar. Jetzt aktualisieren?",
   "UpdateDownloading": "Update wird heruntergeladen…",
   "UpdateFailed": "Das Update ist fehlgeschlagen: {0}\nStattdessen öffnet sich die Download-Seite.",
   "UpdateCheckFailed": "GitHub war für die Update-Prüfung nicht erreichbar.",

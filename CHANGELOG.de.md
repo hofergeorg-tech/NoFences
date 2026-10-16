@@ -4,6 +4,11 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [Unveröffentlicht]
+
+### Behoben
+- „Jetzt nach Updates suchen“ antwortet mit einem Dialog statt einer Benachrichtigung (die blendet Windows im Spielmodus oder bei „Nicht stören“ aus, dann schien der Knopf nichts zu tun); eine neue Version lässt sich direkt daraus installieren.
+
 ## [2.13.1] - 2026-10-16
 
 ### Neu

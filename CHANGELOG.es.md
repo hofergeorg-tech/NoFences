@@ -4,6 +4,11 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
+## [Sin publicar]
+
+### Correcciones
+- «Buscar actualizaciones ahora» responde con un cuadro de diálogo en lugar de una notificación (Windows las oculta en el modo de juego o en «no molestar», y el botón parecía no hacer nada); una nueva versión se instala directamente desde ahí.
+
 ## [2.13.1] - 2026-10-16
 
 ### Novedades

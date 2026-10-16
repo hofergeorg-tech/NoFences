@@ -25,7 +25,12 @@ namespace NoFences
             firstUpdateCheck.Start();
         }
 
-        internal async Task CheckForUpdatesAsync(bool manual)
+        /// <summary>
+        /// Automatic checks report a new version as a notification. A check the user started (with the
+        /// settings window as <paramref name="owner"/>) answers with a dialog instead: Windows hides
+        /// notifications in game mode or "do not disturb", and then the button seemed to do nothing.
+        /// </summary>
+        internal async Task CheckForUpdatesAsync(bool manual, IWin32Window? owner = null)
         {
             if (!manual && !Store.Config.CheckForUpdates)
                 return;
@@ -39,14 +44,20 @@ namespace NoFences
             {
                 Debug.WriteLine($"Update check failed: {e.Message}");
                 if (manual)
-                    ShowBalloon(Strings.UpdateCheckFailed);
+                    MessageBox.Show(owner, Strings.UpdateCheckFailed, "NoFences", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (latest != null && UpdateChecker.IsNewer(latest))
             {
                 availableUpdate = latest;
-                if (manual || notifiedVersion != latest.Version)
+                if (manual)
+                {
+                    notifiedVersion = latest.Version;
+                    if (MessageBox.Show(owner, Strings.UpdateAsk(latest.Version), "NoFences", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                        InstallUpdate();
+                }
+                else if (notifiedVersion != latest.Version)
                 {
                     notifiedVersion = latest.Version;
                     var text = UpdateChecker.CanSelfUpdate && latest.ExeUrl != null
@@ -57,7 +68,7 @@ namespace NoFences
             }
             else if (manual)
             {
-                ShowBalloon(Strings.UpToDate(UpdateChecker.CurrentVersion));
+                MessageBox.Show(owner, Strings.UpToDate(UpdateChecker.CurrentVersion), "NoFences", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
