@@ -4,7 +4,7 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
-## [Sin publicar]
+## [2.13.1] - 2026-10-16
 
 ### Novedades
 - El historial del portapapeles muestra cuándo se copió cada entrada, con segundos (los días anteriores también con la fecha); las entradas fijadas conservan su hora.

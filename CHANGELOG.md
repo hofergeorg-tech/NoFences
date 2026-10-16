@@ -5,7 +5,7 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [Unreleased]
+## [2.13.1] - 2026-10-16
 
 ### Added
 - Clipboard history shows when each entry was copied, with seconds (older days also with the date); pinned entries keep their time.

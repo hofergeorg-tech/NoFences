@@ -4,7 +4,7 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [Unveröffentlicht]
+## [2.13.1] - 2026-10-16
 
 ### Neu
 - Der Zwischenablage-Verlauf zeigt, wann jeder Eintrag kopiert wurde, mit Sekunden (frühere Tage auch mit Datum); angeheftete Einträge behalten ihre Zeit.

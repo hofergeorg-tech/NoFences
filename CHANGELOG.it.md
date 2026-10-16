@@ -4,7 +4,7 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [Non rilasciato]
+## [2.13.1] - 2026-10-16
 
 ### Novità
 - La cronologia degli appunti mostra quando è stata copiata ogni voce, con i secondi (i giorni precedenti anche con la data); le voci fissate mantengono il loro orario.
