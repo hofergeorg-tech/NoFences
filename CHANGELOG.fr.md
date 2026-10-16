@@ -6,6 +6,9 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHAN
 
 ## [Non publié]
 
+### Nouveautés
+- L'historique du presse-papiers affiche l'heure de copie de chaque entrée, avec les secondes (les jours précédents aussi avec la date) ; les entrées épinglées gardent leur heure.
+
 ### Corrections
 - Un clic dans une barrière qui en chevauche une autre ne la fait plus passer derrière l'autre ; elle passe devant les autres barrières (toujours sous les fenêtres normales) et les autres gardent leur ordre.
 

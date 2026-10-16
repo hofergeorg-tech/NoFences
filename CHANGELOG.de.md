@@ -6,6 +6,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 
 ## [Unveröffentlicht]
 
+### Neu
+- Der Zwischenablage-Verlauf zeigt, wann jeder Eintrag kopiert wurde, mit Sekunden (frühere Tage auch mit Datum); angeheftete Einträge behalten ihre Zeit.
+
 ### Behoben
 - Ein Klick in einen Fence, der einen anderen überlappt, schiebt ihn nicht mehr hinter den anderen; er kommt vor die übrigen Fences (bleibt aber unter normalen Fenstern), und die anderen behalten ihre Reihenfolge.
 

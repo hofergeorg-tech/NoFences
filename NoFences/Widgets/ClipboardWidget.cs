@@ -133,7 +133,7 @@ namespace NoFences.Widgets
 
         #region Pinned entries
 
-        private sealed record PinnedEntry(string? Text, string? Image);
+        private sealed record PinnedEntry(string? Text, string? Image, DateTime? Copied = null);
 
         private void LoadPinned()
         {
@@ -149,11 +149,11 @@ namespace NoFences.Widgets
                 foreach (var p in options.Pinned)
                 {
                     if (p.Text != null)
-                        history.AddPinned(new ClipItem { Text = p.Text });
+                        history.AddPinned(new ClipItem { Text = p.Text, Copied = p.Copied });
                     else if (p.Image != null && File.Exists(AppData.Resolve(p.Image)))
                     {
                         using var image = new Bitmap(new MemoryStream(File.ReadAllBytes(AppData.Resolve(p.Image))));
-                        var item = ClipItem.FromImage(image);
+                        var item = ClipItem.FromImage(image, p.Copied);
                         item.File = p.Image;
                         history.AddPinned(item);
                     }
@@ -172,7 +172,7 @@ namespace NoFences.Widgets
             {
                 if (item.Text != null)
                 {
-                    pinned.Add(new PinnedEntry(item.Text, null));
+                    pinned.Add(new PinnedEntry(item.Text, null, item.Copied));
                 }
                 else if (item.Png != null)
                 {
@@ -185,7 +185,7 @@ namespace NoFences.Widgets
                         File.WriteAllBytes(AppData.Resolve(item.File), item.Png);
                     }
                     if (item.File != null)
-                        pinned.Add(new PinnedEntry(null, item.File));
+                        pinned.Add(new PinnedEntry(null, item.File, item.Copied));
                 }
             }
             setOption(pinned.Count == 0 && !showPasswords ? null : JsonSerializer.Serialize(new Options { Pinned = pinned, ShowPasswords = showPasswords }));
@@ -244,6 +244,7 @@ namespace NoFences.Widgets
             }
 
             float y = c.Area.Y;
+            var now = DateTime.Now;
             foreach (var item in history.Items)
             {
                 var height = item.Thumb != null ? c.Px(52) : line + c.Px(4);
@@ -256,6 +257,16 @@ namespace NoFences.Widgets
                     c.G.FillRectangle(mark, rect);
                 }
                 var textWidth = rect.Width - c.Px(4) - (item.Pinned ? c.Px(16) : 0);
+                // Copy time with seconds, dimmed on the right (left out if the fence is too narrow)
+                if (item.CopiedText(now) is { } copied)
+                {
+                    var timeWidth = c.G.MeasureString(copied, c.Label).Width;
+                    if (timeWidth < textWidth / 2)
+                    {
+                        c.Muted(copied, rect.X + textWidth - timeWidth + c.Px(2), item.Thumb != null ? y + (height - line) / 2 : y + c.Px(2), c.Label);
+                        textWidth -= timeWidth + c.Px(4);
+                    }
+                }
                 if (item.Thumb != null)
                 {
                     var thumbHeight = height - c.Px(6);
@@ -395,10 +406,25 @@ namespace NoFences.Widgets
 
         public bool Pinned { get; set; }
 
+        /// <summary>When it was copied (null for entries pinned before 2.14, which didn't store it).</summary>
+        public DateTime? Copied { get; init; } = DateTime.Now;
+
+        /// <summary>The copy time with seconds; earlier days also show the date.</summary>
+        public string? CopiedText(DateTime now)
+        {
+            if (Copied is not { } t)
+                return null;
+            var culture = System.Globalization.CultureInfo.CurrentCulture;
+            var time = t.ToString("T", culture);
+            return t.Date == now.Date ? time : t.ToString("d", culture) + " " + time;
+        }
+
         /// <summary>Pinned images: where the PNG is stored (relative to the data folder).</summary>
         public string? File { get; set; }
 
-        public static ClipItem FromImage(Image image)
+        public static ClipItem FromImage(Image image) => FromImage(image, DateTime.Now);
+
+        public static ClipItem FromImage(Image image, DateTime? copied)
         {
             using var stream = new MemoryStream();
             image.Save(stream, ImageFormat.Png);
@@ -410,7 +436,7 @@ namespace NoFences.Widgets
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 g.DrawImage(image, 0, 0, thumb.Width, thumb.Height);
             }
-            return new ClipItem { Png = png, Thumb = thumb, Width = image.Width, Height = image.Height, Hash = Convert.ToHexString(SHA1.HashData(png))[..16] };
+            return new ClipItem { Png = png, Thumb = thumb, Width = image.Width, Height = image.Height, Copied = copied, Hash = Convert.ToHexString(SHA1.HashData(png))[..16] };
         }
 
         public bool SameContent(ClipItem other) => Text != null ? Text == other.Text : Hash != null && Hash == other.Hash;

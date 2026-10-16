@@ -7,6 +7,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 
 ## [Unreleased]
 
+### Added
+- Clipboard history shows when each entry was copied, with seconds (older days also with the date); pinned entries keep their time.
+
 ### Fixed
 - Clicking into a fence that overlaps another one no longer sends it behind the other fence; it comes in front of the other fences (still below normal windows), and the other fences keep their order.
 

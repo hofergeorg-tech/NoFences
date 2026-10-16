@@ -6,6 +6,9 @@ Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CH
 
 ## [Sin publicar]
 
+### Novedades
+- El historial del portapapeles muestra cuándo se copió cada entrada, con segundos (los días anteriores también con la fecha); las entradas fijadas conservan su hora.
+
 ### Correcciones
 - Un clic en una valla que se superpone a otra ya no la manda detrás de la otra; pasa delante de las demás vallas (siempre debajo de las ventanas normales) y las demás conservan su orden.
 

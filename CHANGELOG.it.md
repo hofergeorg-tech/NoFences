@@ -6,6 +6,9 @@ Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CH
 
 ## [Non rilasciato]
 
+### Novità
+- La cronologia degli appunti mostra quando è stata copiata ogni voce, con i secondi (i giorni precedenti anche con la data); le voci fissate mantengono il loro orario.
+
 ### Correzioni
 - Un clic in un recinto che ne sovrappone un altro non lo manda più dietro l'altro; passa davanti agli altri recinti (sempre sotto le finestre normali) e gli altri mantengono il loro ordine.
 
