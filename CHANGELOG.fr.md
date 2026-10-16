@@ -4,7 +4,7 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [Non publié]
+## [2.13.2] - 2026-10-16
 
 ### Corrections
 - « Rechercher les mises à jour maintenant » répond par une boîte de dialogue au lieu d'une notification (Windows les masque en mode jeu ou « ne pas déranger », et le bouton semblait ne rien faire) ; une nouvelle version s'installe directement depuis celle-ci.
