@@ -780,6 +780,15 @@ namespace NoFences.Util
         #region Widgets
 
         public static string WidgetClock => L("WidgetClock");
+        public static string ClockFaceMenu => L("ClockFaceMenu");
+        public static string ClockDigital => L("ClockDigital");
+        public static string ClockAnalog => L("ClockAnalog");
+        public static string ClockBinary => L("ClockBinary");
+        public static string ClockBinaryHowTo => L("ClockBinaryHowTo");
+        public static string ClockWeekNumbers => L("ClockWeekNumbers");
+        public static string ClockWeekHeader => L("ClockWeekHeader");
+        public static string ClockToday => L("ClockToday");
+        public static string ClockPagingTip => L("ClockPagingTip");
         public static string WidgetCountdown => L("WidgetCountdown");
         public static string CountdownSet => L("CountdownSet");
         public static string CountdownHint => L("CountdownHint");

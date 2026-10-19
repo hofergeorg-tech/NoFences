@@ -280,6 +280,17 @@ namespace NoFences
                 ("weather", "contrast", new Size(280, 320)),
                 ("clock", "contrast", new Size(280, 320)),
             });
+            RenderWidgetSheet(outDir, host, "widgets-clock-docs.png", new (string, string, Size)[]
+            {
+                ("clock|face=analog;weeks=1", "default", new Size(280, 380)),
+                ("clock|face=binary;weeks=1", "gaming", new Size(280, 360)),
+                ("clock|face=digital;weeks=1", "windows", new Size(560, 330)),
+            });
+            // Checking: a whole year
+            RenderWidgetSheet(outDir, host, "check-clock-year.png", new (string, string, Size)[]
+            {
+                ("clock|face=analog;weeks=1", "default", new Size(900, 820)),
+            });
             // Checking: news in a wide dark style, as people actually use it
             RenderWidgetSheet(outDir, host, "check-news.png", new (string, string, Size)[]
             {
@@ -445,11 +456,14 @@ namespace NoFences
             using var g = Graphics.FromImage(sheet);
             DrawBackdrop(g, new Rectangle(Point.Empty, sheet.Size));
             var x = gap;
-            foreach (var (type, theme, size) in items)
+            foreach (var (spec, theme, size) in items)
             {
+                // "type|option" sets the widget's option directly
+                var parts = spec.Split('|', 2);
+                var type = parts[0];
                 var name = Widgets.WidgetRegistry.Types.First(t => t.Type == type).Name();
                 var info = new FenceInfo { Name = name, Kind = FenceKind.Widget, WidgetType = type, Theme = theme, BackgroundAlpha = 140,
-                    WidgetOption = type switch
+                    WidgetOption = parts.Length > 1 ? parts[1] : type switch
                     {
                         "countdown" => Widgets.CountdownWidget.Format(new DateTime(DateTime.Now.Year, 12, 24, 18, 0, 0), "Weihnachten"),
                         "weather" => new Widgets.WeatherPlace("Wien", 48.2085, 16.3721).ToOption(),

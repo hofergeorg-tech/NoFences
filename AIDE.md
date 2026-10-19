@@ -143,7 +143,8 @@ résultat, **↑↓** pour choisir, **Échap** ferme. Le raccourci se change dan
 
 Menu de la zone de notification ou d'une barrière → **Nouveau widget**. Les widgets avec une liste défilent à la molette.
 
-- **Horloge et calendrier** ; les jours avec des rendez-vous d'un widget Rendez-vous portent un point.
+- **Horloge et calendrier** ; les jours avec des rendez-vous d'un widget Rendez-vous portent un point. Clic droit → **Cadran** : numérique, analogique ou binaire (colonnes pour heures, minutes, secondes ; l'heure est dans l'info-bulle). Numéros de semaine à gauche (désactivables). La molette ou les flèches font défiler les mois, avec Ctrl une année entière ; un clic sur le nom du mois (ou 5 minutes sans action) revient à aujourd'hui. Un fence plus grand affiche plusieurs mois, jusqu'à une année entière.
+  **Lire l'horloge binaire :** six colonnes, deux pour les heures, les minutes et les secondes (dizaines, puis unités). Chaque rangée a une valeur – du bas 1, 2, 4, 8 (indiquée à gauche). Additionnez les points allumés d'une colonne pour obtenir le chiffre : 4 et 1 allumés font 5. Exemple 14:37 → colonnes 1 | 4 | 3 | 7 = 1 | 4 | 2+1 | 4+2+1.
 - **Compte à rebours** : jours et heures jusqu'à une date ; double-clic pour la définir.
 - **Météo** : temps actuel et prévisions sur trois jours pour un lieu recherché (données : Open-Meteo, sans compte), plus
   une **alerte pluie** pour les deux prochaines heures (« Pluie dans env. 20 min »), le lever et le coucher du soleil et

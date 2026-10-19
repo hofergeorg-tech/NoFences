@@ -68,7 +68,7 @@ namespace NoFences.Widgets
 
             return info.WidgetType switch
             {
-                "clock" => new ClockWidget(),
+                "clock" => new ClockWidget(() => info.WidgetOption, Set),
                 "countdown" => new CountdownWidget(() => info.WidgetOption, option =>
                 {
                     info.WidgetOption = option;

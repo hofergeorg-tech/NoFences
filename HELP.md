@@ -126,7 +126,8 @@ settings pages ("bluetooth", "sound"). Type a calculation like `12*7` or `200*15
 
 Tray or fence menu → **New widget**. Widgets with a list scroll with the mouse wheel.
 
-- **Clock & calendar**; days with appointments from an appointments widget carry a dot.
+- **Clock & calendar**; days with appointments from an appointments widget carry a dot. Right-click → **Clock face**: digital, analog or binary (columns for hours, minutes, seconds; the time is in the tooltip). Week numbers on the left (can be turned off). The mouse wheel or the arrows page through the months, with Ctrl a whole year; a click on the month's name (or 5 minutes of quiet) goes back to today. A bigger fence shows several months, up to a whole year.
+  **Reading the binary clock:** six columns, two each for hours, minutes and seconds (tens, then ones). Each row has a value – from the bottom 1, 2, 4, 8 (shown on the left). Add up the lit dots in a column to get its digit: lit 4 and 1 make a 5. Example 14:37 → columns 1 | 4 | 3 | 7 = 1 | 4 | 2+1 | 4+2+1.
 - **Countdown**: days and hours until a date; double-click to set it.
 - **Weather**: current weather and three days ahead for a place you search for (data: Open-Meteo, no account needed),
   plus a **rain hint** for the next two hours ("Rain in about 20 min"), sunrise and sunset and the **moon phase**

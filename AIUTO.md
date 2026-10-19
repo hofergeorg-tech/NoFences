@@ -132,7 +132,8 @@ cambia in Impostazioni → Desktop.
 
 Menu della barra o del recinto → **Nuovo widget**. I widget con un elenco scorrono con la rotellina del mouse.
 
-- **Orologio e calendario**; i giorni con appuntamenti di un widget Appuntamenti hanno un punto.
+- **Orologio e calendario**; i giorni con appuntamenti di un widget Appuntamenti hanno un punto. Clic destro → **Quadrante**: digitale, analogico o binario (colonne per ore, minuti, secondi; l'ora è nel tooltip). Numeri della settimana a sinistra (disattivabili). La rotellina o le frecce sfogliano i mesi, con Ctrl un anno intero; un clic sul nome del mese (o 5 minuti di pausa) torna a oggi. Un fence più grande mostra più mesi, fino a un anno intero.
+  **Leggere l'orologio binario:** sei colonne, due ciascuna per ore, minuti e secondi (decine, poi unità). Ogni riga ha un valore – dal basso 1, 2, 4, 8 (indicato a sinistra). Somma i punti accesi di una colonna per ottenere la cifra: accesi 4 e 1 fanno 5. Esempio 14:37 → colonne 1 | 4 | 3 | 7 = 1 | 4 | 2+1 | 4+2+1.
 - **Conto alla rovescia**: giorni e ore fino a una data; doppio clic per impostarla.
 - **Meteo**: tempo attuale e previsioni per tre giorni per una località cercata (dati: Open-Meteo, senza account), più un
   **avviso di pioggia** per le prossime due ore ("Pioggia tra circa 20 min"), alba e tramonto e la **fase lunare**

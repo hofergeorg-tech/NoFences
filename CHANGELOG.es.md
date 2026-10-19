@@ -4,6 +4,11 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
+## [Unreleased]
+
+### Novedades
+- **Reloj y calendario** hace más: esfera digital, analógica o binaria (clic derecho → Esfera), números de semana, pasar los meses con la rueda del ratón o las flechas (con Ctrl un año entero, un clic en el nombre del mes vuelve), y un fence más grande muestra varios meses, hasta un año entero.
+
 ## [2.13.2] - 2026-10-16
 
 ### Correcciones

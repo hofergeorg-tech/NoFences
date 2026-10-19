@@ -134,7 +134,8 @@ atajo se cambia en Configuración → Escritorio.
 
 Menú de la bandeja o de una valla → **Nuevo widget**. Los widgets con listas se desplazan con la rueda del ratón.
 
-- **Reloj y calendario**; los días con citas de un widget Citas llevan un punto.
+- **Reloj y calendario**; los días con citas de un widget Citas llevan un punto. Clic derecho → **Esfera**: digital, analógico o binario (columnas para horas, minutos, segundos; la hora está en la información emergente). Números de semana a la izquierda (se pueden desactivar). La rueda del ratón o las flechas pasan los meses, con Ctrl un año entero; un clic en el nombre del mes (o 5 minutos sin tocarlo) vuelve a hoy. Un fence más grande muestra varios meses, hasta un año entero.
+  **Leer el reloj binario:** seis columnas, dos para horas, minutos y segundos (decenas, luego unidades). Cada fila tiene un valor – desde abajo 1, 2, 4, 8 (indicado a la izquierda). Suma los puntos encendidos de una columna para obtener la cifra: encendidos 4 y 1 dan 5. Ejemplo 14:37 → columnas 1 | 4 | 3 | 7 = 1 | 4 | 2+1 | 4+2+1.
 - **Cuenta atrás**: días y horas hasta una fecha; doble clic para configurarla.
 - **Tiempo**: el tiempo actual y la previsión de tres días para un lugar que busques (datos: Open-Meteo, sin cuenta), además
   de un **aviso de lluvia** para las próximas dos horas («Lluvia en unos 20 min»), la salida y puesta del sol y la **fase

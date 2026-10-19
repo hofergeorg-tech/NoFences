@@ -136,7 +136,8 @@ du unter Einstellungen → Desktop.
 
 Tray- oder Fence-Menü → **Neues Widget**. Widgets mit Listen scrollen mit dem Mausrad.
 
-- **Uhr & Kalender**; Tage mit Terminen aus einem Termine-Widget tragen einen Punkt.
+- **Uhr & Kalender**; Tage mit Terminen aus einem Termine-Widget tragen einen Punkt. Rechtsklick → **Zifferblatt**: digital, analog oder binär (Spalten für Stunden, Minuten, Sekunden; die Uhrzeit steht im Tooltip). Kalenderwochen links (abschaltbar). Mausrad oder die Pfeile blättern die Monate, mit Strg ein ganzes Jahr; ein Klick auf den Monatsnamen (oder 5 Minuten Ruhe) springt zurück zu heute. Ein größerer Fence zeigt mehrere Monate, bis zum ganzen Jahr.
+  **Binäre Uhr lesen:** sechs Spalten, je zwei für Stunden, Minuten und Sekunden (Zehner, dann Einer). Jede Reihe hat einen Wert – von unten 1, 2, 4, 8 (steht links daneben). Die leuchtenden Punkte einer Spalte zusammenzählen ergibt die Ziffer: leuchten 4 und 1, ist es eine 5. Beispiel 14:37 → Spalten 1 | 4 | 3 | 7 = 1 | 4 | 2+1 | 4+2+1.
 - **Countdown**: Tage und Stunden bis zu einem Datum; Doppelklick zum Festlegen.
 - **Wetter**: aktuelles Wetter und drei Tage Vorschau für einen gesuchten Ort (Daten: Open-Meteo, ohne Konto), dazu
   ein **Regen-Hinweis** für die nächsten zwei Stunden („Regen in ca. 20 Min.“), Sonnenauf- und -untergang und die
