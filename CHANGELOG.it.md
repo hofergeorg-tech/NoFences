@@ -4,7 +4,7 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [Unreleased]
+## [2.14.0] - 2026-10-19
 
 ### Novità
 - **Orologio e calendario** fa di più: quadrante digitale, analogico o binario (clic destro → Quadrante), numeri della settimana, sfogliare i mesi con la rotellina o le frecce (con Ctrl un anno intero, un clic sul nome del mese torna indietro), e un fence più grande mostra più mesi, fino a un anno intero.

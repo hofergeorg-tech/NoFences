@@ -4,7 +4,7 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [Unreleased]
+## [2.14.0] - 2026-10-19
 
 ### Nouveautés
 - **Horloge et calendrier** en fait plus : cadran numérique, analogique ou binaire (clic droit → Cadran), numéros de semaine, défilement des mois avec la molette ou les flèches (avec Ctrl une année entière, un clic sur le nom du mois revient), et un fence plus grand affiche plusieurs mois, jusqu'à une année entière.

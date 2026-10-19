@@ -4,7 +4,7 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [Unreleased]
+## [2.14.0] - 2026-10-19
 
 ### Neu
 - **Uhr & Kalender** kann mehr: Zifferblatt digital, analog oder binär (Rechtsklick → Zifferblatt), Kalenderwochen, Monate blättern mit Mausrad oder Pfeilen (mit Strg ein ganzes Jahr, Klick auf den Monatsnamen springt zurück), und ein größerer Fence zeigt mehrere Monate bis zum ganzen Jahr.

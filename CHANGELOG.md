@@ -5,7 +5,7 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
-## [Unreleased]
+## [2.14.0] - 2026-10-19
 
 ### Added
 - **Clock & calendar** does more: a digital, analog or binary clock face (right-click → Clock face), week numbers, paging through the months with the mouse wheel or the arrows (with Ctrl a whole year, a click on the month's name goes back), and a bigger fence shows several months, up to a whole year.
