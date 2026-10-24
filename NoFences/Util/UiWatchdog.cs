@@ -28,8 +28,12 @@ namespace NoFences.Util
                 return;
             ui = SynchronizationContext.Current ?? new WindowsFormsSynchronizationContext();
             stopped = false;
+            // The thread that runs posted work is the one to measure (in tests that's not the caller)
+            ui.Post(_ => uiThread = OpenThread(ThreadQueryLimitedInformation, false, GetCurrentThreadId()), null);
             new Thread(Loop) { IsBackground = true, Name = "UI watchdog", Priority = ThreadPriority.AboveNormal }.Start();
         }
+
+        private static IntPtr uiThread;
 
         public static void Stop() => stopped = true;
 
@@ -63,6 +67,7 @@ namespace NoFences.Util
             while (!stopped)
             {
                 pong.Reset();
+                var cpuBefore = UiCpuMs();
                 var watch = Stopwatch.StartNew();
                 ui!.Post(_ => pong.Set(), null);
                 if (pong.Wait(ThresholdMs))
@@ -75,6 +80,9 @@ namespace NoFences.Util
                 var seen = new List<string>();
                 var suspended = false;
                 var lastCheck = watch.ElapsedMilliseconds;
+                // How much later than asked this thread woke up: if it was stuck too, the whole
+                // process or PC stood still, not just the UI thread
+                var late = Math.Max(0, lastCheck - ThresholdMs);
                 while (true)
                 {
                     if (current is { } activity && !seen.Contains(activity))
@@ -85,14 +93,51 @@ namespace NoFences.Util
                     var now = watch.ElapsedMilliseconds;
                     if (now - lastCheck > 3000)
                         suspended = true;
+                    late = Math.Max(late, now - lastCheck - 100);
                     lastCheck = now;
                 }
+                var cpuAfter = UiCpuMs();
+                var cpu = cpuBefore is { } b && cpuAfter is { } a ? a - b : (long?)null;
                 if (!suspended && !stopped)
-                    Log.Write("Freeze", Describe(watch.ElapsedMilliseconds, seen));
+                    Log.Write("Freeze", Describe(watch.ElapsedMilliseconds, seen, cpu, late));
             }
         }
 
         public static string Describe(long milliseconds, IReadOnlyCollection<string> activities) =>
             $"UI blocked {milliseconds} ms during: {(activities.Count == 0 ? "(unmarked)" : string.Join(", ", activities))}";
+
+        /// <summary>
+        /// With the UI thread's CPU time and how late the watchdog itself woke up, the line also tells
+        /// what kind of hang it was: the PC/process stood still, the UI thread was busy, or it waited
+        /// (on another program, a lock, the disk …).
+        /// </summary>
+        public static string Describe(long milliseconds, IReadOnlyCollection<string> activities, long? uiCpuMs, long watchdogLateMs)
+        {
+            var verdict = watchdogLateMs * 2 >= milliseconds ? "whole process/PC stalled"
+                : uiCpuMs is { } cpu && cpu * 2 >= milliseconds ? "UI thread busy"
+                : uiCpuMs != null ? "UI thread waiting"
+                : "unknown";
+            var cpuText = uiCpuMs is { } c ? $"{c} ms" : "?";
+            return $"{Describe(milliseconds, activities)}; UI CPU {cpuText}, watchdog late {watchdogLateMs} ms -> {verdict}";
+        }
+
+        /// <summary>User + kernel time the UI thread has used so far (null if it can't be read).</summary>
+        private static long? UiCpuMs()
+        {
+            if (uiThread == IntPtr.Zero || !GetThreadTimes(uiThread, out _, out _, out var kernel, out var user))
+                return null;
+            return (kernel + user) / 10_000; // 100-ns units
+        }
+
+        private const uint ThreadQueryLimitedInformation = 0x0800;
+
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        private static extern IntPtr OpenThread(uint access, bool inherit, uint threadId);
+
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        private static extern uint GetCurrentThreadId();
+
+        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool GetThreadTimes(IntPtr thread, out long creation, out long exit, out long kernel, out long user);
     }
 }

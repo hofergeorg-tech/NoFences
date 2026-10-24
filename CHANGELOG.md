@@ -5,6 +5,11 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.14.1] - 2026-10-24
+
+### Changed
+- Freeze lines in logs\log.txt also tell what kind of hang it was: the whole PC/process stood still, NoFences was busy, or it waited for something (e.g. another program). This helps to find the short hangs that weren't caused by a marked task.
+
 ## [2.14.0] - 2026-10-19
 
 ### Added

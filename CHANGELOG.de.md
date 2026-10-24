@@ -4,6 +4,11 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.14.1] - 2026-10-24
+
+### Geändert
+- Freeze-Zeilen in logs\log.txt sagen jetzt auch, welche Art Hänger es war: der ganze PC/Prozess stand still, NoFences war beschäftigt, oder es wartete auf etwas (z. B. ein anderes Programm). Das hilft bei den kurzen Hängern, die keiner markierten Aufgabe zuzuordnen waren.
+
 ## [2.14.0] - 2026-10-19
 
 ### Neu

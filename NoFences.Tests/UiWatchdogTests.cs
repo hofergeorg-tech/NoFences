@@ -36,6 +36,18 @@ namespace NoFences.Tests
             Assert.Equal("UI blocked 700 ms during: (unmarked)", UiWatchdog.Describe(700, Array.Empty<string>()));
         }
 
+        [Theory]
+        [InlineData(900L, 20L, 850L, "whole process/PC stalled")] // watchdog was stuck too
+        [InlineData(900L, 800L, 30L, "UI thread busy")]
+        [InlineData(900L, 15L, 30L, "UI thread waiting")]
+        [InlineData(900L, null, 30L, "unknown")]
+        public void Describe_TellsTheKindOfHang(long ms, long? cpu, long late, string verdict)
+        {
+            var line = UiWatchdog.Describe(ms, Array.Empty<string>(), cpu, late);
+            Assert.StartsWith($"UI blocked {ms} ms during: (unmarked); UI CPU ", line);
+            Assert.EndsWith($"watchdog late {late} ms -> {verdict}", line);
+        }
+
         [Fact]
         public void BlockedUiThread_IsLoggedWithItsActivity()
         {
@@ -60,6 +72,8 @@ namespace NoFences.Tests
                 var text = File.ReadAllText(log);
                 Assert.Contains("Freeze: UI blocked", text);
                 Assert.Contains("Slow test work", text);
+                // The fake UI thread slept: hardly any CPU -> it waited
+                Assert.Contains("-> UI thread waiting", text);
                 Assert.Single(text.Split('\n', StringSplitOptions.RemoveEmptyEntries));
             }
             finally

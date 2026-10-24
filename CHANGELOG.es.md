@@ -4,6 +4,11 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
+## [2.14.1] - 2026-10-24
+
+### Cambios
+- Las líneas Freeze de logs\log.txt indican también el tipo de bloqueo: todo el PC/proceso estaba parado, NoFences estaba ocupado o esperaba algo (p. ej. otro programa). Ayuda a encontrar los bloqueos cortos que no se debían a ninguna tarea marcada.
+
 ## [2.14.0] - 2026-10-19
 
 ### Novedades
