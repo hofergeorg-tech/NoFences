@@ -4,6 +4,11 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.14.2] - 2026-10-27
+
+### Sicherheit
+- Mit der .NET-Laufzeit 10.0.14 gebaut, die die Brotli-Lücke CVE-2026-111497 („Brotli2Shell“) schließt. NoFences selbst entpackt keine Brotli-Daten, ein Angriffsweg war nicht bekannt; die mitgelieferte Laufzeit ist damit einfach wieder aktuell.
+
 ## [2.14.1] - 2026-10-24
 
 ### Geändert

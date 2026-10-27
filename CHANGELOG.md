@@ -5,6 +5,11 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.14.2] - 2026-10-27
+
+### Security
+- Built with the .NET 10.0.14 runtime, which fixes the Brotli decoder flaw CVE-2026-111497 ("Brotli2Shell"). NoFences itself doesn't decode Brotli data, so there was no known way to attack it; this just keeps the bundled runtime up to date.
+
 ## [2.14.1] - 2026-10-24
 
 ### Changed

@@ -4,6 +4,11 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.14.2] - 2026-10-27
+
+### Sécurité
+- Compilé avec le runtime .NET 10.0.14, qui corrige la faille du décodeur Brotli CVE-2026-111497 (« Brotli2Shell »). NoFences ne décompresse pas de données Brotli, aucune voie d'attaque n'était connue ; le runtime intégré est simplement de nouveau à jour.
+
 ## [2.14.1] - 2026-10-24
 
 ### Modifications
