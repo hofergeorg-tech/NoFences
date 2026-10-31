@@ -295,6 +295,8 @@
   "FadeFencesHint": "Plus la souris est proche, plus elles sont visibles. Chaque barrière peut être exclue dans ses paramètres.",
   "NoFade": "Ne jamais estomper cette barrière",
   "HoverPreviewSetting": "Aperçu au survol (contenu des dossiers, images, PDF)",
+  "RaiseOnClickSetting": "Mettre barrières et widgets au premier plan au clic",
+  "RaiseOnClickHint": "Une barrière cliquée reste devant les autres fenêtres jusqu'à ce que vous cliquiez sur une autre fenêtre ou le bureau.",
   "FolderEmpty": "Dossier vide",
   "FolderMore": "+ {0} de plus",
   "FenceHotkey": "Raccourci :",

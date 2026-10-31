@@ -4,6 +4,11 @@ Toutes les modifications importantes de ce fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.15.0] - 2026-10-31
+
+### Nouveautés
+- Une barrière ou un widget cliqué passe devant les fenêtres ouvertes – plus besoin de fermer les fenêtres pour l'atteindre. Il retourne sur le bureau dès que vous cliquez sur une autre fenêtre ou le bureau. Désactivable dans Paramètres → Bureau.
+
 ## [2.14.2] - 2026-10-27
 
 ### Sécurité

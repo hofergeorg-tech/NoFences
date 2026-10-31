@@ -23,6 +23,7 @@ namespace NoFences
         public bool Animations => Store.Config.Animations;
 
         public bool HoverPreview => Store.Config.HoverPreview;
+        public bool RaiseOnClick => Store.Config.RaiseOnClick;
 
         public NoFencesApp()
         {

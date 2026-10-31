@@ -295,6 +295,8 @@
   "FadeFencesHint": "Più il mouse è vicino, più sono visibili. Si possono escludere singoli recinti nelle loro impostazioni.",
   "NoFade": "Non sfumare mai questo recinto",
   "HoverPreviewSetting": "Anteprima al passaggio del mouse (cartelle, immagini, PDF)",
+  "RaiseOnClickSetting": "Portare recinti e widget in primo piano al clic",
+  "RaiseOnClickHint": "Un recinto cliccato resta davanti alle altre finestre finché non clicchi un'altra finestra o il desktop.",
   "FolderEmpty": "Cartella vuota",
   "FolderMore": "+ altri {0}",
   "FenceHotkey": "Scorciatoia:",

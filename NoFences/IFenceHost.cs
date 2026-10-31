@@ -64,6 +64,9 @@ namespace NoFences
         /// <summary>Hovering items shows a folder's contents or a large image preview.</summary>
         bool HoverPreview { get; }
 
+        /// <summary>A clicked fence comes in front of other windows until it loses activation.</summary>
+        bool RaiseOnClick { get; }
+
         /// <summary>Visible surfaces (screen coordinates) of all other fences, for snapping.</summary>
         IReadOnlyCollection<Rectangle> OtherFenceSurfaces(FenceWindow except);
 

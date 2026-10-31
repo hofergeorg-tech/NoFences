@@ -60,6 +60,8 @@ Tipp: Für einen aufgeräumten Desktop einen Ordner wie `Dokumente\Fences\Arbeit
   (Strg+0 entfernt) – ein farbiger Punkt am Symbol, z. B. Rot für Wichtiges.
 - **Vorschau beim Darüberfahren**: Bleibt die Maus kurz auf einem Ordner, zeigt NoFences seinen Inhalt; auf Bildern,
   PDFs und Videos eine große Vorschau (abschaltbar unter Einstellungen → Desktop).
+- **Beim Anklicken nach vorne**: Ein angeklickter Fence oder ein Widget kommt vor die offenen Fenster und geht zurück auf
+  den Desktop, sobald du ein anderes Fenster oder den Desktop anklickst (abschaltbar unter Einstellungen → Desktop).
 - **Reiter** (Verknüpfungs-Fences): Fence-Menü → Reiter hinzufügen. Klick wechselt, Doppelklick benennt um, Einträge auf einen
   Reiter ziehen verschiebt sie dorthin.
 - **Ordner im Fence aufklappen**: auf einen Ordner zeigen und auf den kleinen Pfeil in seiner Ecke klicken (oder

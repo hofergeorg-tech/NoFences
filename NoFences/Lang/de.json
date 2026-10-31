@@ -295,6 +295,8 @@
   "FadeFencesHint": "Je näher die Maus, desto sichtbarer. Einzelne Fences lassen sich in ihren Einstellungen ausnehmen.",
   "NoFade": "Diesen Fence nie ausblenden",
   "HoverPreviewSetting": "Vorschau beim Darüberfahren (Ordnerinhalt, Bilder, PDFs)",
+  "RaiseOnClickSetting": "Fences und Widgets beim Anklicken nach vorne holen",
+  "RaiseOnClickHint": "Ein angeklickter Fence bleibt vor anderen Fenstern, bis du ein anderes Fenster oder den Desktop anklickst.",
   "FolderEmpty": "Leerer Ordner",
   "FolderMore": "+ {0} weitere",
   "FenceHotkey": "Tastenkürzel:",

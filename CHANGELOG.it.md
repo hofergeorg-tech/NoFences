@@ -4,6 +4,11 @@ Tutte le modifiche importanti a questo fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.15.0] - 2026-10-31
+
+### Novità
+- Un recinto o widget cliccato passa davanti alle finestre aperte – non serve più chiudere le finestre per raggiungerlo. Torna sul desktop appena clicchi un'altra finestra o il desktop. Disattivabile in Impostazioni → Desktop.
+
 ## [2.14.2] - 2026-10-27
 
 ### Sicurezza

@@ -4,6 +4,11 @@ Todos los cambios importantes de este fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) ·
 Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) · Français : [CHANGELOG.fr.md](CHANGELOG.fr.md)
 
+## [2.15.0] - 2026-10-31
+
+### Novedades
+- Una valla o widget pulsado pasa delante de las ventanas abiertas – ya no hace falta cerrar ventanas para llegar a él. Vuelve al escritorio en cuanto pulsas otra ventana o el escritorio. Se desactiva en Configuración → Escritorio.
+
 ## [2.14.2] - 2026-10-27
 
 ### Seguridad

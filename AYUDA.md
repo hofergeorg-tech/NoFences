@@ -57,6 +57,8 @@ Consejo: para un escritorio ordenado, crea una carpeta como `Documentos\Vallas\T
   (Ctrl+0 la quita): un punto de color en el icono, p. ej. rojo para lo importante.
 - **Vista previa al pasar el ratón**: deja el ratón sobre una carpeta para ver su contenido, sobre imágenes, PDF y vídeos
   para una vista previa grande (se desactiva en Configuración → Escritorio).
+- **Al frente al hacer clic**: una valla o widget pulsado pasa delante de las ventanas abiertas y vuelve al escritorio en
+  cuanto pulsas otra ventana o el escritorio (se desactiva en Configuración → Escritorio).
 - **Pestañas** (vallas de accesos directos): menú → Añadir pestaña. Clic para cambiar, doble clic para cambiar el nombre,
   arrastra elementos a una pestaña para moverlos allí.
 - **Abrir carpetas dentro de la valla**: señala una carpeta y haz clic en la pequeña flecha de su esquina (o clic

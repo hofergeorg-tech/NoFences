@@ -50,6 +50,7 @@ namespace NoFences
             public void AddGroupItems(ToolStripItemCollection items, FenceWindow window) { }
             public void FenceSettingsChanged(FenceInfo info) { }
             public bool HoverPreview => false;
+            public bool RaiseOnClick => false;
             public void OpenStyleDesigner(FenceInfo? info) { }
         }
 

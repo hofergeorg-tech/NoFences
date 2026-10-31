@@ -505,6 +505,8 @@ namespace NoFences.Util
         public static string FadeFencesHint => L("FadeFencesHint");
         public static string NoFade => L("NoFade");
         public static string HoverPreviewSetting => L("HoverPreviewSetting");
+        public static string RaiseOnClickSetting => L("RaiseOnClickSetting");
+        public static string RaiseOnClickHint => L("RaiseOnClickHint");
         public static string FolderEmpty => L("FolderEmpty");
         public static string FolderMore(int n) => L("FolderMore", n);
         public static string FenceHotkey => L("FenceHotkey");

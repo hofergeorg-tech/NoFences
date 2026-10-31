@@ -295,6 +295,8 @@
   "FadeFencesHint": "The closer the mouse, the more visible. Single fences can be excluded in their settings.",
   "NoFade": "Never fade this fence",
   "HoverPreviewSetting": "Preview on hover (folder contents, images, PDFs)",
+  "RaiseOnClickSetting": "Bring fences and widgets to the front on click",
+  "RaiseOnClickHint": "A clicked fence stays in front of other windows until you click another window or the desktop.",
   "FolderEmpty": "Empty folder",
   "FolderMore": "+ {0} more",
   "FenceHotkey": "Shortcut:",

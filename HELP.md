@@ -55,6 +55,8 @@ Tip: for a tidy desktop, create a folder such as `Documents\Fences\Work` and use
   colored dot on the icon, e.g. red for important things.
 - **Preview on hover**: rest the mouse on a folder to see its contents, on pictures, PDFs and videos for a large
   preview (can be turned off in Settings → Desktop).
+- **Bring to front on click**: a clicked fence or widget comes in front of open windows and goes back to the desktop as
+  soon as you click another window or the desktop (can be turned off in Settings → Desktop).
 - **Tabs** (link fences): fence menu → Add tab. Click a tab to switch, double-click to rename, drag items onto a tab
   to move them there.
 - **Open folders inside the fence**: point at a folder and click the small arrow in its corner (or right-click →

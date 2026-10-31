@@ -185,6 +185,7 @@ namespace NoFences
         protected override void OnDeactivate(EventArgs e)
         {
             base.OnDeactivate(e);
+            EndClickRaise();
             if (search.Length > 0)
                 SetSearch("");
         }

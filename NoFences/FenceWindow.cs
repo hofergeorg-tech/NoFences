@@ -570,6 +570,13 @@ namespace NoFences
                     }
                     return;
 
+                case Native.WM_MOUSEACTIVATE when !OnTop && app.RaiseOnClick:
+                    // Clicked: in front of all windows until another window is used (see OnDeactivate).
+                    // Set before the activation so KeepAtBottom lets it go up.
+                    ClickRaised = true;
+                    ApplyZOrder();
+                    break;
+
                 case Native.WM_MOUSEACTIVATE when !OnTop:
                     // Windows sends the clicked fence down while activating it (KeepAtBottom), and the focus
                     // may go to a child instead of the form: come in front of the other fences once that's done.
@@ -623,8 +630,23 @@ namespace NoFences
         /// <summary>True while the fences are shown above all windows (peek shortcut).</summary>
         public bool Peeking { get; private set; }
 
-        /// <summary>Above other windows: during peek, in a bar that is out, or permanently with "Always on top".</summary>
-        private bool OnTop => Peeking || DockRaised || Info.AlwaysOnTop;
+        /// <summary>Clicked and still the active window: above other windows ("Bring to front on click").</summary>
+        private bool ClickRaised { get; set; }
+
+        /// <summary>
+        /// Above other windows: during peek, in a bar that is out, while clicked and active, or permanently
+        /// with "Always on top".
+        /// </summary>
+        private bool OnTop => Peeking || DockRaised || ClickRaised || Info.AlwaysOnTop;
+
+        /// <summary>Another window is used: a clicked fence goes back down to the desktop.</summary>
+        private void EndClickRaise()
+        {
+            if (!ClickRaised)
+                return;
+            ClickRaised = false;
+            ApplyZOrder();
+        }
 
         /// <summary>Part of a docked bar that is shown (or reserves its space): above other windows.</summary>
         public bool DockRaised { get; private set; }

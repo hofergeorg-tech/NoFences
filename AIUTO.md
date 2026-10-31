@@ -57,6 +57,8 @@ Suggerimento: per un desktop ordinato, crea una cartella come `Documenti\Recinti
   selezionati (Ctrl+0 rimuove) – un punto colorato sull'icona, ad es. rosso per le cose importanti.
 - **Anteprima al passaggio del mouse**: tenendo il mouse su una cartella ne vedi il contenuto, su immagini, PDF e video
   un'anteprima grande (disattivabile in Impostazioni → Desktop).
+- **In primo piano al clic**: un recinto o widget cliccato passa davanti alle finestre aperte e torna sul desktop appena
+  clicchi un'altra finestra o il desktop (disattivabile in Impostazioni → Desktop).
 - **Schede** (recinti collegamenti): menu → Aggiungi scheda. Clic per cambiare, doppio clic per rinominare, trascina gli
   elementi su una scheda per spostarli lì.
 - **Aprire le cartelle nel recinto**: passa sopra una cartella e fai clic sulla piccola freccia nell'angolo (o clic

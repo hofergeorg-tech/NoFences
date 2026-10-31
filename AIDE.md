@@ -61,6 +61,8 @@ Astuce : pour un bureau rangé, créez un dossier comme `Documents\Barrières\Tr
   (Ctrl+0 retire) – un point coloré sur l'icône, par ex. rouge pour ce qui est important.
 - **Aperçu au survol** : laissez la souris sur un dossier pour voir son contenu, sur des images, PDF et vidéos pour un
   grand aperçu (désactivable dans Paramètres → Bureau).
+- **Premier plan au clic** : une barrière ou un widget cliqué passe devant les fenêtres ouvertes et retourne sur le
+  bureau dès que vous cliquez sur une autre fenêtre ou le bureau (désactivable dans Paramètres → Bureau).
 - **Onglets** (barrières de raccourcis) : menu → Ajouter un onglet. Clic pour changer, double-clic pour renommer, faites
   glisser des éléments sur un onglet pour les y déplacer.
 - **Ouvrir les dossiers dans la barrière** : pointez un dossier et cliquez sur la petite flèche dans son coin (ou clic

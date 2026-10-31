@@ -5,6 +5,12 @@ versions follow [Semantic Versioning](https://semver.org/).
 Deutsch: [CHANGELOG.de.md](CHANGELOG.de.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.15.0] - 2026-10-31
+
+### Added
+- Clicking a fence or widget brings it in front of open windows – no more closing windows to get to it. It goes back to
+  the desktop as soon as you click another window or the desktop. Can be turned off in Settings → Desktop.
+
 ## [2.14.2] - 2026-10-27
 
 ### Security

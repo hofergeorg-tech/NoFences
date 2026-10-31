@@ -339,6 +339,12 @@ namespace NoFences
                 Config.HoverPreview = v;
                 app.Store.RequestSave();
             }));
+            Wide(grid, Check(Strings.RaiseOnClickSetting, Config.RaiseOnClick, v =>
+            {
+                Config.RaiseOnClick = v;
+                app.Store.RequestSave();
+            }));
+            Hint(grid, Strings.RaiseOnClickHint, ContentWidth);
 
             var profiles = Section(page, Strings.SectionProfiles, ContentWidth);
             var names = new List<string?> { null };

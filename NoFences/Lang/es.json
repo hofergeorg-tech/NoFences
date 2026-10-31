@@ -295,6 +295,8 @@
   "FadeFencesHint": "Cuanto más cerca el ratón, más visibles. Se pueden excluir vallas en su configuración.",
   "NoFade": "No atenuar nunca esta valla",
   "HoverPreviewSetting": "Vista previa al pasar el ratón (carpetas, imágenes, PDF)",
+  "RaiseOnClickSetting": "Traer vallas y widgets al frente al hacer clic",
+  "RaiseOnClickHint": "Una valla pulsada queda delante de las demás ventanas hasta que pulses otra ventana o el escritorio.",
   "FolderEmpty": "Carpeta vacía",
   "FolderMore": "+ {0} más",
   "FenceHotkey": "Atajo:",

@@ -4,6 +4,11 @@ Alle wichtigen Änderungen an diesem Fork.
 English: [CHANGELOG.md](CHANGELOG.md) · Italiano: [CHANGELOG.it.md](CHANGELOG.it.md) ·
 Français : [CHANGELOG.fr.md](CHANGELOG.fr.md) · Español: [CHANGELOG.es.md](CHANGELOG.es.md)
 
+## [2.15.0] - 2026-10-31
+
+### Neu
+- Ein angeklickter Fence oder ein Widget kommt vor die offenen Fenster – kein Fensterschließen mehr, um hinzukommen. Er geht zurück auf den Desktop, sobald du ein anderes Fenster oder den Desktop anklickst. Abschaltbar unter Einstellungen → Desktop.
+
 ## [2.14.2] - 2026-10-27
 
 ### Sicherheit
